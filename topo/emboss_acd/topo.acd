@@ -28,6 +28,8 @@ section: required [
     minsize: "1"
     minimum: "1"
     maximum: "$(sequence.length)"
+    failrange: "N"
+    trueminimum: "Y"
     help: "Examples of region specifications are: \
            24-45, 56-78 \
            1:45, 67=99;765..888 \
@@ -54,6 +56,8 @@ section: required [
     information: "Signature Sections"
     minimum: "1"
     maximum: "$(sequence.length)"
+    failrange: "N"
+    trueminimum: "Y"
     help: "Examples of ranges specifications are: \
            10-10 CF, 56-78 SY\ 1:45 SR, 67=99 HY;765..888 SF \
            1,5,HG,8,10,HY,23,45,SR,57,99,UG"
