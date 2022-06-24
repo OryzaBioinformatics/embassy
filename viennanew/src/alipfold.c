@@ -21,7 +21,7 @@
 
 /*@unused@*/
 #if 0
-static char rcsid[] = "$Id: alipfold.c,v 1.7 2009/02/19 13:11:56 rice Exp $";
+static char rcsid[] = "$Id: alipfold.c,v 1.8 2011/07/06 14:18:46 rice Exp $";
 #endif
 
 #define eMAX(x,y) (((x)>(y)) ? (x) : (y))
@@ -331,10 +331,12 @@ PRIVATE void alipf_create_bppm(char **sequences, char *structure, pair_info **pi
 {
   int s;
   int n, n_seq, i,j,k,l, ij, kl, /*u,*//*u1,*//*d,*/ii,ll, /*type_2,*/ tt, ov=0;
-  FLT_OR_DBL temp, Qmax=0, prm_MLb;
+  FLT_OR_DBL temp, prm_MLb;
   FLT_OR_DBL prmt,prmt1;
   FLT_OR_DBL qbt1, *tmp, tmp2, tmp3;
-
+#ifndef LARGE_PF
+  FLT_OR_DBL Qmax=0;
+#endif
   double /*free_energy,*/ kTn;
   n = (int) strlen(sequences[0]);
   for (s=0; sequences[s]!=NULL; s++);
@@ -346,7 +348,9 @@ PRIVATE void alipf_create_bppm(char **sequences, char *structure, pair_info **pi
     prm_l[i]=prm_l1[i]=prml[i]=0;
 
   /* backtracking to construct binding probabilities of pairs*/
+#ifndef LARGE_PF
   Qmax=0;
+#endif
 
   for (k=1; k<=n; k++) {
     q1k[k] = q[iindx[1] - k];
@@ -1136,9 +1140,9 @@ PUBLIC void alipf_circ(char **sequences, char *structure){
   for (s=0; sequences[s]!=NULL; s++);
   n_seq = s;
 
-  double kTn;
+  /*double kTn;*/
   FLT_OR_DBL qbt1, qot;
-  kTn = (temperature+K0)*GASCONST*n_seq/10.;   /* kT in cal/mol  */
+  /*kTn = (temperature+K0)*GASCONST*n_seq/10.;*/   /* kT in cal/mol  */
 
   qo = qho = qio = qmo = 0.;
   /* calculate the qm2 matrix  */

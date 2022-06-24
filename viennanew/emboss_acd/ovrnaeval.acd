@@ -1,0 +1,118 @@
+application: ovrnaeval [
+  documentation: "RNA eval"
+  groups: "Nucleic:RNA folding, Nucleic:2D structure"
+  gui: "yes"
+  batch: "yes"
+  cpu: "medium"
+  embassy: "vienna"
+  relations: "EDAM:0000697 topic RNA structure and alignment"
+  relations: "EDAM:0000279 operation Nucleic acid folding"
+]
+
+section: input [
+  information: "Input section"
+  type: "page"
+]
+
+  sequence: sequence [
+    parameter: "Y"
+    type: "dna"
+    relations: "EDAM:0002887 data Sequence record (nucleic acid)"
+  ]
+
+  infile: constraintfile [
+    parameter: "Y"
+    information: "Vienna RNA structure constraints file"
+    knowntype: "rna constraint"
+    relations: "EDAM:0000866 data Sequence alignment metadata"
+  ]
+
+  infile: paramfile [
+    nullok: "Y"
+    default: ""
+    information: "Vienna RNA parameters file (optional)"
+    knowntype: "rna parameter"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+endsection: input
+
+section: advanced [
+  information: "Advanced section"
+  type: "page"
+]
+
+  float: temperature [
+    default: "37.0"
+    information: "Temperature"
+    relations: "EDAM:0002139 data Melting temperature"
+  ]
+
+  boolean: convert [
+    default: "Y"
+    information: "Convert T to U"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  boolean: tetraloop [
+    default: "Y"
+    information: "Stabilising energies for tetra-loops"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  boolean: circular [
+    default: "N"
+    information: "Circular RNA"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  list: energy [
+    default: "0"
+    minimum: "1"
+    maximum: "1"
+    header: "Energy parameters"
+    values: "0:BP, 1:Any with GC, 2:Any with AU parameters"
+    delimiter: ","
+    codedelimiter: ":"
+    information: "Method"
+    help: "Rarely used option to fold sequences from the ABCD...
+           alphabet"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  list: dangles [
+    default: "1"
+    minimum: "1"
+    maximum: "1"
+    header: "How to treat dangling end energies"
+    values: "0:No stabilising energies for dangling ends, 1:Use
+             stabilising energies for dangling ends, 2:Dangling energies as
+             in a partition function 3:Allow coaxial stacking of adjacent
+             helices"
+    delimiter: ","
+    codedelimiter: ":"
+    information: "Method"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  boolean: logml [
+    default: "N"
+    information: "Use log scale for multiloop energies"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+endsection: advanced
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+  outfile: outfile [
+    parameter: "Y"
+    knowntype: "rnaeval output"
+    information: "Vienna RNAeval output file"
+    relations: "EDAM:0002985 data Nucleic acid thermodynamic property"
+  ]
+
+endsection: output

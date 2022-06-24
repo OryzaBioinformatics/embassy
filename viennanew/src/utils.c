@@ -6,12 +6,13 @@
 */
 /* Last changed Time-stamp: <2002-11-07 11:34:11 ivo> */
 
+#include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <time.h>
 #include <string.h>
-#include "../config.h"
+#include <config.h>
 #ifdef WITH_DMALLOC
 #include "dmalloc.h"
 #endif
@@ -19,7 +20,7 @@
 
 /*@unused@*/
 #if 0
-static char rcsid[] = "$Id: utils.c,v 1.7 2008/01/14 13:56:13 ajb Exp $";
+static char rcsid[] = "$Id: utils.c,v 1.9 2010/09/23 13:47:04 ajb Exp $";
 #endif
 
 #define PRIVATE  static

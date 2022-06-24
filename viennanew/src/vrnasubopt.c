@@ -5,6 +5,8 @@
 			   c Ivo L Hofacker
 			  Vienna RNA package
 */
+
+#include <config.h>
 #include "emboss.h"
 #include <config.h>
 #include <stdio.h>
@@ -21,7 +23,7 @@
 extern void  read_parameter_file(AjPFile fname);
 extern int   st_back;
 
-static char UNUSED rcsid[] = "$Id: vrnasubopt.c,v 1.10 2009/12/01 14:42:44 rice Exp $";
+static char UNUSED rcsid[] = "$Id: vrnasubopt.c,v 1.14 2011/07/06 14:18:46 rice Exp $";
 #define PRIVATE static
 
 extern double print_energy;
@@ -42,7 +44,7 @@ int main(int argc, char *argv[])
     char *structure = NULL;
     char  *ns_bases = NULL, *c;
     int   i, length, l, sym;
-    int   istty;
+    /*int   istty;*/
     double deltap=0.;
     int delta=100;
     int n_back = 0;
@@ -74,7 +76,7 @@ int main(int argc, char *argv[])
     float prange;
    
 
-    embInitPV("vrnasubopt",argc,argv,"VIENNA",VERSION);
+    embInitPV("ovrnasubopt",argc,argv,"VIENNA",VERSION);
     
     
     constring = ajStrNew();
@@ -105,7 +107,7 @@ int main(int argc, char *argv[])
 
     do_backtrack = 1;
    
-    istty = 0;
+    /*istty = 0;*/
 
     temperature   = (double) eT;
     noGU          = (eGU) ? 0 : 1;
@@ -184,7 +186,7 @@ int main(int argc, char *argv[])
 	strcpy(structure,ajStrGetPtr(constring));
     }
     
-    istty = 0;
+    /*istty = 0;*/
 
     if (fold_constrained)
     {

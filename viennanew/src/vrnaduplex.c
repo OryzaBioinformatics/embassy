@@ -6,6 +6,7 @@
 			  Vienna RNA package
 */
 
+#include <config.h>
 #include "emboss.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,8 +34,8 @@ int main(int argc, char *argv[])
     int  i;
     int  l;
     int  sym;
-    int  pf=0;
-    int  istty;
+    /*int  pf=0;*/
+    /*int  istty;*/
     int  delta=-1;
     int  noconv=0;
    
@@ -64,7 +65,7 @@ int main(int argc, char *argv[])
     duplexT mfe;
     duplexT *subopt;
 
-    embInitPV("vrnaduplex",argc,argv,"VIENNA",VERSION);
+    embInitPV("ovrnaduplex",argc,argv,"VIENNA",VERSION);
     
     seq1      = ajAcdGetSeq("asequence");
     seq2      = ajAcdGetSeq("bsequence");
@@ -82,8 +83,8 @@ int main(int argc, char *argv[])
     edangles  = ajAcdGetListSingle("dangles");
     outf      = ajAcdGetOutfile("outfile");
 
-    pf = 0;
-    istty = 0;
+    /*pf = 0;*/
+    /*istty = 0;*/
 
     temperature   = (double) eT;
     noGU          = (eGU) ? 0 : 1;

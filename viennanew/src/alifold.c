@@ -9,6 +9,7 @@
 */
 
 #include <config.h>
+#include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -22,7 +23,7 @@
 #include "params.h"
 
 /*@unused@*/
-static char rcsid[] UNUSED = "$Id: alifold.c,v 1.6 2008/06/26 08:40:00 rice Exp $";
+static char rcsid[] UNUSED = "$Id: alifold.c,v 1.9 2011/07/06 14:18:46 rice Exp $";
 
 #define PAREN
 
@@ -129,7 +130,7 @@ static short **S;
 #define MINPSCORE -2 * UNIT
 float alifold(char **strings, char *structure)
 {
-  int  length, energy, s, n_seq;
+  int  length, /*energy,*/ s, n_seq;
 
   length = (int) strlen(strings[0]);
   if (length>init_length) init_alifold(length);
@@ -145,7 +146,7 @@ float alifold(char **strings, char *structure)
   }
   make_pscores((const short **) S, (const char *const *) strings, n_seq, structure);
 
-  energy = fill_arrays((const char **)strings);
+  /*energy =*/ fill_arrays((const char **)strings);
 
   backtrack((const char **)strings, 0);
 

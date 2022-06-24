@@ -8,6 +8,7 @@
 	    calculates specific heat using C = - T d^2/dT^2 G(T)
 */
 
+#include <config.h>
 #include "emboss.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -122,7 +123,7 @@ int main(int argc, char *argv[])
     float T_max;
     float h;
     int mpoints;
-    int istty;
+    /*int istty;*/
     int noconv = 0;
 
 
@@ -142,7 +143,7 @@ int main(int argc, char *argv[])
     char edangle = '\0';
 
 
-    embInitPV("vrnaheat",argc,argv,"VIENNA",VERSION);
+    embInitPV("ovrnaheat",argc,argv,"VIENNA",VERSION);
     
     
     seq       = ajAcdGetSeq("sequence");
@@ -165,7 +166,7 @@ int main(int argc, char *argv[])
 
     do_backtrack = 0; 
     string = NULL;
-    istty = 0;
+    /*istty = 0;*/
 
     noGU          = (eGU) ? 0 : 1;
     no_closingGU  = (eclose) ? 0 : 1;

@@ -10,6 +10,7 @@
 */
 
 #include <config.h>
+#include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -23,7 +24,7 @@
 #include "params.h"
 #include "duplex.h"
 /*@unused@*/
-static char rcsid[] UNUSED = "$Id: duplex.c,v 1.2 2008/01/11 14:48:02 ajb Exp $";
+static char rcsid[] UNUSED = "$Id: duplex.c,v 1.5 2011/07/06 14:18:46 rice Exp $";
 
 #define PUBLIC
 #define PRIVATE static
@@ -64,7 +65,7 @@ PRIVATE int delay_free=0;
 
 
 duplexT duplexfold(const char *s1, const char *s2) {
-  int i, j, l1, Emin=INF, i_min=0, j_min=0;
+    int i, j, /*l1,*/ Emin=INF, i_min=0, j_min=0;
   char *struc;
   duplexT mfe;
   
@@ -113,7 +114,7 @@ duplexT duplexfold(const char *s1, const char *s2) {
   struc = backtrack(i_min, j_min);
   if (i_min<n1) i_min++;
   if (j_min>1 ) j_min--;
-  l1 = strchr(struc, '&')-struc;
+  /*l1 = strchr(struc, '&')-struc;*/
   /*
     printf("%s %3d,%-3d : %3d,%-3d (%5.2f)\n", struc, i_min+1-l1, i_min, 
        j_min, j_min+strlen(struc)-l1-2, Emin*0.01);
@@ -306,7 +307,7 @@ PRIVATE int compare(const void *sub1, const void *sub2) {
 #define MINPSCORE -2 * UNIT
 
 duplexT aliduplexfold(const char *s1[], const char *s2[]) {
-  int i, j, s, n_seq, l1, Emin=INF, i_min=0, j_min=0;
+    int i, j, s, n_seq, /*l1,*/ Emin=INF, i_min=0, j_min=0;
   char *struc;
   duplexT mfe;
   short **S1, **S2;
@@ -385,7 +386,7 @@ duplexT aliduplexfold(const char *s1[], const char *s2[]) {
   struc = alibacktrack(i_min, j_min, S1, S2);
   if (i_min<n1) i_min++;
   if (j_min>1 ) j_min--;
-  l1 = strchr(struc, '&')-struc;
+  /*l1 = strchr(struc, '&')-struc;*/
   /*
     printf("%s %3d,%-3d : %3d,%-3d (%5.2f)\n", struc, i_min+1-l1, i_min, 
        j_min, j_min+strlen(struc)-l1-2, Emin*0.01);

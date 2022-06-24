@@ -1,9 +1,9 @@
-pkgdata_DATA =  vrnaalifold.txt vrnaalifoldpf.txt \
-	vrnacofold.txt vrnacofoldconc.txt vrnacofoldpf.txt \
-	vrnadistance.txt vrnaduplex.txt \
-	vrnaeval.txt vrnaevalpair.txt \
-	vrnafold.txt vrnafoldpf.txt \
-	vrnaheat.txt vrnainverse.txt \
-	vrnalfold.txt vrnaplot.txt vrnasubopt.txt
+pkgdata_DATA =  ovrnaalifold.txt ovrnaalifoldpf.txt \
+	ovrnacofold.txt ovrnacofoldconc.txt ovrnacofoldpf.txt \
+	ovrnadistance.txt ovrnaduplex.txt \
+	ovrnaeval.txt ovrnaevalpair.txt \
+	ovrnafold.txt ovrnafoldpf.txt \
+	ovrnaheat.txt ovrnainverse.txt \
+	ovrnalfold.txt ovrnaplot.txt ovrnasubopt.txt
 
 pkgdatadir=$(prefix)/share/EMBOSS/doc/programs/text

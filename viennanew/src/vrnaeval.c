@@ -5,6 +5,8 @@
 			   c Ivo L Hofacker
 			  Vienna RNA Pckage
 */
+
+#include <config.h>
 #include "emboss.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,7 +26,7 @@
 
 /*@unused@*/
 #if 0
-static char UNUSED rcsid[]="$Id: vrnaeval.c,v 1.10 2009/12/01 14:42:44 rice Exp $";
+static char UNUSED rcsid[]="$Id: vrnaeval.c,v 1.14 2011/07/06 14:18:46 rice Exp $";
 #endif
 
 #define  PUBLIC
@@ -54,7 +56,7 @@ int main(int argc, char *argv[])
     /* char  *ParamFile=NULL; */
     int   /*i,*/ l, length1, length2;
     float energy;
-    int   istty;
+    /*int   istty;*/
     int circ=0;
     int   noconv=0;
 
@@ -81,12 +83,12 @@ int main(int argc, char *argv[])
 /*    AjPStr constring2 = NULL; */
     
 
-    embInitPV("vrnaeval",argc,argv,"VIENNA",VERSION);
+    embInitPV("ovrnaeval",argc,argv,"VIENNA",VERSION);
 
 
     string    = NULL;
     structure = NULL;
-    istty = 0;
+    /*istty = 0;*/
     
 
     seqstring1 = ajStrNew();

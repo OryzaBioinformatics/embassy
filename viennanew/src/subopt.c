@@ -1,5 +1,17 @@
 /*
   $Log: subopt.c,v $
+  Revision 1.10  2011/07/06 14:18:46  rice
+  compiler warnings clean
+
+  Revision 1.9  2011/06/07 15:08:42  ajb
+  Fix multiple global integers of same name
+
+  Revision 1.8  2010/09/23 13:47:04  ajb
+  Use name config.h throughout
+
+  Revision 1.7  2010/08/05 09:22:41  ajb
+  Use autoheader
+
   Revision 1.6  2010/01/20 10:47:33  ajb
   Initialise tmpE
 
@@ -82,6 +94,8 @@
 
 		       Vienna RNA package
 */
+
+#include <config.h>
 #include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -106,7 +120,7 @@
 #define SAME_STRAND(I,J) (((I)>=cut_point)||((J)<cut_point))
 
 /*@unused@*/
-PRIVATE char UNUSED rcsid[] = "$Id: subopt.c,v 1.6 2010/01/20 10:47:33 ajb Exp $";
+PRIVATE char UNUSED rcsid[] = "$Id: subopt.c,v 1.10 2011/07/06 14:18:46 rice Exp $";
 
 /*Typedefinitions ---------------------------------------------------------- */
 
@@ -202,7 +216,8 @@ PUBLIC  double print_energy = 9999; /* printing threshold for use with logML */
 extern	int circ;
 PUBLIC	SOLUTION *subopt_circ(char *seq, char *sequence, int delta, FILE *fp);
 PRIVATE int *fM2;	 /* energies of M2 */
-PUBLIC	int	Fc, FcH, FcI, FcM;		/* parts of the exterior loop energies */
+/* Already defined in fold.c */
+extern	int	Fc, FcH, FcI, FcM;		/* parts of the exterior loop energies */
 
 PRIVATE void encode_seq(char *sequence) {
   unsigned int i,l;
@@ -907,7 +922,7 @@ scan_interval(int i, int j, int array_flag, STATE * state)
       /* if we reach here, i should be 1 and j should be n respectively									 */
       for(k=i; k<j; k++)
 	for (l=k+turn+1; l <= j; l++){
-          int kl, type, u, new_c, tmpE=0, no_close;
+            int kl, type, u, /*new_c,*/ tmpE=0, no_close;
 	  u = j-l + k-1;	/* get the hairpin loop length */
 	  if(u<turn) continue;
 
@@ -916,7 +931,9 @@ scan_interval(int i, int j, int array_flag, STATE * state)
 	  no_close = ((type==3)||(type==4))&&no_closingGU;
 	  type=rtype[type];
 	  if (!type) continue;
-	  if (no_close) new_c = FORBIDDEN;
+	  if (no_close){
+              /*new_c = FORBIDDEN;*/
+          }
 	  else{
 	    /* now lets have a look at the hairpin energy */
 	    char loopseq[10];
@@ -947,11 +964,11 @@ scan_interval(int i, int j, int array_flag, STATE * state)
       /* now we search for our exterior interior loop possibilities */
       for(k=i; k<j; k++)
 	for (l=k+turn+1; l <= j; l++){
-	  int kl, type, tmpE, no_close;
+          int kl, type, tmpE/*, no_close*/;
 
 	  kl = indx[l]+k;	/* just confusing these indices ;-) */
 	  type = ptype[kl];
-	  no_close = ((type==3)||(type==4))&&no_closingGU;
+	  /*no_close = ((type==3)||(type==4))&&no_closingGU;*/
 	  type=rtype[type];
 	  if (!type) continue;
 
@@ -1048,10 +1065,10 @@ repeat(int i, int j, STATE * state, int part_energy, int temp_energy)
 
   register int k, p, q, energy=0, new;
   register int mm;
-  register int no_close, no_close_2, type, type_2;
+  register int no_close, /*no_close_2,*/ type, type_2;
   int  rt;
 
-  no_close_2 = 0;
+  /*no_close_2 = 0;*/
 
   type = ptype[indx[j]+i];
   if (type==0) fprintf(stderr, "repeat: Warning: %d %d can't pair\n", i,j);

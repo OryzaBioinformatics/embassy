@@ -1,8 +1,9 @@
 
-pkgdata_DATA = vrnaalifold.acd vrnadistance.acd vrnafoldpf.acd vrnaplot.acd \
-	vrnaalifoldpf.acd vrnaduplex.acd vrnaheat.acd vrnasubopt.acd \
-	vrnacofold.acd vrnaeval.acd vrnainverse.acd \
-	vrnacofoldconc.acd vrnaevalpair.acd vrnalfold.acd \
-	vrnacofoldpf.acd vrnafold.acd vrnapaln.acd
+pkgdata_DATA = ovrnaalifold.acd ovrnadistance.acd \
+	ovrnafoldpf.acd ovrnaplot.acd \
+	ovrnaalifoldpf.acd ovrnaduplex.acd ovrnaheat.acd ovrnasubopt.acd \
+	ovrnacofold.acd ovrnaeval.acd ovrnainverse.acd \
+	ovrnacofoldconc.acd ovrnaevalpair.acd ovrnalfold.acd \
+	ovrnacofoldpf.acd ovrnafold.acd ovrnapaln.acd
 
 pkgdatadir=$(prefix)/share/EMBOSS/acd

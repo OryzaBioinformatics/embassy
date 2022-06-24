@@ -5,6 +5,8 @@
 
 		  Vienna RNA package
 */
+
+#include <config.h>
 #include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +18,7 @@
 #include "params.h"
 
 /*@unused@*/
-static char rcsid[] UNUSED = "$Id: params.c,v 1.2 2008/01/11 14:48:02 ajb Exp $";
+static char rcsid[] UNUSED = "$Id: params.c,v 1.4 2010/09/23 13:47:04 ajb Exp $";
 
 #define PUBLIC
 #define PRIVATE static

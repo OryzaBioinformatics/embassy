@@ -1,0 +1,162 @@
+application: ovrnasubopt [
+  documentation: "Calculate RNA suboptimals"
+  groups: "Nucleic:RNA folding, Nucleic:2D structure"
+  gui: "yes"
+  batch: "yes"
+  cpu: "medium"
+  embassy: "vienna"
+  relations: "EDAM:0000697 topic RNA structure and alignment"
+  relations: "EDAM:0000278 operation RNA secondary structure prediction"
+]
+
+section: input [
+  information: "Input section"
+  type: "page"
+]
+
+  sequence: sequence [
+    parameter: "Y"
+    type: "dna"
+    relations: "EDAM:0002887 data Sequence record (nucleic acid)"
+  ]
+
+  infile: constraintfile [
+    nullok: "Y"
+    default: ""
+    information: "Vienna RNA structure constraints file
+                  (optional)"
+    knowntype: "rna constraint"
+    relations: "EDAM:0000866 data Sequence alignment metadata"
+  ]
+
+  infile: paramfile [
+    nullok: "Y"
+    default: ""
+    information: "Vienna RNA parameters file (optional)"
+    knowntype: "rna parameter"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+endsection: input
+
+section: advanced [
+  information: "Advanced section"
+  type: "page"
+]
+
+  float: temperature [
+    default: "37.0"
+    information: "Temperature"
+    relations: "EDAM:0002139 data Melting temperature"
+  ]
+
+  boolean: circular [
+    default: "N"
+    information: "Allow circular RNA"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+ boolean: dos [
+    default: "N"
+    information: "DOS special corrections"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  boolean: gu [
+    default: "Y"
+    information: "Allow GU pairs"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  boolean: closegu [
+    default: "Y"
+    information: "Allow GU pairs at end of helices"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  boolean: lp [
+    default: "Y"
+    information: "Allow lonely pairs"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  boolean: convert [
+    default: "Y"
+    information: "Convert T to U"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  string: nsbases [
+    default: ""
+    information: "Non-standard bases"
+    knowntype: "nucleotide codes"
+    relations: "EDAM:0001007 identifier Nucleotide code"
+  ]
+
+  boolean: tetraloop [
+    default: "Y"
+    information: "Stabilizing energies for tetra-loops"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  float: erange [
+    default: "1.0"
+    information: "Calculate suboptimal structures within erange
+                  of the mfe"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  float: prange [
+    default: "0.0"
+    information: "Only print structures with energy within
+                  prange of the mfe"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  boolean: sort [
+    default: "N"
+    information: "Sort structures by energy"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  boolean: logml [
+    default: "N"
+    information: "Logarithmic energy function for multi-loops"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  list: dangles [
+    default: "2"
+    minimum: "1"
+    maximum: "1"
+    header: "How to treat dangling end energies"
+    values: "0:Ignore, 1:Only unpaired bases for just one dangling
+             end, 2:Always use dangling energies, 3:Allow coaxial stacking of
+             adjacent helices"
+    delimiter: ","
+    codedelimiter: ":"
+    information: "Method"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  integer: nrandom [
+    default: "0"
+    information: "Number of random suboptimal structures"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+endsection: advanced
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+  outfile: outfile [
+    parameter: "Y"
+    knowntype: "rnafold output"
+    information: "Vienna RNAfold output file"
+    relations:  "EDAM:0000880 data RNA secondary structure"
+  ]
+
+endsection: output

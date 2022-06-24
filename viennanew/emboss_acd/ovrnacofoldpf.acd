@@ -1,0 +1,172 @@
+application: ovrnacofoldpf [
+  documentation: "RNA cofolding with partitioning"
+  groups: "Nucleic:RNA folding, Nucleic:2D structure"
+  gui: "yes"
+  batch: "yes"
+  cpu: "medium"
+  embassy: "vienna"
+  relations: "EDAM:0000697 topic RNA structure and alignment"
+  relations: "EDAM:0000278 operation RNA secondary structure prediction"
+]
+
+section: input [
+  information: "Input section"
+  type: "page"
+]
+
+  sequence: asequence [
+    parameter: "Y"
+    type: "dna"
+    relations: "EDAM:0001215 format pure dna"
+    relations: "EDAM:0000849 data Sequence record"
+  ]
+
+  infile: aconstraintfile [
+    nullok: "Y"
+    default: ""
+    information: "Vienna RNA structure constraints file
+                  (optional)"
+    knowntype: "rna constraint"
+    relations: "EDAM:0000866 data Sequence alignment metadata"
+  ]
+
+  sequence: bsequence [
+    parameter: "Y"
+    type: "dna"
+    relations: "EDAM:0001215 format pure dna"
+    relations: "EDAM:0000849 data Sequence record"
+  ]
+
+  infile: bconstraintfile [
+    nullok: "Y"
+    default: ""
+    information: "Second vienna RNA structure constraints file
+                  (optional)"
+    knowntype: "rna constraint"
+    relations: "EDAM:0000866 data Sequence alignment metadata"
+  ]
+
+  infile: paramfile [
+    nullok: "Y"
+    default: ""
+    information: "Vienna RNA parameters file (optional)"
+    knowntype: "rna parameter"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+endsection: input
+
+section: advanced [
+  information: "Advanced section"
+  type: "page"
+]
+
+  float: temperature [
+    default: "37.0"
+    information: "Temperature"
+    relations: "EDAM:0002139 data Melting temperature"
+  ]
+
+  boolean: gu [
+    default: "Y"
+    information: "Allow GU pairs"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  boolean: closegu [
+    default: "Y"
+    information: "Allow GU pairs at end of helices"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  boolean: lp [
+    default: "Y"
+    information: "Allow lonely pairs"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  boolean: convert [
+    default: "Y"
+    information: "Convert T to U"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  string: nsbases [
+    default: ""
+    information: "Non-standard bases"
+    knowntype: "nucleotide codes"
+    relations:  "EDAM:0001007 identifier Nucleotide code"
+  ]
+
+  boolean: tetraloop [
+    default: "Y"
+    information: "Stabilizing energies for tetra-loops"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  list: energy [
+    default: "0"
+    minimum: "1"
+    maximum: "1"
+    header: "Energy parameters"
+    values: "0:BP, 1:Any with GC, 2:Any with AU parameters"
+    delimiter: ","
+    codedelimiter: ":"
+    information: "Method"
+    help: "Rarely used option to fold sequences from the ABCD...
+           alphabet"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  float: scale [
+    default: "1.07"
+    information: "Estimate of ensemble free energy"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  list: dangles [
+    default: "1"
+    minimum: "1"
+    maximum: "1"
+    header: "How to treat dangling end energies"
+    values: "0:Ignore, 1:Only unpaired bases for just one dangling
+             end, 2:Always use dangling energies, 3:Allow coaxial stacking of
+             adjacent helices"
+    delimiter: ","
+    codedelimiter: ":"
+    information: "Method"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+endsection: advanced
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+  outfile: outfile [
+    parameter: "Y"
+    knowntype: "rnafold output"
+    information: "Vienna RNAfold output file"
+    relations:  "EDAM:0000880 data RNA secondary structure"
+  ]
+
+  outfile: ssoutfile [
+    name: "$(asequence.name)"
+    extension: "ssps"
+    knowntype: "vienna structure"
+    information: "Vienna structure postscript output file"
+    relations:  "EDAM:0001708 data RNA secondary structure image"
+  ]
+
+  outfile: dotoutfile [
+    name: "$(asequence.name)"
+    extension: "ps"
+    knowntype: "vienna dotplot"
+    information: "Vienna dotplot postscript output file"
+    relations: "EDAM:0000862 data Dotplot"
+    relations: "EDAM:0000880 data RNA secondary structure"
+  ]
+
+endsection: output

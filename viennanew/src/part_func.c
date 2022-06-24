@@ -7,6 +7,15 @@
 */
 /*
   $Log: part_func.c,v $
+  Revision 1.9  2010/09/28 13:17:49  ajb
+  Tidy compiler tests and add icc,gcc,cc test
+
+  Revision 1.8  2010/09/23 13:47:04  ajb
+  Use name config.h throughout
+
+  Revision 1.7  2010/08/05 09:22:41  ajb
+  Use autoheader
+
   Revision 1.6  2008/06/26 08:40:00  rice
   version 1.7.2 modes and ajfile deprecated functions renamed
 
@@ -65,6 +74,7 @@
   Revision 1.13  2001/11/16 17:30:04  ivo
   add stochastic backtracking (still incomplete)
 */
+
 #include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -84,7 +94,7 @@ typedef struct plist {
 
 
 /*@unused@*/
-static char rcsid[] UNUSED = "$Id: part_func.c,v 1.6 2008/06/26 08:40:00 rice Exp $";
+static char rcsid[] UNUSED = "$Id: part_func.c,v 1.9 2010/09/28 13:17:49 ajb Exp $";
 
 #define eMAX(x,y) (((x)>(y)) ? (x) : (y))
 #define eMIN(x,y) (((x)<(y)) ? (x) : (y))

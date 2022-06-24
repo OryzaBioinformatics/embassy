@@ -26,13 +26,13 @@ endif
 
 
 if LOCALLINK
-INCLUDES = -I../H -I../../../nucleus -I../../../ajax/pcre \
+AM_CPPFLAGS = -I../H -I../../../nucleus -I../../../ajax/pcre \
 	$(LLINCLUDES) \
 	-I../../../ajax/core -I../../../ajax/graphics \
 	-I../../../ajax/ensembl -I../../../ajax/ajaxdb \
 	-I../../../ajax/acd -I../../../plplot
 else
-INCLUDES = -I../H -I${embprefix}/include -I${embprefix}/include/eplplot \
+AM_CPPFLAGS = -I../H -I${embprefix}/include -I${embprefix}/include/eplplot \
 	$(NLINCLUDES) \
 	-I${embprefix}/include/epcre
 endif
@@ -58,12 +58,12 @@ endif
 
 AM_CFLAGS =  $(AIX_CFLAGS) $(WARN_CFLAGS) $(DEVWARN_CFLAGS)
 
-lib_LTLIBRARIES = libviennarna.la
+lib_LTLIBRARIES = liboviennarna.la
 
-bin_PROGRAMS = vrnaalifold vrnacofoldpf vrnaevalpair vrnainverse \
-	vrnaalifoldpf vrnadistance vrnafold vrnalfold \
-	vrnacofold vrnaduplex vrnafoldpf vrnaplot \
-	vrnacofoldconc vrnaeval vrnaheat vrnasubopt
+bin_PROGRAMS = ovrnaalifold ovrnacofoldpf ovrnaevalpair ovrnainverse \
+	ovrnaalifoldpf ovrnadistance ovrnafold ovrnalfold \
+	ovrnacofold ovrnaduplex ovrnafoldpf ovrnaplot \
+	ovrnacofoldconc ovrnaeval ovrnaheat ovrnasubopt
 
 VIENNALIBSRC = dist_vars.c fold_vars.c part_func.c eread_epars.c \
         treedist.c energy_par.c inverse.c ProfileDist.c RNAstruct.c utils.c \
@@ -76,7 +76,7 @@ noinst_HEADERS = intloops.h list.h
 
 EXTRA_DIST = alicircfold.inc circfold.inc config.h
 
-libviennarna_la_SOURCES = $(VIENNALIBSRC)
+liboviennarna_la_SOURCES = $(VIENNALIBSRC)
 
 VERS_INF = -version-info 1:7:0
 
@@ -86,28 +86,28 @@ else
 LINKFLAGS = $(VERS_INF)
 endif
 
-libviennarna_la_LDFLAGS = $(LINKFLAGS)
+liboviennarna_la_LDFLAGS = $(LINKFLAGS)
 
-vrnaalifold_SOURCES = vrnaalifold.c
-vrnaalifoldpf_SOURCES = vrnaalifoldpf.c
-vrnacofold_SOURCES = vrnacofold.c
-vrnacofoldconc_SOURCES = vrnacofoldconc.c
-vrnacofoldpf_SOURCES = vrnacofoldpf.c
-vrnadistance_SOURCES = vrnadistance.c
-vrnaduplex_SOURCES = vrnaduplex.c
-vrnaeval_SOURCES = vrnaeval.c
-vrnaevalpair_SOURCES = vrnaevalpair.c
-vrnafold_SOURCES = vrnafold.c
-vrnafoldpf_SOURCES = vrnafoldpf.c
-vrnaheat_SOURCES = vrnaheat.c
-vrnainverse_SOURCES = vrnainverse.c
-vrnalfold_SOURCES = vrnalfold.c
-vrnaplot_SOURCES = vrnaplot.c
-vrnasubopt_SOURCES = vrnasubopt.c
+ovrnaalifold_SOURCES = vrnaalifold.c
+ovrnaalifoldpf_SOURCES = vrnaalifoldpf.c
+ovrnacofold_SOURCES = vrnacofold.c
+ovrnacofoldconc_SOURCES = vrnacofoldconc.c
+ovrnacofoldpf_SOURCES = vrnacofoldpf.c
+ovrnadistance_SOURCES = vrnadistance.c
+ovrnaduplex_SOURCES = vrnaduplex.c
+ovrnaeval_SOURCES = vrnaeval.c
+ovrnaevalpair_SOURCES = vrnaevalpair.c
+ovrnafold_SOURCES = vrnafold.c
+ovrnafoldpf_SOURCES = vrnafoldpf.c
+ovrnaheat_SOURCES = vrnaheat.c
+ovrnainverse_SOURCES = vrnainverse.c
+ovrnalfold_SOURCES = vrnalfold.c
+ovrnaplot_SOURCES = vrnaplot.c
+ovrnasubopt_SOURCES = vrnasubopt.c
 
 
 if LOCALLINK
-LDADD = libviennarna.la \
+LDADD = liboviennarna.la \
 	../../../nucleus/libnucleus.la ../../../ajax/acd/libacd.la \
 	../../../ajax/ajaxdb/libajaxdb.la \
 	../../../ajax/ensembl/libensembl.la \
@@ -118,6 +118,6 @@ LDADD = libviennarna.la \
 	../../../plplot/libeplplot.la \
 	$(XLIB)
 else
-LDADD = libviennarna.la -L${embprefix}/lib -lnucleus -lacd -lajaxdb \
+LDADD = liboviennarna.la -L${embprefix}/lib -lnucleus -lacd -lajaxdb \
 	-lensembl -lajaxg -lajax -lepcre $(NLADD) -leplplot $(XLIB)
 endif

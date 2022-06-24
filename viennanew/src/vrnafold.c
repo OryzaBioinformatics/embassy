@@ -6,6 +6,7 @@
 		  Vienna RNA package
 */
 
+#include <config.h>
 #include "emboss.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +27,7 @@ extern void init_pf_circ_fold(int length);
 
 /*@unused@*/
 #if 0
-static char UNUSED rcsid[] = "$Id: vrnafold.c,v 1.11 2009/12/01 14:42:44 rice Exp $";
+static char UNUSED rcsid[] = "$Id: vrnafold.c,v 1.14 2011/06/22 09:53:39 rice Exp $";
 #endif
 
 #define PRIVATE static
@@ -90,7 +91,7 @@ int main(int argc, char *argv[])
 
 
 
-    embInitPV("vrnafold",argc,argv,"VIENNA",VERSION);
+    embInitPV("ovrnafold",argc,argv,"VIENNA",VERSION);
     
     
     seqstring = ajStrNew();

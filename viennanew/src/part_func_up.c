@@ -8,6 +8,15 @@
 */
 /*
   $Log: part_func_up.c,v $
+  Revision 1.7  2011/07/06 14:18:46  rice
+  compiler warnings clean
+
+  Revision 1.6  2010/09/23 13:47:04  ajb
+  Use name config.h throughout
+
+  Revision 1.5  2010/08/05 09:22:41  ajb
+  Use autoheader
+
   Revision 1.4  2008/06/26 08:40:00  rice
   version 1.7.2 modes and ajfile deprecated functions renamed
 
@@ -63,6 +72,7 @@
 */
 
 #include <config.h>
+#include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -79,7 +89,7 @@
 #include "part_func_up.h"
 #include "duplex.h"
 /*@unused@*/
-static char rcsid[] UNUSED = "$Id: part_func_up.c,v 1.4 2008/06/26 08:40:00 rice Exp $";
+static char rcsid[] UNUSED = "$Id: part_func_up.c,v 1.7 2011/07/06 14:18:46 rice Exp $";
 #define CO_TURN 0
 #define eMAX(x,y) (((x)>(y)) ? (x) : (y))
 #define eMIN(x,y) (((x)<(y)) ? (x) : (y))
@@ -134,17 +144,21 @@ PRIVATE short *S, *S1, *SS, *SS2;
 /* you have to call pf_fold(sequence, structure); befor pf_unstru */
 PUBLIC pu_contrib *pf_unstru(char *sequence, int w)
 {
-  int n, i,j,v,k,l, ij, kl, u,u1,d,type, type_2, tt, uu;
+  int n, i,j,v,k,l, ij, kl, u,u1,d,type, type_2, tt;
+#if PF2_DEBUG
+  int uu;
+#endif
   int o,p,po;
   unsigned int size, nu;
-  double temp, tqm2, bla; 
-  double qbt1, *tmp, Zuij, sum_l;
+  double temp, tqm2; 
+  double qbt1, *tmp, sum_l;
   double *store_H, *store_Io, **store_I2o; /* hairp., interior contribs */
   double *store_M_qm_o,*store_M_mlbase;/* multiloop contributions */
   pu_contrib *pu_test;
 #ifdef PF2_DEBUG  
   pu_contrib *pu_stru;
   FLT_OR_DBL *puij;
+  double Zuij, bla;
 #endif
   sum_l=0.0; 
   temp=0;
@@ -358,10 +372,10 @@ PUBLIC pu_contrib *pf_unstru(char *sequence, int w)
       tqm2=0.;
       
       for(i=p+1; i < o; i++) {
-	int p1i,pui;
+          int p1i/*,pui*/;
 	tqm2+=qm[iindx[p]-i]*qqm[i+1];
 	if(  type !=0 ) {
-	  pui= (p+1) < i ? iindx[p+1]-(i) : 0;
+            /*pui= (p+1) < i ? iindx[p+1]-(i) : 0;*/
 	  p1i= (p+1) < (i-1) ? iindx[p+1]-(i-1) : 0;
 	  /*unpaired region expMLbase[i-p] left of structured
 	    region qq_1m2[i+1]*/
@@ -492,12 +506,16 @@ PUBLIC pu_contrib *pf_unstru(char *sequence, int w)
       }
       tqm2=0.;
       for(i=o+1; i < p; i++) {
+#ifdef PF2_DEBUG 
 	uu=0;
+#endif
 	tqm2+=qqm[i]*qm[iindx[i+1]-p];
 	
 	if(type !=0) {
+#ifdef PF2_DEBUG 
 	  double temp2;
 	  temp2=0;
+#endif
 	  /* structured region qq_1m2[i-1] left of unpaired r. expMLbase[p-i]*/
 	  /* @expMLbase:  note distance of p-i == p+1-i+1 */
  	  store_M_mlbase[iindx[i]-p+1] +=  qq_1m2[i-1]*expMLbase[p-i]*temp;
@@ -534,9 +552,13 @@ PUBLIC pu_contrib *pf_unstru(char *sequence, int w)
   free(store_M_mlbase);
   
   /* 1. region [i,j] exterior to all loops */
+#ifdef PF2_DEBUG    
   Zuij=0.;bla=0;
+#endif
   for (i=1; i<=n; i++) {
+#ifdef PF2_DEBUG    
     uu=0;
+#endif
     for(j=i; j<eMIN(i+w,n+1);j++){
       ij=iindx[i]-j;
       temp=q1k[i-1]*1*scale[j-i+1]*qln[j+1]/q1k[n];
@@ -654,7 +676,7 @@ PUBLIC pu_contrib *pf_unstru(char *sequence, int w)
 /* s1 is the longer seq */
 PUBLIC interact *pf_interact(const char *s1, const char *s2, pu_contrib *p_c, pu_contrib *p_c2, int w, char *cstruc, int incr3, int incr5)
 {
-  int i, j, k,l,n1,n2,add_i5,add_i3,i_max,k_max, pc_size;
+    int i, j, k,l,n1,n2,add_i5,add_i3,/*i_max,k_max,*/ pc_size;
   double temp, Z, rev_d, E, Z2,**p_c_S, **p_c2_S=NULL, int_scale;
   FLT_OR_DBL ****qint_4, **qint_ik;
   /* PRIVATE double **pint; array for pf_up() output */
@@ -979,7 +1001,7 @@ PUBLIC interact *pf_interact(const char *s1, const char *s2, pu_contrib *p_c, pu
 
   
   Z2=0.0;
-  i_max = k_max = 0;
+  /*i_max = k_max = 0;*/
   for (i=1; i<=n1; i++) {
     for (k=i; k<=n1 && k<i+w; k++) {
       Z2+=qint_ik[i][k];
@@ -1093,14 +1115,14 @@ PUBLIC interact *pf_interact(const char *s1, const char *s2, pu_contrib *p_c, pu
 /* use an extra scale for pf_interact, here sl is the longer sequence */
 PRIVATE void scale_int(const char *s, const char *sl, double *sc_int,int incr3, int incr5)
 {
-  int n,nl,l_scales;
+    int n,nl/*,l_scales*/;
   duplexT mfe;
   double  kT;
   
   /* sc_int is similar to pf_scale: i.e. one time the scale */
   n=strlen(s);
   nl=strlen(sl);
-  l_scales = (2*nl)+incr3+incr5;
+  /*l_scales = (2*nl)+incr3+incr5;*/
 
   expMLbase  = (double *) space(sizeof(double)*(nl+1));
   scale = (double *) space(sizeof(double)*((nl+1)*2));
@@ -1408,10 +1430,10 @@ PUBLIC int Up_plot(pu_contrib *p_c, pu_contrib *p_c_sh, interact *pint, int len,
       }
     }
     double min_gu;
-    int min_i,min_j;
+    /*int min_i, min_j;*/
     /* unpaired_out = (char*) space(sizeof(char)*(100)); */
     min_gu = 1000.0;
-    min_i=min_j=0;
+    /*min_i= min_j=0;*/
     dG_u=0.;
     for (g=0; g<=4; g++){
       if((int) p_cont[g][0]) {
@@ -1422,8 +1444,8 @@ PUBLIC int Up_plot(pu_contrib *p_c, pu_contrib *p_c_sh, interact *pint, int len,
 	    fprintf(wastl,"%7d\t%7.4f\n",i,dG_u);
 	    if(g==0 &&( dG_u < min_gu )) {
 	      min_gu = dG_u;
-	      min_i=i-w+1;
-	      min_j=i;
+	      /*min_i=i-w+1;*/
+	      /*min_j=i;*/
 	    }
 	  }
 	}

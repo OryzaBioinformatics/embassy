@@ -3,6 +3,7 @@
 	   Walter Fontana, Ivo L Hofacker, Peter F Stadler
 			  Vienna RNA Package
 */
+#include <config.h>
 #include "emboss.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,7 +44,7 @@ int main(int argc, char *argv[])
     swString *S[10][MAXNUM];
     char     *P[MAXNUM];      /* structures for base pair distances */
     int       string_types = 0, tstr;
-    int       i,j, tt, istty, type;
+    int       i,j, tt, /*istty,*/ type;
     int       it, is; 
     FILE     *somewhere=NULL;
     FILE     *fpinf = NULL;
@@ -58,7 +59,7 @@ int main(int argc, char *argv[])
     
     AjPStr etypes = NULL;
 
-    embInitPV("vrnadistance",argc,argv,"VIENNA",VERSION);
+    embInitPV("ovrnadistance",argc,argv,"VIENNA",VERSION);
 
     sfile     = ajAcdGetInfile("structuresfile");
     edist     = ajAcdGetList("distance");
@@ -105,7 +106,7 @@ int main(int argc, char *argv[])
 
     fpinf     = ajFileGetFileptr(sfile);
     somewhere = ajFileGetFileptr(outf);
-    istty = 0;
+    /*istty = 0;*/
    
     do
     {

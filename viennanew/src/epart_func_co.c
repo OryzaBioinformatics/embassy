@@ -8,6 +8,15 @@
 */
 /*
   $Log: epart_func_co.c,v $
+  Revision 1.8  2011/07/06 14:18:46  rice
+  compiler warnings clean
+
+  Revision 1.7  2010/09/23 13:47:04  ajb
+  Use name config.h throughout
+
+  Revision 1.6  2010/08/05 09:22:41  ajb
+  Use autoheader
+
   Revision 1.5  2008/01/14 13:56:13  ajb
   Fix compiler warnings
 
@@ -56,6 +65,7 @@
   add stochastic backtracking (still incomplete)
 */
 
+#include <config.h>
 #include "ajax.h"
 #include <config.h>
 #include <stdio.h>
@@ -70,7 +80,7 @@
 #include "PS_dot.h"
 #include "part_func_co.h"
 /*@unused@*/
-static char rcsid[] UNUSED = "$Id: epart_func_co.c,v 1.5 2008/01/14 13:56:13 ajb Exp $";
+static char rcsid[] UNUSED = "$Id: epart_func_co.c,v 1.8 2011/07/06 14:18:46 rice Exp $";
 
 #define eMAX(x,y) (((x)>(y)) ? (x) : (y))
 #define eMIN(x,y) (((x)<(y)) ? (x) : (y))
@@ -305,7 +315,7 @@ PUBLIC cofoldF co_pf_fold(char *sequence, char *structure)
   /*Computation of "real" Partition function*/
   /*Need that for concentrations*/
   if (cut_point>0){
-    double kT, pbound, QAB, QToT, Qzero;
+    double kT, /*pbound,*/ QAB, QToT, Qzero;
 
     kT = (temperature+K0)*GASCONST/1000.0;
     Qzero=q[iindx[1]-n];
@@ -317,7 +327,7 @@ PUBLIC cofoldF co_pf_fold(char *sequence, char *structure)
       }}
 
     QToT=q[iindx[1]-(cut_point-1)]*q[iindx[cut_point]-n]+QAB;
-    pbound=1-(q[iindx[1]-(cut_point-1)]*q[iindx[cut_point]-n]/QToT);
+    /*pbound=1-(q[iindx[1]-(cut_point-1)]*q[iindx[cut_point]-n]/QToT);*/
      X.FAB  = -kT*(log(QToT)+n*log(pf_scale));
     X.F0AB = -kT*(log(Qzero)+n*log(pf_scale));
     X.FcAB = (QAB>1e-17) ? -kT*(log(QAB)+n*log(pf_scale)) : 999;

@@ -5,6 +5,8 @@
 		 c  Ivo Hofacker and Peter F Stadler
 			  Vienna RNA package
 */
+
+#include <config.h>
 #include "ajax.h"
 #include <config.h>
 #include <stdio.h>
@@ -16,7 +18,7 @@
 #include "fold_vars.h"
 #include "PS_dot.h"
 
-static char UNUSED rcsid[] = "$Id: ePS_dot.c,v 1.6 2008/06/26 08:40:00 rice Exp $";
+static char UNUSED rcsid[] = "$Id: ePS_dot.c,v 1.9 2011/07/06 14:18:46 rice Exp $";
 
 #define PUBLIC
 #define  PRIVATE   static
@@ -73,11 +75,11 @@ PUBLIC int gmlRNA(char *string, char *structure, AjPFile ssfile, char option)
   FILE *gmlfile;
   int i;
   int length;
-  int labels=0;
+  /*int labels=0;*/
   short *pair_table;
   float *X, *Y;
 
-  if (isupper(option)) labels = 1;
+  /*if (isupper(option)) labels = 1;*/
 
 
   gmlfile = ajFileGetFileptr(ssfile);
@@ -305,7 +307,7 @@ static const char *anote_macros =
 
 int PS_rna_plot_a(char *string, char *structure, AjPFile ssfile, char *pre, char *post)
 {
-  float  xmin, xmax, ymin, ymax, size;
+    float  xmin, xmax, ymin, ymax/*, size*/;
   int    i, length;
   float *X, *Y;
   FILE  *xyplot;
@@ -333,7 +335,7 @@ int PS_rna_plot_a(char *string, char *structure, AjPFile ssfile, char *pre, char
      ymin = Y[i] < ymin ? Y[i] : ymin;
      ymax = Y[i] > ymax ? Y[i] : ymax;
   }
-  size = eMAX((xmax-xmin),(ymax-ymin));
+  /*size = eMAX((xmax-xmin),(ymax-ymin));*/
 
   fprintf(xyplot,
 	  "%%!PS-Adobe-3.0 EPSF-3.0\n"
@@ -740,9 +742,9 @@ int PS_color_dot_plot(char *seq, cpair *pi, AjPFile wastlfile) {
   /* produce color PostScript dot plot from cpair */
 
   FILE *wastl;
-  int i, length;
+  int i/*, length*/;
 
-  length= strlen(seq);
+  /*length= strlen(seq);*/
   wastl = PS_dot_common(seq, wastlfile, NULL, 0);
   if (wastl==NULL)  return 0; /* return 0 for failure */
 
@@ -886,11 +888,11 @@ PRIVATE void loop(int i, int j, short *pair_table)
 PUBLIC int PS_dot_plot_list(char *seq, AjPFile wastlfile,
 			    struct plist *pl, struct plist *mf, char *comment) {
   FILE *wastl;
-  int length;
+  /*int length;*/
   double tmp;
   struct plist *pl1;
 
-  length= strlen(seq);
+  /*length= strlen(seq);*/
   wastl = PS_dot_common(seq, wastlfile, comment, 0);
   if (wastl==NULL) return 0; /* return 0 for failure */
 
@@ -971,9 +973,9 @@ int PS_color_dot_plot_turn(char *seq, cpair *pi, AjPFile wastlfile, int winSize)
   /* produce color PostScript dot plot from cpair */
 
   FILE *wastl;
-  int i, length;
+  int i/*, length*/;
 
-  length= strlen(seq);
+  /*length= strlen(seq);*/
   wastl = PS_dot_common(seq, wastlfile, NULL, winSize);
   if (wastl==NULL)
     return 0; /* return 0 for failure */
@@ -1006,9 +1008,9 @@ int PS_dot_plot_turn(char *seq, struct plist *pl, AjPFile wastlfile, int winSize
   /* produce color PostScript dot plot from cpair */
 
   FILE *wastl;
-  int i, length;
+  int i/*, length*/;
 
-  length= strlen(seq);
+  /*length= strlen(seq);*/
   wastl = PS_dot_common(seq, wastlfile, NULL, winSize);
   if (wastl==NULL)
     return 0; /* return 0 for failure */
@@ -1033,9 +1035,9 @@ static FILE * PS_dot_common(char *seq, AjPFile wastlfile,
   /* write PS header etc for all dot plot variants */
   FILE *wastl;
   char name[31], *c;
-  int i, length;
+  int i/*, length*/;
 
-  length= strlen(seq);
+  /*length= strlen(seq);*/
   wastl = ajFileGetFileptr(wastlfile);
 
   strncpy(name, ajFileGetNameC(wastlfile), 30);

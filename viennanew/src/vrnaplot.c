@@ -3,6 +3,7 @@
   Last changed Time-stamp: <2003-09-10 13:55:01 ivo> 
 */
 
+#include <config.h>
 #include "emboss.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,7 +28,7 @@ int main(int argc, char *argv[])
     char *string=NULL;
     char *structure=NULL, *pre=NULL, *post=NULL;
     float energy;
-    int   istty;
+    /*int   istty;*/
     char  format[5]="ps";
     AjPFile inf = NULL;
     AjPFile outf = NULL;
@@ -38,7 +39,7 @@ int main(int argc, char *argv[])
     AjPStr eline = NULL;
    
 
-    embInitPV("vrnaplot",argc,argv,"VIENNA",VERSION);
+    embInitPV("ovrnaplot",argc,argv,"VIENNA",VERSION);
 
 
     inf    = ajAcdGetInfile("structuresfile");
@@ -61,7 +62,7 @@ int main(int argc, char *argv[])
     if(ajStrGetLen(epost))
 	post = MAJSTRGETPTR(epost);
    
-    istty = 0;
+    /*istty = 0;*/
 
     eline = ajStrNew();
 

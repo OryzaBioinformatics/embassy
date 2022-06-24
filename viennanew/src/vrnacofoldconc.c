@@ -3,6 +3,7 @@
 		  c Ivo L Hofacker, Vienna RNA package
 */
 
+#include <config.h>
 #include "emboss.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,7 +25,7 @@ extern AjBool vienna_GetConstraints(AjPFile confile, AjPStr *constring);
 
 /*@unused@*/
 #if 0
-static char rcsid[] = "$Id: vrnacofoldconc.c,v 1.12 2009/12/01 14:42:44 rice Exp $";
+static char rcsid[] = "$Id: vrnacofoldconc.c,v 1.16 2011/07/06 14:18:46 rice Exp $";
 #endif
 
 #define PRIVATE static
@@ -53,7 +54,7 @@ int main(int argc, char *argv[])
     /* char  fname[53], ffname[60]; */
     /* char  *ParamFile=NULL; */
     char  *ns_bases=NULL, *c;
-    char *Concfile;
+    /*char *Concfile;*/
     int   i, length, l, sym/*, r*/;
     double min_en;
     double kT, sfact=1.07;
@@ -61,8 +62,8 @@ int main(int argc, char *argv[])
     int noconv=0;
     int doT=0;    /*compute dimere free energies etc.*/
     int doC=0;    /*toggle to compute concentrations*/
-    int doQ=0;    /*toggle to compute prob of base being paired*/
-    int cofi=0;   /*toggle concentrations stdin / file*/
+    /*int doQ=0;*/    /*toggle to compute prob of base being paired*/
+    /*int cofi=0;*/   /*toggle concentrations stdin / file*/
     struct plist *prAB;
     struct plist *prAA;   /*pair probabilities of AA dimer*/
     struct plist *prBB;
@@ -111,10 +112,10 @@ int main(int argc, char *argv[])
     char edangle = '\0';
 
 /*    AjBool dimers; */
-    AjBool paired;
+    /*AjBool paired;*/
 
 
-    embInitPV("vrnacofoldconc",argc,argv,"VIENNA",VERSION);
+    embInitPV("ovrnacofoldconc",argc,argv,"VIENNA",VERSION);
 
     seqstring1 = ajStrNew();
     constring1 = ajStrNew();
@@ -138,7 +139,7 @@ int main(int argc, char *argv[])
     escale    = ajAcdGetFloat("scale");
     edangles  = ajAcdGetListSingle("dangles");
 /*    dimers    = ajAcdGetBoolean("dimers"); */
-    paired    = ajAcdGetBoolean("paired");
+    /*paired    = ajAcdGetBoolean("paired");*/
     outf      = ajAcdGetOutfile("outfile");
     essfile   = ajAcdGetOutfile("ssoutfile");
 
@@ -158,11 +159,11 @@ int main(int argc, char *argv[])
     pf   = 1;
     doT  = 1;
     doC  = 1;
-    cofi = 1;
-    doQ  = 0;
+    /*cofi = 1;*/
+    /*doQ  = 0;*/
     
     string   = NULL;
-    Concfile = NULL;
+    /*Concfile = NULL;*/
     istty = 0;
 
     temperature   = (double) eT;
@@ -193,7 +194,7 @@ int main(int argc, char *argv[])
     else if(edangle == '3')
 	dangles = 3;
 
-    doQ = !!paired;
+    /*doQ = !!paired;*/
     
     if(paramfile)
 	read_parameter_file(paramfile);

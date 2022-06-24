@@ -9,6 +9,7 @@
 		  Vienna RNA package
 */
 
+#include <config.h>
 #include "ajax.h"
 #include <config.h>
 #include <stdio.h>
@@ -23,7 +24,7 @@
 #include "params.h"
 
 /*@unused@*/
-static char rcsid[] UNUSED = "$Id: eLfold.c,v 1.4 2008/01/14 13:56:13 ajb Exp $";
+static char rcsid[] UNUSED = "$Id: eLfold.c,v 1.6 2010/09/23 13:47:04 ajb Exp $";
 
 
 #define PAREN

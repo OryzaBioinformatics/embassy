@@ -11,6 +11,7 @@
 */
 
 #include <config.h>
+#include <config.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -23,7 +24,7 @@
 #include "params.h"
 
 /*@unused@*/
-static char rcsid[] UNUSED = "$Id: fold.c,v 1.7 2008/06/26 08:40:00 rice Exp $";
+static char rcsid[] UNUSED = "$Id: fold.c,v 1.9 2010/09/23 13:47:04 ajb Exp $";
 #ifdef __GNUC__
 #define INLINE inline
 #else

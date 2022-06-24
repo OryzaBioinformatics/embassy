@@ -5,6 +5,7 @@
 */
 /* Last changed Time-stamp: <2000-09-28 14:58:05 ivo> */
 
+#include <config.h>
 #include "emboss.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -47,7 +48,7 @@ int main(int argc, char *argv[])
     double kT;
     int   pf = 0;
     int   mfe = 0;
-    int   istty;
+    /*int   istty;*/
     int   repeat; 
     int   found;
     
@@ -77,7 +78,7 @@ int main(int argc, char *argv[])
     
     
     
-    embInitPV("vrnainverse",argc,argv,"VIENNA",VERSION);
+    embInitPV("ovrnainverse",argc,argv,"VIENNA",VERSION);
     
     
     inf        = ajAcdGetInfile("structuresfile");
@@ -101,7 +102,7 @@ int main(int argc, char *argv[])
     
     do_backtrack = 0; 
     structure = NULL;
-    istty = 0;
+    /*istty = 0;*/
     
     temperature   = (double) eT;
     noGU          = (eGU) ? 0 : 1;
@@ -155,7 +156,7 @@ int main(int argc, char *argv[])
     init_rand();
     kT = (temperature+273.15)*1.98717/1000.0;
     
-    istty = (isatty(fileno(stdout))&&isatty(fileno(stdin)));
+    /*istty = (isatty(fileno(stdout))&&isatty(fileno(stdin)));*/
     
     if (paramfile)
 	read_parameter_file(paramfile);

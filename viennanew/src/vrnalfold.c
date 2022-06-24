@@ -6,6 +6,7 @@
 		  Vienna RNA package
 */
 
+#include <config.h>
 #include "emboss.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -42,8 +43,8 @@ int main(int argc, char *argv[])
     int   sym;
 
     double min_en;
-    double sfact=1.07;
-    int pf=0;
+    /*double sfact=1.07;*/
+    /*int pf=0;*/
     int istty;
     int noconv=0;
     int maxdist=150;
@@ -65,7 +66,7 @@ int main(int argc, char *argv[])
     AjBool etloop;
     AjPStr eenergy = NULL;
     char ewt = '\0';
-    float escale = 0.;
+    /*float escale = 0.;*/
     AjPStr edangles = NULL;
     char edangle = '\0';
 
@@ -76,11 +77,11 @@ int main(int argc, char *argv[])
 
     
 
-    embInitPV("vrnalfold",argc,argv,"VIENNA",VERSION);
+    embInitPV("ovrnalfold",argc,argv,"VIENNA",VERSION);
 
 
     do_backtrack = 1; 
-    pf = 0;
+    /*pf = 0;*/
     
     string    = NULL;
     structure = NULL;
@@ -104,7 +105,7 @@ int main(int argc, char *argv[])
     ensbases  = ajAcdGetString("nsbases");
     etloop    = ajAcdGetBoolean("tetraloop");
     eenergy   = ajAcdGetListSingle("energy");
-    escale    = ajAcdGetFloat("scale");
+    /*escale    = ajAcdGetFloat("scale");*/
     edangles  = ajAcdGetListSingle("dangles");
     outf      = ajAcdGetOutfile("outfile");
 
@@ -124,7 +125,7 @@ int main(int argc, char *argv[])
     else if(ewt == '2')
 	energy_set = 2;
   
-    sfact = (double) escale;
+    /*sfact = (double) escale;*/
   
     edangle = *ajStrGetPtr(edangles);
     if(edangle == '0')

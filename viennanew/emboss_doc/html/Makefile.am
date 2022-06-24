@@ -1,11 +1,11 @@
 pkgdata_DATA = index.html \
-	vrnaalifold.html vrnaalifoldpf.html \
-	vrnacofold.html vrnacofoldconc.html vrnacofoldpf.html \
-	vrnadistance.html vrnaduplex.html \
-	vrnaeval.html vrnaevalpair.html \
-	vrnafold.html vrnafoldpf.html \
-	vrnaheat.html vrnainverse.html \
-	vrnalfold.html vrnaplot.html \
-	vrnasubopt.html
+	ovrnaalifold.html ovrnaalifoldpf.html \
+	ovrnacofold.html ovrnacofoldconc.html ovrnacofoldpf.html \
+	ovrnadistance.html ovrnaduplex.html \
+	ovrnaeval.html ovrnaevalpair.html \
+	ovrnafold.html ovrnafoldpf.html \
+	ovrnaheat.html ovrnainverse.html \
+	ovrnalfold.html ovrnaplot.html \
+	ovrnasubopt.html
 
-pkgdatadir=$(prefix)/share/EMBOSS/doc/html/embassy/vienna
+pkgdatadir=$(prefix)/share/EMBOSS/doc/html/embassy/oldvienna
