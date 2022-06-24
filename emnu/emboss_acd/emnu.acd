@@ -3,8 +3,8 @@ application: emnu [
   groups: "Menus"
   gui: "N"
   embassy: "emnu"
-  relations: "EDAM:0000088 topic Literature and documentation"
-  relations: "EDAM:0000515 operation Data retrieval (tool annotation)"
+  relations: "EDAM_topic:0091 Data handling"
+  relations: "EDAM_operation:0515 Data retrieval (tool metadata)"
 ]
 
 section: additional [
@@ -23,7 +23,7 @@ section: additional [
            will be put into the comamnd line ready for you to quickly view
            those new files. If you do not wish this to happen, set this to be
            false."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: explode [
@@ -38,7 +38,7 @@ section: additional [
            many combinations of the names as: 'NAME1', 'NAME2', 'NAME1
            NAME2', NAME2 NAME1'. The non-expanded names are simply like:
            'NAME1 NAME2'."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional

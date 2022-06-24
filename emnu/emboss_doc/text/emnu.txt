@@ -426,6 +426,13 @@ Press any key to continue...
 
 Usage
 
+   Here is a sample session with emnu
+
+
+% emnu -explode
+Simple menu of EMBOSS applications
+
+
   General
 
    Key Name                 Description
@@ -474,7 +481,7 @@ Usage
 Command line arguments
 
 Simple menu of EMBOSS applications
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers: (none)
    Additional (Optional) qualifiers:
@@ -522,11 +529,7 @@ Version: EMBOSS:6.4.0.0
 
 Input file format
 
-   None.
-
 Output file format
-
-   None.
 
 Data files
 
@@ -566,6 +569,10 @@ Known bugs
    allow directories to be default files. Should we? It would complicate
    things like copy_file.
 
+See also
+
+   Program name     Description
+
 Author(s)
 
    This application was written by Gary Williams
@@ -589,3 +596,5 @@ Target users
    This program is intended to be used by naive users.
 
 Comments
+
+None

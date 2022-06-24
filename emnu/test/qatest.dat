@@ -1,0 +1,24 @@
+######################################
+# EMNU
+#######################################
+
+ID emnu-ex
+AB emnu
+AA emnu
+CL -explode
+IK [C
+IK
+IK y
+FI stderr
+FC = 1
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FK stdout
+FC > 3
+FP /^emnu version: 1\.05\.650\n/
+FP /^EMBOSS Simple Menu\n/
+FP /ALPHABETIC LISTING OF ALL PROGRAMS/
+FP /ALIGNMENT GLOBAL/
+//
+
