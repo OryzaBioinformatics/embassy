@@ -156,7 +156,7 @@ Done.
 Command line arguments
 
 Calculate distance between two sets of trees
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-intreefile]        tree       Phylip tree file

@@ -96,7 +96,7 @@ Done.
 Command line arguments
 
 Restriction site maximum likelihood method
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-data]              discretestates File containing one or more sets of

@@ -87,7 +87,7 @@ Done.
 Command line arguments
 
 Discrete character parsimony
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            discretestates File containing one or more data sets

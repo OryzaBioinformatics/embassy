@@ -213,7 +213,7 @@ Done.
 Command line arguments
 
 Bootstrapped discrete sites algorithm
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            discretestates (no help text) discretestates value

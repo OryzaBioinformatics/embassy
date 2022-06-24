@@ -80,7 +80,7 @@ Done.
 Command line arguments
 
 Plots a cladogram- or phenogram-like rooted tree diagram
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-intreefile]        tree       Phylip tree file

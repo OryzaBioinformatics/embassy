@@ -18,7 +18,7 @@ Description
    Estimates phylogenies by the parsimony method using nucleic acid
    sequences. Allows use the full IUB ambiguity codes, and estimates
    ancestral nucleotide states. Gaps treated as a fifth nucleotide state.
-   It can also fo transversion parsimony. Can cope with multifurcations,
+   It can also do transversion parsimony. Can cope with multifurcations,
    reconstruct ancestral states, use 0/1 character weights, and infer
    branch lengths
 
@@ -121,7 +121,7 @@ Done.
 Command line arguments
 
 DNA parsimony algorithm
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqsetall  File containing one or more sequence
@@ -168,6 +168,7 @@ Version: EMBOSS:6.5.0.0
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
    -scircular1         boolean    Sequence is circular
+   -squick1            boolean    Read id and sequence only
    -sformat1           string     Input sequence format
    -iquery1            string     Input query fields or ID list
    -ioffset1           integer    Input start position offset

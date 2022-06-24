@@ -212,7 +212,7 @@ Done.
 Command line arguments
 
 Bootstrapped restriction sites algorithm
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            discretestates File containing one or more sets of

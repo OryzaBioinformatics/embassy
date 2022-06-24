@@ -132,7 +132,7 @@ Done.
 Command line arguments
 
 Continuous character contrasts
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            frequencies File containing one or more sets of data

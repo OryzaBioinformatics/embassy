@@ -122,7 +122,7 @@ Done.
 Command line arguments
 
 Fitch-Margoliash and least-squares distance methods
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-datafile]          distances  File containing one or more distance
