@@ -1,0 +1,30 @@
+###############################################################
+#
+# IPRSCAN
+# iprscan needs to be installed separately
+#
+###############################################################
+
+ID eiprscan-ex
+AB iprscan
+AA eiprscan
+RQ iprscan
+TI 1500
+QQ ../../../scripts/eiprscan-sort.pl iprtest.eiprscan
+CL -nocrc -goterms -iprlookup
+IN ../../data/iprtest.seq
+IN
+IN raw
+IN
+FI stderr
+FC = 26
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI iprtest.eiprscan
+FC = 46
+FP 20 /^Q9RHD9/
+FP  6 /^RS16_ECOLI/
+FP 20 /^Y902_MYCTU/
+//
+

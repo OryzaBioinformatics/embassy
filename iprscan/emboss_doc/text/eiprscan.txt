@@ -65,7 +65,7 @@ SUBMITTED-iprscan-20110715-12345678
 Command line arguments
 
 Motif detection
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqset     Protein sequence set filename and optional
@@ -124,7 +124,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -189,164 +192,164 @@ Output file format
   File: iprtest.eiprscan
 
 Q9RHD9  D44DAE8C544CB7C1        267     Coil    coil    coiled-coil     225
-246     NA      ?       06-Jul-2011     NULL    NULL
+246     NA      ?       13-Dec-2011     NULL    NULL
 Q9RHD9  D44DAE8C544CB7C1        267     Gene3D  G3DSA:2.40.50.140       no descr
-iption  4       65      2.2e-21 T       06-Jul-2011     IPR012340       Nucleic
+iption  4       65      2.2e-21 T       13-Dec-2011     IPR012340       Nucleic
 acid-binding, OB-fold
 Q9RHD9  D44DAE8C544CB7C1        267     Gene3D  G3DSA:2.40.50.140       no descr
-iption  66      146     5.8e-25 T       06-Jul-2011     IPR012340       Nucleic
+iption  66      146     5.8e-25 T       13-Dec-2011     IPR012340       Nucleic
 acid-binding, OB-fold
 Q9RHD9  D44DAE8C544CB7C1        267     Gene3D  G3DSA:2.40.50.140       no descr
-iption  147     228     1.6e-21 T       06-Jul-2011     IPR012340       Nucleic
+iption  147     228     1.6e-21 T       13-Dec-2011     IPR012340       Nucleic
 acid-binding, OB-fold
 RS16_ECOLI      F94D07049A6D489D        82      Gene3D  G3DSA:3.30.1320.10
-no description  1       79      1.1e-31 T       06-Jul-2011     IPR023803
+no description  1       79      1.1e-31 T       13-Dec-2011     IPR023803
 Ribosomal protein S16 domain
 Y902_MYCTU      CD84A335CCFFE6D7        446     Gene3D  G3DSA:1.10.287.240
-no description  222     287     2.4e-08 T       06-Jul-2011     NULL    NULL
+no description  222     287     2.4e-08 T       13-Dec-2011     NULL    NULL
 Y902_MYCTU      CD84A335CCFFE6D7        446     Gene3D  G3DSA:3.30.565.10
-no description  302     444     5.2e-26 T       06-Jul-2011     IPR003594
+no description  302     444     5.2e-26 T       13-Dec-2011     IPR003594
 ATPase-like, ATP-binding domain Molecular Function: ATP binding (GO:0005524)
 Y902_MYCTU      CD84A335CCFFE6D7        446     HMMPanther      PTHR24423
-FAMILY NOT NAMED        27      443     6.7e-36 T       06-Jul-2011     NULL
+FAMILY NOT NAMED        27      443     6.7e-36 T       13-Dec-2011     NULL
 NULL
 RS16_ECOLI      F94D07049A6D489D        82      HMMPanther      PTHR12919:SF12
-SUBFAMILY NOT NAMED     1       77      5.2e-50 T       06-Jul-2011     NULL
+SUBFAMILY NOT NAMED     1       77      5.2e-50 T       13-Dec-2011     NULL
 NULL
 RS16_ECOLI      F94D07049A6D489D        82      HMMPanther      PTHR12919
-FAMILY NOT NAMED        1       77      5.2e-50 T       06-Jul-2011     IPR00030
+FAMILY NOT NAMED        1       77      5.2e-50 T       13-Dec-2011     IPR00030
 7       Ribosomal protein S16   Molecular Function: structural constituent of ri
 bosome (GO:0003735), Cellular Component: intracellular (GO:0005622), Cellular Co
 mponent: ribosome (GO:0005840), Biological Process: translation (GO:0006412)
 Q9RHD9  D44DAE8C544CB7C1        267     HMMPanther      PTHR10724       S1 RNA-B
-INDING DOMAIN-CONTAINING PROTEIN 1      4       156     2.4e-69 T       06-Jul-2
+INDING DOMAIN-CONTAINING PROTEIN 1      4       156     2.4e-69 T       13-Dec-2
 011     NULL    NULL
 RS16_ECOLI      F94D07049A6D489D        82      HMMPfam PF00886 Ribosomal_S16
-8       68      8.7e-26 T       06-Jul-2011     IPR000307       Ribosomal protei
+8       68      8.7e-26 T       13-Dec-2011     IPR000307       Ribosomal protei
 n S16   Molecular Function: structural constituent of ribosome (GO:0003735), Cel
 lular Component: intracellular (GO:0005622), Cellular Component: ribosome (GO:00
 05840), Biological Process: translation (GO:0006412)
 Q9RHD9  D44DAE8C544CB7C1        267     HMMPfam PF00575 S1      4       55
-1.5e-14 T       06-Jul-2011     IPR003029       Ribosomal protein S1, RNA-bindin
+1.5e-14 T       13-Dec-2011     IPR003029       Ribosomal protein S1, RNA-bindin
 g domain        Molecular Function: RNA binding (GO:0003723)
 Q9RHD9  D44DAE8C544CB7C1        267     HMMPfam PF00575 S1      69      142
-1.8e-18 T       06-Jul-2011     IPR003029       Ribosomal protein S1, RNA-bindin
+1.8e-18 T       13-Dec-2011     IPR003029       Ribosomal protein S1, RNA-bindin
 g domain        Molecular Function: RNA binding (GO:0003723)
 Q9RHD9  D44DAE8C544CB7C1        267     HMMPfam PF00575 S1      156     228
-4.7e-19 T       06-Jul-2011     IPR003029       Ribosomal protein S1, RNA-bindin
+4.7e-19 T       13-Dec-2011     IPR003029       Ribosomal protein S1, RNA-bindin
 g domain        Molecular Function: RNA binding (GO:0003723)
 Y902_MYCTU      CD84A335CCFFE6D7        446     HMMPfam PF02518 HATPase_c
-340     443     4.6e-18 T       06-Jul-2011     IPR003594       ATPase-like, ATP
+340     443     4.6e-18 T       13-Dec-2011     IPR003594       ATPase-like, ATP
 -binding domain Molecular Function: ATP binding (GO:0005524)
 Y902_MYCTU      CD84A335CCFFE6D7        446     HMMPfam PF00512 HisKA   232
-293     3.2e-11 T       06-Jul-2011     IPR003661       Signal transduction hist
+293     3.2e-11 T       13-Dec-2011     IPR003661       Signal transduction hist
 idine kinase, subgroup 1, dimerisation/phosphoacceptor domain   Molecular Functi
 on: two-component sensor activity (GO:0000155), Biological Process: signal trans
 duction (GO:0007165), Cellular Component: membrane (GO:0016020)
 Y902_MYCTU      CD84A335CCFFE6D7        446     HMMPfam PF00672 HAMP    151
-217     2.1e-10 T       06-Jul-2011     IPR003660       HAMP linker domain
+217     2.1e-10 T       13-Dec-2011     IPR003660       HAMP linker domain
 Molecular Function: signal transducer activity (GO:0004871), Biological Process:
  signal transduction (GO:0007165), Cellular Component: integral to membrane (GO:
 0016021)
 Q9RHD9  D44DAE8C544CB7C1        267     HMMSmart        SM00316 no description
-3       55      1.2e-06 T       06-Jul-2011     IPR022967       RNA-binding doma
+3       55      1.2e-06 T       13-Dec-2011     IPR022967       RNA-binding doma
 in, S1
 Q9RHD9  D44DAE8C544CB7C1        267     HMMSmart        SM00316 no description
-70      142     1.4e-19 T       06-Jul-2011     IPR022967       RNA-binding doma
+70      142     1.4e-19 T       13-Dec-2011     IPR022967       RNA-binding doma
 in, S1
 Q9RHD9  D44DAE8C544CB7C1        267     HMMSmart        SM00316 no description
-157     228     2.6e-21 T       06-Jul-2011     IPR022967       RNA-binding doma
+157     228     2.6e-21 T       13-Dec-2011     IPR022967       RNA-binding doma
 in, S1
 Y902_MYCTU      CD84A335CCFFE6D7        446     HMMSmart        SM00304 no descr
-iption  170     222     3.1e-06 T       06-Jul-2011     IPR003660       HAMP lin
+iption  170     222     3.1e-06 T       13-Dec-2011     IPR003660       HAMP lin
 ker domain      Molecular Function: signal transducer activity (GO:0004871), Bio
 logical Process: signal transduction (GO:0007165), Cellular Component: integral
 to membrane (GO:0016021)
 Y902_MYCTU      CD84A335CCFFE6D7        446     HMMSmart        SM00388 no descr
-iption  230     296     2.4e-12 T       06-Jul-2011     IPR003661       Signal t
+iption  230     296     2.4e-12 T       13-Dec-2011     IPR003661       Signal t
 ransduction histidine kinase, subgroup 1, dimerisation/phosphoacceptor domain
 Molecular Function: two-component sensor activity (GO:0000155), Biological Proce
 ss: signal transduction (GO:0007165), Cellular Component: membrane (GO:0016020)
 Y902_MYCTU      CD84A335CCFFE6D7        446     HMMSmart        SM00387 no descr
-iption  338     446     5e-24   T       06-Jul-2011     IPR003594       ATPase-l
+iption  338     446     5e-24   T       13-Dec-2011     IPR003594       ATPase-l
 ike, ATP-binding domain Molecular Function: ATP binding (GO:0005524)
 RS16_ECOLI      F94D07049A6D489D        82      HMMTigr TIGR00002       S16: rib
-osomal protein S16      2       78      1.1e-28 T       06-Jul-2011     IPR00030
+osomal protein S16      2       78      1.1e-28 T       13-Dec-2011     IPR00030
 7       Ribosomal protein S16   Molecular Function: structural constituent of ri
 bosome (GO:0003735), Cellular Component: intracellular (GO:0005622), Cellular Co
 mponent: ribosome (GO:0005840), Biological Process: translation (GO:0006412)
 Q9RHD9  D44DAE8C544CB7C1        267     FPrintScan      PR00681 RIBOSOMALS1
-6       27      7.9e-17 T       06-Jul-2011     IPR000110       Ribosomal protei
+6       27      7.9e-17 T       13-Dec-2011     IPR000110       Ribosomal protei
 n S1    Molecular Function: RNA binding (GO:0003723), Molecular Function: struct
 ural constituent of ribosome (GO:0003735), Cellular Component: ribosome (GO:0005
 840), Biological Process: translation (GO:0006412)
 Q9RHD9  D44DAE8C544CB7C1        267     FPrintScan      PR00681 RIBOSOMALS1
-85      104     7.9e-17 T       06-Jul-2011     IPR000110       Ribosomal protei
+85      104     7.9e-17 T       13-Dec-2011     IPR000110       Ribosomal protei
 n S1    Molecular Function: RNA binding (GO:0003723), Molecular Function: struct
 ural constituent of ribosome (GO:0003735), Cellular Component: ribosome (GO:0005
 840), Biological Process: translation (GO:0006412)
 Q9RHD9  D44DAE8C544CB7C1        267     FPrintScan      PR00681 RIBOSOMALS1
-125     143     7.9e-17 T       06-Jul-2011     IPR000110       Ribosomal protei
+125     143     7.9e-17 T       13-Dec-2011     IPR000110       Ribosomal protei
 n S1    Molecular Function: RNA binding (GO:0003723), Molecular Function: struct
 ural constituent of ribosome (GO:0003735), Cellular Component: ribosome (GO:0005
 840), Biological Process: translation (GO:0006412)
 Y902_MYCTU      CD84A335CCFFE6D7        446     FPrintScan      PR00344 BCTRLSEN
-SOR     374     388     1.1e-11 T       06-Jul-2011     IPR004358       Signal t
+SOR     374     388     1.1e-11 T       13-Dec-2011     IPR004358       Signal t
 ransduction histidine kinase-related protein, C-terminal        Biological Proce
 ss: phosphorylation (GO:0016310), Molecular Function: transferase activity, tran
 sferring phosphorus-containing groups (GO:0016772)
 Y902_MYCTU      CD84A335CCFFE6D7        446     FPrintScan      PR00344 BCTRLSEN
-SOR     392     402     1.1e-11 T       06-Jul-2011     IPR004358       Signal t
+SOR     392     402     1.1e-11 T       13-Dec-2011     IPR004358       Signal t
 ransduction histidine kinase-related protein, C-terminal        Biological Proce
 ss: phosphorylation (GO:0016310), Molecular Function: transferase activity, tran
 sferring phosphorus-containing groups (GO:0016772)
 Y902_MYCTU      CD84A335CCFFE6D7        446     FPrintScan      PR00344 BCTRLSEN
-SOR     406     424     1.1e-11 T       06-Jul-2011     IPR004358       Signal t
+SOR     406     424     1.1e-11 T       13-Dec-2011     IPR004358       Signal t
 ransduction histidine kinase-related protein, C-terminal        Biological Proce
 ss: phosphorylation (GO:0016310), Molecular Function: transferase activity, tran
 sferring phosphorus-containing groups (GO:0016772)
 Y902_MYCTU      CD84A335CCFFE6D7        446     FPrintScan      PR00344 BCTRLSEN
-SOR     430     443     1.1e-11 T       06-Jul-2011     IPR004358       Signal t
+SOR     430     443     1.1e-11 T       13-Dec-2011     IPR004358       Signal t
 ransduction histidine kinase-related protein, C-terminal        Biological Proce
 ss: phosphorylation (GO:0016310), Molecular Function: transferase activity, tran
 sferring phosphorus-containing groups (GO:0016772)
 RS16_ECOLI      F94D07049A6D489D        82      superfamily     SSF54565
-Ribosomal protein S16   1       79      5.3e-27 T       06-Jul-2011     IPR02380
+Ribosomal protein S16   1       79      5.3e-27 T       13-Dec-2011     IPR02380
 3       Ribosomal protein S16 domain
 Q9RHD9  D44DAE8C544CB7C1        267     superfamily     SSF50249        Nucleic
-acid-binding proteins   137     254     1.9e-29 T       06-Jul-2011     IPR01602
+acid-binding proteins   137     254     1.9e-29 T       13-Dec-2011     IPR01602
 7       Nucleic acid-binding, OB-fold-like
 Q9RHD9  D44DAE8C544CB7C1        267     superfamily     SSF50249        Nucleic
-acid-binding proteins   58      143     8.5e-23 T       06-Jul-2011     IPR01602
+acid-binding proteins   58      143     8.5e-23 T       13-Dec-2011     IPR01602
 7       Nucleic acid-binding, OB-fold-like
 Q9RHD9  D44DAE8C544CB7C1        267     superfamily     SSF50249        Nucleic
-acid-binding proteins   3       68      2.5e-15 T       06-Jul-2011     IPR01602
+acid-binding proteins   3       68      2.5e-15 T       13-Dec-2011     IPR01602
 7       Nucleic acid-binding, OB-fold-like
 Y902_MYCTU      CD84A335CCFFE6D7        446     superfamily     SSF55874
 ATPase domain of HSP90 chaperone/DNA topoisomerase II/histidine kinase  299
-446     2.1e-33 T       06-Jul-2011     IPR003594       ATPase-like, ATP-binding
+446     2.1e-33 T       13-Dec-2011     IPR003594       ATPase-like, ATP-binding
  domain Molecular Function: ATP binding (GO:0005524)
 Y902_MYCTU      CD84A335CCFFE6D7        446     superfamily     SSF47384
 Homodimeric domain of signal transducing histidine kinase       212     298
-5.5e-12 T       06-Jul-2011     IPR009082       Signal transduction histidine ki
+5.5e-12 T       13-Dec-2011     IPR009082       Signal transduction histidine ki
 nase, homodimeric       Molecular Function: signal transducer activity (GO:00048
 71), Biological Process: signal transduction (GO:0007165)
 Q9RHD9  D44DAE8C544CB7C1        267     Seg     seg     seg     29      40
-NA      ?       06-Jul-2011     NULL    NULL
+NA      ?       13-Dec-2011     NULL    NULL
 Q9RHD9  D44DAE8C544CB7C1        267     Seg     seg     seg     84      98
-NA      ?       06-Jul-2011     NULL    NULL
+NA      ?       13-Dec-2011     NULL    NULL
 Q9RHD9  D44DAE8C544CB7C1        267     Seg     seg     seg     222     237
-NA      ?       06-Jul-2011     NULL    NULL
+NA      ?       13-Dec-2011     NULL    NULL
 Y902_MYCTU      CD84A335CCFFE6D7        446     Seg     seg     seg     44
-55      NA      ?       06-Jul-2011     NULL    NULL
+55      NA      ?       13-Dec-2011     NULL    NULL
 Y902_MYCTU      CD84A335CCFFE6D7        446     Seg     seg     seg     108
-120     NA      ?       06-Jul-2011     NULL    NULL
+120     NA      ?       13-Dec-2011     NULL    NULL
 Y902_MYCTU      CD84A335CCFFE6D7        446     Seg     seg     seg     160
-173     NA      ?       06-Jul-2011     NULL    NULL
+173     NA      ?       13-Dec-2011     NULL    NULL
 Y902_MYCTU      CD84A335CCFFE6D7        446     Seg     seg     seg     308
-319     NA      ?       06-Jul-2011     NULL    NULL
+319     NA      ?       13-Dec-2011     NULL    NULL
 Y902_MYCTU      CD84A335CCFFE6D7        446     Seg     seg     seg     400
-424     NA      ?       06-Jul-2011     NULL    NULL
+424     NA      ?       13-Dec-2011     NULL    NULL
 
 Data files
 
@@ -384,22 +387,22 @@ Known bugs
 See also
 
    Program name     Description
-   antigenic        Finds antigenic sites in proteins
-   elipop           Prediction of lipoproteins
+   antigenic        Find antigenic sites in proteins
+   elipop           Predict lipoproteins
    emast            Motif detection
-   ememe            Multiple EM for Motif Elicitation
-   ememetext        Multiple EM for Motif Elicitation. Text file only
-   epestfind        Finds PEST motifs as potential proteolytic cleavage sites
+   ememe            Multiple EM for motif elicitation
+   ememetext        Multiple EM for motif elicitation, text file only
+   epestfind        Find PEST motifs as potential proteolytic cleavage sites
    fuzzpro          Search for patterns in protein sequences
    fuzztran         Search for patterns in protein sequences (translated)
    omeme            Motif detection
-   patmatdb         Searches protein sequences with a sequence motif
+   patmatdb         Search protein sequences with a sequence motif
    patmatmotifs     Scan a protein sequence with motifs from the PROSITE
                     database
    preg             Regular expression search of protein sequence(s)
-   pscan            Scans protein sequence(s) with fingerprints from the PRINTS
+   pscan            Scan protein sequence(s) with fingerprints from the PRINTS
                     database
-   sigcleave        Reports on signal cleavage sites in a protein sequence
+   sigcleave        Report on signal cleavage sites in a protein sequence
 
 Author(s)
 
