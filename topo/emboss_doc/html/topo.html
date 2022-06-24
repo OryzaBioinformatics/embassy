@@ -85,7 +85,7 @@ Created topo.ps
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
 Draw an image of a transmembrane protein
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-sequence]          sequence   Protein sequence filename and optional
@@ -294,6 +294,7 @@ Version: EMBOSS:6.5.0.0
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
    -scircular1         boolean    Sequence is circular
+   -squick1            boolean    Read id and sequence only
    -sformat1           string     Input sequence format
    -iquery1            string     Input query fields or ID list
    -ioffset1           integer    Input start position offset
@@ -562,6 +563,14 @@ CF circle NOfill, UG up arrow green</td>
 <td> -scircular1<br>-scircular_sequence</td>
 <td>boolean</td>
 <td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -squick1<br>-squick_sequence</td>
+<td>boolean</td>
+<td>Read id and sequence only</td>
 <td>Boolean value Yes/No</td>
 <td>N</td>
 </tr>
@@ -981,112 +990,112 @@ So residues 74 to 82 will have Yellow Squares (sy).
 <tr><th>Program name</th>
 <th>Description</th></tr>
 <tr>
-<td><a href="/emboss/apps/abiview.html">abiview</a></td>
+<td><a href="../../emboss/apps/abiview.html">abiview</a></td>
 <td>Display the trace in an ABI sequencer file</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/cirdna.html">cirdna</a></td>
+<td><a href="../../emboss/apps/cirdna.html">cirdna</a></td>
 <td>Draw circular map of DNA constructs</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/cbstools/echlorop.html">echlorop</a></td>
+<td><a href="../cbstools/echlorop.html">echlorop</a></td>
 <td>Report presence of chloroplast transit peptides</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/cbstools/elipop.html">elipop</a></td>
+<td><a href="../cbstools/elipop.html">elipop</a></td>
 <td>Predict lipoproteins</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/cbstools/esignalp.html">esignalp</a></td>
+<td><a href="../cbstools/esignalp.html">esignalp</a></td>
 <td>Report protein signal cleavage sites</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/cbstools/etmhmm.html">etmhmm</a></td>
+<td><a href="../cbstools/etmhmm.html">etmhmm</a></td>
 <td>Reports transmembrane helices</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/iep.html">iep</a></td>
+<td><a href="../../emboss/apps/iep.html">iep</a></td>
 <td>Calculate the isoelectric point of proteins</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/lindna.html">lindna</a></td>
+<td><a href="../../emboss/apps/lindna.html">lindna</a></td>
 <td>Draw linear maps of DNA constructs</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/pepinfo.html">pepinfo</a></td>
+<td><a href="../../emboss/apps/pepinfo.html">pepinfo</a></td>
 <td>Plot amino acid properties of a protein sequence in parallel</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/pepnet.html">pepnet</a></td>
+<td><a href="../../emboss/apps/pepnet.html">pepnet</a></td>
 <td>Draw a helical net for a protein sequence</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/pepwheel.html">pepwheel</a></td>
+<td><a href="../../emboss/apps/pepwheel.html">pepwheel</a></td>
 <td>Draw a helical wheel diagram for a protein sequence</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/plotorf.html">plotorf</a></td>
+<td><a href="../../emboss/apps/plotorf.html">plotorf</a></td>
 <td>Plot potential open reading frames in a nucleotide sequence</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/prettyplot.html">prettyplot</a></td>
+<td><a href="../../emboss/apps/prettyplot.html">prettyplot</a></td>
 <td>Draw a sequence alignment with pretty formatting</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/prettyseq.html">prettyseq</a></td>
+<td><a href="../../emboss/apps/prettyseq.html">prettyseq</a></td>
 <td>Write a nucleotide sequence and its translation to file</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/remap.html">remap</a></td>
+<td><a href="../../emboss/apps/remap.html">remap</a></td>
 <td>Display restriction enzyme binding sites in a nucleotide sequence</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/showfeat.html">showfeat</a></td>
+<td><a href="../../emboss/apps/showfeat.html">showfeat</a></td>
 <td>Display features of a sequence in pretty format</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/showpep.html">showpep</a></td>
+<td><a href="../../emboss/apps/showpep.html">showpep</a></td>
 <td>Display protein sequences with features in pretty format</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/sigcleave.html">sigcleave</a></td>
+<td><a href="../../emboss/apps/sigcleave.html">sigcleave</a></td>
 <td>Report on signal cleavage sites in a protein sequence</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/signature/siggenlig.html">siggenlig</a></td>
+<td><a href="../signature/siggenlig.html">siggenlig</a></td>
 <td>Generate ligand-binding signatures from a CON file</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/signature/sigscan.html">sigscan</a></td>
+<td><a href="../signature/sigscan.html">sigscan</a></td>
 <td>Generate hits (DHF file) from a signature search</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/sixpack.html">sixpack</a></td>
+<td><a href="../../emboss/apps/sixpack.html">sixpack</a></td>
 <td>Display a DNA sequence with 6-frame translation and ORFs</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/tmap.html">tmap</a></td>
+<td><a href="../../emboss/apps/tmap.html">tmap</a></td>
 <td>Predict and plot transmembrane segments in protein sequences</td>
 </tr>
 
