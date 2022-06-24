@@ -1,13 +1,13 @@
 application: seqwords [
-  documentation: "Generates DHF files from keyword search of
+  documentation: "Generate DHF files from keyword search of
                   UniProt."
   groups: "Protein:Domains"
   gui: "yes"
   batch: "yes"
   cpu: "low"
   embassy: "domsearch"
-  relations: "EDAM:0000736 topic Protein domains"
-  relations: "EDAM:0000345 operation Sequence retrieval (by keyword)"
+  relations: "EDAM_topic:0736 Protein domains and folds"
+  relations: "EDAM_operation:0345 Sequence retrieval (by keyword)"
 ]
 
 section: input [
@@ -23,7 +23,7 @@ section: input [
            CATH families and superfamilies used by SEQWORDS to search a
            sequence database."
     knowntype: "keywords"
-    relations:  "EDAM:0000968 data Keyword"
+    relations:  "EDAM_data:0968 Keyword"
   ]
 
   infile: spfile [
@@ -32,8 +32,8 @@ section: input [
     help: "This option specifies the name of the sequence database
            (input) to search."
     knowntype: "Swissprot database"
-    relations: "EDAM:0000849 data Sequence record"
-    relations: "EDAM:0001219 format pure protein"
+    relations: "EDAM_data:0849 Sequence record"
+    relations: "EDAM_format:1219 pure protein"
   ]
 
 endsection: input
@@ -57,10 +57,10 @@ section: output [
            various types of HMM and profile by using LIBSCAN."
     default: "test.hits"
     knowntype: "domain hits"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations: "EDAM:0000849 data Sequence record"
-    relations: "EDAM:0001219 format pure protein"
-    relations:  "EDAM:0000857 data Database hits (sequence)"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations: "EDAM_data:0849 Sequence record"
+    relations: "EDAM_format:1219 pure protein"
+    relations:  "EDAM_data:0857 Database hits (sequence)"
   ]
 
 endsection: output

@@ -1,0 +1,223 @@
+#########################################################
+#
+# EMBASSY (DOMSEARCH)
+#
+#########################################################
+
+ID domainalign-domsearch
+AY domalign
+DL keep
+AX domainalign
+PP mkdir daf
+RQ stamp
+CC requires a modified stamp to be installed
+IN ../../data/structure/all.scop2
+IN
+IN 4
+IN 1
+IN N
+IN daf
+IN
+IN
+FI stderr
+FC = 15
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 108
+FP 4 /^\S+\/stamp/
+FI 54894.ent
+FC = 1461
+FZ = 117967
+FP 11 /^REMARK/
+DI daf
+DF 54894.daf
+DF 55074.daf
+## FI daf/54894.daf
+## FC = 21
+## FZ = 856
+## FP 6 /^# XX/
+FI 55074.ent
+FC = 3343
+FZ = 270409
+FP 11 /^REMARK/
+## FI daf/55074.daf
+## FC = 36
+## FZ = 1773
+## FP 6 /^# XX/
+FI domainalign.log
+FC = 14
+FZ = 574
+FP 14 /^Replaced/
+//
+
+
+
+ID seqsearch-keep
+RQ blastpgp
+## Uses blastpgp to search
+## blastpgp generates 4 warning messages
+## (WARNING so the test pattern misses it) in stderr
+AB domsearch
+DL keep
+AA seqsearch
+IN 2
+IN ../domainalign-domsearch/daf
+IN ../../data/structure/swsmall
+IN
+IN 0.0001
+IN 100
+IN
+IN
+FI stderr
+FC = 12
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 4
+FP 2 /^\S+blastpgp/
+FI 54894.dhf
+FC = 80
+FZ = 13751
+FP 40 /^>/
+FI 55074.dhf
+FC = 200
+FZ = 37208
+FP 100 /^>/
+FI seqsearch.log
+FC = 4
+FP 2 /\.daf\n/
+FP 2 /^\/\/\n/
+//
+
+
+ID seqfraggle-keep
+AB domsearch
+DL keep
+AA seqfraggle
+IN ../seqsearch-keep
+IN 50
+IN
+FI stdout
+FC = 2
+FP /Processing .*54894\.dhf\n/
+FP /Processing .*55074\.dhf\n/
+FI stderr
+FC = 2
+FP 0 /^Warning:/
+FP 0 /^Error:/
+FP 0 /^Died:/
+FI 54894.dhf
+FZ = 13471
+FC = 80
+FP 40 /^>/
+FI 55074.dhf
+FZ = 34703
+FC = 186
+FP 93 /^>/
+//
+
+ID seqnr-keep
+AB domsearch
+DL keep
+AA seqnr
+PP mkdir hitsnr
+PP mkdir hitsred
+IN ../seqfraggle-keep
+IN N
+IN Y
+IN ../domainalign-domsearch/daf
+IN 1
+IN 70
+IN hitsnr
+IN Y
+IN hitsred
+IN
+FI stderr
+FC = 5
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 2
+FP 2 /^Processing/
+FI seqnr.log
+FC = 4
+FP 2 /^\/\/\n/
+FP 2 /\.dhf\n/
+DI hitsnr
+DF 54894.dhf
+DF 55074.dhf
+## FI hitsnr/54894.dhf
+## FZ = 1351
+## FC = 8
+## FP 4 /^>/
+## hitsnr/55074.dhf
+## FZ = 2512
+## FC = 14
+## FP 7 /^>/
+DI hitsred
+DF 54894.dhf      
+DF 55074.dhf
+## FI hitsred/54894.dhf
+## FZ = 12120
+## FC = 72
+## FP 36 /^>/
+## FI hitsred/55074.dhf
+## FZ = 32611
+## FC = 174
+## FP 87 /^>/
+//
+
+
+ID seqsort-keep
+AB domsearch
+DL keep
+AA seqsort
+IN ../seqnr-keep/hitsnr
+IN 10
+IN Y
+IN Y
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI fam.dhf
+FC = 22
+FZ = 3863
+FP 11 /^> /
+FI oth.dhf
+FC = 0
+FZ = 0 
+FI 54894.dhf
+FC = 8
+FZ = 1351
+FP 4  /^> /
+FI 55074.dhf
+FC = 14
+FZ = 2512
+FP 7 /^> /
+//
+
+
+ID seqwords-ex
+AB domsearch
+AA seqwords
+IN ../../data/structure/seqwords.terms
+IN ../../data/structure/seqwords.seq
+IN seqwords.dhf
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI seqwords.dhf
+FC = 2
+FZ = 531
+FP /^> Q60150\^.\^1\^312\^SCOP\^.\^0\^Alpha and beta proteins/
+//
+

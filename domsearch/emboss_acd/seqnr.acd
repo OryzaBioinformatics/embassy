@@ -1,13 +1,13 @@
 application: seqnr [
-  documentation: "Removes redundancy from DHF files."
+  documentation: "Remove redundancy from DHF files."
   groups: "Utils:Database creation"
   gui: "yes"
   batch: "yes"
   cpu: "medium"
   embassy: "domsearch"
-  relations: "EDAM:0000091 topic Data handling"
-  relations: "EDAM:0000182 topic Sequence alignment"
-  relations: "EDAM:0000290 operation Sequence redundancy removal"
+  relations: "EDAM_topic:0091 Data handling"
+  relations: "EDAM_topic:0182 Sequence alignment"
+  relations: "EDAM_operation:0290 Sequence redundancy removal"
 ]
 
 section: input [
@@ -28,9 +28,9 @@ section: input [
     default: "./"
     extension: "dhf"
     knowntype: "domain hits"
-    relations: "EDAM:0001049 identifier Directory name"
-    relations: "EDAM:0000849 data Sequence record"
-    relations: "EDAM:0001219 format pure protein"
+    relations: "EDAM_identifier:1049 Directory name"
+    relations: "EDAM_data:0849 Sequence record"
+    relations: "EDAM_format:1219 pure protein"
   ]
 
   toggle: dosing [
@@ -42,7 +42,7 @@ section: input [
            (e.g. DHF files) to filter input. Optionally, up to two further
            directories of sequences may be read: these are considered in the
            redundancy calculation but never appear in the output files."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   directory: singletsdir [
@@ -58,9 +58,9 @@ section: input [
     default: "./"
     extension: "dhf"
     knowntype: "domain hits filter"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations: "EDAM:0000849 data Sequence record"
-    relations: "EDAM:0001219 format pure protein"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations: "EDAM_data:0849 Sequence record"
+    relations: "EDAM_format:1219 pure protein"
   ]
 
   toggle: dosets [
@@ -72,7 +72,7 @@ section: input [
            (e.g. DHF files) to filter input. Optionally, up to two further
            directories of sequences may be read: these are considered in the
            redundancy calculation but never appear in the output files."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   directory: insetsdir [
@@ -89,8 +89,8 @@ section: input [
     default: "./"
     extension: "daf"
     knowntype: "domain alignment"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations:  "EDAM:0001384 data Sequence alignment (protein)"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations:  "EDAM_data:1384 Sequence alignment (protein)"
   ]
 
   matrixf: matrix [
@@ -99,7 +99,7 @@ section: input [
     help: "This option specifies the residue substitution matrix that
            is used for sequence comparison."
     default: "EBLOSUM62"
-    relations: "EDAM:0001449 data Comparison matrix (amino acid)"
+    relations: "EDAM_data:1449 Comparison matrix (amino acid)"
   ]
 
 endsection: input
@@ -134,10 +134,10 @@ section: required [
     codedelimiter: ":"
     header: "Redundancy removal options"
     information: "Select number."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
-  float: thresh [
+  float: threshold [
     standard: "@($(mode)==1)"
     information: "The % sequence identity redundancy
                   threshold."
@@ -146,7 +146,7 @@ section: required [
            the redundancy calculation. If a pair of proteins achieve greater
            than this threshold the shortest sequence is discarded."
     default: "95.0"
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
   float: threshlow [
@@ -159,7 +159,7 @@ section: required [
            proteins have a percentage sequence similarity that lies outside
            an acceptable range the shortest sequence is discarded."
     default: "30.0"
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
   float: threshup [
@@ -172,7 +172,7 @@ section: required [
            proteins have a percentage sequence similarity that lies outside
            an acceptable range the shortest sequence is discarded."
     default: "90.0"
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
 endsection: required
@@ -196,7 +196,7 @@ section: additional [
            default value assumes you are using the EBLOSUM62 matrix for
            protein sequences, and the EDNAFULL matrix for nucleotide
            sequences."
-    relations: "EDAM:0001397 data Gap opening penalty"
+    relations: "EDAM_data:1397 Gap opening penalty"
   ]
 
   float: gapextend [
@@ -213,7 +213,7 @@ section: additional [
            Usually you will expect a few long gaps rather than many short
            gaps, so the gap extension penalty should be lower than the gap
            penalty."
-    relations: "EDAM:0001398 data Gap extension penalty"
+    relations: "EDAM_data:1398 Gap extension penalty"
   ]
 
 endsection: additional
@@ -236,9 +236,9 @@ section: output [
     default: "./"
     extension: "dhf"
     knowntype: "domain hits"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations: "EDAM:0000849 data Sequence record"
-    relations: "EDAM:0001219 format pure protein"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations: "EDAM_data:0849 Sequence record"
+    relations: "EDAM_format:1219 pure protein"
   ]
 
   toggle: dored [
@@ -248,7 +248,7 @@ section: output [
            sequences. If this option is set a DHF file (domain hits file) of
            redundant sequences is written."
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   outdir: redoutdir [
@@ -264,9 +264,9 @@ section: output [
     default: "./"
     knowntype: "domain hits"
     extension: "dhf"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations: "EDAM:0000849 data Sequence record"
-    relations: "EDAM:0001219 format pure protein"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations: "EDAM_data:0849 Sequence record"
+    relations: "EDAM_format:1219 pure protein"
   ]
 
   outfile: logfile [
@@ -277,7 +277,7 @@ section: output [
            The log file contains messages about any errors arising while
            SEQNR ran."
     knowntype: "domainatrix log"
-    relations:  "EDAM:0001678 data Tool log"
+    relations:  "EDAM_data:1678 Tool log"
   ]
 
 endsection: output

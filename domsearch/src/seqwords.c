@@ -63,7 +63,7 @@
 ** @alias AjSTerms
 ** @alias AjOTerms
 **
-** @attr Type         [ajint]   Type of domain, either ajSCOP (1) or ajCATH (2).
+** @attr Type         [AjEDomainType] AJAX Domain Type enmeration
 ** @attr Class        [AjPStr]  Domain class name 
 ** @attr Architecture [AjPStr]  Domain architecture name 
 ** @attr Topology     [AjPStr]  Domain topology name 
@@ -74,11 +74,11 @@
 ** @attr Keywords     [AjPStr*]   Array of keywords. 
 **
 ** @@
-****************************************************************************/
+******************************************************************************/
 
 typedef struct AjSTerms
 {
-    ajint  Type;
+    AjEDomainType Type;
     AjPStr Class;
     AjPStr Architecture;
     AjPStr Topology;
@@ -115,7 +115,7 @@ static AjBool   seqwords_keysearch(AjPFile inf,
 
 
 
-/* @prog seqwords *******************************************************
+/* @prog seqwords *************************************************************
 **
 ** Generates DHF files (domain hits files) of database hits (sequences) 
 ** from Swissprot matching keywords from a keywords file.
@@ -191,14 +191,15 @@ int main(int argc, char **argv)
 
 
 
-/* @funcstatic seqwords_TermsNew *********************************************
- **
- ** Terms object constructor. This is normally called by the TermsRead
- **  function.
- **
- ** @return [AjPTerms] Pointer to a Terms object
- ** @@
- ****************************************************************************/
+/* @funcstatic seqwords_TermsNew **********************************************
+**
+** Terms object constructor. This is normally called by the TermsRead
+**  function.
+**
+** @return [AjPTerms] Pointer to a Terms object
+** @@
+******************************************************************************/
+
 static AjPTerms seqwords_TermsNew(void)
 {
     AjPTerms  ret =NULL;	
@@ -222,14 +223,15 @@ static AjPTerms seqwords_TermsNew(void)
 
 
 /* @funcstatic seqwords_TermsDel **********************************************
- **
- ** Destructor for terms object.
- **
- ** @param [w] pthis [AjPTerms*] Terms object pointer
- **
- ** @return [void]
- ** @@
- *****************************************************************************/
+**
+** Destructor for terms object.
+**
+** @param [w] pthis [AjPTerms*] Terms object pointer
+**
+** @return [void]
+** @@
+******************************************************************************/
+
 static void seqwords_TermsDel(AjPTerms *pthis)
 {
     int x=0;				
@@ -257,16 +259,17 @@ static void seqwords_TermsDel(AjPTerms *pthis)
 
 
 /* @funcstatic seqwords_TermsRead *********************************************
- **
- ** Read the next Terms object from a file in embl-like format. The search 
- ** terms are modified with a leading and trailing space.
- **
- ** @param [r] inf  [AjPFile]   Input file stream
- ** @param [w] thys [AjPTerms*] Terms object
- **
- ** @return [AjBool] True on succcess
- ** @@
- *****************************************************************************/
+**
+** Read the next Terms object from a file in embl-like format. The search 
+** terms are modified with a leading and trailing space.
+**
+** @param [r] inf  [AjPFile]   Input file stream
+** @param [w] thys [AjPTerms*] Terms object
+**
+** @return [AjBool] True on succcess
+** @@
+******************************************************************************/
+
 static AjBool seqwords_TermsRead(AjPFile inf, 
 				 AjPTerms *thys)
 {    
@@ -299,9 +302,9 @@ static AjBool seqwords_TermsRead(AjPFile inf,
 	    ajFmtScanS(line, "%*s %S", &type);
 	    
 	    if(ajStrMatchC(type, "SCOP"))
-		(*thys)->Type = ajSCOP;
+		(*thys)->Type = ajEDomainTypeSCOP;
 	    else if(ajStrMatchC(type, "CATH"))
-		(*thys)->Type = ajCATH;
+		(*thys)->Type = ajEDomainTypeCATH;
 	}
 	else if(ajStrPrefixC(line,"CL"))
 	{
@@ -410,6 +413,7 @@ static AjBool seqwords_TermsRead(AjPFile inf,
 ** @return [AjBool] True on success
 ** @@
 ******************************************************************************/
+
 static AjBool seqwords_keysearch(AjPFile inf, 
 				 AjPTerms terms,
 				 EmbPHitlist *hits)

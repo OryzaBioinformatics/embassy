@@ -6,8 +6,8 @@ application: seqsort [
   batch: "yes"
   cpu: "medium"
   embassy: "domsearch"
-  relations: "EDAM:0000736 topic Protein domains"
-  relations: "EDAM:0002121 operation Sequence file processing"
+  relations: "EDAM_topic:0736 Protein domains and folds"
+  relations: "EDAM_operation:2121 Sequence file processing"
 ]
 
 section: input [
@@ -28,9 +28,9 @@ section: input [
     default: "./"
     extension: "dhf"
     knowntype: "domain hits"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations: "EDAM:0000849 data Sequence record"
-    relations: "EDAM:0001219 format pure protein"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations: "EDAM_data:0849 Sequence record"
+    relations: "EDAM_format:1219 pure protein"
   ]
 
 endsection: input
@@ -51,7 +51,7 @@ section: required [
            replaced by a hit that is produced from merging the two
            overlapping hits."
     default: "10"
-    relations: "EDAM:0001249 data Sequence length"
+    relations: "EDAM_data:1249 Sequence length"
   ]
 
   toggle: dofamilies [
@@ -60,7 +60,7 @@ section: required [
     help: "This option specifies to write a domain families file. If
            this option is set a domain families file is written."
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   toggle: doambiguities [
@@ -70,7 +70,7 @@ section: required [
            file. If this option is set a domain ambiguities file is
            written."
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: required
@@ -93,9 +93,9 @@ section: output [
     default: "./"
     extension: "dhf"
     knowntype: "domain hits"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations: "EDAM:0000849 data Sequence record"
-    relations: "EDAM:0001219 format pure protein"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations: "EDAM_data:0849 Sequence record"
+    relations: "EDAM_format:1219 pure protein"
   ]
 
   outfile: hitsfile [
@@ -115,9 +115,9 @@ section: output [
     knowntype: "Domain hits"
     default: "fam.dhf"
     nullok: "Y"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations: "EDAM:0000849 data Sequence record"
-    relations: "EDAM:0001219 format pure protein"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations: "EDAM_data:0849 Sequence record"
+    relations: "EDAM_format:1219 pure protein"
   ]
 
   outfile: ambigfile [
@@ -137,9 +137,9 @@ section: output [
     knowntype: "domain ambiguities"
     default: "oth.dhf"
     nullok: "Y"
-    relations: "EDAM:0001049 identifier Directory name"
-    relations: "EDAM:0000849 data Sequence record"
-    relations: "EDAM:0001219 format pure protein"
+    relations: "EDAM_identifier:1049 Directory name"
+    relations: "EDAM_data:0849 Sequence record"
+    relations: "EDAM_format:1219 pure protein"
   ]
 
 endsection: output

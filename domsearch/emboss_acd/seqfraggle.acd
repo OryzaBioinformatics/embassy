@@ -1,13 +1,13 @@
 application: seqfraggle [
-  documentation: "Removes fragment sequences from DHF files."
+  documentation: "Remove fragment sequences from DHF files."
   groups: "Protein:Domains, Edit"
   gui: "yes"
   batch: "yes"
   cpu: "medium"
   embassy: "domsearch"
-  relations: "EDAM:0000220 topic Data file processing"
-  relations: "EDAM:0000736 topic Protein domains"
-  relations: "EDAM:0002121 operation Sequence file processing"
+  relations: "EDAM_topic:0220 Data processing and validation"
+  relations: "EDAM_topic:0736 Protein domains and folds"
+  relations: "EDAM_operation:2121 Sequence file processing"
 ]
 
 section: input [
@@ -29,9 +29,9 @@ section: input [
     extension: "dhf"
     default: "./"
     knowntype: "domain hits"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations: "EDAM:0000849 data Sequence record"
-    relations: "EDAM:0001219 format pure protein"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations: "EDAM_data:0849 Sequence record"
+    relations: "EDAM_format:1219 pure protein"
   ]
 
 endsection: input
@@ -52,7 +52,7 @@ section: required [
            median length. The remaining sequences are written to the output
            file."
     default: "50"
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
 endsection: required
@@ -76,9 +76,9 @@ section: output [
     default: "./"
     extension: "dhf"
     knowntype: "domain hits"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations: "EDAM:0000849 data Sequence record"
-    relations: "EDAM:0001219 format pure protein"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations: "EDAM_data:0849 Sequence record"
+    relations: "EDAM_format:1219 pure protein"
   ]
 
 endsection: output

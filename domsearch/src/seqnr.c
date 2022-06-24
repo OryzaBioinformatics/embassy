@@ -89,7 +89,7 @@ int main(int argc, char **argv)
     AjPSeqin   seqin     = NULL;    /* Seqin (re-used).                      */
     AjPList    seq_list  = NULL;    /* Main list for redundancy removal.     */
     EmbPDmxNrseq seq_tmp = NULL;    /* Temp. pointer for making seq_list.    */
-    ajint      seq_siz   = 0;       /* Size of seq_list.                     */
+    ajuint     seq_siz   = 0;       /* Size of seq_list.                     */
     AjPUint    keep      = NULL;    /* 1: Sequence in seq_list was classed as
 				       non-redundant, 0: redundant.          */
     AjPUint    nokeep    = NULL;    /* Inversion of keep array.              */
@@ -100,7 +100,7 @@ int main(int argc, char **argv)
     AjPFile    filterf   = NULL;    /* Current filter file.                  */
     EmbPHitlist hitlist   = NULL;   /* Hitlist from input file (re-used).    */
     AjPScopalg scopalg   = NULL;    /* Scopalg from input file.              */
-    ajint      x         = 0;       /* Housekeeping.                         */
+    ajuint     x         = 0;       /* Housekeeping.                         */
     
 
     
@@ -115,7 +115,7 @@ int main(int argc, char **argv)
     dosets    = ajAcdGetToggle("dosets");
     insets    = ajAcdGetDirectory("insetsdir");
     mode      = ajAcdGetListSingle("mode");  
-    thresh    = ajAcdGetFloat("thresh");
+    thresh    = ajAcdGetFloat("threshold");
     threshlow = ajAcdGetFloat("threshlow");
     threshup  = ajAcdGetFloat("threshup");
     matrix    = ajAcdGetMatrixf("matrix");
@@ -361,7 +361,7 @@ int main(int argc, char **argv)
 			ok = ajTrue;
 		}
 		else
-		    if(scopalg->N)
+		    if(scopalg->Number)
 			ok = ajTrue;
 
 
@@ -385,7 +385,7 @@ int main(int argc, char **argv)
 		   but never appear in the output files).. */
 		if(scopalg)
 		{
-		    for(x=0; x<scopalg->N; x++)
+		    for(x=0; x<scopalg->Number; x++)
 		    {
 			AJNEW0(seq_tmp);
 			seq_tmp->Seq = ajSeqNew();

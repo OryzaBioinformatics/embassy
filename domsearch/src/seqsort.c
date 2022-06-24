@@ -368,8 +368,10 @@ static AjBool seqsort_PsiblastHitSort(AjPList famlist,
 
     /* Sort list, first by Family, then by Accession number, and finally by 
        Start. */
-    ajListSortTwoThree(famlist, ajDmxScophitCompSunid, ajDmxScophitCompAcc, 
-		ajDmxScophitCompStart);
+    ajListSortTwoThree(famlist,
+		       &ajDmxScophitCompSunid,
+		       &ajDmxScophitCompAcc, 
+		       &ajDmxScophitCompStart);
 
         
     /* Get the first node in the list, only once. */
@@ -429,18 +431,18 @@ static AjBool seqsort_PsiblastHitSort(AjPList famlist,
 
     /* The end of the list been reached. 
        Delete hits in the list that are targetted for removal. */
-    ajListPurge(famlist, (int(*)(const void *)) ajDmxScophitCheckTarget,
-	       ajDmxScophitDelWrap);
+    ajListPurge(famlist,
+		(int (*)(const void *)) &ajDmxScophitCheckTarget,
+	       &ajDmxScophitDelWrap);
     
 
 
     /* Sort list, first by accession number,
     then by start and finally by family. */
-    ajListSortTwoThree(famlist, ajDmxScophitCompAcc, ajDmxScophitCompStart, 
-		ajDmxScophitCompSunid); 
-
-
-
+    ajListSortTwoThree(famlist,
+		       &ajDmxScophitCompAcc,
+		       &ajDmxScophitCompStart, 
+		       &ajDmxScophitCompSunid); 
 
     /* DIAGNOSTIC
     ajFmtPrint("\n\n\nContents of FAMILIES list\n");
@@ -585,15 +587,18 @@ static AjBool seqsort_PsiblastHitSort(AjPList famlist,
     
     /* The end of the list been reached. 
        Delete hits in the list that are targetted for removal. */
-    ajListPurge(famlist, (int(*)(const void *)) ajDmxScophitCheckTarget, 
-	       ajDmxScophitDelWrap);
+    ajListPurge(famlist,
+		(int (*)(const void *)) &ajDmxScophitCheckTarget, 
+		&ajDmxScophitDelWrap);
 
 
 
     /* Sort list, first by Family, then by accession number, and finally by 
        Start. */
-    ajListSortTwoThree(famlist, ajDmxScophitCompSunid, ajDmxScophitCompAcc, 
-		ajDmxScophitCompStart);
+    ajListSortTwoThree(famlist,
+		       &ajDmxScophitCompSunid,
+		       &ajDmxScophitCompAcc, 
+		       &ajDmxScophitCompStart);
 
     
     ajListIterDel(&iter);
@@ -634,8 +639,10 @@ static AjBool seqsort_PsiblastHitSort(AjPList famlist,
     
     /* Sort list, first by superfamily, then by accession number and finally by
        Start. */
-    ajListSortTwoThree(supfamlist, ajDmxScophitCompSfam, ajDmxScophitCompAcc, 
-		ajDmxScophitCompStart);
+    ajListSortTwoThree(supfamlist,
+		       &ajDmxScophitCompSfam,
+		       &ajDmxScophitCompAcc, 
+		       &ajDmxScophitCompStart);
     
     /* Get the first node in the list, only once. */ 
     hit = (AjPScophit)ajListIterGet(iter);	                
@@ -693,8 +700,10 @@ static AjBool seqsort_PsiblastHitSort(AjPList famlist,
 
     /* Sort list , first by accession number,then by start and finally by 
        superfamily. */
-    ajListSortTwoThree(supfamlist, ajDmxScophitCompAcc, ajDmxScophitCompStart,        	
-		ajDmxScophitCompSfam);
+    ajListSortTwoThree(supfamlist,
+		       &ajDmxScophitCompAcc,
+		       &ajDmxScophitCompStart,
+		       &ajDmxScophitCompSfam);
     
     ajListIterDel(&iter);
 
@@ -823,13 +832,16 @@ static AjBool seqsort_PsiblastHitSort(AjPList famlist,
     
     /* The end of the list has been reached. */
     /* Delete hits in the list that are targeted for removal. */
-    ajListPurge(supfamlist, (int(*)(const void *)) ajDmxScophitCheckTarget,
-			 ajDmxScophitDelWrap);
+    ajListPurge(supfamlist,
+		(int (*)(const void *)) &ajDmxScophitCheckTarget,
+		&ajDmxScophitDelWrap);
 
     /* Sort list, first by superfamily, then by accession number, and finally
        by Start. */
-    ajListSortTwoThree(supfamlist, ajDmxScophitCompSfam, ajDmxScophitCompAcc, 
-		ajDmxScophitCompStart);
+    ajListSortTwoThree(supfamlist,
+		       &ajDmxScophitCompSfam,
+		       &ajDmxScophitCompAcc, 
+		       &ajDmxScophitCompStart);
     
     ajListIterDel(&iter);
 
@@ -871,8 +883,10 @@ static AjBool seqsort_PsiblastHitSort(AjPList famlist,
     
     /* Sort list, first by fold, then by accession number and finally by the 
        Start. */
-    ajListSortTwoThree(foldlist, ajDmxScophitCompFold, ajDmxScophitCompAcc, 
-		ajDmxScophitCompStart);
+    ajListSortTwoThree(foldlist,
+		       &ajDmxScophitCompFold,
+		       &ajDmxScophitCompAcc, 
+		       &ajDmxScophitCompStart);
     
     /* Get the first node in the list, only once. */ 
     hit = (AjPScophit)ajListIterGet(iter);	
@@ -924,11 +938,14 @@ static AjBool seqsort_PsiblastHitSort(AjPList famlist,
     
     /* The end of the list has been reached. */
     /* Delete hits in the list that are targeted for removal. */
-    ajListPurge(foldlist, (int(*)(const void *)) ajDmxScophitCheckTarget, 
-			 ajDmxScophitDelWrap);
+    ajListPurge(foldlist,
+		(int (*)(const void *)) &ajDmxScophitCheckTarget, 
+		&ajDmxScophitDelWrap);
     
-    ajListSortTwoThree(foldlist, ajDmxScophitCompSfam, ajDmxScophitCompAcc, 
-		ajDmxScophitCompStart);
+    ajListSortTwoThree(foldlist,
+		       &ajDmxScophitCompSfam,
+		       &ajDmxScophitCompAcc, 
+		       &ajDmxScophitCompStart);
     
     ajListIterDel(&iter);
 
@@ -1149,10 +1166,10 @@ static AjBool seqsort_HitlistToThreeScophits(AjPList in,
 					     AjPList *sfam,
 					     AjPList *fold)
 {
-    AjPScophit scophit = NULL;   /* Pointer to Scophit object. */
-    EmbPHitlist hitlist = NULL;   /* Pointer to Hitlist object. */
-    AjIList iter       = NULL;   /* List iterator.             */
-    ajint x = 0;                 /* Loop counter.              */
+    AjPScophit scophit  = NULL;  /* Pointer to Scophit object. */
+    EmbPHitlist hitlist = NULL;  /* Pointer to Hitlist object. */
+    AjIList iter        = NULL;  /* List iterator.             */
+    ajuint x = 0;                /* Loop counter.              */
    
 
     /* Check args. */

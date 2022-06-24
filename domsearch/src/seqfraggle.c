@@ -313,7 +313,7 @@ static void seqfraggle_getlengths(EmbPHitlist hitlist,
 				  AjPUint *seq_ok)
 {
     ajint len = 0;     /* Length of sequence hit                 */
-    ajint x   = 0;     /* Loop counters                          */
+    ajuint x  = 0;     /* Loop counters                          */
 
 
     *num_hits = hitlist->N;

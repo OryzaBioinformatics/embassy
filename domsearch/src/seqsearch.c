@@ -237,8 +237,10 @@ int main(int argc, char **argv)
 
 	    ajListPushAppend(listin,tmphitlist);
 	    embDmxHitlistToScophits(listin, listout);
-	    ajListSortTwoThree(listout,ajDmxScophitCompAcc, ajDmxScophitCompStart, 
-			ajDmxScophitCompEnd);
+	    ajListSortTwoThree(listout,
+			       &ajDmxScophitCompAcc,
+			       &ajDmxScophitCompStart, 
+			       &ajDmxScophitCompEnd);
           
 	    /* Eleminate identical hits. */
 	    iter=ajListIterNewread(listout); 
@@ -268,8 +270,9 @@ int main(int argc, char **argv)
      
 	    /* The end of the list been reached. 
 	       Delete hits in the list that are targetted for removal. */
-	    ajListPurge(listout, (const void *) ajDmxScophitCheckTarget,
-			ajDmxScophitDelWrap);
+	    ajListPurge(listout,
+			(int (*)(const void *)) &ajDmxScophitCheckTarget,
+			&ajDmxScophitDelWrap);
           
 	    /* Recreate the hitlist for printing. */
 	    embDmxScophitsToHitlist(listout,&hitlist,&iter);
@@ -475,7 +478,7 @@ static AjPFile seqsearch_psialigned(AjPStr seqname,
 
     /* Write psiblast multiple sequence input file. */
     if((*scopalg))
-	nseqs = (*scopalg)->N;
+	nseqs = (*scopalg)->Number;
     else
 	nseqs = ajSeqsetGetSize(seqset);
 

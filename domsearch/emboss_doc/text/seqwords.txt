@@ -22,7 +22,7 @@ CONTENTS
 1.0 SUMMARY
 
    Generates DHF files (domain hits files) of database hits (sequences)
-   from Swissprot matching keywords from a keywords file. Generates DHF
+   from Swissprot matching keywords from a keywords file. Generate DHF
    files from keyword search of UniProt
 
 2.0 INPUTS & OUTPUTS
@@ -242,8 +242,8 @@ ALQGEQGVVECAYVEGDGQYARFFSQPLLLGKNGVEERKSIGTLSAFEQNALEGMLDTLKKDIALGEEFVNK
 
 6.0 USAGE
 
-Generates DHF files from keyword search of UniProt.
-Version: EMBOSS:6.4.0.0
+Generate DHF files from keyword search of UniProt.
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-keyfile]           infile     This option specifies the name of keywords
