@@ -60,7 +60,7 @@ int main(int argc, char **argv)
     AjPList    in        = NULL;    /* Names of domain hits files (input).   */
     AjPStr     inname    = NULL;    /* Full name of the current DHF file.    */
     AjPFile    inf       = NULL;    /* Current DHF file.                     */
-    AjPHitlist infhits   = NULL;    /* Hitlist from DHF file                 */
+    EmbPHitlist infhits   = NULL;   /* Hitlist from DHF file                 */
     AjBool     dosing    = ajFalse; /* Filter using singlet sequences.       */
     AjPDir     singlets  = NULL;    /* Singlets (input).                     */
     AjBool     dosets    = ajFalse; /* Filter using sets of sequences.       */
@@ -87,17 +87,17 @@ int main(int argc, char **argv)
     AjPSeqset  seqset    = NULL;    /* Seqset (re-used).                     */
     AjPSeqin   seqin     = NULL;    /* Seqin (re-used).                      */
     AjPList    seq_list  = NULL;    /* Main list for redundancy removal.     */
-    AjPSeq     seq_tmp   = NULL;    /* Temp. pointer for making seq_list.    */
+    EmbPDmxNrseq seq_tmp = NULL;    /* Temp. pointer for making seq_list.    */
     ajint      seq_siz   = 0;       /* Size of seq_list.                     */
-    AjPInt     keep      = NULL;    /* 1: Sequence in seq_list was classed as
+    AjPUint    keep      = NULL;    /* 1: Sequence in seq_list was classed as
 				       non-redundant, 0: redundant.          */
-    AjPInt     nokeep    = NULL;    /* Inversion of keep array.              */
+    AjPUint    nokeep    = NULL;    /* Inversion of keep array.              */
     ajint      nseqnr    = 0;       /* No. non-redundant seqs. in seq_list.  */
     
 
     AjPStr     filtername= NULL;    /* Name of filter file (re-used).        */
     AjPFile    filterf   = NULL;    /* Current filter file.                  */
-    AjPHitlist hitlist   = NULL;    /* Hitlist from input file (re-used).    */
+    EmbPHitlist hitlist   = NULL;   /* Hitlist from input file (re-used).    */
     AjPScopalg scopalg   = NULL;    /* Scopalg from input file.              */
     ajint      x         = 0;       /* Housekeeping.                         */
     
@@ -145,8 +145,8 @@ int main(int argc, char **argv)
 
 
 	seq_list    = ajListNew();
-	keep        = ajIntNew();  	    
-	nokeep      = ajIntNew();  	    	
+	keep        = ajUintNew();  	    
+	nokeep      = ajUintNew();  	    	
 	
 	/**********************************/
 	/*         Open DHF file          */
@@ -169,7 +169,7 @@ int main(int argc, char **argv)
 	    if(!(ajSeqsetRead(seqset, seqin)))
 		ajFatal("SeqsetRead failed in seqsearch_psialigned");
 
-	    if(ajSeqsetSize(seqset))
+	    if(ajSeqsetGetSize(seqset))
 		ok = ajTrue;
 	}
 	else
@@ -199,19 +199,21 @@ int main(int argc, char **argv)
 	{
 	    for(x=0; x<infhits->N; x++)
 	    {
-		seq_tmp = ajSeqNew();
-		ajStrAssignS(&seq_tmp->Acc,infhits->hits[x]->Acc);
-		ajStrAssignS(&seq_tmp->Seq,infhits->hits[x]->Seq);
+		AJNEW0(seq_tmp);
+		seq_tmp->Seq = ajSeqNew();
+		ajStrAssignS(&seq_tmp->Seq->Acc,infhits->hits[x]->Acc);
+		ajStrAssignS(&seq_tmp->Seq->Seq,infhits->hits[x]->Seq);
 		ajListPushApp(seq_list,seq_tmp);		
 	    }
 	} 
 	else
 	{	 
-	    for(x=0;x<ajSeqsetSize(seqset);x++)
+	    for(x=0;x<ajSeqsetGetSize(seqset);x++)
 	    {
-		seq_tmp = ajSeqNew();
-		ajStrAssignS(&seq_tmp->Acc, ajSeqsetAcc(seqset, x));
-		ajStrAssignC(&seq_tmp->Seq, ajSeqsetSeq(seqset, x));
+		AJNEW0(seq_tmp);
+		seq_tmp->Seq = ajSeqNew();
+		ajStrAssignS(&seq_tmp->Seq->Acc, ajSeqsetGetseqAccS(seqset, x));
+		ajStrAssignS(&seq_tmp->Seq->Seq, ajSeqsetGetseqSeqS(seqset, x));
 		ajListPushApp(seq_list,seq_tmp);		
 	    }
 	    ajSeqsetDel(&seqset);
@@ -258,7 +260,7 @@ int main(int argc, char **argv)
 		    if(!(ajSeqsetRead(seqset, seqin)))
 			ajFatal("SeqsetRead failed in seqnr");
 
-		    if(ajSeqsetSize(seqset))
+		    if(ajSeqsetGetSize(seqset))
 			ok = ajTrue;
 		}
 		else
@@ -287,22 +289,26 @@ int main(int argc, char **argv)
 		{
 		    for(x=0; x<hitlist->N; x++)
 		    {
-			seq_tmp = ajSeqNew();
-			ajStrAssignS(&seq_tmp->Acc,hitlist->hits[x]->Acc);
-			ajStrAssignS(&seq_tmp->Seq,hitlist->hits[x]->Seq);
-			ajSeqGarbageOn(&seq_tmp);
+			AJNEW0(seq_tmp);
+			seq_tmp->Seq = ajSeqNew();
+			seq_tmp->Garbage = ajTrue;
+			ajStrAssignS(&seq_tmp->Seq->Acc,hitlist->hits[x]->Acc);
+			ajStrAssignS(&seq_tmp->Seq->Seq,hitlist->hits[x]->Seq);
 			ajListPushApp(seq_list,seq_tmp);		
 		    }
 		    embHitlistDel(&hitlist);
 		} 
 		else
 		{	 
-		    for(x=0;x<ajSeqsetSize(seqset);x++)
+		    for(x=0;x<ajSeqsetGetSize(seqset);x++)
 		    {
-			seq_tmp = ajSeqNew();
-			ajStrAssignS(&seq_tmp->Acc, ajSeqsetAcc(seqset, x));
-			ajStrAssignC(&seq_tmp->Seq, ajSeqsetSeq(seqset, x));
-			ajSeqGarbageOn(&seq_tmp);
+			AJNEW0(seq_tmp);
+			seq_tmp->Seq = ajSeqNew();
+			seq_tmp->Garbage = ajTrue;
+			ajStrAssignS(&seq_tmp->Seq->Acc,
+				     ajSeqsetGetseqAccS(seqset, x));
+			ajStrAssignS(&seq_tmp->Seq->Seq,
+				     ajSeqsetGetseqSeqS(seqset, x));
 			ajListPushApp(seq_list,seq_tmp);		
 		    }
 		    ajSeqsetDel(&seqset);
@@ -350,7 +356,7 @@ int main(int argc, char **argv)
 		    if(!(ajSeqsetRead(seqset, seqin)))
 			ajFatal("SeqsetRead failed in seqnr");
 
-		    if(ajSeqsetSize(seqset))
+		    if(ajSeqsetGetSize(seqset))
 			ok = ajTrue;
 		}
 		else
@@ -380,24 +386,28 @@ int main(int argc, char **argv)
 		{
 		    for(x=0; x<scopalg->N; x++)
 		    {
-			seq_tmp = ajSeqNew();
-			ajStrAssignS(&seq_tmp->Acc,scopalg->Codes[x]);
-			ajStrAssignS(&seq_tmp->Seq,scopalg->Seqs[x]);
+			AJNEW0(seq_tmp);
+			seq_tmp->Seq = ajSeqNew();
+			seq_tmp->Garbage = ajTrue;
+			ajStrAssignS(&seq_tmp->Seq->Acc,scopalg->Codes[x]);
+			ajStrAssignS(&seq_tmp->Seq->Seq,scopalg->Seqs[x]);
 			/* Remove gap char's & whitespace. */
-			ajStrRemoveGap(&seq_tmp->Seq);  
-			ajSeqGarbageOn(&seq_tmp);
+			ajStrRemoveGap(&seq_tmp->Seq->Seq);  
 			ajListPushApp(seq_list,seq_tmp);		
 		    }
 		    ajDmxScopalgDel(&scopalg);
 		} 
 		else
 		{	 
-		    for(x=0;x<ajSeqsetSize(seqset);x++)
+		    for(x=0;x<ajSeqsetGetSize(seqset);x++)
 		    {
-			seq_tmp = ajSeqNew();
-			ajStrAssignS(&seq_tmp->Acc, ajSeqsetAcc(seqset, x));
-			ajStrAssignC(&seq_tmp->Seq, ajSeqsetSeq(seqset, x));
-			ajSeqGarbageOn(&seq_tmp);
+			AJNEW0(seq_tmp);
+			seq_tmp->Seq = ajSeqNew();
+			seq_tmp->Garbage = ajTrue;
+			ajStrAssignS(&seq_tmp->Seq->Acc,
+				     ajSeqsetGetseqAccS(seqset, x));
+			ajStrAssignS(&seq_tmp->Seq->Seq,
+				     ajSeqsetGetseqSeqS(seqset, x));
 			ajListPushApp(seq_list,seq_tmp);		
 		    }
 		    ajSeqsetDel(&seqset);
@@ -422,10 +432,10 @@ int main(int argc, char **argv)
 	}	
 	seq_siz = ajListLength(seq_list);
 	for(x=0; x<seq_siz; x++)
-	    if(ajIntGet(keep, x) == 1)
-		ajIntPut(&nokeep, x, 0);
+	    if(ajUintGet(keep, x) == 1)
+		ajUintPut(&nokeep, x, 0);
 	    else
-		ajIntPut(&nokeep, x, 1);
+		ajUintPut(&nokeep, x, 1);
 	
 
 	/* Create output files. */
@@ -448,10 +458,13 @@ int main(int argc, char **argv)
 	ajStrDel(&inname);
 
 	while(ajListPop(seq_list, (void **) &seq_tmp))
-	    ajSeqDel(&seq_tmp);
+	{
+	    ajSeqDel(&seq_tmp->Seq);
+	    AJFREE(seq_tmp);
+	}
 	ajListDel(&seq_list);
-	ajIntDel(&keep);	
-	ajIntDel(&nokeep);	
+	ajUintDel(&keep);	
+	ajUintDel(&nokeep);
     }	    
 
 
