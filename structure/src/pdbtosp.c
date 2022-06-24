@@ -84,4 +84,3 @@ int main(int argc, char **argv)
     ajExit();
     return 0;
 }
-

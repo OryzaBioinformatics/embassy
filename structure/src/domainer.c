@@ -38,12 +38,8 @@
 
 
 
-
 #include <config.h>
 #include "emboss.h"
-
-
-
 
 
 
@@ -57,35 +53,36 @@
 
 int main(int argc, char **argv)
 {
-    AjPStr   cpdb_name     =NULL;	/* Name of cpdb file */
-    AjPStr   pdbscop_name  =NULL;	/* Name of pdbscop file */
-    AjPStr   cpdbscop_name =NULL;	/* Name of cpdbscop file */
-    AjPStr   scop_name =NULL;	        /* Name of cpdbscop file */
-    AjPStr   msg           =NULL;	/* Error message */
-    AjPStr   temp          =NULL;	/* Error message */
+    AjPStr    cpdb_name     = NULL;	/* Name of cpdb file */
+    AjPStr    pdbscop_name  = NULL;	/* Name of pdbscop file */
+    AjPStr    cpdbscop_name = NULL;	/* Name of cpdbscop file */
+    AjPStr    scop_name	    = NULL;       /* Name of cpdbscop file */
+    AjPStr    msg           = NULL;	/* Error message */
+    AjPStr    temp          = NULL;	/* Error message */
 
-    AjPDirout cpdbscop_dir =NULL;
-    AjPDirout pdbscop_dir  =NULL;
-    AjPDir   cpdb_dir      =NULL;
-    AjPFile  scop_inf      =NULL;
-    AjPFile  cpdb_inf      =NULL;
-    AjPFile  pdbscop_outf  =NULL;
-    AjPFile  cpdbscop_outf =NULL;
-    AjPFile  errf1         =NULL;
-    AjPFile  errf2         =NULL;
+    AjPDirout cpdbscop_dir  = NULL;
+    AjPDirout pdbscop_dir   = NULL;
+    AjPDir    cpdb_dir      = NULL;
+    AjPFile   scop_inf      = NULL;
+    AjPFile   cpdb_inf      = NULL;
+    AjPFile   pdbscop_outf  = NULL;
+    AjPFile   cpdbscop_outf = NULL;
+    AjPFile   errf1         = NULL;
+    AjPFile   errf2         = NULL;
 
-    AjPScop  scop=NULL;
-    AjPPdb   pdb=NULL;
-    AjPStr  mode       = NULL;		/* Mode of operation from acd */
-    ajint    moden      = 0;            /* Mode as an integer */
-
+    AjPScop    scop         = NULL;
+    AjPPdb     pdb          = NULL;
+    /* Mode of operation from acd */
+    AjPStr     mode         = NULL;
+    /* Mode as an AJAX PDB Mode enumeration */
+    AjEPdbMode moden        = ajEPdbModeNULL;
     
     /* Initialise strings */
     msg           = ajStrNew();
     cpdb_name     = ajStrNew();
     pdbscop_name  = ajStrNew();
     cpdbscop_name = ajStrNew();
-    scop_name = ajStrNew();
+    scop_name     = ajStrNew();
     temp          = ajStrNew();
 
 
@@ -93,18 +90,17 @@ int main(int argc, char **argv)
     embInitPV("domainer",argc,argv,"STRUCTURE",VERSION);
 
     cpdb_dir     = ajAcdGetDirectory("ccfpdir");
-    mode          = ajAcdGetListSingle("mode");
+    mode         = ajAcdGetListSingle("mode");
     cpdbscop_dir = ajAcdGetOutdir("ccfoutdir");
     pdbscop_dir  = ajAcdGetOutdir("pdboutdir");
-    scop_inf      = ajAcdGetInfile("scopfile");
-    errf1         = ajAcdGetOutfile("pdblogfile");
-    errf2         = ajAcdGetOutfile("cpdblogfile");
+    scop_inf     = ajAcdGetInfile("scopfile");
+    errf1        = ajAcdGetOutfile("pdblogfile");
+    errf2        = ajAcdGetOutfile("cpdblogfile");
     
     if(ajStrGetCharFirst(mode)=='1')
-	moden = ajPDB;
+	moden = ajEPdbModePdb;
     else
-	moden = ajIDX;
-
+	moden = ajEPdbModeIdx;
 
     /* Start of main application loop. */
     while((scop = (ajScopReadCNew(scop_inf, "*"))))

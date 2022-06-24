@@ -21,7 +21,7 @@ CONTENTS
 
 1.0 SUMMARY
 
-   Converts raw dictionary of heterogen groups EMBL-like format. Converts
+   Converts raw dictionary of heterogen groups EMBL-like format. Convert
    heterogen group dictionary to EMBL-like format
 
 2.0 INPUTS & OUTPUTS
@@ -217,8 +217,8 @@ NN   0
 
 6.0 USAGE
 
-Converts heterogen group dictionary to EMBL-like format.
-Version: EMBOSS:6.4.0.0
+Convert heterogen group dictionary to EMBL-like format.
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-infile]            infile     This option specifies the name of input file

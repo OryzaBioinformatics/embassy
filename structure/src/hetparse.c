@@ -54,8 +54,8 @@
 ** PROTOTYPES  
 **
 ******************************************************************************/
-static AjBool  hetparse_HetScan(AjPList listfiles,  
-				      AjPHet ptr);
+
+static AjBool hetparse_HetScan(AjPList listfiles, AjPHet ptr);
 
 
 
@@ -64,18 +64,16 @@ static AjBool  hetparse_HetScan(AjPList listfiles,
 ** Converts raw dictionary of heterogen groups to a file in EMBL-like format.
 **
 ******************************************************************************/
+
 int main(int argc, char **argv)
 {
     AjPFile   fin=NULL;
     AjPFile   fout=NULL;    
-    AjPHet dic=NULL;
+    AjPHet    dic=NULL;
     AjBool    dogrep=ajFalse;
     AjPList   dirlist = NULL;
     AjPStr    tmp=NULL;
     
-
-
-
     
     /* Get values from acd. */
     embInitPV("hetparse", argc, argv, "STRUCTURE",VERSION);
@@ -84,8 +82,7 @@ int main(int argc, char **argv)
     fout    = ajAcdGetOutfile("outfile");
     dogrep  = ajAcdGetToggle("dogrep");
     dirlist = ajAcdGetDirlist("dirlistpath");
-    
-    
+        
 
     /* Parse raw file. */
     if(!(dic=ajHetReadRawNew(fin)))
@@ -110,13 +107,11 @@ int main(int argc, char **argv)
     ajFileClose(&fin);
     ajFileClose(&fout); 
     
-    
 
     ajExit();
+    
     return 0;    
 }
-
-
 
 
 
@@ -132,10 +127,9 @@ int main(int argc, char **argv)
 ** @return [AjBool] True on success
 ** @@
 ******************************************************************************/
-static AjBool        hetparse_HetScan(AjPList listfiles, 
-				      AjPHet ptr)
-{
 
+static AjBool hetparse_HetScan(AjPList listfiles, AjPHet ptr)
+{
     AjPList     listhet=NULL;     /* List of names of different heterogens 
 				     in the current file.                    */
     AjIList     iter=NULL;        /* Iterator for listhet.                   */
@@ -151,7 +145,7 @@ static AjBool        hetparse_HetScan(AjPList listfiles,
 				     heterogen.                              */
     AjBool      foundhet=ajFalse; /* True if current heterogen was found 
 				     in listhet.                             */
-    ajint       i=0;              /* Counter.                                */
+    ajuint      i = 0U;           /* Counter.                                */
     
 
 
@@ -229,22 +223,20 @@ static AjBool        hetparse_HetScan(AjPList listfiles,
 	}
 	
 
-
-	
 	/* Compare list of heterogens from this file to our dictionary. 
 	   Initialise iterator to iterate through the list <listhet>. */
 	iter=ajListIterNewread(listhet);
 
 	/* Iterate through list, make <hettemp> point to the current node. */		
-	while((hettemp=(AjPStr)ajListIterGet(iter)))
+	while((hettemp = (AjPStr) ajListIterGet(iter)))
 	{
 	    /* Run through each heterogen in our dictionary and 
 	       increment the counter if we have a match*/
-	    for(i=0; i< ptr->n; i++)
+	    for(i = 0U; i < ptr->Number; i++)
 	    {
-		if(ajStrMatchS(hettemp, ptr->entries[i]->abv))
+		if(ajStrMatchS(hettemp, ptr->Entries[i]->abv))
 		{
-		    ptr->entries[i]->cnt++;
+		    ptr->Entries[i]->cnt++;
 		    break;
 		}
 	    }
@@ -268,17 +260,9 @@ static AjBool        hetparse_HetScan(AjPList listfiles,
 	ajListIterDel(&iter);
     }
 
-
-
-    /* Tidy up and return. */
     ajStrDel(&search_term);
     ajStrDel(&line);
     ajStrDel(&het);
 
     return ajTrue;
 }
-
-
-
-
-

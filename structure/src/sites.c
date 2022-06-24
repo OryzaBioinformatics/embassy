@@ -74,7 +74,7 @@
 ** @attr Nres [ajint] No. residues in chain. 
 ** @attr Seq [AjPStr] Polypeptide sequence. 
 ** @attr scop_name [AjPStr] 7-character scop id domain name. 
-** @attr no_keyres [ajint] number of key binding residues.
+** @attr no_keyres [ajuint] number of key binding residues.
 ** @attr *aa_code [AjPStr*] Array for 3-character amino acid codes. 
 ** @attr res_pos [AjPInt] Array of ints for residue positions in domain 
 **                 clean coordinate file. 
@@ -92,7 +92,7 @@ typedef struct AjSDomConts
   ajint  Nres;
   AjPStr Seq;
   AjPStr scop_name;
-  ajint  no_keyres;
+  ajuint  no_keyres;
   AjPStr *aa_code;
   AjPInt res_pos;
   AjPStr *res_pos2;
@@ -114,7 +114,7 @@ typedef struct AjSDomConts
 **
 ** @attr abv [AjPStr] 3-letter abbreviation of heterogen
 ** @attr ful [AjPStr] Full name
-** @attr no_sites [ajint] number of binding sites
+** @attr no_sites [ajuint] number of binding sites
 ** @attr cont_data [AjPDomConts] array of domain contact data
 **                               (derived from tmp)
 ** @attr tmp [AjPList]  Temp. list of domain contact data
@@ -125,10 +125,11 @@ typedef struct AjSDbaseEnt
 {
   AjPStr      abv;
   AjPStr      ful;
-  ajint       no_sites; 
+  ajuint      no_sites; 
   AjPDomConts *cont_data; 
   AjPList     tmp;        
 } AjODbaseEnt, *AjPDbaseEnt;
+
 
 
 
@@ -143,17 +144,16 @@ typedef struct AjSDbaseEnt
 ** @alias AjSDbase
 ** @alias AjODbase  
 **
-** @attr n [ajint] Number of entries
+** @attr Number [ajuint] Number of entries
 ** @attr entries [AjPDbaseEnt *] Array of entries
 ** @@
 ******************************************************************************/
 
 typedef struct AjSDbase
 {
-  ajint         n;        
+  ajuint       Number;        
   AjPDbaseEnt *entries; 
 } AjODbase, *AjPDbase;
-
 
 
 
@@ -227,7 +227,7 @@ int main(ajint argc, char **argv)
     
     /* Creating Dbase object */
     AjPDbase   dbase=NULL;	    /* Database of functional residues for whole build */
-    ajint      i=0;		    /* Counter */
+    ajuint     i = 0U;		    /* Counter */
     
     
     /* Main application loop */
@@ -373,18 +373,18 @@ int main(ajint argc, char **argv)
 	ajFatal("Error reading HET dictionary file\n"); 
     }
     
-    ajFmtPrint("Entries in HetDic %d\n", hetDic->n);
+    ajFmtPrint("Entries in HetDic %u\n", hetDic->Number);
     
     /* CREATE DBASE OBJECT */
-    dbase=sites_DbaseNew(hetDic->n);
-    for(i=0; i<hetDic->n; i++) 
+    dbase=sites_DbaseNew(hetDic->Number);
+    for(i=0; i<hetDic->Number; i++) 
 	dbase->entries[i] = sites_DbaseEntNew(0); 
     
     /* WRITE HETEROGEN INFORMATION FROM DICHET OBJECT (ABBREVIATIONS 
        AND FULL NAMES) TO DBASE OBJECT */
     sites_DichetToDbase(&dbase, hetDic);
     
-    ajFmtPrint("Entries in Dbase %d\n", dbase->n);
+    ajFmtPrint("Entries in Dbase %u\n", dbase->Number);
     
     /* CREATE LIST OF PROTEIN COORDINATE FILES IN PROTEIN COORDINATE 
        DIRECTORY */
@@ -675,7 +675,7 @@ int main(ajint argc, char **argv)
 
     /* COMPLETE THE DBASE OBJECT - WRITE CONTACT DATA ARRAY FOR EACH 
        HETEROGEN ENTRY IN THE OBJECT */
-    for(i=0; i<(dbase)->n; i++)
+    for(i = 0U; i < (dbase)->Number; i++)
     {
 	(dbase)->entries[i]->no_sites
 	    =ajListToarray((dbase)->entries[i]->tmp, 
@@ -731,7 +731,7 @@ int main(ajint argc, char **argv)
 ******************************************************************************/
 static AjBool      sites_DichetToDbase(AjPDbase *dbase, AjPHet hetDic)
 {
-  ajint i=0;
+  ajuint i=0U;
 
   /* Check args */
   if(!hetDic || !dbase)
@@ -742,15 +742,15 @@ static AjBool      sites_DichetToDbase(AjPDbase *dbase, AjPHet hetDic)
 
   if(*dbase==NULL) 
     {
-      *dbase=sites_DbaseNew(hetDic->n);
-      for(i=0; i< hetDic->n; i++)
+      *dbase=sites_DbaseNew(hetDic->Number);
+      for(i = 0U; i < hetDic->Number; i++)
 	(*dbase)->entries[i] = sites_DbaseEntNew(0);
 	
     }
-  for(i=0;i<(hetDic)->n;++i)
+  for(i = 0U; i < (hetDic)->Number; i++)
     {
-      ajStrAssignS(&(*dbase)->entries[i]->abv, hetDic->entries[i]->abv);
-      ajStrAssignS(&(*dbase)->entries[i]->ful, hetDic->entries[i]->ful);
+      ajStrAssignS(&(*dbase)->entries[i]->abv, hetDic->Entries[i]->abv);
+      ajStrAssignS(&(*dbase)->entries[i]->ful, hetDic->Entries[i]->ful);
     }
 
   return ajTrue;
@@ -828,13 +828,13 @@ static AjBool      sites_HeterogenContacts(ajint entype,
 
   ajint   DomIdx=0;	/* For index into siz_domains array */
   ajint   HetIdx=0;	/* For index into siz_heterogens array */
-  ajint   dom_max=0;	/* Size of current domain atoms array */
-  ajint   het_max=0;	/* Size of current heterogen atoms array */
-  ajint   idx_tmp=0;	/* Current residue identifier */
-  ajint   i=0;          /* Counter for looping through domain 
+  ajuint  dom_max = 0U;	/* Size of current domain atoms array */
+  ajuint  het_max = 0U;	/* Size of current heterogen atoms array */
+  ajuint  idx_tmp = 0U;	/* Current residue identifier */
+  ajuint  i = 0U;       /* Counter for looping through domain 
 			   atom array also used for looping 
 			   through (*dbase)->entries */
-  ajint   j=0;          /* Counter for looping through heterogen atom array */
+  ajuint  j = 0U;       /* Counter for looping through heterogen atom array */
     
   /*ajint res_ctr=0;*/  /* Counter for looping through aa_code */
   AjPStr temp=NULL;    	/* Temporary string for holding Hetrogen 
@@ -899,14 +899,14 @@ static AjBool      sites_HeterogenContacts(ajint entype,
 	  /* loop through current domain atoms array */
 
 	  /* (i) loop through domains*/
-	  for(i=0;i<dom_max;++i)
+	  for(i = 0U; i < dom_max; i++)
 	  {
 	      /* Disregard any non-protein atoms */
 	      if(dom_atm[i]->Type!='P') 
 		  continue; 
 
 	      /*Current residue check*/
-	      if(dom_atm[i]->Idx==idx_tmp) 
+	      if(dom_atm[i]->Idx == idx_tmp) 
 		  continue; 
 
 	      
@@ -937,7 +937,7 @@ static AjBool      sites_HeterogenContacts(ajint entype,
 		{		  
 		  
 		  /* (j) loop through current hetetrogen atoms array */
-		  for(j=0;j<het_max;j++)
+		  for(j = 0U; j < het_max; j++)
 		    {
 		      if(het_atm[j]->Id3 == NULL)
 			continue;
@@ -1023,7 +1023,7 @@ static AjBool      sites_HeterogenContacts(ajint entype,
     } /* while dom_atm */
   
   while(ajListPop(cont_dataList,(void **)&dom_cont))
-      for(i=0; i<(*dbase)->n; i++) 
+      for(i = 0U; i < (*dbase)->Number; i++) 
 	  if(ajStrMatchS(dom_cont->het_name, (*dbase)->entries[i]->abv))
 	      ajListPushAppend((*dbase)->entries[i]->tmp, dom_cont);
   
@@ -1031,10 +1031,11 @@ static AjBool      sites_HeterogenContacts(ajint entype,
   ajListIterDel(&iter_dom);
   AJFREE(scopidArr);
   AJFREE(chainseqsArr); 
-  
 
   return ajTrue;
 }
+
+
 
 
 /* @func sites_Dummy **********************************************************
@@ -1072,11 +1073,10 @@ void sites_Dummy (void)
 static AjBool    sites_HeterogenContactsWriteOld(AjPFile funky_out, 
 						 AjPDbase dbase)
 {
-
-  ajint i=0;  /* loop counter for dbase->entries[i] */
-  ajint j=0;  /* loop counter for dbase->entries[i]->cont_data[j] */
-  ajint k=0;  /* loop counter for dbase->entries[i]->cont_data[j]->aa_code[j]
-		 and dbase->entries[i]->cont_data[j]->res_pos[j] */
+  ajuint i = 0U;  /* loop counter for dbase->entries[i] */
+  ajuint j = 0U;  /* loop counter for dbase->entries[i]->cont_data[j] */
+  ajuint k = 0U;  /* loop counter for dbase->entries[i]->cont_data[j]->aa_code[j]
+                   and dbase->entries[i]->cont_data[j]->res_pos[j] */
 
   /* Check arguments */
   if((funky_out==NULL) || (dbase==NULL)) 
@@ -1086,7 +1086,7 @@ static AjBool    sites_HeterogenContactsWriteOld(AjPFile funky_out,
   }
   
 
-  for(i=0;i<dbase->n;i++)
+  for(i = 0U; i < dbase->Number; i++)
     {
       if((dbase)->entries[i]->no_sites >0)
 	{
@@ -1094,7 +1094,7 @@ static AjBool    sites_HeterogenContactsWriteOld(AjPFile funky_out,
 	  ajFmtPrintF(funky_out, "DE   %S\n", dbase->entries[i]->ful);
 	  ajFmtPrintF(funky_out, "NS   %d\n", dbase->entries[i]->no_sites);
 	  ajFmtPrintF(funky_out, "XX\n");
-	  for(j=0;j<(dbase)->entries[i]->no_sites; j++)
+	  for(j = 0U; j < (dbase)->entries[i]->no_sites; j++)
 	    {
 	      ajFmtPrintF(funky_out, "SN   %d\n", j+1);
 	      ajFmtPrintF(funky_out, "XX\n");
@@ -1114,7 +1114,7 @@ static AjBool    sites_HeterogenContactsWriteOld(AjPFile funky_out,
 			      dbase->entries[i]->cont_data[j]->no_keyres);
 		  ajFmtPrintF(funky_out, "XX\n");
 		  
-		  for(k=0; k< dbase->entries[i]->cont_data[j]->no_keyres; k++)
+		  for(k = 0U; k< dbase->entries[i]->cont_data[j]->no_keyres; k++)
 		    {
 		      if((ajStrMatchC(dbase->entries[i]->cont_data[j]->aa_code[k], "ALA"))||
 			 (ajStrMatchC(dbase->entries[i]->cont_data[j]->aa_code[k], "CYS"))||
@@ -1157,10 +1157,6 @@ static AjBool    sites_HeterogenContactsWriteOld(AjPFile funky_out,
 
 
 
-
-
-
-
 /* @funcstatic  sites_HeterogenContactsWrite *********************************
 **
 ** Write Dbase object to file i.e. the database of functional residues.
@@ -1179,11 +1175,11 @@ static AjBool    sites_HeterogenContactsWrite(AjPFile outf,
 					      float thresh)
 {
 
-  ajint i=0;   /* loop counter for dbase->entries[i] */
-  ajint j=0;   /* loop counter for dbase->entries[i]->cont_data[j] */
-  ajint k=0;   /* loop counter for dbase->entries[i]->cont_data[j]->aa_code[j] 
+  ajuint i = 0U;   /* loop counter for dbase->entries[i] */
+  ajuint j = 0U;   /* loop counter for dbase->entries[i]->cont_data[j] */
+  ajuint k = 0U;   /* loop counter for dbase->entries[i]->cont_data[j]->aa_code[j] 
 		      and dbase->entries[i]->cont_data[j]->res_pos[j] */
-  ajint entry=0;
+  ajint entry = 0;
   ajint total_entry=0;
   AjPStr ptr=NULL;
   AjPSeqout outseq = NULL;
@@ -1214,9 +1210,9 @@ static AjBool    sites_HeterogenContactsWrite(AjPFile outf,
 
   
   /* NE */
-  for(i=0;i<dbase->n;i++)
+  for(i = 0U; i < dbase->Number; i++)
       if((dbase)->entries[i]->no_sites >0)
-	  for(j=0;j<(dbase)->entries[i]->no_sites; j++)
+	  for(j = 0U; j < (dbase)->entries[i]->no_sites; j++)
 	      ++total_entry;
   /*  ajFmtPrintF(outf, "%-5s%d\n", "NE", dbase->n); */
   ajFmtPrintF(outf, "%-5s%d\n", "NE", total_entry);
@@ -1224,12 +1220,11 @@ static AjBool    sites_HeterogenContactsWrite(AjPFile outf,
   
 
   /* Start of loop to print out data for each entry (ligand:domain pair) */
-  for(i=0;i<dbase->n;i++)
+  for(i = 0U; i < dbase->Number; i++)
   {
     if((dbase)->entries[i]->no_sites >0)
       {
-	  
-	  for(j=0;j<(dbase)->entries[i]->no_sites; j++)
+	  for(j = 0U; j < (dbase)->entries[i]->no_sites; j++)
 	  {
 	      /* EN */
 	      ajFmtPrintF(outf, "%-5s[%d]\n", "EN", ++entry);
@@ -1293,7 +1288,7 @@ static AjBool    sites_HeterogenContactsWrite(AjPFile outf,
 	      /* SM */
 	      if(dbase->entries[i]->cont_data[j]->no_keyres > 0)
 	      {
-		  for(k=0; k< dbase->entries[i]->cont_data[j]->no_keyres; k++)
+		  for(k = 0U; k < dbase->entries[i]->cont_data[j]->no_keyres; k++)
 		  {
 		      ptr=dbase->entries[i]->cont_data[j]->aa_code[k];
 		      
@@ -1337,8 +1332,6 @@ static AjBool    sites_HeterogenContactsWrite(AjPFile outf,
 
 
 
-
-
 /* @funcstatic sites_HetTest **************************************************
 **
 ** Tests for presence of heterogens in a pdb object. Returns True if a 
@@ -1354,11 +1347,11 @@ static AjBool sites_HetTest(AjPPdb pdb_ptr)
 {
   /* False = no hets found */
   /* True = hets found */
-  ajint i=0;
+  ajuint i = 0U;
   
   if(pdb_ptr->Nchn>0)
-      for(i=0;i<pdb_ptr->Nchn;++i) 
-	  if(pdb_ptr->Chains[i]->Nlig>0)
+      for(i = 0U; i < pdb_ptr->Nchn; i++) 
+	  if(pdb_ptr->Chains[i]->Nlig > 0)
 	      return ajTrue;
 
   if(pdb_ptr->Ngp>0)
@@ -1382,21 +1375,22 @@ static AjBool sites_HetTest(AjPPdb pdb_ptr)
 ** 
 ** @return [AjPDbase] Dbase object pointer.
 ** @@
-*************************************************************************/
+******************************************************************************/
+
 static AjPDbase  sites_DbaseNew(ajint n)
 {
     AjPDbase ret = NULL;
     
     AJNEW0(ret);
     
-    ret->n = n;
+    ret->Number = n;
     
     if(n)
 	AJCNEW0(ret->entries, n);
     else
     {
 	ajWarn("Arg with value zero passed to sites_DbaseNew");
-	ret->entries=NULL;
+	ret->entries = NULL;
     }
 
     return ret;
@@ -1419,7 +1413,7 @@ static AjPDbase  sites_DbaseNew(ajint n)
 
 static void sites_DbaseDel(AjPDbase *ptr)
 {
-    ajint i = 0;
+    ajuint i = 0U;
   
     /* Check arg's */
     if(ptr==NULL) 
@@ -1436,7 +1430,7 @@ static void sites_DbaseDel(AjPDbase *ptr)
 
     if((*ptr)->entries)
     {
-	for(i=0;i<(*ptr)->n;i++)
+	for(i = 0; i < (*ptr)->Number; i++)
 	    if((*ptr)->entries[i])
 		sites_DbaseEntDel(&((*ptr)->entries[i]));
 	AJFREE((*ptr)->entries);
@@ -1499,7 +1493,7 @@ static AjPDbaseEnt sites_DbaseEntNew(ajint n)
 
 static void sites_DbaseEntDel(AjPDbaseEnt *ptr)
 {
-    ajint x = 0;
+    ajuint i = 0U;
     
     /* Check arg's */
     if(*ptr==NULL) 
@@ -1514,13 +1508,12 @@ static void sites_DbaseEntDel(AjPDbaseEnt *ptr)
   
     if((*ptr)->cont_data)
     {
-	for(x=0;x<(*ptr)->no_sites;x++)
-	    sites_DomContsDel(&((*ptr)->cont_data[x]));
+	for(i = 0U; i < (*ptr)->no_sites; i++)
+	    sites_DomContsDel(&((*ptr)->cont_data[i]));
 
 	AJFREE((*ptr)->cont_data);
     }
   
-    
     AJFREE((*ptr));
     *ptr = NULL;
 
@@ -1597,7 +1590,7 @@ static AjPDomConts sites_DomContsNew(ajint n)
 
 static void sites_DomContsDel(AjPDomConts *ptr) 
 {
-    ajint i = 0;
+    ajuint i = 0U;
 
     /* Check arg's */
     if(*ptr==NULL) 
@@ -1605,12 +1598,13 @@ static void sites_DomContsDel(AjPDomConts *ptr)
 	ajWarn("Attemp to free NULL pointer in sites_DomContsDel");
 	return; 
     }
+
     ajStrDel(&(*ptr)->scop_name);
     ajStrDel(&(*ptr)->het_name);
     ajStrDel(&(*ptr)->pdb_name);
     ajStrDel(&(*ptr)->Seq);
 
-    for(i=0;i<(*ptr)->no_keyres;++i)
+    for(i = 0U; i < (*ptr)->no_keyres; i++)
     {
 	ajStrDel(&(*ptr)->aa_code[i]);
 	ajStrDel(&(*ptr)->res_pos2[i]); 
@@ -1621,7 +1615,6 @@ static void sites_DomContsDel(AjPDomConts *ptr)
 
     if((*ptr)->res_pos2)
 	AJFREE((*ptr)->res_pos2);
-
 
     ajIntDel(&(*ptr)->res_pos);
     AJFREE(*ptr);

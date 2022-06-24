@@ -1,13 +1,13 @@
 application: domainer [
-  documentation: "Generates domain CCF files from protein CCF
+  documentation: "Generate domain CCF files from protein CCF
                   files."
   groups: "Utils:Database creation"
   gui: "yes"
   batch: "yes"
   cpu: "low"
   embassy: "structure"
-  relations: "EDAM:0000220 topic Data file processing"
-  relations: "EDAM:0002234 operation Structure editing"
+  relations: "EDAM_topic:0220 Data processing and validation"
+  relations: "EDAM_operation:2234 Structure file processing"
 ]
 
 section: input [
@@ -25,7 +25,7 @@ section: input [
            file by using DOMAINSEQS."
     knowntype: "domain classification"
     information: "Domain classification file"
-    relations:  "EDAM:0000900 data Protein domain classification"
+    relations:  "EDAM_data:0900 Protein domain classification"
   ]
 
   directory: ccfpdir [
@@ -44,8 +44,8 @@ section: input [
     knowntype: "protein clean coordinates"
     information: "Clean protein structure coordinates
                   directory"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations:  "EDAM:0001460 data Protein structure"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations:  "EDAM_data:1460 Protein structure"
   ]
 
 endsection: input
@@ -67,8 +67,8 @@ section: output [
     knowntype: "domain clean coordinates"
     information: "Clean domain coordinates file output
                   directory"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations:  "EDAM:0001468 data Protein domain"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations:  "EDAM_data:1468 Protein domain"
   ]
 
   outdir: pdboutdir [
@@ -81,8 +81,8 @@ section: output [
     extension: "ent"
     knowntype: "domain pdb"
     information: "Domain pdb file output directory"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations:  "EDAM:0001460 data Protein structure"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations:  "EDAM_data:1460 Protein structure"
   ]
 
   list: mode [
@@ -100,7 +100,7 @@ section: output [
     help: "This option specifies the operational mode of DOMAINER.
            This determines which sort of residue number is written to the PDB
            file."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   outfile: cpdblogfile [
@@ -111,7 +111,7 @@ section: output [
            files"
     default: "domainer_embl.log"
     knowntype: "domainatrix log"
-    relations:  "EDAM:0001678 data Tool log"
+    relations:  "EDAM_data:1678 Tool log"
   ]
 
   outfile: pdblogfile [
@@ -122,7 +122,7 @@ section: output [
            format files"
     default: "domainer_pdb.log"
     knowntype: "domainatrix log"
-    relations:  "EDAM:0001678 data Tool log"
+    relations:  "EDAM_data:1678 Tool log"
   ]
 
 endsection: output

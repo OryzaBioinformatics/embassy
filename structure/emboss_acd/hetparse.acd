@@ -1,13 +1,13 @@
 application: hetparse [
-  documentation: "Converts heterogen group dictionary to
+  documentation: "Convert heterogen group dictionary to
                   EMBL-like format."
   groups: "Utils:Database creation"
   gui: "yes"
   batch: "yes"
   cpu: "low"
   embassy: "structure"
-  relations: "EDAM:0000220 topic Data file processing"
-  relations: "EDAM:0000335 operation File reformatting"
+  relations: "EDAM_topic:0220 Data processing and validation"
+  relations: "EDAM_operation:0335 File reformatting"
 ]
 
 section: input [
@@ -22,7 +22,7 @@ section: input [
            dictionary of heterogen groups) to parse, which should be of the
            format specified at http://pdb.rutgers.edu/het_dictionary.txt"
     knowntype: "Raw dictionary of heterogen groups"
-    relations:  "EDAM:0002240 data Heterogen annotation"
+    relations:  "EDAM_data:2240 Heterogen annotation"
   ]
 
   toggle: dogrep [
@@ -34,7 +34,7 @@ section: input [
            search the directory and will count the number of files that each
            heterogen appears in."
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   dirlist: dirlistpath [
@@ -45,8 +45,8 @@ section: input [
     default: "./"
     extension: "ent"
     knowntype: "pdb"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations:  "EDAM:0001460 data Protein structure"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations:  "EDAM_data:1460 Protein structure"
   ]
 
 endsection: input
@@ -70,7 +70,7 @@ section: output [
     help: "This option specifies the name of EMBL-like format
            dictionary of heterogen groups."
     knowntype: "Dictionary of heterogen groups"
-    relations:  "EDAM:0002240 data Heterogen annotation"
+    relations:  "EDAM_data:2240 Heterogen annotation"
   ]
 
 endsection: output

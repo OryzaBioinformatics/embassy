@@ -54,7 +54,7 @@
 <br><br><br><H2> 1.0   SUMMARY  </H2>
 Parses PDB files and writes CCF files (clean coordinate files) for proteins.
 
-Parses PDB files and writes protein CCF files
+Parse PDB files and writes protein CCF files
 
 
 <!-- INPUTS & OUTPUTS
@@ -682,8 +682,8 @@ PDBPARSE does not use a data file.
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" >
 <tr><td>
 <pre>
-Parses PDB files and writes protein CCF files.
-Version: EMBOSS:6.4.0.0
+Parse PDB files and writes protein CCF files.
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-pdbpath]           dirlist    [./] This option specifies the location of
@@ -692,13 +692,13 @@ Version: EMBOSS:6.4.0.0
                                   detailed explanation of the PDB file format
                                   is available on the PDB web site
                                   http://www.rcsb.org/pdb/info.html.
-   -camask             boolean    [N] This option specifies whether to to mask
+   -camasknon          boolean    [N] This option specifies whether to to mask
                                   non-amino acid groups in protein chains
                                   that do not contain a C-alpha atom. If
                                   masked, the group will not appear in either
                                   the CO or SQ records of the clean coordinate
                                   file.
-   -camaska            boolean    [N] This option specifies whether to mask
+   -camaskamino        boolean    [N] This option specifies whether to mask
                                   amino acids in protein chains that do not
                                   contain a C-alpha atom. If masked, the amino
                                   acid will not appear in the CO record but
@@ -801,7 +801,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-camask</td>
+<td>-camasknon</td>
 <td>boolean</td>
 <td>This option specifies whether to to mask non-amino acid groups in protein chains that do not contain a C-alpha atom. If masked, the group will not appear in either the CO or SQ records of the clean coordinate file.</td>
 <td>Boolean value Yes/No</td>
@@ -809,7 +809,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-camaska</td>
+<td>-camaskamino</td>
 <td>boolean</td>
 <td>This option specifies whether to mask amino acids in protein chains that do not contain a C-alpha atom. If masked, the amino acid will not appear in the CO record but will still be present in the SQ record of the clean coordinate file.</td>
 <td>Boolean value Yes/No</td>
@@ -889,7 +889,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-pdbpath" associated dirlist qualifiers
+<td align="left" colspan=5>"-pdbpath" associated dirlist qualifiers
 </td>
 </tr>
 
@@ -902,7 +902,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-ccfoutdir" associated outdir qualifiers
+<td align="left" colspan=5>"-ccfoutdir" associated outdir qualifiers
 </td>
 </tr>
 
@@ -915,7 +915,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-logfile" associated outfile qualifiers
+<td align="left" colspan=5>"-logfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -1039,7 +1039,7 @@ Here is a sample session with <b>pdbparse</b>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
 % <b>pdbparse </b>
-Parses PDB files and writes protein CCF files.
+Parse PDB files and writes protein CCF files.
 Pdb entry directories [./]: <b>structure</b>
 Mask non-amino acid groups in protein chains that do not contain a C-alpha atom. [N]: <b></b>
 Mask amino acids in protein chains that do not contain a C-alpha atom. [N]: <b>Y</b>
@@ -1267,7 +1267,7 @@ The correct residue sequence and numbering for a chain is determined by an align
 
 <tr>
 <td><a href="/embassy/domainatrix/cathparse.html">cathparse</a></td>
-<td>Generates DCF file from raw CATH files</td>
+<td>Generate DCF file from raw CATH files</td>
 </tr>
 
 <tr>
@@ -1277,17 +1277,17 @@ The correct residue sequence and numbering for a chain is determined by an align
 
 <tr>
 <td><a href="domainer.html">domainer</a></td>
-<td>Generates domain CCF files from protein CCF files</td>
+<td>Generate domain CCF files from protein CCF files</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/domainatrix/domainnr.html">domainnr</a></td>
-<td>Removes redundant domains from a DCF file</td>
+<td>Remove redundant domains from a DCF file</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/domainatrix/domainseqs.html">domainseqs</a></td>
-<td>Adds sequence records to a DCF file</td>
+<td>Add sequence records to a DCF file</td>
 </tr>
 
 <tr>
@@ -1297,7 +1297,7 @@ The correct residue sequence and numbering for a chain is determined by an align
 
 <tr>
 <td><a href="hetparse.html">hetparse</a></td>
-<td>Converts heterogen group dictionary to EMBL-like format</td>
+<td>Convert heterogen group dictionary to EMBL-like format</td>
 </tr>
 
 <tr>
@@ -1322,7 +1322,7 @@ The correct residue sequence and numbering for a chain is determined by an align
 
 <tr>
 <td><a href="/emboss/apps/prosextract.html">prosextract</a></td>
-<td>Processes the PROSITE motif database for use by patmatmotifs</td>
+<td>Process the PROSITE motif database for use by patmatmotifs</td>
 </tr>
 
 <tr>
@@ -1337,7 +1337,7 @@ The correct residue sequence and numbering for a chain is determined by an align
 
 <tr>
 <td><a href="/embassy/domsearch/seqnr.html">seqnr</a></td>
-<td>Removes redundancy from DHF files</td>
+<td>Remove redundancy from DHF files</td>
 </tr>
 
 <tr>

@@ -142,8 +142,8 @@ int main(ajint argc, char **argv)
     max_mismatch =ajAcdGetInt("maxmis");
     max_trim     =ajAcdGetInt("maxtrim");
     ccfnaming    = ajAcdGetBoolean("ccfnaming");
-    camask       = ajAcdGetBoolean("camask");
-    camask1      = ajAcdGetBoolean("camaska");
+    camask       = ajAcdGetBoolean("camasknon");
+    camask1      = ajAcdGetBoolean("camaskamino");
     atommask     = ajAcdGetBoolean("atommask");
     
     

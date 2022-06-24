@@ -22,7 +22,7 @@ CONTENTS
 1.0 SUMMARY
 
    Parses PDB files and writes CCF files (clean coordinate files) for
-   proteins. Parses PDB files and writes protein CCF files
+   proteins. Parse PDB files and writes protein CCF files
 
 2.0 INPUTS & OUTPUTS
 
@@ -792,8 +792,8 @@ AT   1    .    .    .    223   . HOH   W O         8.142   18.836    1.041    8.
 
 6.0 USAGE
 
-Parses PDB files and writes protein CCF files.
-Version: EMBOSS:6.4.0.0
+Parse PDB files and writes protein CCF files.
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-pdbpath]           dirlist    [./] This option specifies the location of
@@ -802,13 +802,13 @@ Version: EMBOSS:6.4.0.0
                                   detailed explanation of the PDB file format
                                   is available on the PDB web site
                                   http://www.rcsb.org/pdb/info.html.
-   -camask             boolean    [N] This option specifies whether to to mask
+   -camasknon          boolean    [N] This option specifies whether to to mask
                                   non-amino acid groups in protein chains
                                   that do not contain a C-alpha atom. If
                                   masked, the group will not appear in either
                                   the CO or SQ records of the clean coordinate
                                   file.
-   -camaska            boolean    [N] This option specifies whether to mask
+   -camaskamino        boolean    [N] This option specifies whether to mask
                                   amino acids in protein chains that do not
                                   contain a C-alpha atom. If masked, the amino
                                   acid will not appear in the CO record but

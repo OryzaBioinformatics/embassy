@@ -21,7 +21,7 @@ CONTENTS
 
 1.0 SUMMARY
 
-   Generates domain CCF files from protein CCF files
+   Generate domain CCF files from protein CCF files
 
 2.0 INPUTS & OUTPUTS
 
@@ -42,7 +42,7 @@ CONTENTS
 
   Input files for usage example
 
-  File: ../scopparse-keep/all.scop
+  File: ../scopparse-structure/all.scop
 
 ID   D1CS4A_
 XX
@@ -788,8 +788,8 @@ AT   1    1    .    50   50    L LEU   P CD2      12.425   39.035   22.798    1.
 
   6.1 COMMAND LINE ARGUMENTS
 
-Generates domain CCF files from protein CCF files.
-Version: EMBOSS:6.4.0.0
+Generate domain CCF files from protein CCF files.
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-scopfile]          infile     This option specifies the DCF file (domain

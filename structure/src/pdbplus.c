@@ -3,7 +3,6 @@
 ** Add residue solvent accessibility and secondary structure data to
 ** a CCF file (clean coordinate file) for a protein or domain.
 ** 
-**
 ** @author: Copyright (C) Jon Ison (jison@ebi.ac.uk)
 ** @author: Copyright (C) Amanda O'Reilly
 ** @@
@@ -40,10 +39,8 @@
 
 
 
-
 #include <config.h>
 #include "emboss.h"
-
 
 
 
@@ -53,6 +50,7 @@
 ** PROTOTYPES  
 **
 ******************************************************************************/
+
 static void     pdbplus_writeElement(int start, 
 			      int end,
 			      int eNum,
@@ -102,11 +100,11 @@ int main(ajint argc, char **argv)
     AjBool   done_naccess= ajFalse;
     AjBool   done_stride = ajFalse;
     AjBool   found       = ajFalse;
-    AjPResidue temp_res  = NULL;  /* Pointer to Residue object.                */
+    AjPResidue temp_res  = NULL;  /* Pointer to Residue object.             */
     AjPPdb   pdb_old     = NULL;  /* Pointer to PDB object - without new
 				     stride elements.                       */
     AjPPdb   pdb         = NULL;  /* Pointer to PDB object.                 */
-    ajint    idn         = 0;     /* Chain identifier as a number (1,2,...) */
+    ajuint   idn         = 0U;    /* Chain identifier as a number (1,2,...) */
     ajint    chain_num   = 0;     /* Chain identifier index (0,1,...).      */
     ajint    tS          = 0;     /* User-defined threshold size for SSEs.  */
     ajint    nostride    = 0;     /* No. times stride failed                */
@@ -616,13 +614,13 @@ static void pdbplus_sort(AjPPdb pdb, int tS)
 			     of Residue objects in Pdb chain object.        */
     ajint n      = 0;     /* Current position in array of residues.         */
     ajint x      = 0;     /* Loop counter.                                  */
-    ajint z      = 0;     /* Loop counter.                                  */
+    ajuint z     = 0U;    /* Loop counter.                                  */
     ajint siz    = 0;     /* Size of array of residues.                     */
     ajint start  = 0;     /* Start position of element.                     */
     ajint end    = 0;     /* End position of element.                       */
     ajint esiz   = 0;     /* Size of current element.                       */
     ajint eNum   = 0;     /* Sequential count of elements.                  */
-    ajint resnum = 0;     /* Residue number of last residue, Idx value.     */
+    ajuint resnum = 0U;   /* Residue number of last residue, Idx value.     */
     char   etype = ' ';   /* Element type.                                  */
     AjBool foundStart =ajFalse; /* True if we have found the start 
 				   of an element of any size*/
@@ -633,7 +631,7 @@ static void pdbplus_sort(AjPPdb pdb, int tS)
 
 
 
-    for(z=0; z < pdb->Nchn; z++)
+    for(z = 0; z < pdb->Nchn; z++)
     {
         /* Use ajListToArray to convert the list of residues for the current
 	   chain to an array.  Returns size of array of pointers */
@@ -785,6 +783,8 @@ static void pdbplus_sort(AjPPdb pdb, int tS)
         pdb->Chains[z]->numStrands = numStrands;
 	AJFREE(arr); 
     }
+    
+    return;
 }
 
 
@@ -818,7 +818,3 @@ static void pdbplus_writeElement(int start,
 
     return;
 }
-
-
-
-

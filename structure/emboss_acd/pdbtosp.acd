@@ -6,8 +6,8 @@ application: pdbtosp [
   batch: "yes"
   cpu: "low"
   embassy: "structure"
-  relations: "EDAM:0000220 topic Data file processing"
-  relations: "EDAM:0000335 operation File reformatting"
+  relations: "EDAM_topic:0220 Data processing and validation"
+  relations: "EDAM_operation:0335 File reformatting"
 ]
 
 section: input [
@@ -22,7 +22,7 @@ section: input [
            available at URL http://www.expasy.ch/cgi-bin/lists?pdbtosp.txt"
     parameter: "Y"
     knowntype: "swissprot pdb equivalence table"
-    relations:  "EDAM:0000954 data Database cross-mapping"
+    relations:  "EDAM_data:0954 Database cross-mapping"
   ]
 
 endsection: input
@@ -39,7 +39,7 @@ section: output [
     default: "Epdbtosp.dat"
     parameter: "Y"
     knowntype: "swissprot pdb equivalence"
-    relations:  "EDAM:0000954 data Database cross-mapping"
+    relations:  "EDAM_data:0954 Database cross-mapping"
   ]
 
 endsection: output
