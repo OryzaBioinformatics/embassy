@@ -21,26 +21,19 @@
 
 #include "emboss.h"
 
+AjPStr    str0  = NULL;      
+AjPStr    str1  = NULL;      
+AjPStr    str2  = NULL;      
+AjPStr    str3  = NULL;        
+AjPStr    str4  = NULL;        
+AjPStr    str5  = NULL;        
 
-
-
-
-
-
-
-    AjPStr    str0  = NULL;      
-    AjPStr    str1  = NULL;      
-    AjPStr    str2  = NULL;      
-    AjPStr    str3  = NULL;        
-    AjPStr    str4  = NULL;        
-    AjPStr    str5  = NULL;        
-
-    char*     txt0  = NULL;      
-    char*     txt1  = NULL;      
-    char*     txt2  = NULL;      
-    char*     txt3  = NULL;      
-    char*     txt4  = NULL;      
-    char*     txt5  = NULL;      
+char*     txt0  = NULL;      
+char*     txt1  = NULL;      
+char*     txt2  = NULL;      
+char*     txt3  = NULL;      
+char*     txt4  = NULL;      
+char*     txt5  = NULL;      
 
 
 
@@ -70,7 +63,7 @@ int main(int argc, char **argv)
     size_t    size  = 100;   /* Reserved memory size.  Could be any value you know in advance. */
 
 
-    embInit("demostringnew", argc, argv);
+    embInitPV("demostringnew", argc, argv, "myembossdemo", VERSION);
     
     demostringnew_msg("/* Starting string values */");
     
@@ -117,7 +110,9 @@ int main(int argc, char **argv)
     ** See "@section destructors" in ajstr.c) 
     */
     
-    /* Destruct a string */
+    /* Destroy a string */
+
+    ajCharDel(&txt0);
     ajCharDel(&txt1);
     ajCharDel(&txt2);
     ajCharDel(&txt3);
@@ -376,6 +371,18 @@ AjBool     ajStrRandom(AjPStr *s);
 AjBool     ajStrReverse(AjPStr* Pstr);
     */
 
+    ajCharDel(&txt0);
+    ajCharDel(&txt1);
+    ajCharDel(&txt2);
+    ajCharDel(&txt3);
+    ajCharDel(&txt4);
+    ajCharDel(&txt5);
+    ajStrDel(&str0);
+    ajStrDel(&str1);
+    ajStrDel(&str2);
+    ajStrDel(&str3);
+    ajStrDel(&str4);
+    ajStrDel(&str5);
 
     embExit();
     return 0;

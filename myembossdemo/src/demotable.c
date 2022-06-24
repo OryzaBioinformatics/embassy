@@ -51,7 +51,7 @@ int main(int argc, char **argv)
     AjPStr trukey = NULL;
     AjIList iter;
 
-    embInit("demotable", argc, argv);
+    embInitPV("demotable", argc, argv, "myembossdemo", VERSION);
 
 
     /*open file */
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
     **  and ajTablestrHashCase as the hash function. Initial size of 50
     **  is used
     */
-    type   = ajTableNewFunctionLen(50, ajTablestrCmpCase, ajTablestrHashCase);
+    type   = ajTablestrNew(50);
     list = ajListstrNew();
     while(ajReadlineTrim(gfffile, &line))
     {
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 	if(temp)
 	{
 	    /* does the key "temp" already exist in the table */
-	    intptr = ajTableFetch(type, temp);
+	    intptr = ajTableFetchmodS(type, temp);
 
 	    if(!intptr)
 	    {				/* if not i.e. no key returned */

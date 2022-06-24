@@ -77,7 +77,7 @@ int main(int argc, char **argv)
     ajint i;
     ajint ia;
 
-    embInit ("demolist", argc, argv);
+    embInitPV("demolist", argc, argv, "myembossdemo", VERSION);
 
     /*open file */
     gfffile = ajAcdGetInfile("infile");

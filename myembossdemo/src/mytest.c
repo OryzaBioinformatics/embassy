@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     AjPSeq seq = NULL;
     AjPFile outf = NULL;
 
-    embInitPV("mytest", argc, argv, "MYEMBOSS",VERSION);
+    embInitPV("mytest", argc, argv, "myembossdemo",VERSION);
 
     seq = ajAcdGetSeq("sequence");
     outf = ajAcdGetOutfile("outfile");
@@ -44,6 +44,9 @@ int main(int argc, char **argv)
     ajFmtPrintF(outf, "Name: %S\n", ajSeqGetNameS(seq));
     ajFmtPrintF(outf, "Usa: %S\n", ajSeqGetUsaS(seq));
     ajFmtPrintF(outf, "Length: %d\n", ajSeqGetLen(seq));
+    ajFileClose(&outf);
+
+    ajSeqDel(&seq);
     ajFileClose(&outf);
 
     embExit();

@@ -36,7 +36,7 @@ int main(int argc, char **argv)
     AjPSeq seq = NULL;
     AjPFeattable ftab;
 
-    embInit("demoreport", argc, argv);
+    embInitPV("demoreport", argc, argv, "myembossdemo", VERSION);
 
     report = ajAcdGetReport("outfile");
     seq    = ajAcdGetSeq("sequence");

@@ -3,6 +3,8 @@ application: demoreport [
                   a report"
   groups: "Test"
   embassy: "myembossdemo"
+  relations: "EDAM:0000088 topic Literature and documentation"
+  relations: "EDAM:0002246 operation Demonstration"
 ]
 
 section: input [
@@ -14,6 +16,8 @@ section: input [
     parameter: "Y"
     features: "Y"
     type: "any"
+    relations: "EDAM:0000848 data Sequence"
+    relations: "EDAM:0000849 data Sequence record"
   ]
 
 endsection: input
@@ -27,6 +31,7 @@ section: output [
     parameter: "Y"
     taglist: "int:demo=demo_tag float:test
               int:pos=Maximum_position"
+    relations: "EDAM:0002143 data EMBOSS report"
   ]
 
 endsection: output

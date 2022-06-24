@@ -19,12 +19,11 @@ int main (int argc, char **argv)
     ajint frame   = 0;
     AjBool sortbytype;
     AjBool sortbystart;
-    AjPFeature feature = NULL;
     AjPFeattabOut output = NULL;
     ajint i;
     float score = 0.0;
 
-    embInit("demofeatures", argc, argv);
+    embInitPV("demofeatures", argc, argv, "myembossdemo", VERSION);
 
     output      = ajAcdGetFeatout("outfeat");
     sortbytype  = ajAcdGetBoolean("typesort");
@@ -44,8 +43,8 @@ int main (int argc, char **argv)
 	else
 	    ajStrAssignC(&type,"misc_feature");
 
-	feature = ajFeatNew(feattable, source, type, i, i+10, score, strand,
-			    frame) ;
+	ajFeatNew(feattable, source, type, i, i+10, score, strand,
+                  frame) ;
     }
 
 

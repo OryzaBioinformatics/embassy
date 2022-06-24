@@ -38,7 +38,7 @@ int main(int argc, char **argv)
     AjPMatrixf fmat;
     AjBool dofloat;
 
-    embInit("demoalign", argc, argv);
+    embInitPV("demoalign", argc, argv, "myembossdemo", VERSION);
 
     seqset  = ajAcdGetSeqset("sequence");
     align   = ajAcdGetAlign("outfile");

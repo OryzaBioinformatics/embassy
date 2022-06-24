@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 
     AjPTime today;
 
-    embInit ("demostring", argc, argv);
+    embInitPV("demostring", argc, argv, "myembossdemo", VERSION);
 
     /*
      *  the ajStrTrace function writes the string contents out to the

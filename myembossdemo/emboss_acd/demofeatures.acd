@@ -2,6 +2,8 @@ application: demofeatures [
   documentation: "Demonstration of the feature functions"
   groups: "Test"
   embassy: "myembossdemo"
+  relations: "EDAM:0000088 topic Literature and documentation"
+  relations: "EDAM:0002246 operation Demonstration"
 ]
 
 section: advanced [
@@ -13,12 +15,16 @@ section: advanced [
     default: "N"
     information: "Do you want to Sort by Type"
     help: "Sort output features by their type"
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
+
+
 
   boolean: startsort [
     default: "N"
     information: "Do you want to Sort by Start position"
     help: "Sort output features by their start position"
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: advanced
@@ -33,6 +39,7 @@ section: output [
     default: "gff:demofeatures.gff"
     help: "File for output of normal tab delimited gff's"
     type: "any"
+    relations: "EDAM:0001255 data Sequence features"
   ]
 
 endsection: output

@@ -1,0 +1,31 @@
+application: demodirectory [
+  documentation: "Demonstration of directory input"
+  groups: "Test"
+  embassy: "myembossdemo"
+  relations: "EDAM:0000088 topic Literature and documentation"
+  relations: "EDAM:0002246 operation Demonstration"
+]
+
+section: input [
+  information: "Input section"
+  type: "page"
+]
+
+ directory: infile [
+   parameter: "Y"
+   information: "Directory name"
+   extension: "c"
+ ]
+
+endsection: input
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+ outfile: outfile [
+   parameter: "Y"
+ ]
+
+endsection: output

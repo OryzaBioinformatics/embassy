@@ -1,7 +1,7 @@
 EXTRA_DIST = Makefile.am
 
-pkgdata_DATA = demoalign.acd demofeatures.acd demolist.acd demoreport.acd \
-	demosequence.acd demostring.acd demostringnew.acd demotable.acd \
-        myseq.acd mytest.acd
+## Uncomment these lines and use your own program names
+
+## pkgdata_DATA = 
 
 pkgdatadir=$(prefix)/share/EMBOSS/acd

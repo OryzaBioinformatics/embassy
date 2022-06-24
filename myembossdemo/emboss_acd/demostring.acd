@@ -2,6 +2,8 @@ application: demostring [
   documentation: "Demonstration of the string functions"
   groups: "Test"
   embassy: "myembossdemo"
+  relations: "EDAM:0000088 topic Literature and documentation"
+  relations: "EDAM:0002246 operation Demonstration"
 ]
 
 section: input [
@@ -13,6 +15,7 @@ section: input [
     standard: "Y"
     information: "Value for instr"
     knowntype: "string"
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: input

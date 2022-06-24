@@ -3,6 +3,8 @@ application: demoalign [
                   file"
   groups: "Test"
   embassy: "myembossdemo"
+  relations: "EDAM:0000088 topic Literature and documentation"
+  relations: "EDAM:0002246 operation Demonstration"
 ]
 
 section: input [
@@ -15,6 +17,7 @@ section: input [
     features: "Y"
     type: "gapany"
     aligned: "Y"
+    relations: "EDAM:0000863 data Sequence alignment"
   ]
 
   matrixf: floatmatrix [
@@ -25,6 +28,7 @@ section: input [
            sequences. By default it is the file 'EBLOSUM62' (for proteins) or
            the file 'EDNAFULL' (for nucleic sequences). These files are
            found in the 'data' directory of the EMBOSS installation."
+    relations: "EDAM:0001447 data Comparison matrix (floats)"
   ]
 
   matrix: intmatrix [
@@ -35,6 +39,7 @@ section: input [
            sequences. By default it is the file 'EBLOSUM62' (for proteins) or
            the file 'EDNAFULL' (for nucleic sequences). These files are
            found in the 'data' directory of the EMBOSS installation."
+    relations: "EDAM:0001446 data Comparison matrix (integers)"
   ]
 
 endsection: input
@@ -46,6 +51,7 @@ section: advanced [
 
   boolean: dofloat [
     information: "Use floating point matrix"
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: advanced
@@ -58,6 +64,9 @@ section: output [
   align: outfile [
     parameter: "Y"
     aformat: "SRS"
+    relations: "EDAM:0000863 data Sequence alignment"
   ]
 
 endsection: output
+
+

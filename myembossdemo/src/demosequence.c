@@ -32,7 +32,7 @@
 int main(int argc, char **argv)
 {
 
-    embInit("demosequence", argc, argv);
+    embInitPV("demosequence", argc, argv, "myembossdemo", VERSION);
 
 
     /* in progress ... */

@@ -13,13 +13,13 @@ endif
 
 
 if LOCALLINK
-INCLUDES = -I../../../nucleus -I../../../ajax/pcre \
+AM_CPPFLAGS = -I../../../nucleus -I../../../ajax/pcre \
 	$(LLINCLUDES) \
 	-I../../../ajax/core -I../../../ajax/graphics \
-	-I../../../ajax/ensembl -I../../../ajax/ajaxdb -\
-	I../../../ajax/acd -I../../../plplot
+	-I../../../ajax/ensembl -I../../../ajax/ajaxdb \
+	-I../../../ajax/acd -I../../../plplot
 else
-INCLUDES = -I${embprefix}/include -I${embprefix}/include/eplplot \
+AM_CPPFLAGS = -I${embprefix}/include -I${embprefix}/include/eplplot \
 	$(NLINCLUDES) \
 	-I${embprefix}/include/epcre
 endif
@@ -48,12 +48,16 @@ AM_CFLAGS =  $(AIX_CFLAGS) $(WARN_CFLAGS) $(DEVWARN_CFLAGS)
 ## from check_PROGRAMS to bin_PROGRAMS and run "make install"
 
 check_PROGRAMS = \
-demoalign demofeatures demolist demoreport \
+demoalign demodirectory demodirlist \
+demofeatures demofilelist demolist demoreport \
 demosequence demostring demostringnew demotable \
 myseq mytest
 
 demoalign_SOURCES = demoalign.c
+demodirectory_SOURCES = demodirectory.c
+demodirlist_SOURCES = demodirlist.c
 demofeatures_SOURCES = demofeatures.c
+demofilelist_SOURCES = demofilelist.c
 demolist_SOURCES = demolist.c
 demoreport_SOURCES = demoreport.c
 demosequence_SOURCES = demosequence.c
