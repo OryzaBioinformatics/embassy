@@ -506,7 +506,7 @@ CONTACTS uses a data file containing van der Waals radii for atoms in proteins (
 <tr><td>
 <pre>
 Generate intra-chain CON files from CCF files.
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers:
   [-cpdbdir]           dirlist    [./] This option specifies the location of
@@ -565,6 +565,12 @@ Version: EMBOSS:6.2.0
 
    Advanced (Unprompted) qualifiers: (none)
    Associated qualifiers:
+
+   "-cpdbdir" associated qualifiers
+   -extension1         string     Default file extension
+
+   "-conoutdir" associated qualifiers
+   -extension2         string     Default file extension
 
    "-conlogfile" associated qualifiers
    -odirectory         string     Output directory
@@ -684,6 +690,32 @@ Version: EMBOSS:6.2.0
 
 <tr bgcolor="#FFFFCC">
 <th align="left" colspan=5>Associated qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-cpdbdir" associated dirlist qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension1<br>-extension_cpdbdir</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>ccf</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-conoutdir" associated outdir qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension2<br>-extension_conoutdir</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>con</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -1045,7 +1077,7 @@ Contact between two residues is defined when the van der Waals surface of any at
 
 <tr>
 <td><a href="/embassy/signature/sigscanlig.html">sigscanlig</a></td>
-<td>Searches ligand-signature library & writes hits (LHF file)</td>
+<td>Searches ligand-signature library and writes hits (LHF file)</td>
 </tr>
 
 </table>

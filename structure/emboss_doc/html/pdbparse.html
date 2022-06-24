@@ -683,7 +683,7 @@ PDBPARSE does not use a data file.
 <tr><td>
 <pre>
 Parses PDB files and writes protein CCF files.
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers:
   [-pdbpath]           dirlist    [./] This option specifies the location of
@@ -745,6 +745,12 @@ Version: EMBOSS:6.2.0
 
    Advanced (Unprompted) qualifiers: (none)
    Associated qualifiers:
+
+   "-pdbpath" associated qualifiers
+   -extension1         string     Default file extension
+
+   "-ccfoutdir" associated qualifiers
+   -extension2         string     Default file extension
 
    "-logfile" associated qualifiers
    -odirectory         string     Output directory
@@ -880,6 +886,32 @@ Version: EMBOSS:6.2.0
 
 <tr bgcolor="#FFFFCC">
 <th align="left" colspan=5>Associated qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-pdbpath" associated dirlist qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension1<br>-extension_pdbpath</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>ent</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-ccfoutdir" associated outdir qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension2<br>-extension_ccfoutdir</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>ccf</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -1275,7 +1307,7 @@ The correct residue sequence and numbering for a chain is determined by an align
 
 <tr>
 <td><a href="pdbplus.html">pdbplus</a></td>
-<td>Add accessibility & secondary structure to a CCF file</td>
+<td>Add accessibility and secondary structure to a CCF file</td>
 </tr>
 
 <tr>

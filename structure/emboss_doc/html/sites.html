@@ -488,7 +488,7 @@ The file Ehet.dat is such a data file and is part of the EMBOSS distribution.
 
 <pre>
 Generate residue-ligand CON files from CCF files.
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers:
   [-protpath]          dirlist    [./] This option specifies the location of
@@ -549,6 +549,12 @@ Version: EMBOSS:6.2.0
                                   part of the EMBOSS distribution.
 
    Associated qualifiers:
+
+   "-protpath" associated qualifiers
+   -extension1         string     Default file extension
+
+   "-domaindir" associated qualifiers
+   -extension2         string     Default file extension
 
    "-outfile" associated qualifiers
    -odirectory4        string     Output directory
@@ -667,6 +673,32 @@ Version: EMBOSS:6.2.0
 
 <tr bgcolor="#FFFFCC">
 <th align="left" colspan=5>Associated qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-protpath" associated dirlist qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension1<br>-extension_protpath</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>ccf</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-domaindir" associated directory qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension2<br>-extension_domaindir</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>ccf</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -1021,7 +1053,7 @@ value of 1 Angstrom.
 
 <tr>
 <td><a href="pdbplus.html">pdbplus</a></td>
-<td>Add accessibility & secondary structure to a CCF file</td>
+<td>Add accessibility and secondary structure to a CCF file</td>
 </tr>
 
 <tr>

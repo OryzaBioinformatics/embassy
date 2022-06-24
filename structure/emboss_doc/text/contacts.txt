@@ -436,7 +436,7 @@ SM   TYR 145 ; HIS 146
 6.0 USAGE
 
 Generate intra-chain CON files from CCF files.
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers:
   [-cpdbdir]           dirlist    [./] This option specifies the location of
@@ -495,6 +495,12 @@ Version: EMBOSS:6.2.0
 
    Advanced (Unprompted) qualifiers: (none)
    Associated qualifiers:
+
+   "-cpdbdir" associated qualifiers
+   -extension1         string     Default file extension
+
+   "-conoutdir" associated qualifiers
+   -extension2         string     Default file extension
 
    "-conlogfile" associated qualifiers
    -odirectory         string     Output directory
