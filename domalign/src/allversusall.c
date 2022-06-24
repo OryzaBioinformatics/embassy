@@ -3,7 +3,7 @@
 ** Does an all-versus-all global alignment for each set of sequences in an 
 ** input directory and writes files of sequence similarity values. 
 **
-** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
+** @author: Copyright (C) Jon Ison (jison@ebi.ac.uk)
 ** @@
 **
 ** This program is free software; you can redistribute it and/or
@@ -31,7 +31,7 @@
 **  Software Suite.  Trends in Genetics, 15:276-278.  
 **  See also http://www.uk.embnet.org/Software/EMBOSS
 **  
-**  Email jison@rfcgr.mrc.ac.uk.
+**  Email jison@ebi.mrc.ac.uk.
 **  
 **  NOTES
 **  
@@ -82,8 +82,8 @@ int main(int argc, char **argv)
 
 
     /* Read data from acd */
-    ajNamInit("emboss");
-    ajAcdInitP("allversusall",argc,argv,"DOMALIGN");
+    embInitP("allversusall",argc,argv,"DOMALIGN");
+
     in        = ajAcdGetDirlist("seqinpath");
     matrix    = ajAcdGetMatrixf("matrix");
     gapopen   = ajAcdGetFloat("gapopen");
@@ -141,8 +141,8 @@ int main(int argc, char **argv)
 	for(x=0;x<ajSeqsetSize(seqset);x++)
 	{
 	    seq_tmp = ajSeqNew();
-	    ajStrAssS(&seq_tmp->Acc, ajSeqsetAcc(seqset, x));
-	    ajStrAssC(&seq_tmp->Seq, ajSeqsetSeq(seqset, x));
+	    ajStrAssignS(&seq_tmp->Acc, ajSeqsetAcc(seqset, x));
+	    ajStrAssignC(&seq_tmp->Seq, ajSeqsetSeq(seqset, x));
 	    ajListPushApp(seq_list,seq_tmp);		
 	}
     
@@ -154,7 +154,7 @@ int main(int argc, char **argv)
 
 
 	/* Create output files. */
-	ajStrAssS(&outname, inname);
+	ajStrAssignS(&outname, inname);
 	ajFileDirExtnTrim(&outname);
 	outf = ajFileNewOutDir(out, outname);
 	
