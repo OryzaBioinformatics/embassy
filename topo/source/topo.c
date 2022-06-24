@@ -23,41 +23,48 @@ void  truncup(const int num,const int istart,const int iend,
 	      float *off,const float wide,char *strand,int *syms)  ;
 /*void  selectsym(int ndev,int symx);*/
 void  checkcys(AjBool outstart,const int symcys,const int tmcount,
-	       const int length,int *istart,
-	       int *iend,char *strand,int *syms) ;
+	       const int length,ajuint *istart,
+	       ajuint *iend,char *strand,int *syms) ;
 void  checklca(const int symlcharge,const int tmcount,
-	       int *istart,int *iend,char *strand,int *syms);
+	       ajuint *istart,ajuint *iend,char *strand,int *syms);
 void  checklcb(const int symlcharge,const int tmcount,
-	       int *istart,int *iend,char *strand,int *syms);
+	       ajuint *istart,ajuint *iend,char *strand,int *syms);
 void  checkla(const int symlcharge,const int tmcount,
-	      int *istart,int *iend,char *strand,int *syms);
+	      ajuint *istart,ajuint *iend,char *strand,int *syms);
 void  checkloh(const int symloh,const int tmcount,
-	       int *istart,int *iend,char *strand,int *syms);
+	       ajuint *istart,ajuint *iend,char *strand,int *syms);
 void  checklar(const int symlar,const int tmcount,
-	       int *istart,int *iend,char *strand,int *syms);
+	       ajuint *istart,ajuint *iend,char *strand,int *syms);
 void  checklpro(const int symlpro,const int tmcount,
-		int *istart,int *iend,char *strand,int *syms);
+		ajuint *istart,ajuint *iend,char *strand,int *syms);
 void  checkgly(AjBool outstart,const int symgly,const int tmcount,int length,
-	       int *istart,int *iend,char *strand,int *syms);
+	       ajuint *istart,ajuint *iend,char *strand,int *syms);
 void  topoMembrane(void);
 void  topoMembrane2(void);
 void  topoMembrane3(void);
 void  topoSymbol(const float x,float y,char stran,int sym);
-void  starttop7(const int tmcount,const int istart,float *off,
+void  starttop7(AjPGraph graph, const int tmcount,const int istart,float *off,
 		char *strand,int *syms);
-void  starttop7full(const int tmcount,const int istart,
-		    char *strand,int *syms);
-void  endtop7full(const int tmcount,const int iend,const int length,
-		  char *strand,int *syms) ;
-void  endbot7full(const int tmcount,const int ie,const int length,
-		  char *strand,int *syms);
-void  endtop7(const int tmcount,const int iend,const int length,
+void  starttop7full(AjPGraph graph, const int tmcount,
+		    const int istart,char *strand,int *syms);
+void  endtop7(AjPGraph graph, const int tmcount,
+	      const int iend,const int length,
 	      float *off,char *strand,int *syms)  ;
+void  endtop7full(AjPGraph graph, const int tmcount,
+		  const int iend,const int length,
+		  char *strand,int *syms) ;
 void  topoTerm(const float x,const float y);
-void  startbot7(const int tmcount,const int istart,float *off,
+void  startbot7(AjPGraph graph, const int tmcount,
+		const int istart,float *off,
 		char *strand,int *syms);
-void  endbot7(const int tmcount,const int iend,const int length,
+void  startbot7full(AjPGraph graph, const int tmcount,
+		    int istart,char *strand,int *syms)  ;
+void  endbot7(AjPGraph graph, const int tmcount,
+	      const int iend,const int length,
 	      float *off,char *strand,int *syms);
+void  endbot7full(AjPGraph graph, const int tmcount,
+		  const int ie,const int length,
+		  char *strand,int *syms);
 void  chaindown(const int i,const int istart,const int nchain,
 		float *off,const int page,const float wide,
 		float *hold,char *strand,int *syms);
@@ -155,18 +162,24 @@ void  ball5down(const int i,const int j,const float x,
 		char *strand,int *syms)  ;
 void  ball5up(const int i,const int j,const float x,
 	      char *strand,int *syms)  ;
-void  conup(float *hold,const int i,const int is,int *ie,
+void  conup(float *hold,const int i,const ajuint is,ajuint *ie,
 	    char *strand,int *syms)  ;
-void  condown(float *hold1,const int i,const int is,int *ie,
+void  condown(float *hold1,const int i,const ajuint is,ajuint *ie,
 	      char *strand,int *syms) ;
 void  condownsmall(const int is,int *ie,char *strand,int *syms)  ;
 void  conupbig2(const int is,int *ie,char *strand,int *syms)  ;
 void  condownbig2(const int is,int *ie,char *strand,int *syms)  ;
 void  condownbig3(const int is,int *ie,char *strand,int *syms)  ;
-void  startbot7full(const int tmcount,int istart,char *strand,int *syms)  ;
 void  sheetdown(const int page,const int i,const int istart,
 		const int nchain,float *off,
 		float *hold,const float wide,char *strand,int *syms) ;
+int getValFromStr(AjPStr str);
+void topoMoveTo(const float x, float y);
+void topoDraw(const float x, float y);
+void topoCentre(const float x, float y);
+void topoCurve(float rad, float junk, float junk2);
+void topoPlotText(char *text);
+void topoNewColour(int col);
  
 
 
@@ -297,8 +310,8 @@ int main(int argc, char * argv[])
     int   i,tmcount,tmcount2,nsecs,nsece,nchain,length;
     int   j,iex,iex2;
     int   gap,page,pages,stsp;
-    int   *istart = NULL;
-    int   *iend = NULL;
+    ajuint   *istart = NULL;
+    ajuint   *iend = NULL;
     int   *syms = NULL;
     int   gaps ;
     int   symcys,symgly,symlchargea,symlchargeb ;
@@ -310,8 +323,6 @@ int main(int argc, char * argv[])
     int ii;
     int minstart;
     int minend;
-    int *isigstart = NULL;
-    int *isigend = NULL;
     int maxtm;
 
     /* acd defs */
@@ -330,17 +341,21 @@ int main(int argc, char * argv[])
     AjPStr listaro;
     AjPStr listpro;
     AjBool doend = ajTrue;
+    ajuint isigstart, isigend;
 
     ajGraphInitP ("topo", argc, argv, "TOPO");
   
     sequence = ajAcdGetSeq("sequence");
     graph  = ajAcdGetGraph("graph");
+
+    ajGraphSetTitlePlus(graph, ajSeqGetUsaS(sequence));
+
     ajGraphOpenWin(graph,0.0,150.0,0.0,100.0);
-    ajGraphSetCharSize(0.5);
+    ajGraphSetCharScale(0.5);
 
     sq.seq[0] = ' '; /* hopefully sort out the fortran to c offset worrys :) */
 
-    strcpy(&sq.seq[1],ajSeqChar(sequence));
+    strcpy(&sq.seq[1],ajSeqGetSeqC(sequence));
     length = strlen(sq.seq);
 
     if(sq.seq[length] == '*')
@@ -369,9 +384,9 @@ int main(int argc, char * argv[])
 
     regions = ajAcdGetRange ("sections");
     tmcount = ajRangeNumber(regions);
-    istart = (int *) AJALLOC((tmcount+1)*sizeof(int)); 
-    iend = (int *) AJALLOC((tmcount+1)*sizeof(int));  
-    ajRangeValues(regions,tmcount,istart,iend); /* again offset by 1 */
+    istart = (ajuint *) AJALLOC((tmcount+1)*sizeof(ajuint)); 
+    iend = (ajuint *) AJALLOC((tmcount+1)*sizeof(ajuint));  
+    ajRangeValues(regions,tmcount,&istart[0],&iend[0]); /* again offset by 1*/
     for(i=0;i<=tmcount;i++){
 	ajRangeValues(regions,i,
 		      &istart[i+1],&iend[i+1]); /* again offset by 1 */
@@ -460,25 +475,21 @@ int main(int argc, char * argv[])
 	/* num num code sets */
 	sigregions = ajAcdGetRange ("sigrange");
 	ii = ajRangeNumber(sigregions);
-	isigstart = (int *) AJALLOC(sizeof(int));         
-	isigend = (int *) AJALLOC(sizeof(int));               
 	for(i=0;i<ii;i++){
 	    AjPStr val = NULL;
-	    ajRangeValues(sigregions,i,isigstart,isigend);
+	    ajRangeValues(sigregions,i,&isigstart,&isigend);
 	    if(ajRangeText(sigregions,i,&val)){
 		symsign = getValFromStr(val);
 	    }
 	    else{
 		symsign = 1;
 	    }
-	    for(j=*isigstart;j<=*isigend ;j++)
+	    for(j=isigstart;j<=isigend ;j++)
 	    {
 		syms[j]=symsign ;
 	    }  /*end for*/
 	    ajStrDel(&val);
 	}
-	AJFREE(isigstart);
-	AJFREE(isigend);
     }
     
 /*c determine if this is a draft plot */ 
@@ -497,9 +508,9 @@ int main(int argc, char * argv[])
 	if(stsp > minstart)
 	{
 	    if(outstart)
-		starttop7full(tmcount,istart[1],strand,syms) ;
+		starttop7full(graph, tmcount,istart[1],strand,syms) ;
 	    else
-		startbot7full(tmcount,istart[1],strand,syms) ;
+		startbot7full(graph, tmcount,istart[1],strand,syms) ;
 	    off = offi;
 	    ++pages;
 	}
@@ -512,16 +523,20 @@ int main(int argc, char * argv[])
 	    if(outstart)
 	    {
 		if(tmcount%2)
-		    endbot7full(tmcount,iend[tmcount],length,strand,syms) ;
+		    endbot7full(graph, tmcount,
+				iend[tmcount],length,strand,syms) ;
 		else
-		    endtop7full(tmcount,iend[tmcount],length,strand,syms);
+		    endtop7full(graph, tmcount,
+				iend[tmcount],length,strand,syms);
 	    }
 	    else
 	    {
 		if(tmcount%2)
-		    endtop7full(tmcount,iend[tmcount],length,strand,syms);
+		    endtop7full(graph, tmcount,
+				iend[tmcount],length,strand,syms);
 		else
-		    endbot7full(tmcount,iend[tmcount],length,strand,syms) ;
+		    endbot7full(graph, tmcount,
+				iend[tmcount],length,strand,syms) ;
 	    }
 	    ++pages;
 	}
@@ -616,7 +631,7 @@ int main(int argc, char * argv[])
     {
 	if(draft)
 	{
-	    starttop7(tmcount,istart[1],&off,strand,syms) ;
+	    starttop7(graph, tmcount,istart[1],&off,strand,syms) ;
 	}
 	else
 	{
@@ -624,14 +639,14 @@ int main(int argc, char * argv[])
 	    if(stsp > minstart)
 		off=offi;
 	    else
-		starttop7(tmcount,istart[1],&off,strand,syms);
+		starttop7(graph, tmcount,istart[1],&off,strand,syms);
 	}
     }
     else
     {
 	if(draft)
 	{
-	    startbot7(tmcount,istart[1],&off,strand,syms) ;
+	    startbot7(graph, tmcount,istart[1],&off,strand,syms) ;
 	}
 	else
 	{
@@ -639,7 +654,7 @@ int main(int argc, char * argv[])
 	    if(stsp > minstart)
 		off=offi;
 	    else
-		startbot7(tmcount,istart[1],&off,strand,syms) ;
+		startbot7(graph, tmcount,istart[1],&off,strand,syms) ;
 	}
     }
   
@@ -686,7 +701,7 @@ int main(int argc, char * argv[])
 	      for the second */ 
 	    /*c	      call closef(fn) */ 
 	    /*c start up the second page */ 
-	    ajGraphNewPage(AJFALSE);
+	    ajGraphNewPage(graph,AJFALSE);
 	    page = 2;
 	    /*c start a new membrane */ 
 	    topoMembrane();
@@ -815,17 +830,17 @@ int main(int argc, char * argv[])
 	if(outstart)
 	{
 	    if(tmcount%2)
-		endbot7(tmcount,iend[tmcount],length,&off,strand,syms) ;
+		endbot7(graph, tmcount,iend[tmcount],length,&off,strand,syms) ;
 	    else
-		endtop7(tmcount,iend[tmcount],length,&off,strand,syms) ;
+		endtop7(graph, tmcount,iend[tmcount],length,&off,strand,syms) ;
 	}
 
 	else
 	{
 	    if(tmcount%2)
-		endtop7(tmcount,iend[tmcount],length,&off,strand,syms) ;
+		endtop7(graph, tmcount,iend[tmcount],length,&off,strand,syms) ;
 	    else
-		endbot7(tmcount,iend[tmcount],length,&off,strand,syms) ;
+		endbot7(graph, tmcount,iend[tmcount],length,&off,strand,syms) ;
 	}
     }
 
@@ -836,7 +851,8 @@ int main(int argc, char * argv[])
     AJFREE(iend);
     ajSeqDel(&sequence);
     ajRangeDel(&regions);
-    ajRangeDel(&sigregions);
+    if (ajspnum)
+      ajRangeDel(&sigregions);
     ajStrDel(&listcys);
     ajStrDel(&listgly);
     ajStrDel(&listacid);
@@ -944,7 +960,8 @@ void  truncup(const int num,const int istart,const int iend,
 ******************************************************************************/
 
 void  checkcys(AjBool outstart,const int symcys,const int tmcount,
-	       const int length,int *istart,int *iend,char *strand,int *syms)
+	       const int length,ajuint *istart,ajuint *iend,
+	       char *strand,int *syms)
 {
  
  
@@ -1196,7 +1213,7 @@ void  checkcys(AjBool outstart,const int symcys,const int tmcount,
 ******************************************************************************/
 
 void  checklca(const int symlcharge,const int tmcount,
-	       int *istart,int *iend,char *strand,int *syms)  {
+	       ajuint *istart,ajuint *iend,char *strand,int *syms)  {
 /*#include "common.inc" */ 
   int    i,k ;
  
@@ -1216,7 +1233,7 @@ void  checklca(const int symlcharge,const int tmcount,
 ******************************************************************************/
 
 void  checklcb(const int symlcharge,const int tmcount,
-	       int *istart,int *iend,char *strand,int *syms)  {
+	       ajuint *istart,ajuint *iend,char *strand,int *syms)  {
 /*#include "common.inc" */ 
   int    i,k ;
  
@@ -1237,7 +1254,7 @@ void  checklcb(const int symlcharge,const int tmcount,
 ******************************************************************************/
 
 void  checkla(const int symlamine,const int tmcount,
-	      int *istart,int *iend,char *strand,int *syms)  {
+	      ajuint *istart,ajuint *iend,char *strand,int *syms)  {
 /*#include "common.inc" */ 
   int    i,k ;
  
@@ -1257,7 +1274,7 @@ void  checkla(const int symlamine,const int tmcount,
 ******************************************************************************/
 
 void  checkloh(const int symloh,const int tmcount,
-	       int *istart,int *iend,char *strand,int *syms)
+	       ajuint *istart,ajuint *iend,char *strand,int *syms)
 {
 /*#include "common.inc" */ 
   int    i,k ;
@@ -1279,7 +1296,7 @@ void  checkloh(const int symloh,const int tmcount,
 ******************************************************************************/
 
 void  checklar(const int symlar,const int tmcount,
-	       int *istart,int *iend,char *strand,int *syms)
+	       ajuint *istart,ajuint *iend,char *strand,int *syms)
 {
 /*#include "common.inc" */ 
   int    i,k ;
@@ -1302,7 +1319,7 @@ void  checklar(const int symlar,const int tmcount,
 ******************************************************************************/
 
 void  checklpro(const int symlpro,const int tmcount,
-		int *istart,int *iend,char *strand,int *syms){
+		ajuint *istart,ajuint *iend,char *strand,int *syms){
   int    i,k ;
  
   for(k=1;k<=tmcount ;k++)
@@ -1320,7 +1337,7 @@ void  checklpro(const int symlpro,const int tmcount,
 ******************************************************************************/
 
 void  checkgly(AjBool outstart,const int symgly,const int tmcount,int length,
-	       int *istart,int *iend,char *strand,int *syms)
+	       ajuint *istart,ajuint *iend,char *strand,int *syms)
 {
   int    i,k,count,pass = 0 ;
   float       rcount ;
@@ -2095,7 +2112,7 @@ void  topoSymbol(const float x,float y,char stran,int sym)
 **
 ******************************************************************************/
 
-void  starttop7(const int tmcount,const int istart,float *off,
+void  starttop7(AjPGraph graph, const int tmcount,const int istart,float *off,
 		char *strand,int *syms) 
 {
     char  stran ;
@@ -2390,7 +2407,8 @@ CAA:
 **
 ******************************************************************************/
 
-void  starttop7full(const int tmcount,const int istart,char *strand,int *syms)
+void  starttop7full(AjPGraph graph, const int tmcount,
+		    const int istart,char *strand,int *syms)
 {
  
 /*#include "common.inc" */ 
@@ -2804,7 +2822,7 @@ void  starttop7full(const int tmcount,const int istart,char *strand,int *syms)
 	      topoSymbol(x,y,stran,sym) ;
 	   }  /*end if*/
 	}  /*end for*/
-  ajGraphNewPage(AJFALSE);
+  ajGraphNewPage(graph,AJFALSE);
 return ;
 }
  
@@ -2812,7 +2830,8 @@ return ;
 **
 ******************************************************************************/
 
-void  endtop7full(const int tmcount,const int iend,const int length,
+void  endtop7full(AjPGraph graph, const int tmcount,
+		  const int iend,const int length,
 		  char *strand,int *syms)  {
  
 /*#include "common.inc" */ 
@@ -3228,7 +3247,7 @@ void  endtop7full(const int tmcount,const int iend,const int length,
 	      topoSymbol(x,y,stran,sym) ;
 	   }  /*end if*/
 	}  /*end for*/
-  ajGraphNewPage(AJFALSE);
+  ajGraphNewPage(graph,AJFALSE);
 	return ;
 }
  
@@ -3236,7 +3255,8 @@ void  endtop7full(const int tmcount,const int iend,const int length,
 **
 ******************************************************************************/
 
-void  startbot7full(const int tmcount,int istart,char *strand,int *syms)  {
+void  startbot7full(AjPGraph graph, const int tmcount,
+		    int istart,char *strand,int *syms)  {
  
 /*#include "common.inc" */ 
  
@@ -3649,7 +3669,7 @@ void  startbot7full(const int tmcount,int istart,char *strand,int *syms)  {
 	      topoSymbol(x,y,stran,sym) ;
 	   }  /*end if*/
 	}  /*end for*/
-  ajGraphNewPage(AJFALSE);
+  ajGraphNewPage(graph, AJFALSE);
 	return ;
 }
  
@@ -3657,7 +3677,8 @@ void  startbot7full(const int tmcount,int istart,char *strand,int *syms)  {
 **
 ******************************************************************************/
 
-void  endbot7full(const int tmcount,const int ie,const int length,
+void  endbot7full(AjPGraph graph, const int tmcount,
+		  const int ie,const int length,
 		  char *strand,int *syms)  {
  
 /*#include "common.inc" */ 
@@ -4072,7 +4093,7 @@ void  endbot7full(const int tmcount,const int ie,const int length,
 	      topoSymbol(x,y,stran,sym) ;
 	   }  /*end if*/
 	}  /*end for*/
-  ajGraphNewPage(AJFALSE);
+  ajGraphNewPage(graph, AJFALSE);
 	return ;
 }
  
@@ -4080,7 +4101,8 @@ void  endbot7full(const int tmcount,const int ie,const int length,
 **
 ******************************************************************************/
 
-void  endtop7(const int tmcount,const int iend,const int length,
+void  endtop7(AjPGraph graph, const int tmcount,
+	      const int iend,const int length,
 	      float *off,char *strand,int *syms)  {
  
 /*#include "common.inc" */ 
@@ -4414,7 +4436,7 @@ void  topoTerm(const float x,const float y)  {
 **
 ******************************************************************************/
 
-void  startbot7(const int tmcount,const int istart,float *off,
+void  startbot7(AjPGraph graph, const int tmcount,const int istart,float *off,
 		char *strand,int *syms)  {
  
 /*#include "common.inc" */ 
@@ -4710,7 +4732,8 @@ void  startbot7(const int tmcount,const int istart,float *off,
 **
 ******************************************************************************/
 
-void  endbot7(const int tmcount,const int iend,const int length,
+void  endbot7(AjPGraph graph, const int tmcount,
+	      const int iend,const int length,
 	      float *off,char *strand,int *syms)  {
  
 /*#include "common.inc" */ 
@@ -7404,7 +7427,7 @@ void  ball5up(const int istart,const int j,const float x,
 **
 ******************************************************************************/
 
-void  conup(float *hold,const int i,const int is,int *ie,
+void  conup(float *hold,const int i,const ajuint is,ajuint *ie,
 	    char *strand,int *syms)
 {
  
@@ -8018,7 +8041,7 @@ void  conup(float *hold,const int i,const int is,int *ie,
 **
 ******************************************************************************/
 
-void  condown(float *hold1,const int i,const int is,int *ie,
+void  condown(float *hold1,const int i,const ajuint is,ajuint *ie,
 	      char *strand,int *syms)
 {
  
@@ -8878,7 +8901,7 @@ void  condownsmall(const int is,int *ie,char *strand,int *syms)
 	sym=syms[*ie+12+6*ihole+j] ;
 	topoSymbol(x,y,stran,sym) ;
     }  /*end for*/
-    ajGraphNewPage(AJFALSE);
+    ajGraphNewPage(graph,AJFALSE);
     return ;
 }
  
@@ -9386,11 +9409,11 @@ void  conupbig2(const int is,int *ie,char *strand,int *syms)
 	topoSymbol(x,y,stran,sym) ;
     }  /*end for*/
  
-    ajGraphSetCharSize(0.5) ;
+    ajGraphSetCharScale(0.5) ;
     topoMoveTo(105.0,5.0) ;
 /*c	call topoPlotText(title)    */ 
 /*!	call closef(fn) */ 
-    ajGraphNewPage(AJFALSE);
+    ajGraphNewPage(graph,AJFALSE);
     return ;
 }
  
@@ -9894,11 +9917,11 @@ void  condownbig2(const int is,int *ie,char *strand,int *syms)
 	topoSymbol(x,y,stran,sym) ;
     }  /*end for*/
  
-    ajGraphSetCharSize(0.5) ;
+    ajGraphSetCharScale(0.5) ;
     topoMoveTo(105.0,5.0) ;
 /*c        call topoPlotText(title) */ 
 /*!       call closef(fn) */ 
-    ajGraphNewPage(AJFALSE);
+    ajGraphNewPage(graph,AJFALSE);
     return ;
 }    /*end subroutine*/
 
@@ -10396,10 +10419,10 @@ void  condownbig3(const int is,int *ie,char *strand,int *syms)
 	topoSymbol(x,y,stran,sym) ;
     }  /*end for*/
  
-    ajGraphSetCharSize(0.5) ;
+    ajGraphSetCharScale(0.5) ;
     topoMoveTo(105.0,5.0) ;
 /*c        call topoPlotText(title) */ 
 /*!       call closef(fn) */ 
-    ajGraphNewPage(AJFALSE);
+    ajGraphNewPage(graph,AJFALSE);
     return ;
 }    /*end subroutine*/
