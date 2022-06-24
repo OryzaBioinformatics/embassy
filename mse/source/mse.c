@@ -15,7 +15,7 @@
 **  October 2003   Fix for file closing
 **
 *****************************************************************************/
-#include "ajax.h"
+#include "emboss.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <math.h>
@@ -48,7 +48,7 @@ void LoadSeqWithseqset(AjPSeqset seqset){
     DEFAULTFORMAT = 7;
   }
 
-  strcpy(FOSSName,ajStrStr(seqset->Usa));
+  strcpy(FOSSName,ajStrGetPtr(seqset->Usa));
   ajDebug("FOSSName = %s \n",FOSSName);
   for(i=0;i<ajSeqsetSize(seqset);i++){
     seq = ajSeqsetSeq (seqset, i);
@@ -75,8 +75,8 @@ void LoadSeqWithseqset(AjPSeqset seqset){
     Seq[Strand].Format = DefFormat;
 
     tempname = ajSeqsetName(seqset,i);
-    Seq[Strand].Name = CALLOC(ajStrLen(tempname)+1,char);
-    strcpy(Seq[Strand].Name,ajStrStr(tempname));
+    Seq[Strand].Name = CALLOC(ajStrGetLen(tempname)+1,char);
+    strcpy(Seq[Strand].Name,ajStrGetPtr(tempname));
 
     Seq[Strand].Code = CALLOC(1,char);
     strcpy(Seq[Strand].Code,"");
@@ -117,9 +117,9 @@ void DoSave(char *FName, AjPSeqout outseq)
     ajSeqFileNewOut(outseq, ajname);
   }    
   for(i=1;i<NOS && OkToEdit[i]; i++){
-    seqnew = ajSeqNewC(Seq[i].Mem, Seq[i].Name);
-    ajSeqAssEntryC(seqnew, Seq[i].Name);
-    ajSeqAssDescC(seqnew, Seq[i].Desc);
+    seqnew = ajSeqNewNameC(Seq[i].Mem, Seq[i].Name);
+    ajSeqAssignEntryC(seqnew, Seq[i].Name);
+    ajSeqAssignDescC(seqnew, Seq[i].Desc);
     ajSeqAllWrite(myoutseq, seqnew);
     ajSeqDel(&seqnew);
   }
@@ -169,9 +169,8 @@ AjPSeqout outseq;
 /*
 ** Setup screen control package, keypad and MSE, check for in-line arguments
 */
-        ajNamInit("emboss"); 
-	ajAcdInitP("mse", argc, argv, "MSE");
-  
+
+	embInitP("mse", argc, argv, "MSE");
 
 	seqset = ajAcdGetSeqset("sequence");
 
@@ -2543,9 +2542,9 @@ void DoWrite( int Start, int Finish, char *FName )
     myoutseq->Format = DEFAULTFORMAT;
     ajSeqFileNewOut(myoutseq, ajname);
 
-    seqnew = ajSeqNewC(Seq[Strand].Mem, Seq[Strand].Name);
-    ajSeqAssEntryC(seqnew, Seq[Strand].Name);
-    ajSeqAssDescC(seqnew, Seq[Strand].Desc);
+    seqnew = ajSeqNewNameC(Seq[Strand].Mem, Seq[Strand].Name);
+    ajSeqAssignEntryC(seqnew, Seq[Strand].Name);
+    ajSeqAssignDescC(seqnew, Seq[Strand].Desc);
     ajSeqWrite(myoutseq, seqnew);
 
     Seq[Strand].Mem  = sChar;
@@ -2557,7 +2556,7 @@ void DoWrite( int Start, int Finish, char *FName )
 
     ajFmtPrintS(&OneLine," \"%s\",  %d residues written to %F.",
 	    Seq[Strand].Name, f-s+1, myoutseq->File);
-    ShowText(ajStrStr(OneLine));
+    ShowText(ajStrGetPtr(OneLine));
 
     ajSeqDel(&seqnew);
     ajSeqoutDel(&myoutseq);
@@ -4360,13 +4359,13 @@ void DoHelp(int Start)
  /*	savescreen(); il NEED still */
 
 /*
- ajStrAssC(&whereto,"./");
- ajStrAppC(&whereto,"virtual.dump");
- if(scr_dump(ajStrStr(whereto))==ERR) {
+ ajStrAssignC(&whereto,"./");
+ ajStrAppendC(&whereto,"virtual.dump");
+ if(scr_dump(ajStrGetPtr(whereto))==ERR) {
    ajDebug("scr_dump to %S ERR \n",whereto);
-   ajStrClear(&whereto);
-   ajStrAppC(&whereto,"/tmp/virtual.dump");
-   if(scr_dump(ajStrStr(whereto))==ERR) {
+   ajStrSetClear(&whereto);
+   ajStrAppendC(&whereto,"/tmp/virtual.dump");
+   if(scr_dump(ajStrGetPtr(whereto))==ERR) {
      ajDebug("scr_dump to %S ERR \n",whereto);
      okay = ajFalse;
    }
@@ -4396,7 +4395,7 @@ void DoHelp(int Start)
  clear();
 /*
  if(okay){
-   if(scr_restore(ajStrStr(whereto))==ERR)
+   if(scr_restore(ajStrGetPtr(whereto))==ERR)
      ajDebug("scr_restore ERR \n");
    else 
    ajStrInsertC(&whereto,0,"rm ");
