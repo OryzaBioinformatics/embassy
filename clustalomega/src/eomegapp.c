@@ -181,7 +181,7 @@ int main(int argc, char **argv)
     outseq = ajAcdGetSeqoutset("outseq");
 
     ajStrAssignS(&outname,ajSeqoutGetFilename(outseq));
-    ajSeqoutClose(outseq);
+    ajSeqoutCloseEmpty(outseq);
     ajSeqoutDel(&outseq);
     ajSysFileUnlinkS(outname);    
 
@@ -366,7 +366,7 @@ static void eomegapp_doinfile(AjPStr *cl, OmegaOQual qual)
 
         if(infile)
         {
-            squal = ajStrNewS(ajFileGetName(infile));
+            squal = ajStrNewS(ajFileGetNameS(infile));
 
             ajFmtPrintAppS(cl," --%s%s=%S",
                            qual.prefix,
@@ -407,7 +407,7 @@ static void eomegapp_dooutfile(AjPStr *cl, OmegaOQual qual)
 
         if(outfile)
         {
-            squal = ajStrNewS(ajFileGetName(outfile));
+            squal = ajStrNewS(ajFileGetNameS(outfile));
 
             ajFmtPrintAppS(cl," --%s%s=%S",
                            qual.prefix,

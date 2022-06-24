@@ -6,8 +6,8 @@ application: eomega [
   cpu: "high"
   embassy: "clustalomega"
   external: "clustalo Clustal Omega from http://www.clustal.org/"
-  relations: "EDAM:0000182 topic Sequence alignment"
-  relations: "EDAM:0000499 operation Multiple sequence alignment
+  relations: "EDAM_topic:0182 Sequence alignment"
+  relations: "EDAM_operation:0499 Multiple sequence alignment construction
               (phylogenetic tree-based)"
 ]
 
@@ -21,7 +21,7 @@ section: input [
     type: "gapprotein"
     aligned: "N"
     help: "File containing sequences to align"
-    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM_data:0849 Sequence record"
   ]
 
   infile: indist [
@@ -30,7 +30,7 @@ section: input [
     information: "Pairwise distance matrix input file"
     help: "Pairwise distance matrix input file (skips distance computation)"
     knowntype: "distance matrix"
-    relations:  "EDAM:0000870 data Sequence distance matrix"
+    relations:  "EDAM_data:0870 Sequence distance matrix"
   ]
 
   infile: inguide [
@@ -40,7 +40,7 @@ section: input [
     help: "Guide tree input file  (skips distance computation and guide tree
            clustering step)"
     knowntype: "dendrogram"
-    relations: "EDAM:0000872 data Phylogenetic tree"
+    relations: "EDAM_data:0872 Phylogenetic tree"
   ]
 
 endsection: input
@@ -61,19 +61,19 @@ section: advanced [
   toggle: dealign [
     default: "N"
     information: "Dealign input sequences"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   toggle: mbed [
     default: "N"
     information: "Fast, Mbed-like clustering for guide tree calculation"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   toggle: intermbed [
     default: "N"
     information: "Fast, Mbed-like clustering for guide tree calculation"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: maxiterations [
@@ -81,7 +81,7 @@ section: advanced [
     minimum: "0"
     maximum: "2000000000"
     default: "0"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: maxgiterations [
@@ -89,7 +89,7 @@ section: advanced [
     minimum: "0"
     maximum: "2000000000"
     default: "2000000000"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: maxhiterations [
@@ -97,7 +97,7 @@ section: advanced [
     minimum: "0"
     maximum: "2000000000"
     default: "2000000000"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: maxseqs [
@@ -105,7 +105,7 @@ section: advanced [
     minimum: "2"
     maximum: "2000000000"
     default: "2000000000"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: maxlenseq [
@@ -113,14 +113,14 @@ section: advanced [
     minimum: "1"
     maximum: "2000000000"
     default: "2000000000"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   toggle: self [
     default: "N"
     information: "Set options automatically"
     help: "Set options automatically (might overwrite some options"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: advanced
@@ -134,7 +134,7 @@ section: output [
     parameter: "Y"
     extension: "aln"
     aligned: "Y"
-    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM_data:0849 Sequence record"
   ]
 
   outfile: outdist [
@@ -144,7 +144,7 @@ section: output [
     information: "Pairwise distance matrix output file"
     help: "Pairwise distance matrix output file"
     knowntype: "distance matrix"
-    relations:  "EDAM:0000870 data Sequence distance matrix"
+    relations:  "EDAM_data:0870 Sequence distance matrix"
   ]
 
   outfile: outguide [
@@ -154,7 +154,7 @@ section: output [
     information: "Guide tree output file"
     help: "Guide tree output file"
     knowntype: "dendrogram"
-    relations: "EDAM:0000872 data Phylogenetic tree"
+    relations: "EDAM_data:0872 Phylogenetic tree"
   ]
 
 endsection: output

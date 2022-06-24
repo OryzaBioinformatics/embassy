@@ -53,7 +53,7 @@ WARNING: This is a beta version of Clustal Omega, for protein only.
 Command line arguments
 
 Profile with profile (ClustalO wrapper)
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-aprofile]          infile     Pre-aligned multiple sequence file (aligned
@@ -521,7 +521,7 @@ See also
    eomegash         Sequence with HMM (ClustalO wrapper)
    eomegasp         Sequence with profile (ClustalO wrapper)
    infoalign        Display basic information about a multiple sequence alignment
-   mse              Multiple Sequence Editor
+   mse              Multiple sequence editor
    plotcon          Plot conservation of a sequence alignment
    prettyplot       Draw a sequence alignment with pretty formatting
    showalign        Display a multiple sequence alignment in pretty format
