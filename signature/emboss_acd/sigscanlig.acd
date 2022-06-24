@@ -1,11 +1,14 @@
 application: sigscanlig [
   documentation: "Searches ligand-signature library and writes
                   hits (LHF file)"
-  groups: "Protein:3D Structure"
+  groups: "Protein:Profiles"
   gui: "yes"
   batch: "yes"
   cpu: "medium"
   embassy: "signature"
+  relations: "EDAM:0000188 topic Sequence profiles and HMMs"
+  relations: "EDAM:0000148 topic Protein-ligand interactions"
+  relations: "EDAM:0000342 operation Sequence profile database search"
 ]
 
 section: input [
@@ -23,7 +26,8 @@ section: input [
     extension: "sig"
     default: "./"
     knowntype: "domainatrix signature"
-    relations:  "EDAM: Domainatrix signature record"                   
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM:0001354 data Sequence profile"
   ]
 
   seqall: dbseqall [
@@ -32,7 +36,7 @@ section: input [
     help: "This option specifies the name of the database of query
            sequences."
     type: "protein"
-    relations: "EDAM: Protein sequence record"                             
+    relations: "EDAM:0002886 data Sequence record (protein)"
   ]
 
   matrixf: sub [
@@ -42,7 +46,7 @@ section: input [
            residue substitution matrix (1D signatures) or matrix of 3D:1D
            (environment:residue) scores (3D)."
     default: "EBLOSUM62"
-    relations: "EDAM: Float comparison matrix"                             
+    relations: "EDAM:0001449 data Comparison matrix (amino acid)"
   ]
 
 endsection: input
@@ -68,7 +72,7 @@ section: required [
            its patch scores. In 'Site Score Mode' the score for a ligand is
            the mean of its site scores. A site score is the mean of patch
            score for all patches for a given site."
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: gapo [
@@ -85,7 +89,7 @@ section: required [
            default value assumes you are using the EBLOSUM62 matrix for
            protein sequences, and the EDNAMAT matrix for nucleotide
            sequences."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0001397 data Gap opening penalty"
   ]
 
   float: gape [
@@ -102,7 +106,7 @@ section: required [
            Usually you will expect a few long gaps rather than many short
            gaps, so the gap extension penalty should be lower than the gap
            penalty."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0001398 data Gap extension penalty"
   ]
 
   list: nterm [
@@ -120,7 +124,7 @@ section: required [
     help: "This option specifies the N-terminal matching option. This
            determines how the first signature position is aligned to a
            sequence from the database."
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: required
@@ -143,7 +147,7 @@ section: output [
     help: "This option specifies the maximum number of hits to
            output."
     default: "100"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001694 data Number of output entities"
   ]
 
   toggle: domax [
@@ -153,7 +157,7 @@ section: output [
     help: "This option specifies whether to consider a max. number of
            top-scoring hits only for each ligand."
     default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: maxhits [
@@ -162,7 +166,7 @@ section: output [
                   for each ligand."
     help: "This option specifies the maximum number of top-scoring
            hits to consider for each ligand."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002146 data Threshold"
   ]
 
   outdir: hitsoutdir [
@@ -178,7 +182,7 @@ section: output [
     knowntype: "domainatrix ligand hits"
     information: "Domainatrix LHF ligand hits file output
                   directory"
-    relations:  "EDAM: EMBASSY ligand hits report"                     
+    relations:  "EDAM:0000857 data Database hits (sequence)"
   ]
 
   outdir: alignoutdir [
@@ -199,7 +203,7 @@ section: output [
     knowntype: "signature alignment"
     information: "Domainatrix signature alignment file output
                   directory"
-    relations:  "EDAM: Domainatrix signature alignment report"         
+    relations:  "EDAM:0000869 data Sequence-profile alignment"
   ]
 
   outdir: resultsoutdir [
@@ -212,7 +216,7 @@ section: output [
     knowntype: "sigscanlig output"
     information: "Domainatrix sigscanlig program output file output
                   directory"
-    relations:  "EDAM: Domainatrix signature alignment report"         
+    relations:  "EDAM:0000869 data Sequence-profile alignment"
   ]
 
 endsection: output

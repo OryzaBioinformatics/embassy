@@ -462,7 +462,7 @@ MATGEN3D does not use any data files.
 <tr><td>
 <pre>
 Generate a 3D-1D scoring matrix from CCF files.
-Version: EMBOSS:6.3.0
+Version: EMBOSS:6.4.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
    -mode               menu       [1] This option specifies the amino acid
@@ -875,7 +875,7 @@ Version: EMBOSS:6.3.0
 
 <H3> 6.2 EXAMPLE SESSION </H3>
 An example of interactive use of MATGEN3D is shown below.
-<b>Here is a sample session with matgen3d</b>
+Here is a sample session with <b>matgen3d</b>
 <p>
 
 <p>
@@ -1013,8 +1013,8 @@ MATGEN3D generates a matrix of 3D:1D scores which give the probability of findin
 <tr><th>Program name</th>
 <th>Description</th></tr>
 <tr>
-<td><a href="/embassy/structure/contacts.html">contacts</a></td>
-<td>Generate intra-chain CON files from CCF files</td>
+<td><a href="/embassy/domainatrix/cathparse.html">cathparse</a></td>
+<td>Generates DCF file from raw CATH files</td>
 </tr>
 
 <tr>
@@ -1023,18 +1023,28 @@ MATGEN3D generates a matrix of 3D:1D scores which give the probability of findin
 </tr>
 
 <tr>
+<td><a href="/embassy/domainatrix/domainnr.html">domainnr</a></td>
+<td>Removes redundant domains from a DCF file</td>
+</tr>
+
+<tr>
 <td><a href="/embassy/domalign/domainrep.html">domainrep</a></td>
 <td>Reorder DCF file to identify representative structures</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/domainatrix/domainreso.html">domainreso</a></td>
-<td>Remove low resolution domains from a DCF file</td>
+<td><a href="/embassy/domainatrix/domainseqs.html">domainseqs</a></td>
+<td>Adds sequence records to a DCF file</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/structure/interface.html">interface</a></td>
-<td>Generate inter-chain CON files from CCF files</td>
+<td><a href="/embassy/domainatrix/domainsse.html">domainsse</a></td>
+<td>Add secondary structure records to a DCF file</td>
+</tr>
+
+<tr>
+<td><a href="/emboss/apps/helixturnhelix.html">helixturnhelix</a></td>
+<td>Identify nucleic acid-binding motifs in protein sequences</td>
 </tr>
 
 <tr>
@@ -1043,8 +1053,8 @@ MATGEN3D generates a matrix of 3D:1D scores which give the probability of findin
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/psiphi.html">psiphi</a></td>
-<td>Calculates phi and psi torsion angles from protein coordinates</td>
+<td><a href="/emboss/apps/pepcoil.html">pepcoil</a></td>
+<td>Predicts coiled coil regions in protein sequences</td>
 </tr>
 
 <tr>
@@ -1058,6 +1068,11 @@ MATGEN3D generates a matrix of 3D:1D scores which give the probability of findin
 </tr>
 
 <tr>
+<td><a href="/embassy/domainatrix/scopparse.html">scopparse</a></td>
+<td>Generate DCF file from raw SCOP files</td>
+</tr>
+
+<tr>
 <td><a href="/embassy/domalign/seqalign.html">seqalign</a></td>
 <td>Extend alignments (DAF file) with sequences (DHF file)</td>
 </tr>
@@ -1065,11 +1080,6 @@ MATGEN3D generates a matrix of 3D:1D scores which give the probability of findin
 <tr>
 <td><a href="/embassy/domsearch/seqfraggle.html">seqfraggle</a></td>
 <td>Removes fragment sequences from DHF files</td>
-</tr>
-
-<tr>
-<td><a href="/embassy/domsearch/seqsearch.html">seqsearch</a></td>
-<td>Generate PSI-BLAST hits (DHF file) from a DAF file</td>
 </tr>
 
 <tr>
@@ -1083,23 +1093,8 @@ MATGEN3D generates a matrix of 3D:1D scores which give the probability of findin
 </tr>
 
 <tr>
-<td><a href="siggen.html">siggen</a></td>
-<td>Generates a sparse protein signature from an alignment</td>
-</tr>
-
-<tr>
-<td><a href="siggenlig.html">siggenlig</a></td>
-<td>Generates ligand-binding signatures from a CON file</td>
-</tr>
-
-<tr>
-<td><a href="sigscan.html">sigscan</a></td>
-<td>Generates hits (DHF file) from a signature search</td>
-</tr>
-
-<tr>
-<td><a href="sigscanlig.html">sigscanlig</a></td>
-<td>Searches ligand-signature library and writes hits (LHF file)</td>
+<td><a href="/embassy/domainatrix/ssematch.html">ssematch</a></td>
+<td>Search a DCF file for secondary structure matches</td>
 </tr>
 
 </table>

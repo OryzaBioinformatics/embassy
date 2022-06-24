@@ -38,6 +38,7 @@
 
 
 
+#include <config.h>
 #include "emboss.h"
 
 
@@ -90,7 +91,7 @@ int main(ajint argc, char **argv)
     ajint   envdefi      = 0;     /* envdef as an int.                       */
     ajint   patchsize    = 0;     /* Minimum patch size.                     */
     ajint   gapdistance  = 0;     /* Maximum gap distance.                   */
-    ajint   wsiz         = 0;     /* Window size.                            */
+    /*ajint   wsiz         = 0;*/ /* Window size.                            */
     AjPDirout sigdir     = NULL;  /* Directory of signature files (output).  */
     
     AjPCmap cmap         = NULL;  /* Contact map for entry from CON
@@ -132,7 +133,7 @@ int main(ajint argc, char **argv)
     envdef      = ajAcdGetListSingle("environment");
     patchsize   = ajAcdGetInt("patchsize");
     gapdistance = ajAcdGetInt("gapdistance");
-    wsiz        = ajAcdGetInt("wsiz");
+    /*wsiz        = ajAcdGetInt("wsiz");*/
     sigdir      = ajAcdGetOutdir("sigoutdir");
     logf        = ajAcdGetOutfile("logfile");
     

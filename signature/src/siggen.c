@@ -41,6 +41,7 @@
 
 
 
+#include <config.h>
 #include <math.h>
 
 #include "emboss.h"
@@ -1455,7 +1456,7 @@ static AjBool  siggen_ScoreCcon(AjPScopalg alg, AjPScorealg *scores,
     ajint       nsite        =0;    /* Number of sites with oarticular contact. */
     ajint       x            =0;    /* Counter. */
     ajint       temp         =0;    /* Current position of seq_pos array. */
-    ajint       num          =0;    /* Assign to each element of con_contacts. */
+  /*ajint       num          =0;*/  /* Assign to each element of con_contacts. */
     ajint       p            =0;
     ajint       idx_seqpos   =0;    /* Index. */
     ajint       idx_atomidx  =0;    /* Index. */
@@ -1550,7 +1551,6 @@ static AjBool  siggen_ScoreCcon(AjPScopalg alg, AjPScorealg *scores,
             for(x = 0; x < alg->width; x++)
                 ajUintPut(&con_line, x, 0); 
             nsite = 0;
-            num = 0;
 
 
             /* Perform calculation for each member of family. */

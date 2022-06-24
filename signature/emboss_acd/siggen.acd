@@ -1,11 +1,13 @@
 application: siggen [
   documentation: "Generates a sparse protein signature from
                   an alignment"
-  groups: "Protein:3D Structure"
+  groups: "Protein:Profiles"
   gui: "yes"
   batch: "yes"
   cpu: "low"
   embassy: "signature"
+  relations: "EDAM:0000188 topic Sequence profiles and HMMs"
+  relations: "EDAM:0000296 operation Sequence profile generation"
 ]
 
 section: input [
@@ -28,7 +30,8 @@ section: input [
     default: "./"
     extension: "daf"
     knowntype: "domain alignment"
-    relations:  "EDAM: EMBASSY domain alignment file"                  
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM:0001384 data Sequence alignment (protein)"
   ]
 
   list: mode [
@@ -54,7 +57,7 @@ section: input [
            randomised signature. A signature of a specified sparsity is
            sampled at random from the alignment."
     information: "Select number"
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   list: conoption [
@@ -72,7 +75,7 @@ section: input [
     help: "This option specifies the structure-based scoring scheme.
            SIGGEN provides 2 structure-based scoring schemes (plus a
            combination method) that are used to score the input alignment."
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   directory: conpath [
@@ -87,7 +90,8 @@ section: input [
     default: "./"
     extension: "con"
     knowntype: "contact"
-    relations:  "EDAM: Amino acid contact map"                         
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM:0001547 data Protein contact map"
   ]
 
   directory: cpdbpath [
@@ -105,7 +109,8 @@ section: input [
     default: "./"
     extension: "ccf"
     knowntype: "domain clean coordinates"
-    relations:  "EDAM: Protein tertiary structure"                     
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM:0001468 data Protein domain"
   ]
 
   list: seqoption [
@@ -121,7 +126,7 @@ section: input [
     help: "This option specifies the sequence-based scoring scheme.
            SIGGEN provides 2 sequence-based scoring schemes that are used to
            score the input alignment."
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   matrixf: datafile [
@@ -131,7 +136,7 @@ section: input [
            substitution matrix is used by the sequence-based scoring
            schemes."
     default: "EBLOSUM62"
-    relations: "EDAM: Float comparison matrix"                             
+    relations: "EDAM:0001449 data Comparison matrix (amino acid)"
   ]
 
 endsection: input
@@ -152,7 +157,7 @@ section: required [
            will contain 25 key residues or signature positions, that
            correspond to the top 25% highest scoring alignment positions."
     default: "10"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: wsiz [
@@ -168,7 +173,7 @@ section: required [
            (window size is identified by the WSIZ record in the signature
            output file)."
     default: "0"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001251 data Window size"
   ]
 
   toggle: filtercon [
@@ -179,7 +184,7 @@ section: required [
            forming few contacts only during the selection of signature
            positions."
     default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: conthresh [
@@ -189,7 +194,7 @@ section: required [
            controls the selection of key positions for the structure-based
            scoring scheme (number of contacts)."
     default: "10"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002146 data Threshold"
   ]
 
   boolean: filterpsim [
@@ -199,7 +204,7 @@ section: required [
     help: "This option specifies whether to disregard alignment sites
            that were not aligned satisfactorily (STAMP alignments only)."
     default: "Y"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: required
@@ -219,7 +224,7 @@ section: output [
     extension: "sig"
     knowntype: "domainatrix signature"
     information: "Domainatrix signature file output directory"
-    relations:  "EDAM: Domainatrix signature record"                   
+    relations:  "EDAM:0001354 data Sequence profile"
   ]
 
 endsection: output

@@ -21,6 +21,7 @@
 ** Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ******************************************************************************/
 
+#include <config.h>
 #include "emboss.h"
 #include <math.h>
 
@@ -84,7 +85,7 @@ int main(ajint argc, char **argv)
     ajint     lig_n=0;	         /* Size of lig_arr.                         */
     
     AjPCmap  *cmap_arr=NULL;     /* list_cmap as an array.                   */
-    ajint     cmap_n=0;	         /* Size of cmap_arr.                        */
+    /*ajint     cmap_n=0;*/      /* Size of cmap_arr.                        */
     
     AjPInt    sites_arr;         /* Array of residue index numbers of ligand-
 				    contact residues.  */
@@ -229,7 +230,7 @@ int main(ajint argc, char **argv)
 	
 
 	list_cmap = ajCmapReadAllNew(coninfile);
-	cmap_n = ajListToarray(list_cmap, (void ***) &cmap_arr);
+	ajListToarray(list_cmap, (void ***) &cmap_arr);
 		
 	
 	CmapIter=(ajListIterNew(list_cmap));

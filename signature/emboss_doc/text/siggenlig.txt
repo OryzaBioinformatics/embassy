@@ -945,7 +945,7 @@ GA   0 ; 1
 6.0 USAGE
 
 Generates ligand-binding signatures from a CON file
-Version: EMBOSS:6.3.0
+Version: EMBOSS:6.4.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-confile]           infile     This option specifies the name of the CON
@@ -1025,19 +1025,6 @@ Version: EMBOSS:6.3.0
                                   (Env9); 10 (Env10); 11 (Env11); 12 (Env12);
                                   13 (Env13); 14 (Env14); 15 (Env15); 16
                                   (Env16))
-   -wsiz               integer    [0] This option specifies the window size.
-                                  When a signature is aligned to a protein
-                                  sequence, the permissible gaps between two
-                                  signature positions is determined by the
-                                  empirical gaps and the window size. The user
-                                  is prompted for a window size that is used
-                                  for every position in the signature. Likely
-                                  this is not optimal. A future implementation
-                                  will provide a range of methods for
-                                  generating values of window size depending
-                                  upon the alignment (window size is
-                                  identified by the WSIZ record in the
-                                  signature output file). (Any integer value)
   [-sigoutdir]         outdir     [./] This option specifies the location of
                                   signature files (output). A 'signature file'
                                   contains a sparse sequence signature

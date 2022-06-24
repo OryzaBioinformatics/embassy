@@ -41,7 +41,7 @@
 
 
 
-
+#include <config.h>
 #include "emboss.h"
 
 #define LIBGEN_FREQUENCY 1
