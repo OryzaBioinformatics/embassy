@@ -93,7 +93,7 @@ int main(int argc, char **argv)
     ajUser("%d types found",ajTableGetLength(type));
 
     /* use the map function to print out the results */
-    ajTableMap(type, demotable_typePrint, NULL);
+    ajTableMap(type, &demotable_typePrint, NULL);
 
 
     /* clean up the table using a list of known keys */
@@ -112,7 +112,7 @@ int main(int argc, char **argv)
 
     /* Backup plan - use the map function to free all memory */
     /* not needed here because the loop above already removed the entries */
-    ajTableMapDel(type, demotable_freetype, NULL);
+    ajTableMapDel(type, &demotable_freetype, NULL);
     ajTableFree(&type);
 
     ajFileClose(&gfffile);

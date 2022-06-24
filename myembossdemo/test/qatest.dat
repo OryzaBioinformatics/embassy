@@ -1,0 +1,151 @@
+#######################################
+# MYEMBOSSDEMO
+#######################################
+
+ID demoalign-check
+AB myembossdemo
+AQ demoalign
+CC No documentation, no example
+CL ../../data/dna.msf
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI dna.demoalign
+FZ = 1273
+FP 9 /^MSFM[1-3] +/
+//
+
+ID demofeatures-check
+AB myembossdemo
+AQ demofeatures
+CC No documentation, no example
+IN test.out
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI test.out
+FZ = 592
+FP /\A##gff-version 3\n/
+FP 10 /^seq1\tdemofeature\t/
+//
+
+ID demolist-check
+AB myembossdemo
+AQ demolist
+CC No documentation, no example
+CL ../../data/paamir.gff3
+FI stderr
+FZ = 1227
+FP 30 /^X13776\tEMBL\t[^ \t]/
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID demoreport-check
+AB myembossdemo
+AQ demoreport
+CC No documentation, no example
+CL tembl:x13776 test.out -rformat gff
+FI stderr
+FC = 1
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI test.out
+FZ = 2190
+FP 10 /^X13776\tEMBL\t/
+//
+
+ID demosequence-check
+AB myembossdemo
+AQ demosequence
+CC No documentation, no example, and no code
+CC Just checking it does nothing
+FI stderr
+FC = 1
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID demostring-check
+AB myembossdemo
+AQ demostring
+CC No documentation, no example
+IN How long is a piece of string?
+FI stderr
+FZ = 874
+FP /^first token 'How'\n/
+FP /^second token 'long is a piece of string[?]'\n/
+FP /Warning: Unknown date/time format fred\n/
+FP 1 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID demostringnew-check
+AB myembossdemo
+AQ demostringnew
+CC No documentation, no example
+FI stderr
+FZ = 4062
+FP 3 /str5: String 5 WITHSOMETEXTINABLOCK\n/
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FP /f1 \(from str3\): 0.500000\n/
+FP /d1 \(from str4\): 0.500000\n/
+//
+
+ID demotable-check
+AB myembossdemo
+AQ demotable
+CC No documentation, no example
+IN ../../data/paamir.gff3
+FI stderr
+FC = 16
+FP 7 /^type [a-zA-Z_']+ found/
+FP /^type 'CDS' found 2 times\n/
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID myseq-ex
+AB myembossdemo
+AQ myseq
+IN tembl:x13776
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI x13776.myseq
+FC = 5
+FP /^Usa: tembl-id:X13776\n/
+FP /^Length: 2167\n/
+//
+
+ID mytest-ex
+AB myembossdemo
+AQ mytest
+IN tembl:x13776
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI x13776.mytest
+FC = 5
+FP /^Usa: tembl-id:X13776\n/
+FP /^Length: 2167\n/
+//
+

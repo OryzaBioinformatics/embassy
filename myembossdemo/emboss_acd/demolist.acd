@@ -2,8 +2,8 @@ application: demolist [
   documentation: "Demonstration of the list functions"
   groups: "Test"
   embassy: "myembossdemo"
-  relations: "EDAM:0000088 topic Literature and documentation"
-  relations: "EDAM:0002246 operation Demonstration"
+  relations: "EDAM_topic:0088 Literature and documentation"
+  relations: "EDAM_operation:2246 Demonstration"
 ]
 
 section: input [
@@ -16,7 +16,7 @@ section: input [
     information: "GFF format features file"
     help: "File containing normal tab delimited gff's"
     knowntype: "gff"
-    relations: "EDAM:0001255 data Sequence features"
+    relations: "EDAM_data:1255 Sequence features"
   ]
 
 endsection: input

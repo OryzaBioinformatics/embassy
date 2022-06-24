@@ -111,13 +111,13 @@ int main(int argc, char **argv)
 
 
 
-    ajListSort(list, demolist_startcomp);
+    ajListSort(list, &demolist_startcomp);
     ajUserDumpC("\nOutput via the ajListMap function \nSorted by start pos");
-    ajListMap(list,demolist_dumpOut,NULL);
+    ajListMap(list, &demolist_dumpOut, NULL);
 
 
     /* printout the list but use the array method */
-    ajListSort(list, demolist_typecomp);
+    ajListSort(list, &demolist_typecomp);
     ajUserDumpC("\nOutput via the array method \nSorted by type");
     ia = ajListToarray(list, &array);
     for (i = 0; i < ia; i++)
@@ -128,7 +128,7 @@ int main(int argc, char **argv)
     }
 
     /* free the objects in the list */
-    ajListMap(list,demolist_freegff,NULL);
+    ajListMap(list, &demolist_freegff, NULL);
 
     ajListFree(&list);
     ajStrDel(&line);

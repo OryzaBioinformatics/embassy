@@ -2,8 +2,8 @@ application: myseq [
   documentation: "Demonstration of sequence reading"
   groups: "Test"
   embassy: "myemboss"
-  relations: "EDAM:0000088 topic Literature and documentation"
-  relations: "EDAM:0002246 operation Demonstration"
+  relations: "EDAM_topic:0088 Literature and documentation"
+  relations: "EDAM_operation:2246 Demonstration"
 ]
 
 section: input [
@@ -14,8 +14,8 @@ section: input [
   sequence: sequence [
     parameter: "Y"
     type: "any"
-    relations: "EDAM:0000848 data Sequence"
-    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM_data:0848 Sequence"
+    relations: "EDAM_data:0849 Sequence record"
   ]
 
 endsection: input
@@ -28,7 +28,7 @@ section: output [
   outfile: outfile [
     parameter: "Y"
     knowntype: "myseq output"
-    relations: "EDAM:0000969 data Free text"
+    relations: "EDAM_data:2048 Report"
   ]
 
 endsection: output

@@ -2,8 +2,8 @@ application: demosequence [
   documentation: "Demonstration of the sequence functions"
   groups: "Test"
   embassy: "myembossdemo"
-  relations: "EDAM:0000088 topic Literature and documentation"
-  relations: "EDAM:0002246 operation Demonstration"
+  relations: "EDAM_topic:0088 Literature and documentation"
+  relations: "EDAM_operation:2246 Demonstration"
 ]
 
 section: input [
