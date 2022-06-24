@@ -126,11 +126,11 @@ Here is a sample session with <b>ehmmfetch</b>
 <p>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
-% <b>ehmmfetch ../ehmmindex-ex-keep/myhmmso pkinase pkinase.ehmmfetch </b>
+% <b>ehmmfetch ../ehmmindex-keep/myhmmso pkinase pkinase.ehmmfetch </b>
 Retrieve an HMM from an HMM database.
 
 
-/shared/software/bin/hmmfetch ../ehmmindex-ex-keep/myhmmso pkinase > pkinase.ehmmfetch
+/shared/software/bin/hmmfetch ../ehmmindex-keep/myhmmso pkinase > pkinase.ehmmfetch
 
 
 </pre></td></tr></table><p>
@@ -150,7 +150,7 @@ Where possible, the same command-line qualifier names and parameter order is use
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
 Retrieve an HMM from an HMM database.
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-database]          infile     HMMER hmm database file
@@ -253,7 +253,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outfile" associated outfile qualifiers
+<td align="left" colspan=5>"-outfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -403,7 +403,7 @@ Automatic processing of gzipped files is not supported.
 
 <a name="input.1"></a>
 <h3>Input files for usage example </h3>
-<p><h3>File: ../ehmmindex-ex-keep/myhmmso</h3>
+<p><h3>File: ../ehmmindex-keep/myhmmso</h3>
 <table width="90%"><tr><td bgcolor="#FFCCFF">
 <pre>
 HMMER2.0  [2.3.2]
@@ -414,7 +414,7 @@ RF    no
 CS    no
 MAP   yes
 COM   /shared/software/bin/hmmbuild -n rrm --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../data/hmmnew/rrm.sto
-COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex4-keep/myhmms
+COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-keep4/myhmms
 NSEQ  90
 DATE  Fri Jul 15 12:00:00 2011
 CKSUM 8325
@@ -556,7 +556,7 @@ RF    no
 CS    no
 MAP   yes
 COM   /shared/software/bin/hmmbuild -n pkinase --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../data/hmmnew/pkinase.sto
-COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex4-keep/myhmms
+COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-keep4/myhmms
 NSEQ  67
 DATE  Fri Jul 15 12:00:00 2011
 CKSUM 4536
@@ -988,6 +988,16 @@ Please report all bugs to the EMBOSS bug team (emboss-bug&nbsp;&copy;&nbsp;embos
 This program is intended to be used by everyone and everything, from naive users to embedded scripts.
 
 
+
+
+
+
+<H2>
+    Comments
+</H2>
+<pre>
+None
+</pre>
 
 
 

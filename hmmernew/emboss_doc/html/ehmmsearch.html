@@ -124,11 +124,11 @@ Here is a sample session with <b>ehmmsearch</b>
 <p>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
-% <b>ehmmsearch ../ehmmcalibrate-ex-keep/globino.hmm Artemia.fa globino.ehmmsearch -a 100 </b>
+% <b>ehmmsearch ../ehmmcalibrate-keep/globino.hmm Artemia.fa globino.ehmmsearch -a 100 </b>
 Search a sequence database with a profile HMM
 
 
-/shared/software/bin/hmmsearch -A 100 -E 10.000000 -T -1000000.000000 -Z 0 --domE 1000000.000000 --domT -1000000.000000  ../ehmmcalibrate-ex-keep/globino.hmm ../../data/hmmnew/Artemia.fa > globino.ehmmsearch
+/shared/software/bin/hmmsearch -A 100 -E 10.000000 -T -1000000.000000 -Z 0 --domE 1000000.000000 --domT -1000000.000000  ../ehmmcalibrate-keep/globino.hmm ../../data/hmmnew/Artemia.fa > globino.ehmmsearch
 
 
 </pre></td></tr></table><p>
@@ -147,7 +147,7 @@ Where possible, the same command-line qualifier names and parameter order is use
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
 Search a sequence database with a profile HMM
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-hmmfile]           infile     File of HMMs.
@@ -323,7 +323,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein2          boolean    Sequence is protein
    -slower2            boolean    Make lower case
    -supper2            boolean    Make upper case
+   -scircular2         boolean    Sequence is circular
    -sformat2           string     Input sequence format
+   -iquery2            string     Input query fields or ID list
+   -ioffset2           integer    Input start position offset
    -sdbname2           string     Database name
    -sid2               string     Entryname
    -ufo2               string     UFO features
@@ -523,7 +526,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-seqfile" associated seqall qualifiers
+<td align="left" colspan=5>"-seqfile" associated seqall qualifiers
 </td>
 </tr>
 
@@ -592,11 +595,35 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
+<td> -scircular2<br>-scircular_seqfile</td>
+<td>boolean</td>
+<td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td> -sformat2<br>-sformat_seqfile</td>
 <td>string</td>
 <td>Input sequence format</td>
 <td>Any string</td>
 <td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -iquery2<br>-iquery_seqfile</td>
+<td>string</td>
+<td>Input query fields or ID list</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -ioffset2<br>-ioffset_seqfile</td>
+<td>integer</td>
+<td>Input start position offset</td>
+<td>Any integer value</td>
+<td>0</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -640,7 +667,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outfile" associated outfile qualifiers
+<td align="left" colspan=5>"-outfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -791,7 +818,7 @@ Automatic processing of gzipped files is not supported.
 
 <a name="input.1"></a>
 <h3>Input files for usage example </h3>
-<p><h3>File: ../ehmmcalibrate-ex-keep/globino.hmm</h3>
+<p><h3>File: ../ehmmcalibrate-keep/globino.hmm</h3>
 <table width="90%"><tr><td bgcolor="#FFCCFF">
 <pre>
 HMMER2.0  [2.3.2]
@@ -802,7 +829,7 @@ RF    no
 CS    no
 MAP   yes
 COM   /shared/software/bin/hmmbuild -n globins50 --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin.hmm ../../data/hmmnew/globins50.msf
-COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex-keep/globin.hmm
+COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-keep/globin.hmm
 NSEQ  50
 DATE  Fri Jul 15 12:00:00 2011
 CKSUM 9858
@@ -992,7 +1019,7 @@ HMMER 2.3.2 (Oct 2003)
 Copyright (C) 1992-2003 HHMI/Washington University School of Medicine
 Freely distributed under the GNU General Public License (GPL)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HMM file:                   ../ehmmcalibrate-ex-keep/globino.hmm [globins50]
+HMM file:                   ../ehmmcalibrate-keep/globino.hmm [globins50]
 Sequence database:          ../../data/hmmnew/Artemia.fa
 per-sequence score cutoff:  &gt;= -1000000.0
 per-domain score cutoff:    &gt;= -1000000.0
@@ -1431,6 +1458,16 @@ Please report all bugs to the EMBOSS bug team (emboss-bug&nbsp;&copy;&nbsp;embos
 This program is intended to be used by everyone and everything, from naive users to embedded scripts.
 
 
+
+
+
+
+<H2>
+    Comments
+</H2>
+<pre>
+None
+</pre>
 
 
 

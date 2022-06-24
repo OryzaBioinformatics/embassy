@@ -6,9 +6,10 @@ application: ehmmindex [
   batch: "yes"
   cpu: "medium"
   embassy: "hmmernew"
+  wrapper: "Y"
   external: "hmmindex HMMER 2.3.2 available from http://hmmer.wustl.edu/"
-  relations:  "EDAM:0000188 topic Sequence profiles and HMMs"
-  relations:  "EDAM:0000227 operation Data indexing"
+  relations:  "EDAM_topic:0188 Sequence profiles and HMMs"
+  relations:  "EDAM_operation:0227 Data indexing"
 ]
 
 section: input [
@@ -21,7 +22,7 @@ section: input [
     information: "HMMER hmm database file"
     knowntype: "hmm database"
     help: "HMM database."
-    relations:  "EDAM:0001364 data Hidden Markov model"
+    relations:  "EDAM_data:1364 Hidden Markov model"
   ]
 
 endsection: input

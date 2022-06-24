@@ -44,12 +44,12 @@ Usage
    Here is a sample session with ehmmfetch
 
 
-% ehmmfetch ../ehmmindex-ex-keep/myhmmso pkinase pkinase.ehmmfetch
+% ehmmfetch ../ehmmindex-keep/myhmmso pkinase pkinase.ehmmfetch
 Retrieve an HMM from an HMM database.
 
 
-/shared/software/bin/hmmfetch ../ehmmindex-ex-keep/myhmmso pkinase > pkinase.ehm
-mfetch
+/shared/software/bin/hmmfetch ../ehmmindex-keep/myhmmso pkinase > pkinase.ehmmfe
+tch
 
 
 
@@ -69,7 +69,7 @@ Command line arguments
    them).
 
 Retrieve an HMM from an HMM database.
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-database]          infile     HMMER hmm database file
@@ -126,7 +126,7 @@ Input file format
 
   Input files for usage example
 
-  File: ../ehmmindex-ex-keep/myhmmso
+  File: ../ehmmindex-keep/myhmmso
 
 HMMER2.0  [2.3.2]
 NAME  rrm
@@ -139,7 +139,7 @@ COM   /shared/software/bin/hmmbuild -n rrm --pbswitch 1000 --archpri 0.850000 --
 idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../
 data/hmmnew/rrm.sto
 COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.00
-0000 --seed 1 ../ehmmbuild-ex4-keep/myhmms
+0000 --seed 1 ../ehmmbuild-keep4/myhmms
 NSEQ  90
 DATE  Fri Jul 15 12:00:00 2011
 CKSUM 8325
@@ -315,7 +315,7 @@ COM   /shared/software/bin/hmmbuild -n pkinase --pbswitch 1000 --archpri 0.85000
 0 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ..
 /../data/hmmnew/pkinase.sto
 COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.00
-0000 --seed 1 ../ehmmbuild-ex4-keep/myhmms
+0000 --seed 1 ../ehmmbuild-keep4/myhmms
 NSEQ  67
 DATE  Fri Jul 15 12:00:00 2011
 CKSUM 4536
@@ -596,3 +596,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

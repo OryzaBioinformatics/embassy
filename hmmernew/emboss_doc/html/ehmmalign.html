@@ -123,7 +123,7 @@ Here is a sample session with <b>ehmmalign</b>
 <p>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
-% <b>ehmmalign ../ehmmcalibrate-ex-keep/globino.hmm globins630.fa globins630.ali </b>
+% <b>ehmmalign ../ehmmcalibrate-keep/globino.hmm globins630.fa globins630.ali </b>
 Align sequences to an HMM profile
 
 hmmalign - align sequences to an HMM profile
@@ -131,13 +131,13 @@ HMMER 2.3.2 (Oct 2003)
 Copyright (C) 1992-2003 HHMI/Washington University School of Medicine
 Freely distributed under the GNU General Public License (GPL)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HMM file:             ../ehmmcalibrate-ex-keep/globino.hmm
+HMM file:             ../ehmmcalibrate-keep/globino.hmm
 Sequence file:        ./ehmmalign-1234567890.1234
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 Alignment saved in file globins630.ali
 
-/shared/software/bin/hmmalign  --informat FASTA --outformat A2M  -o globins630.ali ../ehmmcalibrate-ex-keep/globino.hmm ./ehmmalign-1234567890.1234
+/shared/software/bin/hmmalign  --informat FASTA --outformat A2M  -o globins630.ali ../ehmmcalibrate-keep/globino.hmm ./ehmmalign-1234567890.1234
 
 
 </pre></td></tr></table><p>
@@ -156,7 +156,7 @@ Where possible, the same command-line qualifier names and parameter order is use
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
 Align sequences to an HMM profile
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-hmmfile]           infile     File containing a HMM profile
@@ -213,7 +213,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein2          boolean    Sequence is protein
    -slower2            boolean    Make lower case
    -supper2            boolean    Make upper case
+   -scircular2         boolean    Sequence is circular
    -sformat2           string     Input sequence format
+   -iquery2            string     Input query fields or ID list
+   -ioffset2           integer    Input start position offset
    -sdbname2           string     Database name
    -sid2               string     Entryname
    -ufo2               string     UFO features
@@ -333,7 +336,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-seqfile" associated seqset qualifiers
+<td align="left" colspan=5>"-seqfile" associated seqset qualifiers
 </td>
 </tr>
 
@@ -402,11 +405,35 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
+<td> -scircular2<br>-scircular_seqfile</td>
+<td>boolean</td>
+<td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td> -sformat2<br>-sformat_seqfile</td>
 <td>string</td>
 <td>Input sequence format</td>
 <td>Any string</td>
 <td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -iquery2<br>-iquery_seqfile</td>
+<td>string</td>
+<td>Input query fields or ID list</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -ioffset2<br>-ioffset_seqfile</td>
+<td>integer</td>
+<td>Input start position offset</td>
+<td>Any integer value</td>
+<td>0</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -450,7 +477,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-o" associated align qualifiers
+<td align="left" colspan=5>"-o" associated align qualifiers
 </td>
 </tr>
 
@@ -665,7 +692,7 @@ Automatic processing of gzipped files is not supported.
 
 <a name="input.1"></a>
 <h3>Input files for usage example </h3>
-<p><h3>File: ../ehmmcalibrate-ex-keep/globino.hmm</h3>
+<p><h3>File: ../ehmmcalibrate-keep/globino.hmm</h3>
 <table width="90%"><tr><td bgcolor="#FFCCFF">
 <pre>
 HMMER2.0  [2.3.2]
@@ -676,7 +703,7 @@ RF    no
 CS    no
 MAP   yes
 COM   /shared/software/bin/hmmbuild -n globins50 --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin.hmm ../../data/hmmnew/globins50.msf
-COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex-keep/globin.hmm
+COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-keep/globin.hmm
 NSEQ  50
 DATE  Fri Jul 15 12:00:00 2011
 CKSUM 9858
@@ -1361,8 +1388,12 @@ This program is intended to be used by everyone and everything, from naive users
 
 
 
-
-
+<H2>
+    Comments
+</H2>
+<pre>
+None
+</pre>
 
 
 

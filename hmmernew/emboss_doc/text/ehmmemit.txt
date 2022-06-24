@@ -45,7 +45,7 @@ Usage
    Here is a sample session with ehmmemit
 
 
-% ehmmemit ../ehmmcalibrate-ex-keep/globino.hmm globino.ehmmemit -c N -n 10
+% ehmmemit ../ehmmcalibrate-keep/globino.hmm globino.ehmmemit -c N -n 10
 Generate sequences from a profile HMM.
 
 hmmemit - generate sequences from a profile HMM
@@ -53,7 +53,7 @@ HMMER 2.3.2 (Oct 2003)
 Copyright (C) 1992-2003 HHMI/Washington University School of Medicine
 Freely distributed under the GNU General Public License (GPL)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HMM file:             ../ehmmcalibrate-ex-keep/globino.hmm
+HMM file:             ../ehmmcalibrate-keep/globino.hmm
 Number of seqs:       10
 Random seed:          0
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -61,7 +61,7 @@ Random seed:          0
 Output saved in file globino.ehmmemit
 
 /shared/software/bin/hmmemit --seed 0  -n 10  -o globino.ehmmemit ../ehmmcalibra
-te-ex-keep/globino.hmm
+te-keep/globino.hmm
 
 
 
@@ -81,7 +81,7 @@ Command line arguments
    them).
 
 Generate sequences from a profile HMM.
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-hmmfile]           infile     File containing one or more HMMs.
@@ -158,7 +158,7 @@ Input file format
 
   Input files for usage example
 
-  File: ../ehmmcalibrate-ex-keep/globino.hmm
+  File: ../ehmmcalibrate-keep/globino.hmm
 
 HMMER2.0  [2.3.2]
 NAME  globins50
@@ -171,7 +171,7 @@ COM   /shared/software/bin/hmmbuild -n globins50 --pbswitch 1000 --archpri 0.850
 000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin.
 hmm ../../data/hmmnew/globins50.msf
 COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.00
-0000 --seed 1 ../ehmmbuild-ex-keep/globin.hmm
+0000 --seed 1 ../ehmmbuild-keep/globin.hmm
 NSEQ  50
 DATE  Fri Jul 15 12:00:00 2011
 CKSUM 9858
@@ -504,3 +504,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

@@ -2,9 +2,10 @@ application: ehmmconvert [
   documentation: "Convert between profile HMM file formats"
   groups: "HMM"
   embassy: "hmmernew"
+  wrapper: "Y"
   external: "hmmconvert HMMER 2.3.2 available from http://hmmer.wustl.edu/"
-  relations:  "EDAM:0000188 topic Sequence profiles and HMMs"
-  relations:  "EDAM:0002409 operation Data file processing"
+  relations:  "EDAM_topic:0188 Sequence profiles and HMMs"
+  relations:  "EDAM_operation:2409 File processing"
 ]
 
 section: input [
@@ -17,7 +18,7 @@ section: input [
     knowntype: "hmm"
     information: "HMMER hidden markov model file"
     help: "HMM input file"
-    relations:  "EDAM:0001364 data Hidden Markov model"
+    relations:  "EDAM_data:1364 Hidden Markov model"
   ]
 
 endsection: input
@@ -38,7 +39,7 @@ section: required [
     header: "HMM format"
     information: "Select format"
     button: "Y"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: required
@@ -61,7 +62,7 @@ section: output [
     help: "HMM output file"
     append: "N"
     information: "HMMER hidden markov model output file"
-    relations:  "EDAM:0001364 data Hidden Markov model"
+    relations:  "EDAM_data:1364 Hidden Markov model"
   ]
 
 endsection: output

@@ -6,9 +6,10 @@ application: ehmmpfam [
   batch: "yes"
   cpu: "medium"
   embassy: "hmmernew"
+  wrapper: "Y"
   external: "hmmpfam HMMER 2.3.2 available from http://hmmer.wustl.edu/"
-  relations:  "EDAM:0000188 topic Sequence profiles and HMMs"
-  relations:  "EDAM:0000342 operation Sequence profile database search"
+  relations:  "EDAM_topic:0188 Sequence profiles and HMMs"
+  relations:  "EDAM_operation:0342 Sequence profile database search"
 ]
 
 section: input [
@@ -21,14 +22,14 @@ section: input [
     knowntype: "hmm"
     information: "HMMER hidden markov model file"
     help: "File of HMMs."
-    relations:  "EDAM:0001364 data Hidden Markov model"
+    relations:  "EDAM_data:1364 Hidden Markov model"
   ]
 
   seqall: seqfile [
     parameter: "Y"
     type: "gapstopprotein"
     help: "File of sequences."
-    relations: "EDAM:0002886 data Sequence record (protein)"
+    relations: "EDAM_data:2886 Sequence record (protein)"
   ]
 
 endsection: input
@@ -45,7 +46,7 @@ section: required [
            domains. -A0 shuts off the alignment output and can be used to
            reduce the size of output files."
     default: "100"
-    relations: "EDAM:0001694 data Number of output entities"
+    relations: "EDAM_data:1694 Number of output entities"
   ]
 
   float: e [
@@ -56,8 +57,8 @@ section: required [
            to <x>, where <x> is a positive real number. The default is 10.0.
            Hits with E-values better than (less than) this threshold will be
            shown."
-    relations: "EDAM:0001667 data E-value"
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:1667 E-value"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
 endsection: required
@@ -75,7 +76,7 @@ section: additional [
            protein. Other HMMER programs autodetect this; but because of the
            order in which hmmpfam accesses data, it can't reliably determine
            the correct 'alphabet' by itself."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: t [
@@ -87,7 +88,7 @@ section: additional [
            infinity; by default, the threshold is controlled by E-value and
            not by bit score. Hits with bit scores better than (greater than)
            this threshold will be shown."
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
   integer: z [
@@ -97,7 +98,7 @@ section: additional [
     help: "Calculate the E-value scores as if we had seen a sequence
            database of <n> sequences. The default is arbitrarily set to
            59021, the size of Swissprot 34."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -113,7 +114,7 @@ section: advanced [
     help: "Report HMM accessions instead of names in the output
            reports. Useful for high-throughput annotation, where the data are
            being parsed for storage in a relational database."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: compat [
@@ -121,7 +122,7 @@ section: advanced [
     information: "Use HMMER 2.1.1 output format."
     help: "Use the output format of HMMER 2.1.1, the 1998-2001 public
            release; provided so 2.1.1 parsers don't have to be rewritten."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: cpu [
@@ -131,7 +132,7 @@ section: advanced [
            on. The default is to use all CPUs in the machine. Overrides the
            HMMER NCPU environment variable. Only affects threaded versions of
            HMMER (the default on most systems)."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: cutga [
@@ -145,7 +146,7 @@ section: advanced [
            Pfam-friendly alignment format (extended SELEX or Stockholm
            format) and the optional GA annotation line was present. If these
            cutoffs are not set in the HMM file, -cut ga doesn't work."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: cuttc [
@@ -158,7 +159,7 @@ section: advanced [
            alignment format (extended SELEX or Stockholm format) and the
            optional TC annotation line was present. If these cutoffs are not
            set in the HMM file, -cut tc doesn't work."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: cutnc [
@@ -171,7 +172,7 @@ section: advanced [
            alignment format (extended SELEX or Stockholm format) and the
            optional NC annotation line was present. If these cutoffs are not
            set in the HMM file, -cut nc doesn't work."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: dome [
@@ -183,8 +184,8 @@ section: advanced [
            frst threshold will be reported in the second list, so that the
            number of domains reported in the per-sequence list is consistent
            with the number that appear in the per-domain list."
-    relations: "EDAM:0001667 data E-value"
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:1667 E-value"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
   float: domt [
@@ -205,7 +206,7 @@ section: advanced [
            better score than the single domain alignment, and hence the extra
            domains must contribute positive score. See the Users' Guide for
            more detail."
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
   boolean: forward [
@@ -217,7 +218,7 @@ section: advanced [
            is a more sensitive algorithm for detecting remote sequence
            homologues; my experiments with HMMER have not confrmed this,
            however."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: nulltwo [
@@ -231,7 +232,7 @@ section: advanced [
            chance that this postprocessing might remove real matches, and in
            these cases --null2 may improve sensitivity at the expense of
            reducing specifcity by letting biased composition hits through."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: pvm [
@@ -246,7 +247,7 @@ section: advanced [
            highly recommended that each node have a local copy of hmmfile
            rather than NFS mounting a shared copy. Optional PVM support must
            have been compiled into HMMER for -pvm to function."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: xnu [
@@ -256,7 +257,7 @@ section: advanced [
            effect on nucleic acid sequences. In trial experiments, -xnu
            appears to perform less well than the default post hoc null2
            model."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: advanced
@@ -275,7 +276,7 @@ section: output [
            the best scoring HMMs, a list of the best scoring domains in order
            of their occurrence in the sequence, and alignments for all the
            best scoring domains."
-    relations:  "EDAM:0000869 data Sequence-profile alignment"
+    relations:  "EDAM_data:0869 Sequence-profile alignment"
   ]
 
 endsection: output
