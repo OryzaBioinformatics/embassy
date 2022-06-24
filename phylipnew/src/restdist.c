@@ -94,7 +94,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
 
     restsites = ajAcdGetBoolean("restsites");
     neili = ajAcdGetBoolean("neili");
-    if(!neili) gama = ajAcdGetBoolean("gamma");
+    if(!neili) gama = ajAcdGetBoolean("gammatype");
     if(gama) {
       cvi = ajAcdGetFloat("gammacoefficient");
       cvi = 1.0 / (cvi * cvi);

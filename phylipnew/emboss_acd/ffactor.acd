@@ -2,8 +2,9 @@ application: ffactor [
   documentation: "Multistate to binary recoding program"
   groups: "Phylogeny:Discrete characters"
   embassy: "phylipnew"
-  relations:  "EDAM:0000084 topic Phylogenetics"
-  relations:  "EDAM:0000550 operation Phylogenetic modelling"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_operation:0550 Sequence alignment analysis
+                                      (phylogenetic modelling)"
 ]
 
 section: input [
@@ -15,7 +16,7 @@ section: input [
     parameter: "Y"
     information: "Phylip factor program input file"
     knowntype: "factor input"
-    relations:  "EDAM:0001427 data Phylogenetic discrete data"
+    relations:  "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
 endsection: input
@@ -29,21 +30,21 @@ section: additional [
     additional: "Y"
     default: "N"
     information: "Put ancestral states in output file"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: factors [
     additional: "Y"
     default: "N"
     information: "Put factors information in output file"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -57,7 +58,7 @@ section: output [
     parameter: "Y"
     knowntype: "factor output"
     information: "Phylip factor program output file"
-    relations:  "EDAM:0001427 data Phylogenetic discrete data"
+    relations:  "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
   outfile: outfactorfile [
@@ -65,7 +66,7 @@ section: output [
     information: "Phylip factor data output file (optional)"
     nullok: "Y"
     knowntype: "phylip factor"
-    relations:  "EDAM:0001427 data Phylogenetic discrete data"
+    relations:  "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
   outfile: outancfile [
@@ -73,7 +74,7 @@ section: output [
     information: "Phylip ancestor data output file (optional)"
     nullok: "Y"
     knowntype: "phylip ancestor"
-    relations:  "EDAM:0001427 data Phylogenetic discrete data"
+    relations:  "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
 endsection: output

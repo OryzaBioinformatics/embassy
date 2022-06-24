@@ -87,7 +87,7 @@ Done.
 Command line arguments
 
 Discrete character parsimony
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            discretestates File containing one or more data sets
@@ -108,7 +108,7 @@ Version: EMBOSS:6.4.0.0
                                   (must be odd) (Integer from 1 to 32767)
    -outgrno            integer    [0] Species number to use as outgroup
                                   (Integer 0 or more)
-   -thresh             toggle     [N] Use threshold parsimony
+   -dothreshold        toggle     [N] Use threshold parsimony
 *  -threshold          float      [1] Threshold value (Number 1.000 or more)
    -[no]trout          toggle     [Y] Write out trees to tree file
 *  -outtreefile        outfile    [*.fpars] Phylip tree output file (optional)
@@ -344,7 +344,7 @@ Output file format
   File: pars.fpars
 
 
-Discrete character parsimony algorithm, version 3.69
+Discrete character parsimony algorithm, version 3.69.650
 
 
 One most parsimonious tree found:
@@ -441,3 +441,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

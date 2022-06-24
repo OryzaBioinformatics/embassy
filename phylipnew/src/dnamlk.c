@@ -256,7 +256,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
 
     phyloratecat = ajAcdGetProperties("categories");      
 
-    gammamethod = ajAcdGetListSingle("gamma");
+    gammamethod = ajAcdGetListSingle("gammatype");
 
     if(ajStrMatchC(gammamethod, "n")) {
       rrate      = (double *) Malloc(rcategs*sizeof(double));

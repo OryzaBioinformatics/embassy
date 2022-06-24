@@ -46,7 +46,7 @@ Please help by correcting and extending the Wiki pages.
 <H2>
     Function
 </H2>
-Interactive Dollo or Polymorphism Parsimony
+Interactive Dollo or polymorphism parsimony
 <!--
 DON'T WRITE ANYTHING HERE.
 IT IS DONE FOR YOU.
@@ -117,14 +117,14 @@ Here is a sample session with <b>fdolmove</b>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
 % <b>fdolmove </b>
-Interactive Dollo or Polymorphism Parsimony
+Interactive Dollo or polymorphism parsimony
 Phylip character discrete states file: <b>dolmove.dat</b>
 Phylip tree file (optional): <b></b>
 NEXT? (R # + - S . T U W O F H J K L C ? X Q) (? for Help): <b>Q</b>
 Do you want to write out the tree to a file? (Y or N): <b>Y</b>
 
 
-Interactive Dollo or polymorphism parsimony, version 3.69
+Interactive Dollo or polymorphism parsimony, version 3.69.650
 
  5 species,   6 characters
 
@@ -160,8 +160,8 @@ Tree written to file "dolmove.treefile"
 
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
-Interactive Dollo or Polymorphism Parsimony
-Version: EMBOSS:6.4.0.0
+Interactive Dollo or polymorphism parsimony
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            discretestates File containing data set
@@ -173,7 +173,7 @@ Version: EMBOSS:6.4.0.0
    -factorfile         properties Factors file
    -method             menu       [d] Parsimony method (Values: d (Dollo); p
                                   (Polymorphism))
-   -thresh             toggle     [N] Use threshold parsimony
+   -dothreshold        toggle     [N] Use threshold parsimony
 *  -threshold          float      [1] Threshold value (Number 0.000 or more)
    -initialtree        menu       [Arbitary] Initial tree (Values: a
                                   (Arbitary); u (User); s (Specify))
@@ -276,7 +276,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-thresh</td>
+<td>-dothreshold</td>
 <td>toggle</td>
 <td>Use threshold parsimony</td>
 <td>Toggle value Yes/No</td>
@@ -336,7 +336,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outtreefile" associated outfile qualifiers
+<td align="left" colspan=5>"-outtreefile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -772,22 +772,22 @@ None.
 
 <tr>
 <td><a href="/embassy/phylip/ednadist.html">ednadist</a></td>
-<td>Nucleic acid sequence Distance Matrix program</td>
+<td>Nucleic acid sequence distance matrix program</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/phylip/ednainvar.html">ednainvar</a></td>
-<td>Nucleic acid sequence Invariants method</td>
+<td>Nucleic acid sequence invariants method</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/phylip/ednaml.html">ednaml</a></td>
-<td>Phylogenies from nucleic acid Maximum Likelihood</td>
+<td>Phylogenies from nucleic acid maximum likelihood</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/phylip/ednamlk.html">ednamlk</a></td>
-<td>Phylogenies from nucleic acid Maximum Likelihood with clock</td>
+<td>Phylogenies from nucleic acid maximum likelihood with clock</td>
 </tr>
 
 <tr>
@@ -812,7 +812,7 @@ None.
 
 <tr>
 <td><a href="/embassy/phylip/erestml.html">erestml</a></td>
-<td>Restriction site Maximum Likelihood method</td>
+<td>Restriction site maximum likelihood method</td>
 </tr>
 
 <tr>
@@ -832,17 +832,17 @@ None.
 
 <tr>
 <td><a href="fdnadist.html">fdnadist</a></td>
-<td>Nucleic acid sequence Distance Matrix program</td>
+<td>Nucleic acid sequence distance matrix program</td>
 </tr>
 
 <tr>
 <td><a href="fdnainvar.html">fdnainvar</a></td>
-<td>Nucleic acid sequence Invariants method</td>
+<td>Nucleic acid sequence invariants method</td>
 </tr>
 
 <tr>
 <td><a href="fdnaml.html">fdnaml</a></td>
-<td>Estimates nucleotide phylogeny by maximum likelihood</td>
+<td>Estimate nucleotide phylogeny by maximum likelihood</td>
 </tr>
 
 <tr>
@@ -897,12 +897,12 @@ None.
 
 <tr>
 <td><a href="frestdist.html">frestdist</a></td>
-<td>Distance matrix from restriction sites or fragments</td>
+<td>Calculate distance matrix from restriction sites or fragments</td>
 </tr>
 
 <tr>
 <td><a href="frestml.html">frestml</a></td>
-<td>Restriction site maximum Likelihood method</td>
+<td>Restriction site maximum likelihood method</td>
 </tr>
 
 <tr>
@@ -967,6 +967,14 @@ This program is intended to be used by everyone and everything, from naive users
 
 
 
+
+<H2>
+    Comments
+</H2>
+
+<pre>
+None
+</pre>
 
 
 

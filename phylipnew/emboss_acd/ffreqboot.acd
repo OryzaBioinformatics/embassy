@@ -2,8 +2,8 @@ application: ffreqboot [
   documentation: "Bootstrapped genetic frequencies algorithm"
   groups: "Phylogeny:Molecular sequence"
   embassy: "phylipnew"
-  relations:  "EDAM:0000084 topic Phylogenetics"
-  relations:  "EDAM:0000552 operation Phylogenetic tree bootstrapping"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_operation:0552 Phylogenetic tree bootstrapping"
 ]
 
 section: input [
@@ -13,7 +13,7 @@ section: input [
 
   frequencies: infile [
     parameter: "Y"
-    relations: "EDAM:0001426 data Phylogenetic continuous quantitative data"
+    relations: "EDAM_data:1426 Phylogenetic continuous quantitative data"
   ]
 
   properties: weights [
@@ -23,7 +23,7 @@ section: input [
     help: "Weights file"
     length: "$(infile.length)"
     nullok: "Y"
-    relations: "EDAM:0002994 data Phylogenetic character weights"
+    relations: "EDAM_data:2994 Phylogenetic character weights"
   ]
 
 endsection: input
@@ -43,14 +43,14 @@ section: additional [
              r:Rewrite data"
     information: "Choose test"
     default: "b"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   toggle: regular [
     additional: "@( $(test) == { b | j } )"
     information: "Altered sampling fraction"
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: fracsample [
@@ -59,7 +59,7 @@ section: additional [
     default: "100.0"
     minimum: "0.1"
     maximum: "100.0"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: blocksize [
@@ -67,7 +67,7 @@ section: additional [
     additional: "@($(test) == b)"
     default: "1"
     minimum: "1"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: reps [
@@ -75,7 +75,7 @@ section: additional [
     information: "How many replicates"
     minimum: "1"
     default: "100"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: justweights [
@@ -86,7 +86,7 @@ section: additional [
     values: "d:Datasets; w:Weights"
     information: "Write out datasets or just weights"
     default: "d"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: seed [
@@ -96,7 +96,7 @@ section: additional [
     minimum: "1"
     maximum: "32767"
     default: "1"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -110,28 +110,28 @@ section: output [
     parameter: "Y"
     knowntype: "seqbootfreq output"
     information: "Phylip seqboot_freq program output file"
-    relations:  "EDAM:0002245 data Sequence set (bootstrapped)"
+    relations:  "EDAM_data:2245 Sequence set (bootstrapped)"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print out the data at start of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: dotdiff [
     additional: "$(printdata)"
     default: "Y"
     information: "Use dot-differencing"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: output

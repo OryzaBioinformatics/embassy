@@ -1,13 +1,13 @@
 application: fcontml [
   documentation: "Gene frequency and continuous character
-                  Maximum Likelihood"
+                  maximum likelihood"
   groups: "Phylogeny:Gene frequencies"
   gui: "yes"
   batch: "yes"
   cpu: "high"
   embassy: "phylipnew"
-  relations:  "EDAM:0000191 topic Phylogeny reconstruction"
-  relations:  "EDAM:0000547 operation Phylogenetic tree construction (maximum likelihood and Bayesian methods)"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_operation:0547 Phylogenetic tree construction (maximum likelihood and Bayesian methods)"
 ]
 
 section: input [
@@ -18,7 +18,7 @@ section: input [
   frequencies: infile [
     parameter: "Y"
     help: "File containing one or more sets of data"
-    relations: "EDAM:0001426 data Phylogenetic continuous quantitative data"
+    relations: "EDAM_data:1426 Phylogenetic continuous quantitative data"
   ]
 
   tree: intreefile [
@@ -26,7 +26,7 @@ section: input [
     knowntype: "newick"
     nullok: "Y"
     information: "Phylip tree file (optional)"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
 endsection: input
@@ -44,14 +44,14 @@ section: additional [
     values: "g:Gene frequencies; i:Continuous characters"
     information: "Input type in infile"
     default: "g"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: lengths [
     additional: "$(intreefile.isdefined)"
     default: "N"
     information: "Use branch lengths from user trees"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: njumble [
@@ -59,7 +59,7 @@ section: additional [
     default: "0"
     minimum: "0"
     information: "Number of times to randomise"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: seed [
@@ -69,14 +69,14 @@ section: additional [
     maximum: "32767"
     minimum: "1"
     default: "1"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: global [
     additional: "@(!$(intreefile.isdefined))"
     default: "N"
     information: "Global rearrangements"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: outgrno [
@@ -87,7 +87,7 @@ section: additional [
     failrange: "N"
     trueminimum: "Y"
     information: "Species number to use as outgroup"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -101,14 +101,14 @@ section: output [
     parameter: "Y"
     knowntype: "contml output"
     information: "Phylip contml program output file"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   toggle: trout [
     additional: "Y"
     default: "Y"
     information: "Write out trees to tree file"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   outfile: outtreefile [
@@ -117,28 +117,28 @@ section: output [
     information: "Phylip tree output file (optional)"
     knowntype: "newick tree"
     nullok: "Y"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: treeprint [
     additional: "Y"
     default: "Y"
     information: "Print out tree"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: output

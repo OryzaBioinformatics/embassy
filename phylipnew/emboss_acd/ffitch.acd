@@ -1,13 +1,13 @@
 application: ffitch [
-  documentation: "Fitch-Margoliash and Least-Squares Distance
-                  Methods"
+  documentation: "Fitch-Margoliash and least-squares distance
+                  methods"
   groups: "Phylogeny:Distance matrix"
   gui: "yes"
   batch: "yes"
   cpu: "high"
   embassy: "phylipnew"
-  relations:  "EDAM:0000191 topic Phylogeny reconstruction"
-  relations:  "EDAM:0000546 operation Phylogenetic tree construction (minimum distance methods)"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_operation:0546 Phylogenetic tree construction (minimum distance methods)"
 ]
 
 section: input [
@@ -20,7 +20,7 @@ section: input [
     help: "File containing one or more distance matrices"
     knowntype: "distance matrix"
     information: "Phylip distance matrix file"
-    relations:  "EDAM:0000870 data Sequence distance matrix"
+    relations:  "EDAM_data:0870 Sequence distance matrix"
   ]
 
   tree: intreefile [
@@ -28,7 +28,7 @@ section: input [
     nullok: "Y"
     knowntype: "newick"
     information: "Phylip tree file (optional)"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
 endsection: input
@@ -46,14 +46,14 @@ section: additional [
     values: "s:Square; u:Upper triangular; l:Lower triangular"
     information: "Type of input data matrix"
     default: "s"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: minev [
     additional: "Y"
     information: "Minimum evolution"
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: njumble [
@@ -61,7 +61,7 @@ section: additional [
     default: "0"
     minimum: "0"
     information: "Number of times to randomise"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: seed [
@@ -71,7 +71,7 @@ section: additional [
     minimum: "1"
     maximum: "32767"
     default: "1"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: outgrno [
@@ -82,42 +82,42 @@ section: additional [
     trueminimum: "Y"
     default: "0"
     information: "Species number to use as outgroup"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: power [
     additional: "Y"
     default: "2.0"
     information: "Power"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: lengths [
     additional: "$(intreefile.isdefined)"
     default: "N"
     information: "Use branch lengths from user trees"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: negallowed [
     additional: "@(!$(minev))"
     default: "N"
     information: "Negative branch lengths allowed"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: global [
     additional: "@(!$(intreefile.isdefined))"
     default: "N"
     information: "Global rearrangements"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: replicates [
     additional: "Y"
     default: "N"
     information: "Subreplicates"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -131,14 +131,14 @@ section: output [
     parameter: "Y"
     knowntype: "fitch output"
     information: "Phylip fitch program output file"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   toggle: trout [
     additional: "Y"
     default: "Y"
     information: "Write out trees to tree file"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   outfile: outtreefile [
@@ -147,28 +147,28 @@ section: output [
     information: "Phylip tree output file (optional)"
     knowntype: "newick tree"
     nullok: "Y"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: treeprint [
     additional: "Y"
     default: "Y"
     information: "Print out tree"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: output

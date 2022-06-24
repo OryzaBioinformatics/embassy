@@ -253,15 +253,6 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
     embossoutfile = ajAcdGetOutfile("outfile");   
     emboss_openfile(embossoutfile, &outfile, &outfilename);
 
-    printf("\n bootstrap: %s",(bootstrap ? "true" : "false"));
-    printf("\njackknife: %s",(jackknife ? "true" : "false"));
-    printf("\n permute: %s",(permute ? "true" : "false"));
-    printf("\n lockhart: %s",(lockhart ? "true" : "false"));
-    printf("\n ild: %s",(ild ? "true" : "false"));
-    printf("\n justwts: %s \n",(justwts ? "true" : "false"));
-
-     
-
 }  /* emboss_getoptions */
 
 
@@ -1234,7 +1225,8 @@ int main(int argc, Char *argv[])
   if (mixture)
     fixmacfile(outmixfilename);
 #endif
-  printf("Done.\n\n");
+  if(progress)
+      printf("Done.\n\n");
 #ifdef WIN32
   phyRestoreConsoleAttributes();
 #endif 

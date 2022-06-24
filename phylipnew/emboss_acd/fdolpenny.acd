@@ -2,8 +2,8 @@ application: fdolpenny [
   documentation: "Penny algorithm Dollo or polymorphism"
   groups: "Phylogeny:Discrete characters"
   embassy: "phylipnew"
-  relations:  "EDAM:0000191 topic Phylogeny reconstruction"
-  relations:  "EDAM:0000545 operation Phylogenetic tree construction (parsimony methods)"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_operation:0545 Phylogenetic tree construction (parsimony methods)"
 ]
 
 section: input [
@@ -17,7 +17,7 @@ section: input [
     help: "File containing one or more data sets"
     knowntype: "discrete characters"
     information: "Phylip character discrete states file"
-    relations:  "EDAM:0001427 data Phylogenetic discrete data"
+    relations:  "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
   properties: weights [
@@ -27,7 +27,7 @@ section: input [
     nullok: "Y"
     length: "$(infile.discretelength)"
     size: "1"
-    relations: "EDAM:0002994 data Phylogenetic character weights"
+    relations: "EDAM_data:2994 Phylogenetic character weights"
   ]
 
   properties: ancfile [
@@ -37,7 +37,7 @@ section: input [
     nullok: "Y"
     length: "$(infile.discretelength)"
     size: "1"
-    relations: "EDAM:0001427 data Phylogenetic discrete data"
+    relations: "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
 endsection: input
@@ -47,40 +47,40 @@ section: additional [
   type: "page"
 ]
 
-  toggle: thresh [
+  toggle: dothreshold [
     additional: "Y"
     default: "N"
     information: "Use threshold parsimony"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: threshold [
-    additional: "$(thresh)"
+    additional: "$(dothreshold)"
     minimum: "0"
     information: "Threshold value"
     default: "1"
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
   integer: howmany [
     additional: "Y"
     information: "How many groups of trees"
     default: "1000"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: howoften [
     additional: "Y"
     information: "How often to report, in trees"
     default: "100"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: simple [
     additional: "Y"
     information: "Branch and bound is simple"
     default: "Y"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: method [
@@ -91,7 +91,7 @@ section: additional [
     values: "d:Dollo; p:Polymorphism"
     information: "Parsimony method"
     default: "d"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -105,14 +105,14 @@ section: output [
     parameter: "Y"
     knowntype: "dolpenny output"
     information: "Phylip dolpenny program output file"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   toggle: trout [
     additional: "Y"
     default: "Y"
     information: "Write out trees to tree file"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   outfile: outtreefile [
@@ -121,42 +121,42 @@ section: output [
     information: "Phylip tree output file (optional)"
     knowntype: "newick tree"
     nullok: "Y"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: treeprint [
     additional: "Y"
     default: "Y"
     information: "Print out tree"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: ancseq [
     additional: "Y"
     default: "N"
     information: "Print states at all nodes of tree"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: stepbox [
     additional: "Y"
     default: "N"
     information: "Print out steps in each character"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: output

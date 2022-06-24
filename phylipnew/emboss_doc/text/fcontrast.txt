@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Continuous character Contrasts
+   Continuous character contrasts
 
 Description
 
@@ -114,7 +114,7 @@ Usage
 
 
 % fcontrast
-Continuous character Contrasts
+Continuous character contrasts
 Input file: contrast.dat
 Phylip tree file (optional): contrast.tree
 Phylip contrast program output file [contrast.fcontrast]:
@@ -131,8 +131,8 @@ Done.
 
 Command line arguments
 
-Continuous character Contrasts
-Version: EMBOSS:6.4.0.0
+Continuous character contrasts
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            frequencies File containing one or more sets of data
@@ -404,7 +404,7 @@ Known bugs
 See also
 
                     Program name                  Description
-                    econtml      Continuous character Maximum Likelihood method
+                    econtml      Continuous character maximum likelihood method
                     econtrast    Continuous character contrasts
 
 Author(s)
@@ -425,3 +425,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

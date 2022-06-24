@@ -1,12 +1,12 @@
 application: frestdist [
-  documentation: "Distance matrix from restriction sites or
+  documentation: "Calculate distance matrix from restriction sites or
                   fragments"
   groups: "Phylogeny:Molecular sequence"
   embassy: "phylipnew"
-  relations:  "EDAM:0000191 topic Phylogeny reconstruction"
-  relations:  "EDAM:0000084 topic Phylogenetics"
-  relations:  "EDAM:0000092 topic Data rendering and visualisation"
-  relations:  "EDAM:0000289 operation Sequence distance matrix generation"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_topic:0092 Data visualisation"
+  relations:  "EDAM_operation:0289 Sequence distance matrix generation"
 ]
 
 section: input [
@@ -18,7 +18,7 @@ section: input [
     characters: "01+-?"
     parameter: "Y"
     help: "File containing one or more sets of restriction data"
-    relations: "EDAM:0001427 data Phylogenetic discrete data"
+    relations: "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
 endsection: input
@@ -33,7 +33,7 @@ section: additional [
     information: "Restriction sites (put N if you want
                   restriction fragments)"
     default: "Y"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: neili [
@@ -41,23 +41,23 @@ section: additional [
     information: "Use original Nei/Li model (default uses
                   modified Nei/Li model)"
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
-  boolean: gamma [
+  boolean: gammatype [
     additional: "@(!$(neili))"
-    information: "Gama distributed rates among sites"
+    information: "Gamma distributed rates among sites"
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: gammacoefficient [
-    additional: "$(gamma)"
+    additional: "$(gammatype)"
     information: "Coefficient of variation of substitution rate
                   among sites"
     minimum: "0.001"
     default: "1"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: ttratio [
@@ -65,7 +65,7 @@ section: additional [
     default: "2.0"
     minimum: "0.001"
     information: "Transition/transversion ratio"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: sitelength [
@@ -73,14 +73,14 @@ section: additional [
     default: "6"
     information: "Site length"
     minimum: "1"
-    relations: "EDAM:0001249 data Sequence length"
+    relations: "EDAM_data:1249 Sequence length"
   ]
 
   boolean: lower [
     additional: "Y"
     default: "N"
     information: "Lower triangular distance matrix"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -94,21 +94,21 @@ section: output [
     parameter: "Y"
     knowntype: "restdist output"
     information: "Phylip restdist program output file"
-    relations:  "EDAM:0000870 data Sequence distance matrix"
+    relations:  "EDAM_data:0870 Sequence distance matrix"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: output

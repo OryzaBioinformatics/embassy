@@ -2,8 +2,8 @@ application: fprotpars [
   documentation: "Protein parsimony algorithm"
   groups: "Phylogeny:Molecular sequence"
   embassy: "phylipnew"
-  relations:  "EDAM:0000191 topic Phylogeny reconstruction"
-  relations:  "EDAM:0000545 operation Phylogenetic tree construction (parsimony methods)"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_operation:0545 Phylogenetic tree construction (parsimony methods)"
 ]
 
 section: input [
@@ -16,7 +16,7 @@ section: input [
     type: "gapproteinphylo"
     aligned: "Y"
     help: "File containing one or more sequence alignments"
-    relations: "EDAM:0001384 data Sequence alignment (protein)"
+    relations: "EDAM_data:1384 Sequence alignment (protein)"
   ]
 
   tree: intreefile [
@@ -24,7 +24,7 @@ section: input [
     nullok: "Y"
     knowntype: "newick"
     information: "Phylip tree file (optional)"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   properties: weights [
@@ -34,7 +34,7 @@ section: input [
     nullok: "Y"
     length: "$(sequence.length)"
     size: "@(@($(sequence.multicount)>1) ? 1:0)"
-    relations: "EDAM:0002994 data Phylogenetic character weights"
+    relations: "EDAM_data:2994 Phylogenetic character weights"
   ]
 
 endsection: input
@@ -49,7 +49,7 @@ section: additional [
     default: "0"
     minimum: "0"
     information: "Number of times to randomise"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: seed [
@@ -59,7 +59,7 @@ section: additional [
     minimum: "1"
     maximum: "32767"
     default: "1"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: outgrno [
@@ -70,22 +70,22 @@ section: additional [
     trueminimum: "Y"
     default: "0"
     information: "Species number to use as outgroup"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
-  toggle: thresh [
+  toggle: dothreshold [
     additional: "Y"
     default: "N"
     information: "Use threshold parsimony"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: threshold [
-    additional: "$(thresh)"
+    additional: "$(dothreshold)"
     minimum: "1"
     information: "Threshold value"
     default: "1"
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
   list: whichcode [
@@ -99,7 +99,7 @@ section: additional [
     delimiter: ","
     codedelimiter: ":"
     information: "Use which genetic code"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -113,14 +113,14 @@ section: output [
     parameter: "Y"
     knowntype: "protpars output"
     information: "Phylip protpars program output file"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   toggle: trout [
     additional: "Y"
     default: "Y"
     information: "Write out trees to tree file"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   outfile: outtreefile [
@@ -129,49 +129,49 @@ section: output [
     information: "Phylip tree output file (optional)"
     knowntype: "newick tree"
     nullok: "Y"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: treeprint [
     additional: "Y"
     default: "Y"
     information: "Print out tree"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: stepbox [
     additional: "Y"
     default: "N"
     information: "Print steps at each site"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: ancseq [
     additional: "Y"
     default: "N"
     information: "Print sequences at all nodes of tree"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: dotdiff [
     additional: "@($(printdata) | $(ancseq))"
     default: "Y"
     information: "Use dot differencing to display results"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: output

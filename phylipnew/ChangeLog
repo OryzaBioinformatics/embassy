@@ -1,3 +1,12 @@
+Release 3.69 update July 2011
+
+	Changed -thresh to -dothreshold and -gamma to -gammatype to avoid
+	qualifier name clashes with stricter ACD validation.
+
+	The *boot applications reported the status of some boolean options
+	and printed "Done" at the end. Removed the boolean reports and now
+	only print "Done" unless -noprogress is set to allow piping.
+
 Release 3.69
 
 	Updated all code to include the changes in phylip 3.69.

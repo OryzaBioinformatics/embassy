@@ -2,8 +2,8 @@ application: fdnamove [
   documentation: "Interactive DNA parsimony"
   groups: "Phylogeny:Molecular sequence"
   embassy: "phylipnew"
-  relations:  "EDAM:0000191 topic Phylogeny reconstruction"
-  relations:  "EDAM:0000545 operation Phylogenetic tree construction
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_operation:0545 Phylogenetic tree construction
                                       (parsimony methods)"
 ]
 
@@ -16,7 +16,7 @@ section: input [
     parameter: "Y"
     type: "gapdnaphylo"
     aligned: "Y"
-    relations: "EDAM:0001383 data Sequence alignment (nucleic acid)"
+    relations: "EDAM_data:1383 Sequence alignment (nucleic acid)"
   ]
 
   tree: intreefile [
@@ -24,7 +24,7 @@ section: input [
     nullok: "Y"
     knowntype: "newick"
     information: "Phylip tree file (optional)"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   properties: weights [
@@ -35,7 +35,7 @@ section: input [
     size: ""
     help: "Weights file - ignore sites with weight zero"
     nullok: "Y"
-    relations: "EDAM:0002994 data Phylogenetic character weights"
+    relations: "EDAM_data:2994 Phylogenetic character weights"
   ]
 
 endsection: input
@@ -53,22 +53,22 @@ section: additional [
     trueminimum: "Y"
     default: "0"
     information: "Species number to use as outgroup"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
-  toggle: thresh [
+  toggle: dothreshold [
     additional: "Y"
     default: "N"
     information: "Use threshold parsimony"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: threshold [
-    additional: "$(thresh)"
+    additional: "$(dothreshold)"
     minimum: "1"
     information: "Threshold value"
     default: "1"
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
   list: initialtree [
@@ -79,21 +79,21 @@ section: additional [
     values: "a:Arbitary; u:User; s:Specify"
     information: "Initial tree"
     default: "Arbitary"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: screenwidth [
     additional: "Y"
     default: "80"
     information: "Width of terminal screen in characters"
-    relations: "EDAM:0002152 data Rendering parameter"
+    relations: "EDAM_data:2152 Rendering parameter"
   ]
 
   integer: screenlines [
     additional: "Y"
     default: "24"
     information: "Number of lines on screen"
-    relations: "EDAM:0002152 data Rendering parameter"
+    relations: "EDAM_data:2152 Rendering parameter"
   ]
 
 endsection: additional
@@ -109,7 +109,7 @@ section: output [
     knowntype: "newick tree"
     information: "Phylip tree output file (optional)"
     nullok: "Y"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
 endsection: output

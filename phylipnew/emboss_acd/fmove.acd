@@ -3,8 +3,8 @@ application: fmove [
   groups: "Phylogeny:Discrete characters"
   batch: "no"
   embassy: "phylipnew"
-  relations:  "EDAM:0000191 topic Phylogeny reconstruction"
-  relations:  "EDAM:0000545 operation Phylogenetic tree construction (parsimony methods)"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_operation:0545 Phylogenetic tree construction (parsimony methods)"
 ]
 
 section: input [
@@ -18,7 +18,7 @@ section: input [
     help: "File containing data set"
     knowntype: "discrete characters"
     information: "Phylip character discrete states file"
-    relations:  "EDAM:0001427 data Phylogenetic discrete data"
+    relations:  "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
   tree: intreefile [
@@ -26,7 +26,7 @@ section: input [
     nullok: "Y"
     knowntype: "newick"
     information: "Phylip tree file (optional)"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   properties: weights [
@@ -37,7 +37,7 @@ section: input [
     length: "$(infile.discretelength)"
     size: "1"
     nullok: "Y"
-    relations: "EDAM:0002994 data Phylogenetic character weights"
+    relations: "EDAM_data:2994 Phylogenetic character weights"
   ]
 
   properties: ancfile [
@@ -47,7 +47,7 @@ section: input [
     nullok: "Y"
     length: "$(infile.discretelength)"
     size: "1"
-    relations: "EDAM:0001427 data Phylogenetic discrete data"
+    relations: "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
   properties: factorfile [
@@ -56,7 +56,7 @@ section: input [
     nullok: "Y"
     length: "$(infile.discretelength)"
     size: "1"
-    relations: "EDAM:0001427 data Phylogenetic discrete data"
+    relations: "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
 endsection: input
@@ -74,7 +74,7 @@ section: additional [
     values: "w:Wagner; c:Camin-Sokal; m:Mixed;"
     information: "Choose the method to use"
     default: "Wagner"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: outgrno [
@@ -85,7 +85,7 @@ section: additional [
     trueminimum: "Y"
     default: "0"
     information: "Species number to use as outgroup"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: threshold [
@@ -93,7 +93,7 @@ section: additional [
     minimum: "0"
     information: "Threshold value"
     default: "$(infile.discretesize)"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: initialtree [
@@ -104,21 +104,21 @@ section: additional [
     values: "a:Arbitary; u:User; s:Specify"
     information: "Initial tree"
     default: "Arbitary"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: screenwidth [
     additional: "Y"
     default: "80"
     information: "Width of terminal screen in characters"
-    relations: "EDAM:0002152 data Rendering parameter"
+    relations: "EDAM_data:2152 Rendering parameter"
   ]
 
   integer: screenlines [
     additional: "Y"
     default: "24"
     information: "Number of lines on screen"
-    relations: "EDAM:0002152 data Rendering parameter"
+    relations: "EDAM_data:2152 Rendering parameter"
   ]
 
 endsection: additional
@@ -134,7 +134,7 @@ section: output [
     knowntype: "newick tree"
     nullok: "Y"
     information: "Phylip tree output file (optional)"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
 endsection: output

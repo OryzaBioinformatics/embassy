@@ -2,8 +2,8 @@ application: fprotdist [
   documentation: "Protein distance algorithm"
   groups: "Phylogeny:Molecular sequence"
   embassy: "phylipnew"
-  relations:  "EDAM:0000084 topic Phylogenetics"
-  relations:  "EDAM:0000289 operation Sequence distance matrix generation"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_operation:0289 Sequence distance matrix generation"
 ]
 
 section: input [
@@ -16,7 +16,7 @@ section: input [
     type: "gapproteinphylo"
     aligned: "Y"
     help: "File containing one or more sequence alignments"
-    relations: "EDAM:0001384 data Sequence alignment (protein)"
+    relations: "EDAM_data:1384 Sequence alignment (protein)"
   ]
 
   integer: ncategories [
@@ -25,7 +25,7 @@ section: input [
     minimum: "1"
     maximum: "9"
     information: "Number of substitution rate categories"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   array: rate [
@@ -33,7 +33,7 @@ section: input [
     information: "Rate for each category"
     size: "$(ncategories)"
     sumtest: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   properties: categories [
@@ -43,7 +43,7 @@ section: input [
     nullok: "@($(ncategories) == 1)"
     size: "1"
     length: "$(sequence.length)"
-    relations: "EDAM:0001427 data Phylogenetic discrete data"
+    relations: "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
   properties: weights [
@@ -53,7 +53,7 @@ section: input [
     length: "$(sequence.length)"
     size: "@(@($(sequence.multicount)>1) ? 1:0)"
     nullok: "Y"
-    relations: "EDAM:0002994 data Phylogenetic character weights"
+    relations: "EDAM_data:2994 Phylogenetic character weights"
   ]
 
 endsection: input
@@ -73,10 +73,10 @@ section: additional [
              table; c:Categories model"
     information: "Choose the method to use"
     default: "j"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
-  list: gamma [
+  list: gammatype [
     additional: "@($(method) == { j | h | d | c })"
     minimum: "1"
     maximum: "1"
@@ -85,25 +85,25 @@ section: additional [
              c:Constant rate"
     information: "Rate variation among sites"
     default: "c"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: gammacoefficient [
-    additional: "@($(gamma)==g)"
+    additional: "@($(gammatype)==g)"
     information: "Coefficient of variation of substitution rate
                   among sites"
     minimum: "0.001"
     default: "1"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: invarcoefficient [
-    additional: "@($(gamma)==i)"
+    additional: "@($(gammatype)==i)"
     information: "Coefficient of variation of substitution rate
                   among sites"
     minimum: "0.001"
     default: "1"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: aacateg [
@@ -118,7 +118,7 @@ section: additional [
              Thr),(Pro)"
     information: "Choose the category to use"
     default: "G"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: whichcode [
@@ -131,7 +131,7 @@ section: additional [
              mitochondrial"
     information: "Which genetic code"
     default: "u"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: ease [
@@ -140,7 +140,7 @@ section: additional [
     maximum: "1.0"
     default: "0.457"
     information: "Prob change category (1.0=easy)"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: ttratio [
@@ -148,7 +148,7 @@ section: additional [
     minimum: "0.0"
     default: "2.0"
     information: "Transition/transversion ratio"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   array: basefreq [
@@ -160,7 +160,7 @@ section: additional [
     information: "Base frequencies for A C G T/U (use blanks to
                   separate)"
     sum: "1.0"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -174,21 +174,21 @@ section: output [
     parameter: "Y"
     knowntype: "distance matrix"
     information: "Phylip distance matrix output file"
-    relations:  "EDAM:0000870 data Sequence distance matrix"
+    relations:  "EDAM_data:0870 Sequence distance matrix"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: output

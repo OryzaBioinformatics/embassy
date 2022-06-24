@@ -427,7 +427,7 @@ Trees also written onto file "dolpenny.treefile"
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
 Penny algorithm Dollo or polymorphism
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            discretestates File containing one or more data sets
@@ -437,7 +437,7 @@ Version: EMBOSS:6.4.0.0
    Additional (Optional) qualifiers (* if not always prompted):
    -weights            properties Weights file
    -ancfile            properties Ancestral states file
-   -thresh             toggle     [N] Use threshold parsimony
+   -dothreshold        toggle     [N] Use threshold parsimony
 *  -threshold          float      [1] Threshold value (Number 0.000 or more)
    -howmany            integer    [1000] How many groups of trees (Any integer
                                   value)
@@ -534,7 +534,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-thresh</td>
+<td>-dothreshold</td>
 <td>toggle</td>
 <td>Use threshold parsimony</td>
 <td>Toggle value Yes/No</td>
@@ -650,7 +650,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outfile" associated outfile qualifiers
+<td align="left" colspan=5>"-outfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -663,7 +663,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outtreefile" associated outfile qualifiers
+<td align="left" colspan=5>"-outtreefile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -979,7 +979,7 @@ that find many tied trees.
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
 
-Penny algorithm for Dollo or polymorphism parsimony, version 3.69
+Penny algorithm for Dollo or polymorphism parsimony, version 3.69.650
  branch-and-bound to find all most parsimonious trees
 
 
@@ -1290,6 +1290,14 @@ Converted (August 2004) to an EMBASSY program by the EMBOSS team.
 This program is intended to be used by everyone and everything, from naive users to embedded scripts.
 
 
+
+<H2>
+    Comments
+</H2>
+
+<pre>
+None
+</pre>
 
 
 

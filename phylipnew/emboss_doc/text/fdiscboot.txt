@@ -190,13 +190,6 @@ Phylip mix data output file (optional) [discboot.mixfile]:
 Phylip factor data output file (optional) [discboot.factfile]:
 
 
- bootstrap: true
-jackknife: false
- permute: false
- lockhart: false
- ild: false
- justwts: false
-
 completed replicate number   10
 completed replicate number   20
 completed replicate number   30
@@ -220,7 +213,7 @@ Done.
 Command line arguments
 
 Bootstrapped discrete sites algorithm
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            discretestates (no help text) discretestates value
@@ -460,36 +453,36 @@ Known bugs
 
 See also
 
-                    Program name                         Description
+                    Program name                          Description
                     distmat      Create a distance matrix from a multiple sequence alignment
                     ednacomp     DNA compatibility algorithm
-                    ednadist     Nucleic acid sequence Distance Matrix program
-                    ednainvar    Nucleic acid sequence Invariants method
-                    ednaml       Phylogenies from nucleic acid Maximum Likelihood
-                    ednamlk      Phylogenies from nucleic acid Maximum Likelihood with clock
+                    ednadist     Nucleic acid sequence distance matrix program
+                    ednainvar    Nucleic acid sequence invariants method
+                    ednaml       Phylogenies from nucleic acid maximum likelihood
+                    ednamlk      Phylogenies from nucleic acid maximum likelihood with clock
                     ednapars     DNA parsimony algorithm
                     ednapenny    Penny algorithm for DNA
                     eprotdist    Protein distance algorithm
                     eprotpars    Protein parsimony algorithm
-                    erestml      Restriction site Maximum Likelihood method
+                    erestml      Restriction site maximum likelihood method
                     eseqboot     Bootstrapped sequences algorithm
                     fdnacomp     DNA compatibility algorithm
-                    fdnadist     Nucleic acid sequence Distance Matrix program
-                    fdnainvar    Nucleic acid sequence Invariants method
-                    fdnaml       Estimates nucleotide phylogeny by maximum likelihood
+                    fdnadist     Nucleic acid sequence distance matrix program
+                    fdnainvar    Nucleic acid sequence invariants method
+                    fdnaml       Estimate nucleotide phylogeny by maximum likelihood
                     fdnamlk      Estimates nucleotide phylogeny by maximum likelihood
                     fdnamove     Interactive DNA parsimony
                     fdnapars     DNA parsimony algorithm
                     fdnapenny    Penny algorithm for DNA
-                    fdolmove     Interactive Dollo or Polymorphism Parsimony
+                    fdolmove     Interactive Dollo or polymorphism parsimony
                     ffreqboot    Bootstrapped genetic frequencies algorithm
                     fproml       Protein phylogeny by maximum likelihood
                     fpromlk      Protein phylogeny by maximum likelihood
                     fprotdist    Protein distance algorithm
                     fprotpars    Protein parsimony algorithm
                     frestboot    Bootstrapped restriction sites algorithm
-                    frestdist    Distance matrix from restriction sites or fragments
-                    frestml      Restriction site maximum Likelihood method
+                    frestdist    Calculate distance matrix from restriction sites or fragments
+                    frestml      Restriction site maximum likelihood method
                     fseqboot     Bootstrapped sequences algorithm
                     fseqbootall  Bootstrapped sequences algorithm
 

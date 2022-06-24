@@ -2,8 +2,8 @@ application: fdnacomp [
   documentation: "DNA compatibility algorithm"
   groups: "Phylogeny:Molecular sequence"
   embassy: "phylipnew"
-  relations:  "EDAM:0000084 topic Phylogenetics"
-  relations:  "EDAM:0000547 operation Phylogenetic tree construction (maximum likelihood and Bayesian methods)"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_operation:0547 Phylogenetic tree construction (maximum likelihood and Bayesian methods)"
 ]
 
 section: input [
@@ -16,7 +16,7 @@ section: input [
     type: "gapdnaphylo"
     aligned: "Y"
     help: "File containing one or more sequence alignments"
-    relations: "EDAM:0002887 data Sequence record (nucleic acid)"
+    relations: "EDAM_data:2887 Sequence record (nucleic acid)"
   ]
 
   tree: intreefile [
@@ -24,7 +24,7 @@ section: input [
     nullok: "Y"
     knowntype: "newick"
     information: "Phylip tree file (optional)"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   properties: weights [
@@ -33,7 +33,7 @@ section: input [
     length: "$(sequence.length)"
     nullok: "Y"
     knowntype: "weights"
-    relations:  "EDAM:0002994 data Phylogenetic character weights"
+    relations:  "EDAM_data:2994 Phylogenetic character weights"
   ]
 
 endsection: input
@@ -51,7 +51,7 @@ section: additional [
     failrange: "N"
     trueminimum: "Y"
     information: "Species number to use as outgroup"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: njumble [
@@ -59,7 +59,7 @@ section: additional [
     information: "Number of times to randomise"
     minimum: "0"
     default: "0"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: seed [
@@ -69,7 +69,7 @@ section: additional [
     minimum: "1"
     maximum: "32767"
     default: "1"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -83,14 +83,14 @@ section: output [
     parameter: "Y"
     knowntype: "dnacomp output"
     information: "Phylip dnacomp program output file"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   toggle: trout [
     additional: "Y"
     default: "Y"
     information: "Write out trees to tree file"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   outfile: outtreefile [
@@ -99,42 +99,42 @@ section: output [
     information: "Phylip tree output file (optional)"
     knowntype: "newick tree"
     nullok: "Y"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: treeprint [
     additional: "Y"
     default: "Y"
     information: "Print out tree"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: stepbox [
     additional: "Y"
     default: "N"
     information: "Print steps & compatibility at sites"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: ancseq [
     additional: "Y"
     default: "N"
     information: "Print sequences at all nodes of tree"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: output

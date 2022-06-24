@@ -559,7 +559,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 
 
     if(!kimura && !similarity) {
-      gammamethod = ajAcdGetListSingle("gamma");
+      gammamethod = ajAcdGetListSingle("gammatype");
 
       if(ajStrMatchC(gammamethod, "g")) {
          gama = true;

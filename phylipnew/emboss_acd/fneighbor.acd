@@ -6,8 +6,8 @@ application: fneighbor [
   batch: "yes"
   cpu: "high"
   embassy: "phylipnew"
-  relations: "EDAM:0000191 topic Phylogeny reconstruction"
-  relations: "EDAM:0000546 operation Phylogenetic tree construction (minimum distance methods)"
+  relations: "EDAM_topic:0084 Phylogenetics"
+  relations: "EDAM_operation:0546 Phylogenetic tree construction (minimum distance methods)"
 ]
 
 section: input [
@@ -19,7 +19,7 @@ section: input [
     parameter: "Y"
     knowntype: "distance matrix"
     information: "Phylip distance matrix file"
-    relations:  "EDAM:0000870 data Sequence distance matrix"
+    relations:  "EDAM_data:0870 Sequence distance matrix"
   ]
 
 endsection: input
@@ -37,7 +37,7 @@ section: additional [
     values: "s:Square; u:Upper triangular; l:Lower triangular"
     information: "Type of data matrix"
     default: "s"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: treetype [
@@ -48,7 +48,7 @@ section: additional [
     values: "n:Neighbor-joining; u:UPGMA"
     information: "Neighbor-joining or UPGMA tree"
     default: "n"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: outgrno [
@@ -59,14 +59,14 @@ section: additional [
     trueminimum: "Y"
     default: "0"
     information: "Species number to use as outgroup"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   toggle: jumble [
     additional: "Y"
     default: "N"
     information: "Randomise input order of species"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: seed [
@@ -76,14 +76,14 @@ section: additional [
     minimum: "1"
     maximum: "32767"
     default: "1"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: replicates [
     additional: "Y"
     default: "N"
     information: "Subreplicates"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -97,14 +97,14 @@ section: output [
     parameter: "Y"
     knowntype: "neighbor output"
     information: "Phylip neighbor program output file"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   toggle: trout [
     additional: "Y"
     default: "Y"
     information: "Write out trees to tree file"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   outfile: outtreefile [
@@ -113,28 +113,28 @@ section: output [
     information: "Phylip tree output file (optional)"
     knowntype: "newick tree"
     nullok: "Y"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: treeprint [
     additional: "Y"
     default: "Y"
     information: "Print out tree"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: output

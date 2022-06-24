@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Gene frequency and continuous character Maximum Likelihood
+   Gene frequency and continuous character maximum likelihood
 
 Description
 
@@ -101,7 +101,7 @@ Usage
 
 
 % fcontml -printdata
-Gene frequency and continuous character Maximum Likelihood
+Gene frequency and continuous character maximum likelihood
 Input file: contml.dat
 Phylip tree file (optional):
 Phylip contml program output file [contml.fcontml]:
@@ -127,8 +127,8 @@ Done.
 
 Command line arguments
 
-Gene frequency and continuous character Maximum Likelihood
-Version: EMBOSS:6.4.0.0
+Gene frequency and continuous character maximum likelihood
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            frequencies File containing one or more sets of data
@@ -419,7 +419,7 @@ Output file format
   File: contml.fcontml
 
 
-Continuous character Maximum Likelihood method version 3.69
+Continuous character Maximum Likelihood method version 3.69.650
 
 
    5 Populations,   10 Loci
@@ -523,7 +523,7 @@ Known bugs
 See also
 
                     Program name                   Description
-                    egendist     Genetic Distance Matrix program
+                    egendist     Genetic distance matrix program
                     fgendist     Compute genetic distances from gene frequencies
 
 Author(s)
@@ -544,3 +544,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

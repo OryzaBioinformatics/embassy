@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Distances between trees
+   Calculate distances between trees
 
 Description
 
@@ -141,7 +141,7 @@ Usage
 
 
 % ftreedist
-Distances between trees
+Calculate distances between trees
 Phylip tree file: treedist.dat
 Phylip treedist program output file [treedist.ftreedist]:
 
@@ -159,7 +159,7 @@ Done.
 
 
 % ftreedist -dtype s
-Distances between trees
+Calculate distances between trees
 Phylip tree file: treedist2.dat
 Phylip treedist program output file [treedist2.ftreedist]:
 
@@ -175,8 +175,8 @@ Done.
 
 Command line arguments
 
-Distances between trees
-Version: EMBOSS:6.4.0.0
+Calculate distances between trees
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-intreefile]        tree       Phylip tree file
@@ -366,7 +366,7 @@ Trees 11 and 12:    10
   File: treedist.ftreedist
 
 
-Tree distance program, version 3.69
+Tree distance program, version 3.69.650
 
 Branch score distances between adjacent pairs of trees:
 
@@ -382,7 +382,7 @@ Trees 11 and 12:    3.162278e-01
   File: treedist2.ftreedist
 
 
-Tree distance program, version 3.69
+Tree distance program, version 3.69.650
 
 Symmetric differences between adjacent pairs of trees:
 
@@ -423,10 +423,10 @@ Known bugs
 
 See also
 
-                    Program name                Description
+                    Program name                  Description
                     econsense     Majority-rule and strict consensus tree
                     fconsense     Majority-rule and strict consensus tree
-   ftreedistpair    Distances between two sets of trees
+   ftreedistpair    Calculate distance between two sets of trees
 
 Author(s)
 
@@ -446,3 +446,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

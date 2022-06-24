@@ -46,7 +46,7 @@ Please help by correcting and extending the Wiki pages.
 <H2>
     Function
 </H2>
-Estimates nucleotide phylogeny by maximum likelihood
+Estimate nucleotide phylogeny by maximum likelihood
 <!--
 DON'T WRITE ANYTHING HERE.
 IT IS DONE FOR YOU.
@@ -273,8 +273,8 @@ Here is a sample session with <b>fdnaml</b>
 <p>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
-% <b>fdnaml -printdata -ncategories 2 -categories "1111112222222" -rate "1.0 2.0" -gamma h -nhmmcategories 5 -hmmrates "0.264 1.413 3.596 7.086 12.641" -hmmprobabilities "0.522 0.399 0.076 0.0036 0.000023" -lambda 1.5 -weight "0111111111110" </b>
-Estimates nucleotide phylogeny by maximum likelihood
+% <b>fdnaml -printdata -ncategories 2 -categories "1111112222222" -rate "1.0 2.0" -gammatype h -nhmmcategories 5 -hmmrates "0.264 1.413 3.596 7.086 12.641" -hmmprobabilities "0.522 0.399 0.076 0.0036 0.000023" -lambda 1.5 -weight "0111111111110" </b>
+Estimate nucleotide phylogeny by maximum likelihood
 Input (aligned) nucleotide sequence set(s): <b>dnaml.dat</b>
 Phylip tree file (optional): <b></b>
 Phylip dnaml program output file [dnaml.fdnaml]: <b></b>
@@ -344,7 +344,7 @@ Done.
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
 % <b>fdnaml -printdata -njumble 3 -seed 3  </b>
-Estimates nucleotide phylogeny by maximum likelihood
+Estimate nucleotide phylogeny by maximum likelihood
 Input (aligned) nucleotide sequence set(s): <b>dnaml.dat</b>
 Phylip tree file (optional): <b></b>
 Phylip dnaml program output file [dnaml.fdnaml]: <b></b>
@@ -429,8 +429,8 @@ Done.
 
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
-Estimates nucleotide phylogeny by maximum likelihood
-Version: EMBOSS:6.4.0.0
+Estimate nucleotide phylogeny by maximum likelihood
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqsetall  File containing one or more sequence
@@ -451,7 +451,7 @@ Version: EMBOSS:6.4.0.0
                                   seqeunce input
 *  -basefreq           array      [0.25 0.25 0.25 0.25] Base frequencies for A
                                   C G T/U (use blanks to separate)
-   -gamma              menu       [Constant rate] Rate variation among sites
+   -gammatype          menu       [Constant rate] Rate variation among sites
                                   (Values: g (Gamma distributed rates); i
                                   (Gamma+invariant sites); h (User defined HMM
                                   of rates); n (Constant rate))
@@ -500,7 +500,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -639,7 +642,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-gamma</td>
+<td>-gammatype</td>
 <td>list</td>
 <td>Rate variation among sites</td>
 <td><table><tr><td>g</td> <td><i>(Gamma distributed rates)</i></td></tr><tr><td>i</td> <td><i>(Gamma+invariant sites)</i></td></tr><tr><td>h</td> <td><i>(User defined HMM of rates)</i></td></tr><tr><td>n</td> <td><i>(Constant rate)</i></td></tr></table></td>
@@ -827,7 +830,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-sequence" associated seqsetall qualifiers
+<td align="left" colspan=5>"-sequence" associated seqsetall qualifiers
 </td>
 </tr>
 
@@ -896,11 +899,35 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
+<td> -scircular1<br>-scircular_sequence</td>
+<td>boolean</td>
+<td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td> -sformat1<br>-sformat_sequence</td>
 <td>string</td>
 <td>Input sequence format</td>
 <td>Any string</td>
 <td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -iquery1<br>-iquery_sequence</td>
+<td>string</td>
+<td>Input query fields or ID list</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -ioffset1<br>-ioffset_sequence</td>
+<td>integer</td>
+<td>Input start position offset</td>
+<td>Any integer value</td>
+<td>0</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -944,7 +971,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outfile" associated outfile qualifiers
+<td align="left" colspan=5>"-outfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -957,7 +984,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outtreefile" associated outfile qualifiers
+<td align="left" colspan=5>"-outtreefile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -1345,7 +1372,7 @@ rates.
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
 
-Nucleic acid sequence Maximum Likelihood method, version 3.69
+Nucleic acid sequence Maximum Likelihood method, version 3.69.650
 
  5 species,  13  sites
 
@@ -1451,7 +1478,7 @@ Gamma:0.95677,Alpha:0.26766);
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
 
-Nucleic acid sequence Maximum Likelihood method, version 3.69
+Nucleic acid sequence Maximum Likelihood method, version 3.69.650
 
  5 species,  13  sites
 
@@ -1652,22 +1679,22 @@ None.
 
 <tr>
 <td><a href="/embassy/phylip/ednadist.html">ednadist</a></td>
-<td>Nucleic acid sequence Distance Matrix program</td>
+<td>Nucleic acid sequence distance matrix program</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/phylip/ednainvar.html">ednainvar</a></td>
-<td>Nucleic acid sequence Invariants method</td>
+<td>Nucleic acid sequence invariants method</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/phylip/ednaml.html">ednaml</a></td>
-<td>Phylogenies from nucleic acid Maximum Likelihood</td>
+<td>Phylogenies from nucleic acid maximum likelihood</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/phylip/ednamlk.html">ednamlk</a></td>
-<td>Phylogenies from nucleic acid Maximum Likelihood with clock</td>
+<td>Phylogenies from nucleic acid maximum likelihood with clock</td>
 </tr>
 
 <tr>
@@ -1692,7 +1719,7 @@ None.
 
 <tr>
 <td><a href="/embassy/phylip/erestml.html">erestml</a></td>
-<td>Restriction site Maximum Likelihood method</td>
+<td>Restriction site maximum likelihood method</td>
 </tr>
 
 <tr>
@@ -1712,12 +1739,12 @@ None.
 
 <tr>
 <td><a href="fdnadist.html">fdnadist</a></td>
-<td>Nucleic acid sequence Distance Matrix program</td>
+<td>Nucleic acid sequence distance matrix program</td>
 </tr>
 
 <tr>
 <td><a href="fdnainvar.html">fdnainvar</a></td>
-<td>Nucleic acid sequence Invariants method</td>
+<td>Nucleic acid sequence invariants method</td>
 </tr>
 
 <tr>
@@ -1742,7 +1769,7 @@ None.
 
 <tr>
 <td><a href="fdolmove.html">fdolmove</a></td>
-<td>Interactive Dollo or Polymorphism Parsimony</td>
+<td>Interactive Dollo or polymorphism parsimony</td>
 </tr>
 
 <tr>
@@ -1777,12 +1804,12 @@ None.
 
 <tr>
 <td><a href="frestdist.html">frestdist</a></td>
-<td>Distance matrix from restriction sites or fragments</td>
+<td>Calculate distance matrix from restriction sites or fragments</td>
 </tr>
 
 <tr>
 <td><a href="frestml.html">frestml</a></td>
-<td>Restriction site maximum Likelihood method</td>
+<td>Restriction site maximum likelihood method</td>
 </tr>
 
 <tr>
@@ -1848,6 +1875,14 @@ This program is intended to be used by everyone and everything, from naive users
 
 
 
+
+<H2>
+    Comments
+</H2>
+
+<pre>
+None
+</pre>
 
 
 

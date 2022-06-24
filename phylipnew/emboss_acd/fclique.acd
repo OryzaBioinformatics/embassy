@@ -2,8 +2,8 @@ application: fclique [
   documentation: "Largest clique program"
   groups: "Phylogeny:Discrete characters"
   embassy: "phylipnew"
-  relations:  "EDAM:0000191 topic Phylogeny reconstruction"
-  relations:  "EDAM:0000546 operation Phylogenetic tree construction (minimum distance methods)"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_operation:0546 Phylogenetic tree construction (minimum distance methods)"
 ]
 
 section: input [
@@ -16,7 +16,7 @@ section: input [
     characters: "01PB?"
     knowntype: "discrete states"
     information: "Phylip discrete states file"
-    relations:  "EDAM:0001427 data Phylogenetic discrete data"
+    relations:  "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
   properties: ancfile [
@@ -26,7 +26,7 @@ section: input [
     knowntype: "ancestral states"
     nullok: "Y"
     information: "Phylip ancestral states file (optional)"
-    relations:  "EDAM:0001427 data Phylogenetic discrete data"
+    relations:  "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
   properties: factorfile [
@@ -36,7 +36,7 @@ section: input [
     knowntype: "multistate factors"
     nullok: "Y"
     information: "Phylip multistate factors file (optional)"
-    relations:  "EDAM:0001427 data Phylogenetic discrete data"
+    relations:  "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
   properties: weights [
@@ -46,7 +46,7 @@ section: input [
     knowntype: "Weights"
     nullok: "Y"
     information: "Phylip weights file (optional)"
-    relations: "EDAM:0002994 data Phylogenetic character weights"
+    relations: "EDAM_data:2994 Phylogenetic character weights"
   ]
 
 endsection: input
@@ -61,7 +61,7 @@ section: additional [
     default: "0"
     minimum: "0"
     information: "Minimum clique size"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: outgrno [
@@ -72,7 +72,7 @@ section: additional [
     trueminimum: "Y"
     default: "0"
     information: "Species number to use as outgroup"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -86,14 +86,14 @@ section: output [
     parameter: "Y"
     knowntype: "clique output"
     information: "Phylip clique program output file"
-    relations:  "EDAM:0001428 data Phylogenetic report (cliques)"
+    relations:  "EDAM_data:1428 Phylogenetic character cliques"
   ]
 
   toggle: trout [
     additional: "Y"
     default: "Y"
     information: "Write out trees to tree file"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   outfile: outtreefile [
@@ -102,35 +102,35 @@ section: output [
     information: "Phylip tree output file (optional)"
     knowntype: "newick tree"
     nullok: "Y"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: treeprint [
     additional: "Y"
     default: "Y"
     information: "Print out tree"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: printcomp [
     additional: "Y"
     default: "N"
     information: "Print out compatibility matrix"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: output

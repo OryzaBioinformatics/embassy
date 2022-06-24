@@ -26,7 +26,7 @@ typedef struct pattern_elm {
 /* function prototypes */
 void initconsnode(node **, node **, node *, long, long, long *, long *,
                   initops, pointarray, pointarray, Char *, Char *, char **);
-void   compress(long *);
+void   phylipcompress(long *);
 void   sort(long);
 void   eliminate(long *, long *);
 void   printset(long);

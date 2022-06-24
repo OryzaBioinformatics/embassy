@@ -66,7 +66,7 @@ Done.
 Command line arguments
 
 Multistate to binary recoding program
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            infile     Phylip factor program input file
@@ -361,3 +361,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

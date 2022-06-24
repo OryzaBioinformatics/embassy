@@ -59,7 +59,7 @@ Plots an unrooted tree diagram
 Phylip tree file: drawgram.tree
 Phylip drawtree output file [drawgram.fdrawtree]:
 
-DRAWTREE from PHYLIP version 3.69
+DRAWTREE from PHYLIP version 3.69.650
 Reading tree ...
 Tree has been read.
 Loading the font ...
@@ -79,7 +79,7 @@ Done.
 Command line arguments
 
 Plots an unrooted tree diagram
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-intreefile]        tree       Phylip tree file
@@ -258,3 +258,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

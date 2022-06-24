@@ -14,3 +14,4 @@ dist-hook:
 	tar cBf - doc | ( cd $(distdir); tar xBf - ; cd doc; rm -rf CVS ) 
 	tar cBf - include | ( cd $(distdir); tar xBf - ; cd include; rm -rf CVS ) 
 	tar cBf - data | ( cd $(distdir); tar xBf - ; cd data; rm -rf CVS ) 
+	tar cBf - test       | ( cd $(distdir); tar xBf - ; cd test;       rm -rf CVS) 

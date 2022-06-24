@@ -264,7 +264,7 @@ Trees also written onto file "dnacomp.treefile"
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
 DNA compatibility algorithm
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqsetall  File containing one or more sequence
@@ -302,7 +302,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -477,7 +480,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-sequence" associated seqsetall qualifiers
+<td align="left" colspan=5>"-sequence" associated seqsetall qualifiers
 </td>
 </tr>
 
@@ -546,11 +549,35 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
+<td> -scircular1<br>-scircular_sequence</td>
+<td>boolean</td>
+<td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td> -sformat1<br>-sformat_sequence</td>
 <td>string</td>
 <td>Input sequence format</td>
 <td>Any string</td>
 <td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -iquery1<br>-iquery_sequence</td>
+<td>string</td>
+<td>Input query fields or ID list</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -ioffset1<br>-ioffset_sequence</td>
+<td>integer</td>
+<td>Input start position offset</td>
+<td>Any integer value</td>
+<td>0</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -594,7 +621,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outfile" associated outfile qualifiers
+<td align="left" colspan=5>"-outfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -607,7 +634,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outtreefile" associated outfile qualifiers
+<td align="left" colspan=5>"-outtreefile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -822,7 +849,7 @@ overrepresenting replicates that find many tied trees.
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
 
-DNA compatibility algorithm, version 3.69
+DNA compatibility algorithm, version 3.69.650
 
  5 species,  13  sites
 
@@ -898,7 +925,7 @@ From    To     Any Steps?    State at upper node
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
 
-DNA compatibility algorithm, version 3.69
+DNA compatibility algorithm, version 3.69.650
 
 User-defined tree:
 
@@ -1058,22 +1085,22 @@ None.
 
 <tr>
 <td><a href="/embassy/phylip/ednadist.html">ednadist</a></td>
-<td>Nucleic acid sequence Distance Matrix program</td>
+<td>Nucleic acid sequence distance matrix program</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/phylip/ednainvar.html">ednainvar</a></td>
-<td>Nucleic acid sequence Invariants method</td>
+<td>Nucleic acid sequence invariants method</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/phylip/ednaml.html">ednaml</a></td>
-<td>Phylogenies from nucleic acid Maximum Likelihood</td>
+<td>Phylogenies from nucleic acid maximum likelihood</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/phylip/ednamlk.html">ednamlk</a></td>
-<td>Phylogenies from nucleic acid Maximum Likelihood with clock</td>
+<td>Phylogenies from nucleic acid maximum likelihood with clock</td>
 </tr>
 
 <tr>
@@ -1098,7 +1125,7 @@ None.
 
 <tr>
 <td><a href="/embassy/phylip/erestml.html">erestml</a></td>
-<td>Restriction site Maximum Likelihood method</td>
+<td>Restriction site maximum likelihood method</td>
 </tr>
 
 <tr>
@@ -1113,17 +1140,17 @@ None.
 
 <tr>
 <td><a href="fdnadist.html">fdnadist</a></td>
-<td>Nucleic acid sequence Distance Matrix program</td>
+<td>Nucleic acid sequence distance matrix program</td>
 </tr>
 
 <tr>
 <td><a href="fdnainvar.html">fdnainvar</a></td>
-<td>Nucleic acid sequence Invariants method</td>
+<td>Nucleic acid sequence invariants method</td>
 </tr>
 
 <tr>
 <td><a href="fdnaml.html">fdnaml</a></td>
-<td>Estimates nucleotide phylogeny by maximum likelihood</td>
+<td>Estimate nucleotide phylogeny by maximum likelihood</td>
 </tr>
 
 <tr>
@@ -1148,7 +1175,7 @@ None.
 
 <tr>
 <td><a href="fdolmove.html">fdolmove</a></td>
-<td>Interactive Dollo or Polymorphism Parsimony</td>
+<td>Interactive Dollo or polymorphism parsimony</td>
 </tr>
 
 <tr>
@@ -1183,12 +1210,12 @@ None.
 
 <tr>
 <td><a href="frestdist.html">frestdist</a></td>
-<td>Distance matrix from restriction sites or fragments</td>
+<td>Calculate distance matrix from restriction sites or fragments</td>
 </tr>
 
 <tr>
 <td><a href="frestml.html">frestml</a></td>
-<td>Restriction site maximum Likelihood method</td>
+<td>Restriction site maximum likelihood method</td>
 </tr>
 
 <tr>
@@ -1260,6 +1287,14 @@ Converted (August 2004) to an EMBASSY program by the EMBOSS team.
 This program is intended to be used by everyone and everything, from naive users to embedded scripts.
 
 
+
+<H2>
+    Comments
+</H2>
+
+<pre>
+None
+</pre>
 
 
 

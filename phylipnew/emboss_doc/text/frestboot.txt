@@ -1,4 +1,4 @@
-                                  fseqboot
+                                  frestboot
 
 
 
@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Bootstrapped sequences algorithm
+   Bootstrapped restriction sites algorithm
 
 Description
 
@@ -27,6 +27,8 @@ Description
    format which is under development
 
 Algorithm
+
+   FRESTBOOT is a restriction site specific version of SEQBOOT.
 
    SEQBOOT is a general bootstrapping and data set translation tool. It is
    intended to allow you to generate multiple data sets that are resampled
@@ -178,21 +180,14 @@ Algorithm
 
 Usage
 
-   Here is a sample session with fseqboot
+   Here is a sample session with frestboot
 
 
-% fseqboot -seed 3
-Bootstrapped sequences algorithm
-Input (aligned) sequence set: seqboot.dat
-Phylip seqboot_seq program output file [seqboot.fseqboot]:
+% frestboot -seed 3
+Bootstrapped restriction sites algorithm
+Input file: restboot.dat
+Phylip seqboot_rest program output file [restboot.frestboot]:
 
-
- bootstrap: true
-jackknife: false
- permute: false
- lockhart: false
- ild: false
- justwts: false
 
 completed replicate number   10
 completed replicate number   20
@@ -205,7 +200,7 @@ completed replicate number   80
 completed replicate number   90
 completed replicate number  100
 
-Output written to file "seqboot.fseqboot"
+Output written to file "restboot.frestboot"
 
 Done.
 
@@ -216,17 +211,16 @@ Done.
 
 Command line arguments
 
-Bootstrapped sequences algorithm
-Version: EMBOSS:6.4.0.0
+Bootstrapped restriction sites algorithm
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
-  [-sequence]          seqset     (Aligned) sequence set filename and optional
-                                  format, or reference (input USA)
-  [-outfile]           outfile    [*.fseqboot] Phylip seqboot_seq program
+  [-infile]            discretestates File containing one or more sets of
+                                  restriction data
+  [-outfile]           outfile    [*.frestboot] Phylip seqboot_rest program
                                   output file
 
    Additional (Optional) qualifiers (* if not always prompted):
-   -categories         properties File of input categories
    -weights            properties Weights file
    -test               menu       [b] Choose test (Values: b (Bootstrap); j
                                   (Jackknife); c (Permute species for each
@@ -237,14 +231,14 @@ Version: EMBOSS:6.4.0.0
                                   (Number from 0.100 to 100.000)
 *  -rewriteformat      menu       [p] Output format (Values: p (PHYLIP); n
                                   (NEXUS); x (XML))
-*  -seqtype            menu       [d] Output format (Values: d (dna); p
-                                  (protein); r (rna))
 *  -blocksize          integer    [1] Block size for bootstraping (Integer 1
                                   or more)
 *  -reps               integer    [100] How many replicates (Integer 1 or
                                   more)
 *  -justweights        menu       [d] Write out datasets or just weights
                                   (Values: d (Datasets); w (Weights))
+   -enzymes            boolean    [N] Is the number of enzymes present in
+                                  input file
 *  -seed               integer    [1] Random number seed between 1 and 32767
                                   (must be odd) (Integer from 1 to 32767)
    -printdata          boolean    [N] Print out the data at start of run
@@ -253,22 +247,6 @@ Version: EMBOSS:6.4.0.0
 
    Advanced (Unprompted) qualifiers: (none)
    Associated qualifiers:
-
-   "-sequence" associated qualifiers
-   -sbegin1            integer    Start of each sequence to be used
-   -send1              integer    End of each sequence to be used
-   -sreverse1          boolean    Reverse (if DNA)
-   -sask1              boolean    Ask for begin/end/reverse
-   -snucleotide1       boolean    Sequence is nucleotide
-   -sprotein1          boolean    Sequence is protein
-   -slower1            boolean    Make lower case
-   -supper1            boolean    Make upper case
-   -sformat1           string     Input sequence format
-   -sdbname1           string     Database name
-   -sid1               string     Entryname
-   -ufo1               string     UFO features
-   -fformat1           string     Features format
-   -fopenfile1         string     Features file name
 
    "-outfile" associated qualifiers
    -odirectory2        string     Output directory
@@ -293,7 +271,7 @@ Version: EMBOSS:6.4.0.0
 
 Input file format
 
-   fseqboot data files read by SEQBOOT are the standard ones for the
+   frestboot data files read by SEQBOOT are the standard ones for the
    various kinds of data. For molecular sequences the sequences may be
    either interleaved or sequential, and similarly for restriction sites.
    Restriction sites data may either have or not have the third argument,
@@ -308,18 +286,18 @@ Input file format
 
   Input files for usage example
 
-  File: seqboot.dat
+  File: restboot.dat
 
-    5    6
-Alpha     AACAAC
-Beta      AACCCC
-Gamma     ACCAAC
-Delta     CCACCA
-Epsilon   CCAAAC
+   5   13   2
+Alpha     ++-+-++--+++-
+Beta      ++++--+--+++-
+Gamma     -+--+-++-+-++
+Delta     ++-+----++---
+Epsilon   ++++----++---
 
 Output file format
 
-   fseqboot output will contain the data sets generated by the resampling
+   frestboot output will contain the data sets generated by the resampling
    process. Note that, when Gene Frequencies data is used or when Discrete
    Morphological characters with the Factors option are used, the number
    of characters in each data set may vary. It may also vary if there are
@@ -355,113 +333,113 @@ Output file format
 
   Output files for usage example
 
-  File: seqboot.fseqboot
+  File: restboot.frestboot
 
-    5     6
-Alpha      AAACCA
-Beta       AAACCC
-Gamma      ACCCCA
-Delta      CCCAAC
-Epsilon    CCCAAA
-    5     6
-Alpha      AAACAA
-Beta       AAACCC
-Gamma      ACCCAA
-Delta      CCCACC
-Epsilon    CCCAAA
-    5     6
-Alpha      AAAAAC
-Beta       AAACCC
-Gamma      AACAAC
-Delta      CCCCCA
-Epsilon    CCCAAC
-    5     6
-Alpha      CCCCCA
-Beta       CCCCCC
-Gamma      CCCCCA
-Delta      AAAAAC
-Epsilon    AAAAAA
-    5     6
-Alpha      AAAACC
-Beta       AAACCC
-Gamma      AACACC
-Delta      CCCCAA
-Epsilon    CCCACC
-    5     6
-Alpha      AAAACC
-Beta       ACCCCC
-Gamma      AAAACC
-Delta      CCCCAA
-Epsilon    CAAACC
-    5     6
-Alpha      AACCAA
-Beta       AACCCC
-Gamma      ACCCAA
-Delta      CCAACC
-Epsilon    CCAAAA
-    5     6
-Alpha      AAAACC
-Beta       ACCCCC
-Gamma      AAAACC
-Delta      CCCCAA
-Epsilon    CAAACC
-    5     6
-Alpha      AACACC
+    5    13
+Alpha     +--++-+++- -++
+Beta      +++++----- -++
+Gamma     -----+---+ +++
+Delta     +--++----- -+-
+Epsilon   +++++----- -+-
+    5    13
+Alpha     ++----+++- +++
+Beta      +++-----+- +++
+Gamma     -+-+++--++ ++-
+Delta     ++-------- ++-
+Epsilon   +++------- ++-
+    5    13
+Alpha     ++++++-+++ ---
+Beta      ++++++-+++ ---
+Gamma     --++-++--- +++
+Delta     +++++----- ---
+Epsilon   +++++----- ---
+    5    13
+Alpha     ++++-+++++ ---
+Beta      ++-+-+++++ ---
+Gamma     ---+-++--- +++
+Delta     ++--+++--- ---
+Epsilon   ++--+++--- ---
+    5    13
+Alpha     +-+++-++++ +--
+Beta      +++++-++++ +--
+Gamma     ----+----- +++
+Delta     +-++-+---- ---
+Epsilon   ++++-+---- ---
+    5    13
+Alpha     +++------- +++
+Beta      +++------- +++
+Gamma     +--++++++- +-+
+Delta     +++------+ +--
+Epsilon   +++------+ +--
+    5    13
+Alpha     ++++-+--++ ++-
+Beta      ++++----++ ++-
+Gamma     --+++---+- -++
+Delta     ++++--+++- ---
+Epsilon   ++++--+++- ---
+    5    13
+Alpha     +--+---+++ +--
+Beta      ++++---+++ +--
+Gamma     ----++-+-+ +++
+Delta     +--+--++-- ---
+Epsilon   ++++--++-- ---
+    5    13
+Alpha     +++--++--+ ++-
 
 
   [Part of this file has been deleted for brevity]
 
-Gamma      ACAAAA
-Delta      CCCCCC
-Epsilon    CCAAAA
-    5     6
-Alpha      AACAAC
-Beta       AACCCC
-Gamma      AACAAC
-Delta      CCACCA
-Epsilon    CCAAAC
-    5     6
-Alpha      AACAAA
-Beta       AACCCC
-Gamma      CCCAAA
-Delta      CCACCC
-Epsilon    CCAAAA
-    5     6
-Alpha      ACAAAA
-Beta       ACCCCC
-Gamma      CCAAAA
-Delta      CACCCC
-Epsilon    CAAAAA
-    5     6
-Alpha      CAAAAA
-Beta       CCCCCC
-Gamma      CAAAAA
-Delta      ACCCCC
-Epsilon    AAAAAA
-    5     6
-Alpha      CAACCC
-Beta       CCCCCC
-Gamma      CAACCC
-Delta      ACCAAA
-Epsilon    AAACCC
-    5     6
-Alpha      ACAACC
-Beta       ACCCCC
-Gamma      ACAACC
-Delta      CACCAA
-Epsilon    CAAACC
-    5     6
-Alpha      AAAAAA
-Beta       AAAAAC
-Gamma      ACCCCA
-Delta      CCCCCC
-Epsilon    CCCCCA
-    5     6
-Alpha      AACAAC
-Beta       AACCCC
-Gamma      CCCAAC
-Delta      CCACCA
-Epsilon    CCAAAC
+Gamma     -+--++-+++ -++
+Delta     ++++------ +++
+Epsilon   ++++------ +++
+    5    13
+Alpha     +++---+-++ +++
+Beta      +++---+-++ +++
+Gamma     ---++++-++ -++
+Delta     +++----+++ ---
+Epsilon   +++----+++ ---
+    5    13
+Alpha     ++++--+--+ +--
+Beta      +++++----+ +--
+Gamma     ---+-+-+++ +++
+Delta     ++++-----+ +--
+Epsilon   +++++----+ +--
+    5    13
+Alpha     +-----+--- +++
+Beta      +++++++--- +++
+Gamma     +------+++ +--
+Delta     +-----+--- +--
+Epsilon   +++++++--- +--
+    5    13
+Alpha     +-++--+-++ +--
+Beta      ++++--+-++ +--
+Gamma     +---++++-- -++
+Delta     +-++------ ---
+Epsilon   ++++------ ---
+    5    13
+Alpha     +++-+-++++ ++-
+Beta      +++---++++ ++-
+Gamma     --++--++-- +++
+Delta     +++--+++-- ---
+Epsilon   +++--+++-- ---
+    5    13
+Alpha     ++-+++--++ +--
+Beta      +++-++--++ +--
+Gamma     ----+++--- +++
+Delta     ++-----+-- ---
+Epsilon   +++----+-- ---
+    5    13
+Alpha     +---++---- ++-
+Beta      ++---+---- ++-
+Gamma     --++-+---- -++
+Delta     +-----++++ ---
+Epsilon   ++----++++ ---
+    5    13
+Alpha     +++-++++-+ +++
+Beta      +++++----+ +++
+Gamma     -++------+ +++
+Delta     +++-+---++ ---
+Epsilon   +++++---++ ---
 
 Data files
 
@@ -493,37 +471,37 @@ Known bugs
 
 See also
 
-                    Program name                         Description
+                    Program name                          Description
                     distmat      Create a distance matrix from a multiple sequence alignment
                     ednacomp     DNA compatibility algorithm
-                    ednadist     Nucleic acid sequence Distance Matrix program
-                    ednainvar    Nucleic acid sequence Invariants method
-                    ednaml       Phylogenies from nucleic acid Maximum Likelihood
-                    ednamlk      Phylogenies from nucleic acid Maximum Likelihood with clock
+                    ednadist     Nucleic acid sequence distance matrix program
+                    ednainvar    Nucleic acid sequence invariants method
+                    ednaml       Phylogenies from nucleic acid maximum likelihood
+                    ednamlk      Phylogenies from nucleic acid maximum likelihood with clock
                     ednapars     DNA parsimony algorithm
                     ednapenny    Penny algorithm for DNA
                     eprotdist    Protein distance algorithm
                     eprotpars    Protein parsimony algorithm
-                    erestml      Restriction site Maximum Likelihood method
+                    erestml      Restriction site maximum likelihood method
                     eseqboot     Bootstrapped sequences algorithm
                     fdiscboot    Bootstrapped discrete sites algorithm
                     fdnacomp     DNA compatibility algorithm
-                    fdnadist     Nucleic acid sequence Distance Matrix program
-                    fdnainvar    Nucleic acid sequence Invariants method
-                    fdnaml       Estimates nucleotide phylogeny by maximum likelihood
+                    fdnadist     Nucleic acid sequence distance matrix program
+                    fdnainvar    Nucleic acid sequence invariants method
+                    fdnaml       Estimate nucleotide phylogeny by maximum likelihood
                     fdnamlk      Estimates nucleotide phylogeny by maximum likelihood
                     fdnamove     Interactive DNA parsimony
                     fdnapars     DNA parsimony algorithm
                     fdnapenny    Penny algorithm for DNA
-                    fdolmove     Interactive Dollo or Polymorphism Parsimony
+                    fdolmove     Interactive Dollo or polymorphism parsimony
                     ffreqboot    Bootstrapped genetic frequencies algorithm
                     fproml       Protein phylogeny by maximum likelihood
                     fpromlk      Protein phylogeny by maximum likelihood
                     fprotdist    Protein distance algorithm
                     fprotpars    Protein parsimony algorithm
-                    frestboot    Bootstrapped restriction sites algorithm
-                    frestdist    Distance matrix from restriction sites or fragments
-                    frestml      Restriction site maximum Likelihood method
+                    frestdist    Calculate distance matrix from restriction sites or fragments
+                    frestml      Restriction site maximum likelihood method
+                    fseqboot     Bootstrapped sequences algorithm
                     fseqbootall  Bootstrapped sequences algorithm
 
 Author(s)
@@ -544,3 +522,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

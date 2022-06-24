@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Fitch-Margoliash and Least-Squares Distance Methods
+   Fitch-Margoliash and least-squares distance methods
 
 Description
 
@@ -94,7 +94,7 @@ Usage
 
 
 % ffitch
-Fitch-Margoliash and Least-Squares Distance Methods
+Fitch-Margoliash and least-squares distance methods
 Phylip distance matrix file: fitch.dat
 Phylip tree file (optional):
 Phylip fitch program output file [fitch.ffitch]:
@@ -121,8 +121,8 @@ Done.
 
 Command line arguments
 
-Fitch-Margoliash and Least-Squares Distance Methods
-Version: EMBOSS:6.4.0.0
+Fitch-Margoliash and least-squares distance methods
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-datafile]          distances  File containing one or more distance
@@ -226,7 +226,7 @@ Output file format
 
    7 Populations
 
-Fitch-Margoliash method version 3.69
+Fitch-Margoliash method version 3.69.650
 
                   __ __             2
                   \  \   (Obs - Exp)
@@ -311,7 +311,7 @@ Known bugs
 See also
 
                     Program name                       Description
-                    efitch       Fitch-Margoliash and Least-Squares Distance Methods
+                    efitch       Fitch-Margoliash and least-squares distance methods
                     ekitsch      Fitch-Margoliash method with contemporary tips
                     eneighbor    Phylogenies from distance matrix by N-J or UPGMA method
                     fkitsch      Fitch-Margoliash method with contemporary tips
@@ -335,3 +335,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

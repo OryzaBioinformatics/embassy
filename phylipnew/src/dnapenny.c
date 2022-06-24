@@ -141,7 +141,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
     if(outgrno != 0) outgropt = true;
     else outgrno = 1;
 
-    thresh = ajAcdGetToggle("thresh");
+    thresh = ajAcdGetToggle("dothreshold");
     if(thresh) ajAcdGetFloat("threshold");
 
 

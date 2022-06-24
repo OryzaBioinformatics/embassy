@@ -143,7 +143,7 @@ Done.
 Command line arguments
 
 Phylogenies from distance matrix by N-J or UPGMA method
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-datafile]          distances  Phylip distance matrix file
@@ -232,7 +232,7 @@ Output file format
   File: neighbor.fneighbor
 
 
-Neighbor-Joining/UPGMA method version 3.69
+Neighbor-Joining/UPGMA method version 3.69.650
 
 
    7 Populations
@@ -312,10 +312,10 @@ Known bugs
 See also
 
                     Program name                       Description
-                    efitch       Fitch-Margoliash and Least-Squares Distance Methods
+                    efitch       Fitch-Margoliash and least-squares distance methods
                     ekitsch      Fitch-Margoliash method with contemporary tips
                     eneighbor    Phylogenies from distance matrix by N-J or UPGMA method
-                    ffitch       Fitch-Margoliash and Least-Squares Distance Methods
+                    ffitch       Fitch-Margoliash and least-squares distance methods
                     fkitsch      Fitch-Margoliash method with contemporary tips
 
 Author(s)
@@ -336,3 +336,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

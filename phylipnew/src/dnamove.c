@@ -418,7 +418,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
     phyloweights = ajAcdGetProperties("weights");
     if(phyloweights)  weights = true;
 
-    thresh = ajAcdGetToggle("thresh");
+    thresh = ajAcdGetToggle("dothreshold");
     if(thresh)  threshold = ajAcdGetFloat("threshold");
  
 

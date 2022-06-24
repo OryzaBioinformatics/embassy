@@ -1,4 +1,4 @@
-                                  fseqboot
+                                  ffreqboot
 
 
 
@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Bootstrapped sequences algorithm
+   Bootstrapped genetic frequencies algorithm
 
 Description
 
@@ -27,6 +27,8 @@ Description
    format which is under development
 
 Algorithm
+
+   FFREQBOOT is a gene frequency specific version of SEQBOOT.
 
    SEQBOOT is a general bootstrapping and data set translation tool. It is
    intended to allow you to generate multiple data sets that are resampled
@@ -178,21 +180,14 @@ Algorithm
 
 Usage
 
-   Here is a sample session with fseqboot
+   Here is a sample session with ffreqboot
 
 
-% fseqboot -seed 3
-Bootstrapped sequences algorithm
-Input (aligned) sequence set: seqboot.dat
-Phylip seqboot_seq program output file [seqboot.fseqboot]:
+% ffreqboot -seed 3
+Bootstrapped genetic frequencies algorithm
+Input file: freqboot.dat
+Phylip seqboot_freq program output file [freqboot.ffreqboot]:
 
-
- bootstrap: true
-jackknife: false
- permute: false
- lockhart: false
- ild: false
- justwts: false
 
 completed replicate number   10
 completed replicate number   20
@@ -205,7 +200,7 @@ completed replicate number   80
 completed replicate number   90
 completed replicate number  100
 
-Output written to file "seqboot.fseqboot"
+Output written to file "freqboot.ffreqboot"
 
 Done.
 
@@ -216,17 +211,15 @@ Done.
 
 Command line arguments
 
-Bootstrapped sequences algorithm
-Version: EMBOSS:6.4.0.0
+Bootstrapped genetic frequencies algorithm
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
-  [-sequence]          seqset     (Aligned) sequence set filename and optional
-                                  format, or reference (input USA)
-  [-outfile]           outfile    [*.fseqboot] Phylip seqboot_seq program
+  [-infile]            frequencies (no help text) frequencies value
+  [-outfile]           outfile    [*.ffreqboot] Phylip seqboot_freq program
                                   output file
 
    Additional (Optional) qualifiers (* if not always prompted):
-   -categories         properties File of input categories
    -weights            properties Weights file
    -test               menu       [b] Choose test (Values: b (Bootstrap); j
                                   (Jackknife); c (Permute species for each
@@ -235,10 +228,6 @@ Version: EMBOSS:6.4.0.0
 *  -regular            toggle     [N] Altered sampling fraction
 *  -fracsample         float      [100.0] Samples as percentage of sites
                                   (Number from 0.100 to 100.000)
-*  -rewriteformat      menu       [p] Output format (Values: p (PHYLIP); n
-                                  (NEXUS); x (XML))
-*  -seqtype            menu       [d] Output format (Values: d (dna); p
-                                  (protein); r (rna))
 *  -blocksize          integer    [1] Block size for bootstraping (Integer 1
                                   or more)
 *  -reps               integer    [100] How many replicates (Integer 1 or
@@ -253,22 +242,6 @@ Version: EMBOSS:6.4.0.0
 
    Advanced (Unprompted) qualifiers: (none)
    Associated qualifiers:
-
-   "-sequence" associated qualifiers
-   -sbegin1            integer    Start of each sequence to be used
-   -send1              integer    End of each sequence to be used
-   -sreverse1          boolean    Reverse (if DNA)
-   -sask1              boolean    Ask for begin/end/reverse
-   -snucleotide1       boolean    Sequence is nucleotide
-   -sprotein1          boolean    Sequence is protein
-   -slower1            boolean    Make lower case
-   -supper1            boolean    Make upper case
-   -sformat1           string     Input sequence format
-   -sdbname1           string     Database name
-   -sid1               string     Entryname
-   -ufo1               string     UFO features
-   -fformat1           string     Features format
-   -fopenfile1         string     Features file name
 
    "-outfile" associated qualifiers
    -odirectory2        string     Output directory
@@ -293,7 +266,7 @@ Version: EMBOSS:6.4.0.0
 
 Input file format
 
-   fseqboot data files read by SEQBOOT are the standard ones for the
+   ffreqboot data files read by SEQBOOT are the standard ones for the
    various kinds of data. For molecular sequences the sequences may be
    either interleaved or sequential, and similarly for restriction sites.
    Restriction sites data may either have or not have the third argument,
@@ -308,18 +281,24 @@ Input file format
 
   Input files for usage example
 
-  File: seqboot.dat
+  File: freqboot.dat
 
-    5    6
-Alpha     AACAAC
-Beta      AACCCC
-Gamma     ACCAAC
-Delta     CCACCA
-Epsilon   CCAAAC
+    5    10
+2 2 2 2 2 2 2 2 2 2
+European   0.2868 0.5684 0.4422 0.4286 0.3828 0.7285 0.6386 0.0205
+0.8055 0.5043
+African    0.1356 0.4840 0.0602 0.0397 0.5977 0.9675 0.9511 0.0600
+0.7582 0.6207
+Chinese    0.1628 0.5958 0.7298 1.0000 0.3811 0.7986 0.7782 0.0726
+0.7482 0.7334
+American   0.0144 0.6990 0.3280 0.7421 0.6606 0.8603 0.7924 0.0000
+0.8086 0.8636
+Australian 0.1211 0.2274 0.5821 1.0000 0.2018 0.9000 0.9837 0.0396
+0.9097 0.2976
 
 Output file format
 
-   fseqboot output will contain the data sets generated by the resampling
+   ffreqboot output will contain the data sets generated by the resampling
    process. Note that, when Gene Frequencies data is used or when Discrete
    Morphological characters with the Factors option are used, the number
    of characters in each data set may vary. It may also vary if there are
@@ -355,113 +334,113 @@ Output file format
 
   Output files for usage example
 
-  File: seqboot.fseqboot
+  File: freqboot.ffreqboot
 
-    5     6
-Alpha      AAACCA
-Beta       AAACCC
-Gamma      ACCCCA
-Delta      CCCAAC
-Epsilon    CCCAAA
-    5     6
-Alpha      AAACAA
-Beta       AAACCC
-Gamma      ACCCAA
-Delta      CCCACC
-Epsilon    CCCAAA
-    5     6
-Alpha      AAAAAC
-Beta       AAACCC
-Gamma      AACAAC
-Delta      CCCCCA
-Epsilon    CCCAAC
-    5     6
-Alpha      CCCCCA
-Beta       CCCCCC
-Gamma      CCCCCA
-Delta      AAAAAC
-Epsilon    AAAAAA
-    5     6
-Alpha      AAAACC
-Beta       AAACCC
-Gamma      AACACC
-Delta      CCCCAA
-Epsilon    CCCACC
-    5     6
-Alpha      AAAACC
-Beta       ACCCCC
-Gamma      AAAACC
-Delta      CCCCAA
-Epsilon    CAAACC
-    5     6
-Alpha      AACCAA
-Beta       AACCCC
-Gamma      ACCCAA
-Delta      CCAACC
-Epsilon    CCAAAA
-    5     6
-Alpha      AAAACC
-Beta       ACCCCC
-Gamma      AAAACC
-Delta      CCCCAA
-Epsilon    CAAACC
-    5     6
-Alpha      AACACC
+    5    10
+   2   2   2   2   2   2   2   2   2   2
+European   0.28680 0.71320 0.56840 0.43160 0.56840 0.43160 0.44220 0.55780
+               0.42860 0.57140 0.38280 0.61720 0.38280 0.61720 0.72850 0.27150
+               0.72850 0.27150 0.02050 0.97950
+African    0.13560 0.86440 0.48400 0.51600 0.48400 0.51600 0.06020 0.93980
+               0.03970 0.96030 0.59770 0.40230 0.59770 0.40230 0.96750 0.03250
+               0.96750 0.03250 0.06000 0.94000
+Chinese    0.16280 0.83720 0.59580 0.40420 0.59580 0.40420 0.72980 0.27020
+               1.00000 0.00000 0.38110 0.61890 0.38110 0.61890 0.79860 0.20140
+               0.79860 0.20140 0.07260 0.92740
+American   0.01440 0.98560 0.69900 0.30100 0.69900 0.30100 0.32800 0.67200
+               0.74210 0.25790 0.66060 0.33940 0.66060 0.33940 0.86030 0.13970
+               0.86030 0.13970 0.00000 1.00000
+Australian 0.12110 0.87890 0.22740 0.77260 0.22740 0.77260 0.58210 0.41790
+               1.00000 0.00000 0.20180 0.79820 0.20180 0.79820 0.90000 0.10000
+               0.90000 0.10000 0.03960 0.96040
+    5    10
+   2   2   2   2   2   2   2   2   2   2
+European   0.28680 0.71320 0.56840 0.43160 0.44220 0.55780 0.42860 0.57140
+               0.38280 0.61720 0.38280 0.61720 0.38280 0.61720 0.02050 0.97950
+               0.02050 0.97950 0.80550 0.19450
+African    0.13560 0.86440 0.48400 0.51600 0.06020 0.93980 0.03970 0.96030
+               0.59770 0.40230 0.59770 0.40230 0.59770 0.40230 0.06000 0.94000
+               0.06000 0.94000 0.75820 0.24180
+Chinese    0.16280 0.83720 0.59580 0.40420 0.72980 0.27020 1.00000 0.00000
+               0.38110 0.61890 0.38110 0.61890 0.38110 0.61890 0.07260 0.92740
+               0.07260 0.92740 0.74820 0.25180
+American   0.01440 0.98560 0.69900 0.30100 0.32800 0.67200 0.74210 0.25790
+               0.66060 0.33940 0.66060 0.33940 0.66060 0.33940 0.00000 1.00000
+               0.00000 1.00000 0.80860 0.19140
+Australian 0.12110 0.87890 0.22740 0.77260 0.58210 0.41790 1.00000 0.00000
+               0.20180 0.79820 0.20180 0.79820 0.20180 0.79820 0.03960 0.96040
+               0.03960 0.96040 0.90970 0.09030
+    5    10
+   2   2   2   2   2   2   2   2   2   2
+European   0.28680 0.71320 0.28680 0.71320 0.44220 0.55780 0.42860 0.57140
+               0.42860 0.57140 0.38280 0.61720 0.72850 0.27150 0.80550 0.19450
+               0.80550 0.19450 0.50430 0.49570
+African    0.13560 0.86440 0.13560 0.86440 0.06020 0.93980 0.03970 0.96030
+               0.03970 0.96030 0.59770 0.40230 0.96750 0.03250 0.75820 0.24180
+               0.75820 0.24180 0.62070 0.37930
+Chinese    0.16280 0.83720 0.16280 0.83720 0.72980 0.27020 1.00000 0.00000
+               1.00000 0.00000 0.38110 0.61890 0.79860 0.20140 0.74820 0.25180
+               0.74820 0.25180 0.73340 0.26660
+American   0.01440 0.98560 0.01440 0.98560 0.32800 0.67200 0.74210 0.25790
+               0.74210 0.25790 0.66060 0.33940 0.86030 0.13970 0.80860 0.19140
+               0.80860 0.19140 0.86360 0.13640
+Australian 0.12110 0.87890 0.12110 0.87890 0.58210 0.41790 1.00000 0.00000
+               1.00000 0.00000 0.20180 0.79820 0.90000 0.10000 0.90970 0.09030
 
 
   [Part of this file has been deleted for brevity]
 
-Gamma      ACAAAA
-Delta      CCCCCC
-Epsilon    CCAAAA
-    5     6
-Alpha      AACAAC
-Beta       AACCCC
-Gamma      AACAAC
-Delta      CCACCA
-Epsilon    CCAAAC
-    5     6
-Alpha      AACAAA
-Beta       AACCCC
-Gamma      CCCAAA
-Delta      CCACCC
-Epsilon    CCAAAA
-    5     6
-Alpha      ACAAAA
-Beta       ACCCCC
-Gamma      CCAAAA
-Delta      CACCCC
-Epsilon    CAAAAA
-    5     6
-Alpha      CAAAAA
-Beta       CCCCCC
-Gamma      CAAAAA
-Delta      ACCCCC
-Epsilon    AAAAAA
-    5     6
-Alpha      CAACCC
-Beta       CCCCCC
-Gamma      CAACCC
-Delta      ACCAAA
-Epsilon    AAACCC
-    5     6
-Alpha      ACAACC
-Beta       ACCCCC
-Gamma      ACAACC
-Delta      CACCAA
-Epsilon    CAAACC
-    5     6
-Alpha      AAAAAA
-Beta       AAAAAC
-Gamma      ACCCCA
-Delta      CCCCCC
-Epsilon    CCCCCA
-    5     6
-Alpha      AACAAC
-Beta       AACCCC
-Gamma      CCCAAC
-Delta      CCACCA
-Epsilon    CCAAAC
+    5    10
+   2   2   2   2   2   2   2   2   2   2
+European   0.28680 0.71320 0.56840 0.43160 0.56840 0.43160 0.56840 0.43160
+               0.42860 0.57140 0.38280 0.61720 0.38280 0.61720 0.80550 0.19450
+               0.50430 0.49570 0.50430 0.49570
+African    0.13560 0.86440 0.48400 0.51600 0.48400 0.51600 0.48400 0.51600
+               0.03970 0.96030 0.59770 0.40230 0.59770 0.40230 0.75820 0.24180
+               0.62070 0.37930 0.62070 0.37930
+Chinese    0.16280 0.83720 0.59580 0.40420 0.59580 0.40420 0.59580 0.40420
+               1.00000 0.00000 0.38110 0.61890 0.38110 0.61890 0.74820 0.25180
+               0.73340 0.26660 0.73340 0.26660
+American   0.01440 0.98560 0.69900 0.30100 0.69900 0.30100 0.69900 0.30100
+               0.74210 0.25790 0.66060 0.33940 0.66060 0.33940 0.80860 0.19140
+               0.86360 0.13640 0.86360 0.13640
+Australian 0.12110 0.87890 0.22740 0.77260 0.22740 0.77260 0.22740 0.77260
+               1.00000 0.00000 0.20180 0.79820 0.20180 0.79820 0.90970 0.09030
+               0.29760 0.70240 0.29760 0.70240
+    5    10
+   2   2   2   2   2   2   2   2   2   2
+European   0.28680 0.71320 0.28680 0.71320 0.56840 0.43160 0.56840 0.43160
+               0.44220 0.55780 0.42860 0.57140 0.42860 0.57140 0.72850 0.27150
+               0.63860 0.36140 0.02050 0.97950
+African    0.13560 0.86440 0.13560 0.86440 0.48400 0.51600 0.48400 0.51600
+               0.06020 0.93980 0.03970 0.96030 0.03970 0.96030 0.96750 0.03250
+               0.95110 0.04890 0.06000 0.94000
+Chinese    0.16280 0.83720 0.16280 0.83720 0.59580 0.40420 0.59580 0.40420
+               0.72980 0.27020 1.00000 0.00000 1.00000 0.00000 0.79860 0.20140
+               0.77820 0.22180 0.07260 0.92740
+American   0.01440 0.98560 0.01440 0.98560 0.69900 0.30100 0.69900 0.30100
+               0.32800 0.67200 0.74210 0.25790 0.74210 0.25790 0.86030 0.13970
+               0.79240 0.20760 0.00000 1.00000
+Australian 0.12110 0.87890 0.12110 0.87890 0.22740 0.77260 0.22740 0.77260
+               0.58210 0.41790 1.00000 0.00000 1.00000 0.00000 0.90000 0.10000
+               0.98370 0.01630 0.03960 0.96040
+    5    10
+   2   2   2   2   2   2   2   2   2   2
+European   0.56840 0.43160 0.56840 0.43160 0.44220 0.55780 0.44220 0.55780
+               0.42860 0.57140 0.38280 0.61720 0.38280 0.61720 0.72850 0.27150
+               0.63860 0.36140 0.80550 0.19450
+African    0.48400 0.51600 0.48400 0.51600 0.06020 0.93980 0.06020 0.93980
+               0.03970 0.96030 0.59770 0.40230 0.59770 0.40230 0.96750 0.03250
+               0.95110 0.04890 0.75820 0.24180
+Chinese    0.59580 0.40420 0.59580 0.40420 0.72980 0.27020 0.72980 0.27020
+               1.00000 0.00000 0.38110 0.61890 0.38110 0.61890 0.79860 0.20140
+               0.77820 0.22180 0.74820 0.25180
+American   0.69900 0.30100 0.69900 0.30100 0.32800 0.67200 0.32800 0.67200
+               0.74210 0.25790 0.66060 0.33940 0.66060 0.33940 0.86030 0.13970
+               0.79240 0.20760 0.80860 0.19140
+Australian 0.22740 0.77260 0.22740 0.77260 0.58210 0.41790 0.58210 0.41790
+               1.00000 0.00000 0.20180 0.79820 0.20180 0.79820 0.90000 0.10000
+               0.98370 0.01630 0.90970 0.09030
 
 Data files
 
@@ -493,37 +472,37 @@ Known bugs
 
 See also
 
-                    Program name                         Description
+                    Program name                          Description
                     distmat      Create a distance matrix from a multiple sequence alignment
                     ednacomp     DNA compatibility algorithm
-                    ednadist     Nucleic acid sequence Distance Matrix program
-                    ednainvar    Nucleic acid sequence Invariants method
-                    ednaml       Phylogenies from nucleic acid Maximum Likelihood
-                    ednamlk      Phylogenies from nucleic acid Maximum Likelihood with clock
+                    ednadist     Nucleic acid sequence distance matrix program
+                    ednainvar    Nucleic acid sequence invariants method
+                    ednaml       Phylogenies from nucleic acid maximum likelihood
+                    ednamlk      Phylogenies from nucleic acid maximum likelihood with clock
                     ednapars     DNA parsimony algorithm
                     ednapenny    Penny algorithm for DNA
                     eprotdist    Protein distance algorithm
                     eprotpars    Protein parsimony algorithm
-                    erestml      Restriction site Maximum Likelihood method
+                    erestml      Restriction site maximum likelihood method
                     eseqboot     Bootstrapped sequences algorithm
                     fdiscboot    Bootstrapped discrete sites algorithm
                     fdnacomp     DNA compatibility algorithm
-                    fdnadist     Nucleic acid sequence Distance Matrix program
-                    fdnainvar    Nucleic acid sequence Invariants method
-                    fdnaml       Estimates nucleotide phylogeny by maximum likelihood
+                    fdnadist     Nucleic acid sequence distance matrix program
+                    fdnainvar    Nucleic acid sequence invariants method
+                    fdnaml       Estimate nucleotide phylogeny by maximum likelihood
                     fdnamlk      Estimates nucleotide phylogeny by maximum likelihood
                     fdnamove     Interactive DNA parsimony
                     fdnapars     DNA parsimony algorithm
                     fdnapenny    Penny algorithm for DNA
-                    fdolmove     Interactive Dollo or Polymorphism Parsimony
-                    ffreqboot    Bootstrapped genetic frequencies algorithm
+                    fdolmove     Interactive Dollo or polymorphism parsimony
                     fproml       Protein phylogeny by maximum likelihood
                     fpromlk      Protein phylogeny by maximum likelihood
                     fprotdist    Protein distance algorithm
                     fprotpars    Protein parsimony algorithm
                     frestboot    Bootstrapped restriction sites algorithm
-                    frestdist    Distance matrix from restriction sites or fragments
-                    frestml      Restriction site maximum Likelihood method
+                    frestdist    Calculate distance matrix from restriction sites or fragments
+                    frestml      Restriction site maximum likelihood method
+                    fseqboot     Bootstrapped sequences algorithm
                     fseqbootall  Bootstrapped sequences algorithm
 
 Author(s)
@@ -544,3 +523,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

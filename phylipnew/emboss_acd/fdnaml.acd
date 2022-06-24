@@ -1,10 +1,10 @@
 application: fdnaml [
-  documentation: "Estimates nucleotide phylogeny by maximum
+  documentation: "Estimate nucleotide phylogeny by maximum
                   likelihood"
   groups: "Phylogeny:Molecular sequence"
   embassy: "phylipnew"
-  relations:  "EDAM:0000191 topic Phylogeny reconstruction"
-  relations:  "EDAM:0000547 operation Phylogenetic tree construction (maximum likelihood and Bayesian methods)"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_operation:0547 Phylogenetic tree construction (maximum likelihood and Bayesian methods)"
 ]
 
 section: input [
@@ -17,7 +17,7 @@ section: input [
     type: "gapdnaphylo"
     aligned: "Y"
     help: "File containing one or more sequence alignments"
-    relations: "EDAM:0001383 data Sequence alignment (nucleic acid)"
+    relations: "EDAM_data:1383 Sequence alignment (nucleic acid)"
   ]
 
   tree: intreefile [
@@ -25,7 +25,7 @@ section: input [
     nullok: "Y"
     knowntype: "newick"
     information: "Phylip tree file (optional)"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   integer: ncategories [
@@ -34,7 +34,7 @@ section: input [
     minimum: "1"
     maximum: "9"
     information: "Number of substitution rate categories"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   array: rate [
@@ -42,7 +42,7 @@ section: input [
     information: "Rate for each category"
     size: "$(ncategories)"
     sumtest: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   properties: categories [
@@ -52,7 +52,7 @@ section: input [
     nullok: "@($(ncategories) == 1)"
     size: "1"
     length: "$(sequence.length)"
-    relations: "EDAM:0001427 data Phylogenetic discrete data"
+    relations: "EDAM_data:1427 Phylogenetic discrete data"
   ]
 
   properties: weights [
@@ -63,7 +63,7 @@ section: input [
     length: "$(sequence.length)"
     size: "@(@($(sequence.multicount)>1) ? 1:0)"
     nullok: "Y"
-    relations: "EDAM:0002994 data Phylogenetic character weights"
+    relations: "EDAM_data:2994 Phylogenetic character weights"
   ]
 
 endsection: input
@@ -77,7 +77,7 @@ section: additional [
     additional: "$(intreefile.isdefined)"
     default: "N"
     information: "Use branch lengths from user trees"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: ttratio [
@@ -85,7 +85,7 @@ section: additional [
     default: "2.0"
     minimum: "0.001"
     information: "Transition/transversion ratio"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   toggle: freqsfrom [
@@ -93,7 +93,7 @@ section: additional [
     default: "Y"
     information: "Use empirical base frequencies from seqeunce
                   input"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   array: basefreq [
@@ -105,10 +105,10 @@ section: additional [
     information: "Base frequencies for A C G T/U (use blanks to
                   separate)"
     sum: "1.0"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
-  list: gamma [
+  list: gammatype [
     additional: "Y"
     minimum: "1"
     maximum: "1"
@@ -117,62 +117,62 @@ section: additional [
              h:User defined HMM of rates; n:Constant rate"
     information: "Rate variation among sites"
     default: "Constant rate"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: gammacoefficient [
-    additional: "@($(gamma)==g)"
+    additional: "@($(gammatype)==g)"
     information: "Coefficient of variation of substitution rate
                   among sites"
     minimum: "0.001"
     default: "1"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: ngammacat [
-    additional: "@($(gamma)==g)"
+    additional: "@($(gammatype)==g)"
     minimum: "1"
     maximum: "9"
     default: "1"
     information: "Number of categories (1-9)"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: invarcoefficient [
-    additional: "@($(gamma)==i)"
+    additional: "@($(gammatype)==i)"
     information: "Coefficient of variation of substitution rate
                   among sites"
     minimum: "0.001"
     default: "1"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: ninvarcat [
-    additional: "@($(gamma)==i)"
+    additional: "@($(gammatype)==i)"
     minimum: "1"
     maximum: "9"
     default: "1"
     information: "Number of categories (1-9) including one for
                   invariant sites"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: invarfrac [
-    additional: "@($(gamma)==i)"
+    additional: "@($(gammatype)==i)"
     information: "Fraction of invariant sites"
     default: "0.0"
     minimum: "0.0"
     maximum: "0.9999"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: nhmmcategories [
-    additional: "@($(gamma)==h)"
+    additional: "@($(gammatype)==h)"
     default: "1"
     minimum: "1"
     maximum: "9"
     information: "Number of HMM rate categories"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   array: hmmrates [
@@ -182,7 +182,7 @@ section: additional [
     minimum: "0.0"
     size: "$(nhmmcategories)"
     sumtest: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   array: hmmprobabilities [
@@ -193,14 +193,14 @@ section: additional [
     maximum: "1.0"
     size: "$(nhmmcategories)"
     sum: "1.0"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: adjsite [
-    additional: "@($(gamma)!=n)"
+    additional: "@($(gammatype)!=n)"
     default: "N"
     information: "Rates at adjacent sites correlated"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   float: lambda [
@@ -209,7 +209,7 @@ section: additional [
     information: "Mean block length of sites having the same
                   rate"
     minimum: "1.0"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: njumble [
@@ -217,7 +217,7 @@ section: additional [
     default: "0"
     minimum: "0"
     information: "Number of times to randomise"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: seed [
@@ -227,14 +227,14 @@ section: additional [
     maximum: "32767"
     minimum: "1"
     default: "1"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: global [
     additional: "@(!$(intreefile.isdefined))"
     default: "N"
     information: "Global rearrangements"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: outgrno [
@@ -245,14 +245,14 @@ section: additional [
     trueminimum: "Y"
     default: "0"
     information: "Species number to use as outgroup"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: rough [
     additional: "Y"
     default: "Y"
     information: "Speedier but rougher analysis"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -266,14 +266,14 @@ section: output [
     parameter: "Y"
     knowntype: "dnaml output"
     information: "Phylip dnaml program output file"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   toggle: trout [
     additional: "Y"
     default: "Y"
     information: "Write out trees to tree file"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   outfile: outtreefile [
@@ -282,35 +282,35 @@ section: output [
     information: "Phylip tree output file (optional)"
     knowntype: "newick tree"
     nullok: "Y"
-    relations:  "EDAM:0000872 data Phylogenetic tree"
+    relations:  "EDAM_data:0872 Phylogenetic tree"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: treeprint [
     additional: "Y"
     default: "Y"
     information: "Print out tree"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: hypstate [
     additional: "Y"
     default: "N"
     information: "Reconstruct hypothetical sequence"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: output

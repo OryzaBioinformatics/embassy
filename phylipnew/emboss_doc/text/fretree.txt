@@ -112,7 +112,7 @@ Reading tree file ...
 Command line arguments
 
 Interactive tree rearrangement
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-spp]               integer    [0] Number of species (Any integer value)
@@ -310,3 +310,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

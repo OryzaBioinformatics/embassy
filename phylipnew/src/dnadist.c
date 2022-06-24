@@ -147,7 +147,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 
 
     if( (f84) || (kimura) || (jukes) ) {
-      gammamethod = ajAcdGetListSingle("gamma");
+      gammamethod = ajAcdGetListSingle("gammatype");
       if(ajStrMatchC(gammamethod, "g")) { 
         gama = true;
         cvi = ajAcdGetFloat("gammacoefficient");

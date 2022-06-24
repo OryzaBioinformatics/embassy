@@ -102,7 +102,7 @@ Phylip tree file (optional):
 Phylip dollop program output file [dollop.fdollop]:
 
 
-Dollo and polymorphism parsimony algorithm, version 3.69
+Dollo and polymorphism parsimony algorithm, version 3.69.650
 
 Adding species:
    1. Alpha
@@ -128,7 +128,7 @@ Trees also written onto file "dollop.treefile"
 Command line arguments
 
 Dollo and polymorphism parsimony algorithm
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            discretestates File containing one or more data sets
@@ -357,7 +357,7 @@ Output file format
   File: dollop.fdollop
 
 
-Dollo and polymorphism parsimony algorithm, version 3.69
+Dollo and polymorphism parsimony algorithm, version 3.69.650
 
 Dollo parsimony method
 
@@ -448,3 +448,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

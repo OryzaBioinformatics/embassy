@@ -274,7 +274,7 @@ Trees also written onto file "penny.treefile"
 Command line arguments
 
 Penny algorithm, branch-and-bound
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            discretestates File containing one or more data sets
@@ -472,7 +472,7 @@ Output file format
   File: penny.fpenny
 
 
-Penny algorithm, version 3.69
+Penny algorithm, version 3.69.650
  branch-and-bound to find all most parsimonious trees
 
 Wagner parsimony method
@@ -611,3 +611,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

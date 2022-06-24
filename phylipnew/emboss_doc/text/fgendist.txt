@@ -178,7 +178,7 @@ Done.
 Command line arguments
 
 Compute genetic distances from gene frequencies
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            frequencies File containing one or more sets of data
@@ -418,8 +418,8 @@ Known bugs
 See also
 
                     Program name                        Description
-                    egendist     Genetic Distance Matrix program
-                    fcontml      Gene frequency and continuous character Maximum Likelihood
+                    egendist     Genetic distance matrix program
+                    fcontml      Gene frequency and continuous character maximum likelihood
 
 Author(s)
 
@@ -439,3 +439,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

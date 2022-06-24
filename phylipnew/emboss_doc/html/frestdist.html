@@ -46,7 +46,7 @@ Please help by correcting and extending the Wiki pages.
 <H2>
     Function
 </H2>
-Distance matrix from restriction sites or fragments
+Calculate distance matrix from restriction sites or fragments
 <!--
 DON'T WRITE ANYTHING HERE.
 IT IS DONE FOR YOU.
@@ -254,12 +254,12 @@ Here is a sample session with <b>frestdist</b>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
 % <b>frestdist </b>
-Distance matrix from restriction sites or fragments
+Calculate distance matrix from restriction sites or fragments
 Input file: <b>restdist.dat</b>
 Phylip restdist program output file [restdist.frestdist]: <b></b>
 
 
-Restriction site or fragment distances, version 3.69
+Restriction site or fragment distances, version 3.69.650
 
 Distances calculated for species
     Alpha        ....
@@ -285,8 +285,8 @@ Done.
 
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
-Distance matrix from restriction sites or fragments
-Version: EMBOSS:6.4.0.0
+Calculate distance matrix from restriction sites or fragments
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-data]              discretestates File containing one or more sets of
@@ -299,7 +299,7 @@ Version: EMBOSS:6.4.0.0
                                   restriction fragments)
    -neili              boolean    [N] Use original Nei/Li model (default uses
                                   modified Nei/Li model)
-*  -gamma              boolean    [N] Gama distributed rates among sites
+*  -gammatype          boolean    [N] Gamma distributed rates among sites
 *  -gammacoefficient   float      [1] Coefficient of variation of substitution
                                   rate among sites (Number 0.001 or more)
    -ttratio            float      [2.0] Transition/transversion ratio (Number
@@ -385,9 +385,9 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-gamma</td>
+<td>-gammatype</td>
 <td>boolean</td>
-<td>Gama distributed rates among sites</td>
+<td>Gamma distributed rates among sites</td>
 <td>Boolean value Yes/No</td>
 <td>No</td>
 </tr>
@@ -453,7 +453,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outfile" associated outfile qualifiers
+<td align="left" colspan=5>"-outfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -843,22 +843,22 @@ None.
 
 <tr>
 <td><a href="/embassy/phylip/ednadist.html">ednadist</a></td>
-<td>Nucleic acid sequence Distance Matrix program</td>
+<td>Nucleic acid sequence distance matrix program</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/phylip/ednainvar.html">ednainvar</a></td>
-<td>Nucleic acid sequence Invariants method</td>
+<td>Nucleic acid sequence invariants method</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/phylip/ednaml.html">ednaml</a></td>
-<td>Phylogenies from nucleic acid Maximum Likelihood</td>
+<td>Phylogenies from nucleic acid maximum likelihood</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/phylip/ednamlk.html">ednamlk</a></td>
-<td>Phylogenies from nucleic acid Maximum Likelihood with clock</td>
+<td>Phylogenies from nucleic acid maximum likelihood with clock</td>
 </tr>
 
 <tr>
@@ -883,7 +883,7 @@ None.
 
 <tr>
 <td><a href="/embassy/phylip/erestml.html">erestml</a></td>
-<td>Restriction site Maximum Likelihood method</td>
+<td>Restriction site maximum likelihood method</td>
 </tr>
 
 <tr>
@@ -903,17 +903,17 @@ None.
 
 <tr>
 <td><a href="fdnadist.html">fdnadist</a></td>
-<td>Nucleic acid sequence Distance Matrix program</td>
+<td>Nucleic acid sequence distance matrix program</td>
 </tr>
 
 <tr>
 <td><a href="fdnainvar.html">fdnainvar</a></td>
-<td>Nucleic acid sequence Invariants method</td>
+<td>Nucleic acid sequence invariants method</td>
 </tr>
 
 <tr>
 <td><a href="fdnaml.html">fdnaml</a></td>
-<td>Estimates nucleotide phylogeny by maximum likelihood</td>
+<td>Estimate nucleotide phylogeny by maximum likelihood</td>
 </tr>
 
 <tr>
@@ -938,7 +938,7 @@ None.
 
 <tr>
 <td><a href="fdolmove.html">fdolmove</a></td>
-<td>Interactive Dollo or Polymorphism Parsimony</td>
+<td>Interactive Dollo or polymorphism parsimony</td>
 </tr>
 
 <tr>
@@ -973,7 +973,7 @@ None.
 
 <tr>
 <td><a href="frestml.html">frestml</a></td>
-<td>Restriction site maximum Likelihood method</td>
+<td>Restriction site maximum likelihood method</td>
 </tr>
 
 <tr>
@@ -1035,6 +1035,14 @@ Converted (August 2004) to an EMBASSY program by the EMBOSS team.
    -->
 
 This program is intended to be used by everyone and everything, from naive users to embedded scripts.
+
+<H2>
+    Comments
+</H2>
+
+<pre>
+None
+</pre>
 
 
 

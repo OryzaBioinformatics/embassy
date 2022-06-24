@@ -163,7 +163,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
     if(ajStrMatchC(method, "d")) dollo = true;
     else dollo = false;
 
-    thresh = ajAcdGetToggle("thresh");
+    thresh = ajAcdGetToggle("dothreshold");
     if(thresh)  threshold = ajAcdGetFloat("threshold");
 
 

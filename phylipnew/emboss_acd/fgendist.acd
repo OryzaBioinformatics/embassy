@@ -3,8 +3,8 @@ application: fgendist [
                   frequencies"
   groups: "Phylogeny:Gene frequencies"
   embassy: "phylipnew"
-  relations:  "EDAM:0000084 topic Phylogenetics"
-  relations:  "EDAM:0000289 operation Sequence distance matrix generation"
+  relations:  "EDAM_topic:0084 Phylogenetics"
+  relations:  "EDAM_operation:0289 Sequence distance matrix generation"
 ]
 
 section: input [
@@ -17,7 +17,7 @@ section: input [
     help: "File containing one or more sets of data"
     knowntype: "gendist input"
     information: "Phylip gendist program input file"
-    relations:  "EDAM:0001426 data Phylogenetic continuous quantitative data"
+    relations:  "EDAM_data:1426 Phylogenetic continuous quantitative data"
   ]
 
 endsection: input
@@ -36,7 +36,7 @@ section: additional [
              r:Reynolds genetic distance"
     information: "Which method to use"
     default: "n"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -50,21 +50,21 @@ section: output [
     parameter: "Y"
     knowntype: "gendist output"
     information: "Phylip gendist program output file"
-    relations:  "EDAM:0000870 data Sequence distance matrix"
+    relations:  "EDAM_data:0870 Sequence distance matrix"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: lower [
     additional: "Y"
     default: "N"
     information: "Lower triangular distance matrix"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: output

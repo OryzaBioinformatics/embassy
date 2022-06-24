@@ -94,7 +94,7 @@ Done.
 Command line arguments
 
 Majority-rule and strict consensus tree
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-intreefile]        tree       Phylip tree file
@@ -195,7 +195,7 @@ Output file format
   File: consense.fconsense
 
 
-Consensus tree program, version 3.69
+Consensus tree program, version 3.69.650
 
 Species in order:
 
@@ -339,10 +339,10 @@ Known bugs
 
 See also
 
-                    Program name                Description
+                    Program name                  Description
                     econsense     Majority-rule and strict consensus tree
-                    ftreedist     Distances between trees
-   ftreedistpair    Distances between two sets of trees
+                    ftreedist     Calculate distances between trees
+   ftreedistpair    Calculate distance between two sets of trees
 
 Author(s)
 
@@ -362,3 +362,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Interactive Dollo or Polymorphism Parsimony
+   Interactive Dollo or polymorphism parsimony
 
 Description
 
@@ -54,14 +54,14 @@ Usage
 
 
 % fdolmove
-Interactive Dollo or Polymorphism Parsimony
+Interactive Dollo or polymorphism parsimony
 Phylip character discrete states file: dolmove.dat
 Phylip tree file (optional):
 NEXT? (R # + - S . T U W O F H J K L C ? X Q) (? for Help): Q
 Do you want to write out the tree to a file? (Y or N): Y
 
 
-Interactive Dollo or polymorphism parsimony, version 3.69
+Interactive Dollo or polymorphism parsimony, version 3.69.650
 
  5 species,   6 characters
 
@@ -91,8 +91,8 @@ Tree written to file "dolmove.treefile"
 
 Command line arguments
 
-Interactive Dollo or Polymorphism Parsimony
-Version: EMBOSS:6.4.0.0
+Interactive Dollo or polymorphism parsimony
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            discretestates File containing data set
@@ -104,7 +104,7 @@ Version: EMBOSS:6.4.0.0
    -factorfile         properties Factors file
    -method             menu       [d] Parsimony method (Values: d (Dollo); p
                                   (Polymorphism))
-   -thresh             toggle     [N] Use threshold parsimony
+   -dothreshold        toggle     [N] Use threshold parsimony
 *  -threshold          float      [1] Threshold value (Number 0.000 or more)
    -initialtree        menu       [Arbitary] Initial tree (Values: a
                                   (Arbitary); u (User); s (Specify))
@@ -287,24 +287,24 @@ Known bugs
 
 See also
 
-                    Program name                         Description
+                    Program name                          Description
                     distmat      Create a distance matrix from a multiple sequence alignment
                     ednacomp     DNA compatibility algorithm
-                    ednadist     Nucleic acid sequence Distance Matrix program
-                    ednainvar    Nucleic acid sequence Invariants method
-                    ednaml       Phylogenies from nucleic acid Maximum Likelihood
-                    ednamlk      Phylogenies from nucleic acid Maximum Likelihood with clock
+                    ednadist     Nucleic acid sequence distance matrix program
+                    ednainvar    Nucleic acid sequence invariants method
+                    ednaml       Phylogenies from nucleic acid maximum likelihood
+                    ednamlk      Phylogenies from nucleic acid maximum likelihood with clock
                     ednapars     DNA parsimony algorithm
                     ednapenny    Penny algorithm for DNA
                     eprotdist    Protein distance algorithm
                     eprotpars    Protein parsimony algorithm
-                    erestml      Restriction site Maximum Likelihood method
+                    erestml      Restriction site maximum likelihood method
                     eseqboot     Bootstrapped sequences algorithm
                     fdiscboot    Bootstrapped discrete sites algorithm
                     fdnacomp     DNA compatibility algorithm
-                    fdnadist     Nucleic acid sequence Distance Matrix program
-                    fdnainvar    Nucleic acid sequence Invariants method
-                    fdnaml       Estimates nucleotide phylogeny by maximum likelihood
+                    fdnadist     Nucleic acid sequence distance matrix program
+                    fdnainvar    Nucleic acid sequence invariants method
+                    fdnaml       Estimate nucleotide phylogeny by maximum likelihood
                     fdnamlk      Estimates nucleotide phylogeny by maximum likelihood
                     fdnamove     Interactive DNA parsimony
                     fdnapars     DNA parsimony algorithm
@@ -315,8 +315,8 @@ See also
                     fprotdist    Protein distance algorithm
                     fprotpars    Protein parsimony algorithm
                     frestboot    Bootstrapped restriction sites algorithm
-                    frestdist    Distance matrix from restriction sites or fragments
-                    frestml      Restriction site maximum Likelihood method
+                    frestdist    Calculate distance matrix from restriction sites or fragments
+                    frestml      Restriction site maximum likelihood method
                     fseqboot     Bootstrapped sequences algorithm
                     fseqbootall  Bootstrapped sequences algorithm
 
@@ -338,3 +338,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

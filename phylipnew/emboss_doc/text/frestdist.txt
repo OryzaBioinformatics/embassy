@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Distance matrix from restriction sites or fragments
+   Calculate distance matrix from restriction sites or fragments
 
 Description
 
@@ -167,12 +167,12 @@ Usage
 
 
 % frestdist
-Distance matrix from restriction sites or fragments
+Calculate distance matrix from restriction sites or fragments
 Input file: restdist.dat
 Phylip restdist program output file [restdist.frestdist]:
 
 
-Restriction site or fragment distances, version 3.69
+Restriction site or fragment distances, version 3.69.650
 
 Distances calculated for species
     Alpha        ....
@@ -192,8 +192,8 @@ Done.
 
 Command line arguments
 
-Distance matrix from restriction sites or fragments
-Version: EMBOSS:6.4.0.0
+Calculate distance matrix from restriction sites or fragments
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-data]              discretestates File containing one or more sets of
@@ -206,7 +206,7 @@ Version: EMBOSS:6.4.0.0
                                   restriction fragments)
    -neili              boolean    [N] Use original Nei/Li model (default uses
                                   modified Nei/Li model)
-*  -gamma              boolean    [N] Gama distributed rates among sites
+*  -gammatype          boolean    [N] Gamma distributed rates among sites
 *  -gammacoefficient   float      [1] Coefficient of variation of substitution
                                   rate among sites (Number 0.001 or more)
    -ttratio            float      [2.0] Transition/transversion ratio (Number
@@ -355,33 +355,33 @@ See also
                     Program name                         Description
                     distmat      Create a distance matrix from a multiple sequence alignment
                     ednacomp     DNA compatibility algorithm
-                    ednadist     Nucleic acid sequence Distance Matrix program
-                    ednainvar    Nucleic acid sequence Invariants method
-                    ednaml       Phylogenies from nucleic acid Maximum Likelihood
-                    ednamlk      Phylogenies from nucleic acid Maximum Likelihood with clock
+                    ednadist     Nucleic acid sequence distance matrix program
+                    ednainvar    Nucleic acid sequence invariants method
+                    ednaml       Phylogenies from nucleic acid maximum likelihood
+                    ednamlk      Phylogenies from nucleic acid maximum likelihood with clock
                     ednapars     DNA parsimony algorithm
                     ednapenny    Penny algorithm for DNA
                     eprotdist    Protein distance algorithm
                     eprotpars    Protein parsimony algorithm
-                    erestml      Restriction site Maximum Likelihood method
+                    erestml      Restriction site maximum likelihood method
                     eseqboot     Bootstrapped sequences algorithm
                     fdiscboot    Bootstrapped discrete sites algorithm
                     fdnacomp     DNA compatibility algorithm
-                    fdnadist     Nucleic acid sequence Distance Matrix program
-                    fdnainvar    Nucleic acid sequence Invariants method
-                    fdnaml       Estimates nucleotide phylogeny by maximum likelihood
+                    fdnadist     Nucleic acid sequence distance matrix program
+                    fdnainvar    Nucleic acid sequence invariants method
+                    fdnaml       Estimate nucleotide phylogeny by maximum likelihood
                     fdnamlk      Estimates nucleotide phylogeny by maximum likelihood
                     fdnamove     Interactive DNA parsimony
                     fdnapars     DNA parsimony algorithm
                     fdnapenny    Penny algorithm for DNA
-                    fdolmove     Interactive Dollo or Polymorphism Parsimony
+                    fdolmove     Interactive Dollo or polymorphism parsimony
                     ffreqboot    Bootstrapped genetic frequencies algorithm
                     fproml       Protein phylogeny by maximum likelihood
                     fpromlk      Protein phylogeny by maximum likelihood
                     fprotdist    Protein distance algorithm
                     fprotpars    Protein parsimony algorithm
                     frestboot    Bootstrapped restriction sites algorithm
-                    frestml      Restriction site maximum Likelihood method
+                    frestml      Restriction site maximum likelihood method
                     fseqboot     Bootstrapped sequences algorithm
                     fseqbootall  Bootstrapped sequences algorithm
 
@@ -403,3 +403,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None

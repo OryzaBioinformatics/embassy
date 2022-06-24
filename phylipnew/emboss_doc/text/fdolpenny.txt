@@ -301,7 +301,7 @@ Trees also written onto file "dolpenny.treefile"
 Command line arguments
 
 Penny algorithm Dollo or polymorphism
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-infile]            discretestates File containing one or more data sets
@@ -311,7 +311,7 @@ Version: EMBOSS:6.4.0.0
    Additional (Optional) qualifiers (* if not always prompted):
    -weights            properties Weights file
    -ancfile            properties Ancestral states file
-   -thresh             toggle     [N] Use threshold parsimony
+   -dothreshold        toggle     [N] Use threshold parsimony
 *  -threshold          float      [1] Threshold value (Number 0.000 or more)
    -howmany            integer    [1000] How many groups of trees (Any integer
                                   value)
@@ -492,7 +492,7 @@ Output file format
   File: dolpenny.fdolpenny
 
 
-Penny algorithm for Dollo or polymorphism parsimony, version 3.69
+Penny algorithm for Dollo or polymorphism parsimony, version 3.69.650
  branch-and-bound to find all most parsimonious trees
 
 
@@ -624,3 +624,7 @@ Target users
 
                     This program is intended to be used by everyone and everything, from
                     naive users to embedded scripts.
+
+Comments
+
+None
