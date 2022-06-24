@@ -3,6 +3,13 @@
 
 
 
+Wiki
+
+   The master copies of EMBOSS documentation are available at
+   http://emboss.open-bio.org/wiki/Appdocs on the EMBOSS Wiki.
+
+   Please help by correcting and extending the Wiki pages.
+
 Function
 
    Plots a cladogram- or phenogram-like rooted tree diagram
@@ -55,7 +62,7 @@ Plots a cladogram- or phenogram-like rooted tree diagram
 Phylip tree file: drawgram.tree
 Phylip drawgram output file [drawgram.fdrawgram]: 
 
-DRAWGRAM from PHYLIP version 3.67
+DRAWGRAM from PHYLIP version 3.68
 Reading tree ...
 Tree has been read.
 Loading the font ....
@@ -141,10 +148,10 @@ Command line arguments
                                   or more)
 *  -ymargin            float      [2.16] Vertical margin (cm) (Number 0.100 or
                                   more)
-*  -xmarginray         float      [1.65] Horizontal margin (pixels) (Number
-                                  0.100 or more)
-*  -ymarginray         float      [2.16] Vertical margin (pixels) (Number
-                                  0.100 or more)
+*  -xrayshade          float      [1.65] Horizontal margin (pixels) for
+                                  Rayshade output (Number 0.100 or more)
+*  -yrayshade          float      [2.16] Vertical margin (pixels) for Rayshade
+                                  output (Number 0.100 or more)
    -paperx             float      [20.63750] Paper width (Any numeric value)
    -papery             float      [26.98750] Paper height (Number 0.100 or
                                   more)
@@ -158,7 +165,7 @@ Command line arguments
                                   0.001 or more)
 
    Advanced (Unprompted) qualifiers:
-   -fontfile           string     [font2] Fontfile name (Any string is
+   -fontfile           string     [font1] Fontfile name (Any string is
                                   accepted)
 
    Associated qualifiers:
@@ -198,84 +205,9 @@ Output file format
 
   Output files for usage example
 
-  File: drawgram.fdrawgram
+  Graphics File: drawgram.fdrawgram
 
-%!PS-Adobe-2.0
-%%Title: Phylip Tree Output
-%%DocumentFonts: (atend)
-%%Pages: 1 1
-%%BoundingBox: 0 0 612 792
-%%DocumentPaperSizes: Letter
-%%Orientation: Portrait
-%%EndComments
-/l {newpath moveto lineto stroke} def
-%%EndProlog
-%%
-%%Page: 1 1
-%%PageBoundingBox: 0 0 585 765
-%%PageFonts: (atend)
-%%BeginPageSetup
-%%PaperSize: Letter
- 1 setlinecap
- 1 setlinejoin
-    7.44 setlinewidth newpath
-   46.80   382.50    60.54   382.50 l
-   60.54   382.50    60.54   630.57 l
-   60.54   630.57   321.67   630.57 l
-   60.54   382.50    60.54   320.48 l
-   60.54   320.48   125.83   320.48 l
-  125.83   320.48   125.83   506.53 l
-  125.83   506.53   321.67   506.53 l
-  125.83   320.48   125.83   258.47 l
-  125.83   258.47   191.11   258.47 l
-  191.11   258.47   191.11   382.50 l
-  191.11   382.50   321.67   382.50 l
-  191.11   258.47   191.11   196.45 l
-  191.11   196.45   256.39   196.45 l
-  256.39   196.45   256.39   258.47 l
-  256.39   258.47   321.67   258.47 l
-  256.39   196.45   256.39   134.43 l
-  256.39   134.43   321.67   134.43 l
- stroke    2.48 setlinewidth
-1 setlinecap 1 setlinejoin
-gsave
-/Times-Roman findfont 62.454658 scalefont setfont
-340.468551 609.897411 translate -0.000000 rotate
-0 0 moveto
-(Delta) show
-grestore
-gsave
-/Times-Roman findfont 62.454658 scalefont setfont
-343.934785 485.862460 translate -0.000000 rotate
-0 0 moveto
-(Epsilon) show
-grestore
-gsave
-/Times-Roman findfont 62.454658 scalefont setfont
-340.468551 361.827508 translate -0.000000 rotate
-0 0 moveto
-(Gamma) show
-grestore
-gsave
-/Times-Roman findfont 62.454658 scalefont setfont
-342.186054 237.792556 translate -0.000000 rotate
-0 0 moveto
-(Beta) show
-grestore
-gsave
-/Times-Roman findfont 62.454658 scalefont setfont
-340.468551 113.757605 translate -0.000000 rotate
-0 0 moveto
-(Alpha) show
-grestore
-stroke     7.44 setlinewidth
- 1 setlinecap 1 setlinejoin
-stroke showpage
-
-%%PageTrailer
-%%PageFonts: Times-Roman
-%%Trailer
-%%DocumentFonts: Times-Roman
+   [fdrawgram results]
 
 Data files
 
@@ -311,30 +243,30 @@ Known bugs
 
 See also
 
-   Program name          Description
-   fdrawtree    Plots an unrooted tree diagram
-   fretree      Interactive tree rearrangement
+                    Program name          Description
+                    fdrawtree    Plots an unrooted tree diagram
+                    fretree      Interactive tree rearrangement
 
 Author(s)
 
-   This program is an EMBOSS conversion of a program written by Joe
-   Felsenstein as part of his PHYLIP package.
+                    This program is an EMBOSS conversion of a program written by Joe
+                    Felsenstein as part of his PHYLIP package.
 
-   Although we take every care to ensure that the results of the EMBOSS
-   version are identical to those from the original package, we recommend
-   that you check your inputs give the same results in both versions
-   before publication.
+                    Although we take every care to ensure that the results of the EMBOSS
+                    version are identical to those from the original package, we recommend
+                    that you check your inputs give the same results in both versions
+                    before publication.
 
-   Please report all bugs in the EMBOSS version to the EMBOSS bug team,
-   not to the original author.
+                    Please report all bugs in the EMBOSS version to the EMBOSS bug team,
+                    not to the original author.
 
 History
 
-   Written (2004) - Joe Felsenstein, University of Washington.
+                    Written (2004) - Joe Felsenstein, University of Washington.
 
-   Converted (August 2004) to an EMBASSY program by the EMBOSS team.
+                    Converted (August 2004) to an EMBASSY program by the EMBOSS team.
 
 Target users
 
-   This program is intended to be used by everyone and everything, from
-   naive users to embedded scripts.
+                    This program is intended to be used by everyone and everything, from
+                    naive users to embedded scripts.
