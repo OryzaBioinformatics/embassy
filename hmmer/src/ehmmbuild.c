@@ -12,7 +12,7 @@
  * SRE, Mon Nov 18 12:41:29 1996
  *
  * main() for HMM construction from an alignment.
- * RCS $Id: ehmmbuild.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: ehmmbuild.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  * Modified for EMBOSS by Alan Bleasby (ISMB 2001)
  */
 

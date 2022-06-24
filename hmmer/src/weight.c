@@ -12,7 +12,7 @@
  * SRE, Thu Mar  3 07:56:01 1994
  * 
  * Calculate weights for sequences in an alignment.
- * RCS $Id: weight.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: weight.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  */
 
 #include <ctype.h>

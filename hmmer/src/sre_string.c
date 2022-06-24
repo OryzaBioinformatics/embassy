@@ -13,7 +13,7 @@
  * my library of extra string functions. Some for portability
  * across UNIXes
  *
- * RCS $Id: sre_string.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: sre_string.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  */
 
 #include <stdio.h>

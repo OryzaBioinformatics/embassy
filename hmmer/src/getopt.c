@@ -8,7 +8,7 @@
  *     for details.
  *****************************************************************/
 
-/* RCS $Id: getopt.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+/* RCS $Id: getopt.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  */
 
 #include <stdio.h>

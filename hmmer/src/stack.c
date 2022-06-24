@@ -12,7 +12,7 @@
  * SRE, Thu Mar  3 10:08:48 1994
  * 
  * Implementation of generic stack structures.
- * RCS $Id: stack.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: stack.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  */
 
 #include <stdlib.h>

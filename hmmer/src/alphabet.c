@@ -10,7 +10,7 @@
 
 /* alphabet.c
  * Configuration of the global symbol alphabet information.
- * RCS $Id: alphabet.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: alphabet.c,v 1.1 2001/07/29 14:13:48 ajb Exp $
  */
 
 #include <stdlib.h>

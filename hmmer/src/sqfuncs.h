@@ -21,7 +21,7 @@
  * Some functions are both obsolete and wrong but still necessary
  * to get legacy code to compile.
  *
- * RCS $Id: sqfuncs.h,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: sqfuncs.h,v 1.1 2001/07/29 14:13:49 ajb Exp $
  */
 
 /* 

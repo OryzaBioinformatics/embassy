@@ -12,7 +12,7 @@
  * SRE, Thu Dec 18 16:05:29 1997 [St. Louis]
  * 
  * main() for aligning a set of sequences to an HMM.
- * RCS $Id: ehmmalign.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: ehmmalign.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  * Modified for EMBOSS by Alan Bleasby (ISMB 2001)
  */ 
 

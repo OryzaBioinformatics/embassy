@@ -10,7 +10,7 @@
 
 /* alignio.c
  * SRE, Mon Jul 12 11:57:37 1993
- * RCS $Id: alignio.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: alignio.c,v 1.1 2001/07/29 14:13:48 ajb Exp $
  * 
  * Input/output of sequence alignments.
  */

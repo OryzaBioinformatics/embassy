@@ -9,7 +9,7 @@
  *****************************************************************/
 
 /* aligneval.c
- * RCS $Id: aligneval.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: aligneval.c,v 1.1 2001/07/29 14:13:48 ajb Exp $
  * 
  * Comparison of multiple alignments. Three functions are
  * provided, using subtly different scoring schemes:

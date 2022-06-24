@@ -11,7 +11,7 @@
 /* cluster.c
  * SRE, Sun Jul 18 09:49:47 1993
  * moved to squid Thu Mar  3 08:42:57 1994
- * RCS $Id: cluster.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: cluster.c,v 1.1 2001/07/29 14:13:48 ajb Exp $
  *
  * almost identical to bord.c, from fd
  * also now contains routines for constructing difference matrices

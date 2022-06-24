@@ -19,7 +19,7 @@
  * currently are UNIX-specific: i.e. this file is currently POSIX compliant
  * but it is NOT ANSI C compliant. (The sole offender is getenv().)
  *
- * RCS $Id: file.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: file.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  */
 
 #include <stdio.h>

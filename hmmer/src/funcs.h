@@ -9,7 +9,7 @@
  ************************************************************/
 
 /* funcs.h 
- * RCS $Id: funcs.h,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: funcs.h,v 1.1 2001/07/29 14:13:49 ajb Exp $
  *
  * Declarations of external functions in HMMER.
  */            

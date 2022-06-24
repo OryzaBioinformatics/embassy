@@ -18,7 +18,7 @@
  * Thanks, Henry!
  *  
  * SRE, Fri Aug 28 11:10:17 1998
- * RCS $Id: hsregex.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: hsregex.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  *****************************************************************/    
 
 /* Copyright (c) 1986, 1993, 1995 by University of Toronto.

@@ -10,7 +10,7 @@
 
 /* emit.c
  * SRE, Sun Mar  8 12:26:58 1998
- * RCS $Id: emit.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: emit.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  * 
  * Generation of sequences/traces from an HMM.
  */

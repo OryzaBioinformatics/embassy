@@ -12,7 +12,7 @@
  * translate.c - functions for translating nucleic acid sequence
  * created Tue Jan 12 11:27:29 1993, SRE
  * 
- * RCS $Id: translate.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: translate.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  */
 
 #include <stdio.h>

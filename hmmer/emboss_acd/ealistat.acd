@@ -1,18 +1,28 @@
-appl: ealistat [
-        doc: "Statistics for multiple alignment files"
-        groups: "HMM"
+application: ealistat [
+  documentation: "Statistics for multiple alignment files"
+  groups: "HMM"
+  gui: "yes"
+  batch: "yes"
+  cpu: "medium"
 ]
 
-
-infile: infile [
-	param: Y
+infile: infile  [
+  parameter: "Y"
+  knowntype: "alistat input"
+  information: "alignment file"
 ]
 
-bool: additional [ req: N def: N info: "Show additional information"
+boolean: additional  [
+  default: "N"
+  information: "Show additional information"
 ]
 
-bool: fast [ req: N def: N info: "Use sampling method"
+boolean: fast  [
+  default: "N"
+  information: "Use sampling method"
 ]
 
-outfile: outfile [ param: Y
+outfile: outfile  [
+  parameter: "Y"
+  knowntype: "alistat output"
 ]

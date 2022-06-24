@@ -23,7 +23,7 @@
  *
  * Matches up with my Perl scripts that create GSI files.
  * 
- * RCS $Id: gsi.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: gsi.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  */
 
 #include <stdio.h>

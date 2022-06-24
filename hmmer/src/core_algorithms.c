@@ -10,7 +10,7 @@
 
 /* core_algorithms.c
  * SRE, Mon Nov 11 15:58:52 1996
- * RCS $Id: core_algorithms.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: core_algorithms.c,v 1.1 2001/07/29 14:13:48 ajb Exp $
  * 
  * Simple and robust "research" implementations of Forward, Backward,
  * and Viterbi for Plan7.

@@ -10,7 +10,7 @@
 
 /* version.h
  * Version and copyright stamp information for the package.
- * RCS $Header: /packages/emboss/MASTER/emboss/emboss/embassy/hmmer/src/version.h,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Header: /home/repository/emboss/emboss/emboss/embassy/hmmer/src/version.h,v 1.1 2001/07/29 14:13:49 ajb Exp $
  */
 #ifndef hmmer_version_h
 #define hmmer_version_h

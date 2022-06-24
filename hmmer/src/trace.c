@@ -10,7 +10,7 @@
 
 /* trace.c
  * SRE, Sat Nov 16 12:34:57 1996
- * RCS $Id: trace.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: trace.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  * 
  * Support for Plan 7 traceback data structure, p7trace_s.
  */

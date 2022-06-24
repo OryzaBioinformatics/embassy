@@ -13,7 +13,7 @@
  * Globally defines the IUPAC symbols for nucleic acid sequence
  * Slowly evolving into a repository of globals. Tue Apr 20 1993
  *
- * RCS $Id: iupac.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: iupac.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  */
 #include "squid.h"
 

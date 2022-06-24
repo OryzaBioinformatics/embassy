@@ -17,7 +17,7 @@
  *    
  *    
  * SRE - Fri Apr  2 11:23:45 1993   
- * RCS $Id: dayhoff.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: dayhoff.c,v 1.1 2001/07/29 14:13:48 ajb Exp $
  */
 
 

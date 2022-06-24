@@ -24,7 +24,7 @@
  *      Packaged for squid, Thu Oct  1 10:07:11 1992
  *      ANSI conversion in full swing, Mon Jul 12 12:22:21 1993
  *
- * RCS $Id: sqio.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: sqio.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  */
 
 #include "ajax.h"

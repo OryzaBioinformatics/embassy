@@ -16,7 +16,7 @@
  * threads. Most of the threads code, however, is in the respective
  * main's, i.e. hmmsearch.c, hmmpfam.c, hmmcalibrate.c
  * 
- * RCS $Id: threads.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: threads.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  */
 
 #ifdef HMMER_THREADS		/* conditional inclusion of the entire file */

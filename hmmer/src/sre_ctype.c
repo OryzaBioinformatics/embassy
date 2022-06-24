@@ -13,7 +13,7 @@
  * For portability. Some systems have functions tolower, toupper
  * as macros (for instance, MIPS M-2000 RISC/os!)
  * 
- * RCS $Id: sre_ctype.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $
+ * RCS $Id: sre_ctype.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
  */
 
 #include <ctype.h>
