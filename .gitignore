@@ -42,6 +42,9 @@
 **/*.idb
 **/*.pdb
 
+# Dependencies
+**/.deps
+
 # Kernel Module Compile Results
 **/*.mod*
 **/*.cmd
@@ -50,6 +53,14 @@
 **/Module.symvers
 **/Mkfile.old
 **/dkms.conf
+
+
+# CVS files
+**/.cvsignore
+**/CVS
+**/CVS/Entries
+**/CVS/Repository
+**/CVS/Root
 
 # automake files
 **/autom4te.cache
@@ -73,5 +84,4 @@
 **/Makefile.in
 **/Makefile
 **/*~
-
-
+**/.#*
