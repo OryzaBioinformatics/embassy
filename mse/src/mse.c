@@ -22,9 +22,16 @@
 #include <string.h>
 
 /* for curses etc. */
+#ifndef __CYGWIN__
 #include <curses.h>
 #include <menu.h>
 #include <form.h>
+#else
+#define NCURSES_INTERNALS
+#include <ncurses/curses.h>
+#include <ncurses/menu.h>
+#include <ncurses/form.h>
+#endif
 
 #include "mse.h"         /* MSE global variables and definitions  */
 

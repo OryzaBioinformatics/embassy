@@ -13,7 +13,12 @@
 #include "macros.h"
 #include "ckittypes.h"
 #include "ckit.h"
+
+#ifndef __CYGWIN__
 #include <curses.h>
+#else
+#include <ncurses/curses.h>
+#endif
 
 /*---------------------------------------*/
 /* Match "Curses" attributes

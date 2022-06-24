@@ -21,8 +21,8 @@ section: input [
 
 endsection: input
 
-section: additional [
-  information: "Additional section"
+section: advanced [
+  information: "Advanced section"
   type: "page"
 ]
 
@@ -38,13 +38,6 @@ section: additional [
     relations: "EDAM: Generic boolean"                                     
   ]
   
-endsection: additional
-
-section: advanced [
-  information: "Advanced section"
-  type: "page"
-]
-
 endsection: advanced
 
 section: output [
