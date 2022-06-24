@@ -24,7 +24,7 @@ Usage
 
 % topo tsw:aqp1_human -signa -prol=UM -cys=cg -gly=sr -acid=dr -basic=db -ohaa=d
 a -araa=dg -graph ps
-Draws an image of a transmembrane protein
+Draw an image of a transmembrane protein
 Transmembrane Sections: 18 35 49 67 94 115 136 156 165 184 211 232
 First membrane from the outside [Y]: n
 Signature Sections: 74 82 sy 189 189 hm 239 239 sa 157 157 sa 262 262 sa
@@ -37,8 +37,8 @@ Created topo.ps
 
 Command line arguments
 
-Draws an image of a transmembrane protein
-Version: EMBOSS:6.4.0.0
+Draw an image of a transmembrane protein
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-sequence]          sequence   Protein sequence filename and optional
@@ -246,7 +246,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -296,13 +299,13 @@ ID   AQP1_HUMAN              Reviewed;         269 AA.
 AC   P29972; B5BU39; Q8TBI5; Q8TDC1;
 DT   01-APR-1993, integrated into UniProtKB/Swiss-Prot.
 DT   23-JAN-2007, sequence version 3.
-DT   15-JUN-2010, entry version 123.
+DT   16-MAY-2012, entry version 142.
 DE   RecName: Full=Aquaporin-1;
 DE            Short=AQP-1;
 DE   AltName: Full=Aquaporin-CHIP;
+DE   AltName: Full=Urine water channel;
 DE   AltName: Full=Water channel protein for red blood cells and kidney proximal
  tubule;
-DE   AltName: Full=Urine water channel;
 GN   Name=AQP1; Synonyms=CHIP28;
 OS   Homo sapiens (Human).
 OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
@@ -441,13 +444,13 @@ See also
 
                    Program name                            Description
                    abiview      Display the trace in an ABI sequencer file
-                   cirdna       Draws circular maps of DNA constructs
-                   echlorop     Reports presence of chloroplast transit peptides
-                   elipop       Prediction of lipoproteins
-                   esignalp     Reports protein signal cleavage sites
+                   cirdna       Draw circular map of DNA constructs
+                   echlorop     Report presence of chloroplast transit peptides
+                   elipop       Predict lipoproteins
+                   esignalp     Report protein signal cleavage sites
                    etmhmm       Reports transmembrane helices
                    iep          Calculate the isoelectric point of proteins
-                   lindna       Draws linear maps of DNA constructs
+                   lindna       Draw linear maps of DNA constructs
                    pepinfo      Plot amino acid properties of a protein sequence in parallel
                    pepnet       Draw a helical net for a protein sequence
                    pepwheel     Draw a helical wheel diagram for a protein sequence
@@ -456,10 +459,10 @@ See also
                    prettyseq    Write a nucleotide sequence and its translation to file
                    remap        Display restriction enzyme binding sites in a nucleotide sequence
                    showfeat     Display features of a sequence in pretty format
-                   showpep      Displays protein sequences with features in pretty format
-                   sigcleave    Reports on signal cleavage sites in a protein sequence
-                   siggenlig    Generates ligand-binding signatures from a CON file
-                   sigscan      Generates hits (DHF file) from a signature search
+                   showpep      Display protein sequences with features in pretty format
+                   sigcleave    Report on signal cleavage sites in a protein sequence
+                   siggenlig    Generate ligand-binding signatures from a CON file
+                   sigscan      Generate hits (DHF file) from a signature search
                    sixpack      Display a DNA sequence with 6-frame translation and ORFs
                    tmap         Predict and plot transmembrane segments in protein sequences
 

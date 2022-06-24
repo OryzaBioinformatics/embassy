@@ -40,7 +40,7 @@ Please help by correcting and extending the Wiki pages.
 <H2>
     Function
 </H2
-Draws an image of a transmembrane protein
+Draw an image of a transmembrane protein
 <!--
 DON'T WRITE ANYTHING HERE.
 IT IS DONE FOR YOU.
@@ -66,7 +66,7 @@ Here is a sample session with <b>topo</b>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
 % <b>topo tsw:aqp1_human -signa -prol=UM -cys=cg -gly=sr -acid=dr -basic=db -ohaa=da -araa=dg -graph ps </b>
-Draws an image of a transmembrane protein
+Draw an image of a transmembrane protein
 Transmembrane Sections: <b>18 35 49 67 94 115 136 156 165 184 211 232</b>
 First membrane from the outside [Y]: <b>n</b>
 Signature Sections: <b>74 82 sy 189 189 hm 239 239 sa 157 157 sa 262 262 sa</b>
@@ -84,8 +84,8 @@ Created topo.ps
 
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
-Draws an image of a transmembrane protein
-Version: EMBOSS:6.4.0.0
+Draw an image of a transmembrane protein
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-sequence]          sequence   Protein sequence filename and optional
@@ -293,7 +293,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -487,7 +490,7 @@ CF circle NOfill, UG up arrow green</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-sequence" associated sequence qualifiers
+<td align="left" colspan=5>"-sequence" associated sequence qualifiers
 </td>
 </tr>
 
@@ -556,11 +559,35 @@ CF circle NOfill, UG up arrow green</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
+<td> -scircular1<br>-scircular_sequence</td>
+<td>boolean</td>
+<td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td> -sformat1<br>-sformat_sequence</td>
 <td>string</td>
 <td>Input sequence format</td>
 <td>Any string</td>
 <td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -iquery1<br>-iquery_sequence</td>
+<td>string</td>
+<td>Input query fields or ID list</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -ioffset1<br>-ioffset_sequence</td>
+<td>integer</td>
+<td>Input start position offset</td>
+<td>Any integer value</td>
+<td>0</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -604,7 +631,7 @@ CF circle NOfill, UG up arrow green</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-graph" associated graph qualifiers
+<td align="left" colspan=5>"-graph" associated graph qualifiers
 </td>
 </tr>
 
@@ -797,12 +824,12 @@ ID   AQP1_HUMAN              Reviewed;         269 AA.
 AC   P29972; B5BU39; Q8TBI5; Q8TDC1;
 DT   01-APR-1993, integrated into UniProtKB/Swiss-Prot.
 DT   23-JAN-2007, sequence version 3.
-DT   15-JUN-2010, entry version 123.
+DT   16-MAY-2012, entry version 142.
 DE   RecName: Full=Aquaporin-1;
 DE            Short=AQP-1;
 DE   AltName: Full=Aquaporin-CHIP;
-DE   AltName: Full=Water channel protein for red blood cells and kidney proximal tubule;
 DE   AltName: Full=Urine water channel;
+DE   AltName: Full=Water channel protein for red blood cells and kidney proximal tubule;
 GN   Name=AQP1; Synonyms=CHIP28;
 OS   Homo sapiens (Human).
 OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
@@ -960,22 +987,22 @@ So residues 74 to 82 will have Yellow Squares (sy).
 
 <tr>
 <td><a href="/emboss/apps/cirdna.html">cirdna</a></td>
-<td>Draws circular maps of DNA constructs</td>
+<td>Draw circular map of DNA constructs</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/cbstools/echlorop.html">echlorop</a></td>
-<td>Reports presence of chloroplast transit peptides</td>
+<td>Report presence of chloroplast transit peptides</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/cbstools/elipop.html">elipop</a></td>
-<td>Prediction of lipoproteins</td>
+<td>Predict lipoproteins</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/cbstools/esignalp.html">esignalp</a></td>
-<td>Reports protein signal cleavage sites</td>
+<td>Report protein signal cleavage sites</td>
 </tr>
 
 <tr>
@@ -990,7 +1017,7 @@ So residues 74 to 82 will have Yellow Squares (sy).
 
 <tr>
 <td><a href="/emboss/apps/lindna.html">lindna</a></td>
-<td>Draws linear maps of DNA constructs</td>
+<td>Draw linear maps of DNA constructs</td>
 </tr>
 
 <tr>
@@ -1035,22 +1062,22 @@ So residues 74 to 82 will have Yellow Squares (sy).
 
 <tr>
 <td><a href="/emboss/apps/showpep.html">showpep</a></td>
-<td>Displays protein sequences with features in pretty format</td>
+<td>Display protein sequences with features in pretty format</td>
 </tr>
 
 <tr>
 <td><a href="/emboss/apps/sigcleave.html">sigcleave</a></td>
-<td>Reports on signal cleavage sites in a protein sequence</td>
+<td>Report on signal cleavage sites in a protein sequence</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/signature/siggenlig.html">siggenlig</a></td>
-<td>Generates ligand-binding signatures from a CON file</td>
+<td>Generate ligand-binding signatures from a CON file</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/signature/sigscan.html">sigscan</a></td>
-<td>Generates hits (DHF file) from a signature search</td>
+<td>Generate hits (DHF file) from a signature search</td>
 </tr>
 
 <tr>

@@ -1,0 +1,25 @@
+#######################################
+# TOPO
+#######################################
+
+ID topo-ex
+AB topo
+AA topo
+CL tsw:aqp1_human -signa -prol=UM -cys=cg -gly=sr -acid=dr
+CL -basic=db -ohaa=da -araa=dg -graph ps
+IN 18 35 49 67 94 115 136 156 165 184 211 232
+IN n
+IN 74 82 sy 189 189 hm 239 239 sa 157 157 sa 262 262 sa
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 1
+FP /^Created topo\.ps\n/
+FI topo.ps
+FZ > 950000
+FP /^%%Title: PLplot Graph\n/
+//
+

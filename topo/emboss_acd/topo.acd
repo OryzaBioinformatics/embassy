@@ -1,11 +1,11 @@
 application: topo [
-  documentation: "Draws an image of a transmembrane protein"
+  documentation: "Draw an image of a transmembrane protein"
   groups: "Protein:Functional sites, Display"
   embassy: "topo"
-  relations: "EDAM:0000820 topic Membrane protein"
-  relations: "EDAM:0000748 topic Protein functional sites"
-  relations: "EDAM:0000092 topic Data rendering and visualisation"
-  relations: "EDAM:0002241 operation Transmembrane protein rendering"
+  relations: "EDAM_topic:0820 Membrane proteins"
+  relations: "EDAM_topic:0748 Protein sites and features"
+  relations: "EDAM_topic:0092 Data visualisation"
+  relations: "EDAM_operation:2241 Transmembrane protein rendering"
 ]
 
 section: input [
@@ -16,7 +16,7 @@ section: input [
   sequence: sequence [
     parameter: "Y"
     type: "protein"
-    relations: "EDAM:0002886 data Sequence record (protein)"
+    relations: "EDAM_data:2886 Sequence record (protein)"
   ]
 
 endsection: input
@@ -38,21 +38,21 @@ section: required [
            24-45, 56-78 \
            1:45, 67=99;765..888 \
            1,5,8,10,23,45,57,99"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: membrane [
     standard: "Y"
     information: "First membrane from the outside"
     default: "Y"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   toggle: signature [
     standard: "Y"
     default: "N"
     information: "Are there any signature areas to be marked"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   range: sigrange [
@@ -65,7 +65,7 @@ section: required [
     help: "Examples of ranges specifications are: \
            10-10 CF, 56-78 SY\ 1:45 SR, 67=99 HY;765..888 SF \
            1,5,HG,8,10,HY,23,45,SR,57,99,UG"
-    relations: "EDAM:0001017 data Sequence range"
+    relations: "EDAM_data:1017 Sequence range"
   ]
 
 endsection: required
@@ -100,7 +100,7 @@ section: additional [
     help: "Code representing shape and colour for cys \
            i.e. SR square red, HY hexagon yellow \
            CF circle NOfill, UG up arrow green"
-    relations: "EDAM:0002152 data Rendering parameter"
+    relations: "EDAM_data:2152 Rendering parameter"
   ]
 
   list: glysymbol [
@@ -129,7 +129,7 @@ section: additional [
                   outside of membrane"
     help: "Symbol to display N-glycosylation sites outside of membrane
            see cyssymbol for examples"
-    relations: "EDAM:0002152 data Rendering parameter"
+    relations: "EDAM_data:2152 Rendering parameter"
   ]
 
   list: acidicaa [
@@ -154,7 +154,7 @@ section: additional [
     delimiter: ","
     codedelimiter: ":"
     information: "Symbol to display acidic amino acids"
-    relations: "EDAM:0002152 data Rendering parameter"
+    relations: "EDAM_data:2152 Rendering parameter"
   ]
 
   list: basicaa [
@@ -179,7 +179,7 @@ section: additional [
     delimiter: ","
     codedelimiter: ":"
     information: "Symbol to display basic amino acids"
-    relations: "EDAM:0002152 data Rendering parameter"
+    relations: "EDAM_data:2152 Rendering parameter"
   ]
 
   list: amineaa [
@@ -204,7 +204,7 @@ section: additional [
     delimiter: ","
     codedelimiter: ":"
     information: "Symbol to display amine amino acids"
-    relations: "EDAM:0002152 data Rendering parameter"
+    relations: "EDAM_data:2152 Rendering parameter"
   ]
 
   list: ohaa [
@@ -229,7 +229,7 @@ section: additional [
     delimiter: ","
     codedelimiter: ":"
     information: "Symbol to display OH- amino acids"
-    relations: "EDAM:0002152 data Rendering parameter"
+    relations: "EDAM_data:2152 Rendering parameter"
   ]
 
   list: araa [
@@ -254,7 +254,7 @@ section: additional [
     delimiter: ","
     codedelimiter: ":"
     information: "Symbol to display aromatic amino acids"
-    relations: "EDAM:0002152 data Rendering parameter"
+    relations: "EDAM_data:2152 Rendering parameter"
   ]
 
   list: proline [
@@ -279,14 +279,14 @@ section: additional [
     delimiter: ","
     codedelimiter: ":"
     information: "Symbol to display prolines"
-    relations: "EDAM:0002152 data Rendering parameter"
+    relations: "EDAM_data:2152 Rendering parameter"
   ]
 
   boolean: draft [
     additional: "Y"
     default: "N"
     information: "Is this a draft plot"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -299,7 +299,7 @@ section: output [
   graph: graph [
     standard: "Y"
     gdesc: "Membrane topology"
-    relations: "EDAM:0002968 data Image or plot"
+    relations: "EDAM_data:2968 Image"
   ]
 
 endsection: output
