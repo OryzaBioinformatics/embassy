@@ -1,0 +1,830 @@
+<HTML>
+<HEAD>
+  <TITLE>
+  EMBASSY: VIENNA: vrnalfold
+  </TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" text="#000000">
+
+<table align=center border=0 cellspacing=0 cellpadding=0>
+<tr><td valign=top>
+<A HREF="/" ONMOUSEOVER="self.status='Go to the EMBOSS home page';return true"><img border=0 src="emboss_icon.jpg" alt="" width=150 height=48></a>
+</td>
+<td align=left valign=middle>
+<b><font size="+6">
+vrnalfold
+</font></b>
+</td></tr>
+</table>
+<br>&nbsp;
+<p>
+
+
+
+<H2>
+    Function
+</H2>
+Calculate locally stable secondary structures of RNAs
+<!--
+DON'T WRITE ANYTHING HERE.
+IT IS DONE FOR YOU.
+-->
+
+
+
+
+<H2>
+    Description
+</H2>
+
+
+This is a port of the Vienna RNA package program RNAlfold.
+
+<H2>
+    Algorithm
+</H2>
+
+See the original documentation for the Vienna RNA package
+http://www.tbi.univie.ac.at/~ivo/RNA/
+
+
+
+<H2>
+    Usage
+</H2>
+
+<!--  
+	Example usage, as run from the command-line.
+        Many examples illustrating different behaviours is good.
+ -->
+
+<b>Here is a sample session with vrnalfold</b>
+<p>
+
+<p>
+<table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
+
+% <b>vrnalfold </b>
+Calculate locally stable secondary structures of RNAs
+Input nucleotide sequence: <b>tembl:hsts1</b>
+Vienna RNALfold output file [hsts1.vrnalfold]: <b></b>
+
+</pre></td></tr></table><p>
+<p>
+<a href="#input.1">Go to the input files for this example</a><br><a href="#output.1">Go to the output files for this example</a><p><p>
+
+
+
+<H2>
+    Command line arguments
+</H2>
+
+<table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
+<pre>
+   Standard (Mandatory) qualifiers:
+  [-sequence]          sequence   Nucleotide sequence filename and optional
+                                  format, or reference (input USA)
+  [-outfile]           outfile    [*.vrnalfold] Vienna RNALfold output file
+
+   Additional (Optional) qualifiers: (none)
+   Advanced (Unprompted) qualifiers:
+   -constraintfile     infile     Vienna RNA structure contraints file
+                                  (optional)
+   -paramfile          infile     Vienna RNA parameters file (optional)
+   -separation         integer    [150] Maximum allowed separation (Any
+                                  integer value)
+   -temperature        float      [37.0] Temperature (Any numeric value)
+   -[no]gu             boolean    [Y] Allow GU pairs
+   -[no]closegu        boolean    [Y] Allow GU pairs at end of helices
+   -[no]lp             boolean    [Y] Allow lonely pairs
+   -[no]convert        boolean    [Y] Convert T to U
+   -nsbases            string     Non-standard bases (Any string is accepted)
+   -[no]tetraloop      boolean    [Y] Stabilizing energies for tetra-loops
+   -energy             menu       [0] Rarely used option to fold sequences
+                                  from the ABCD... alphabet (Values: 0 (BP); 1
+                                  (Any with GC); 2 (Any with AU parameters))
+   -scale              float      [1.07] Estimate of ensemble free energy (Any
+                                  numeric value)
+   -dangles            menu       [1] Method (Values: 0 (Ignore); 1 (Only
+                                  unpaired bases for just one dangling end); 2
+                                  (Always use dangling energies); 3 (Allow
+                                  coaxial stacking of adjacent helices))
+
+   Associated qualifiers:
+
+   "-sequence" associated qualifiers
+   -sbegin1            integer    Start of the sequence to be used
+   -send1              integer    End of the sequence to be used
+   -sreverse1          boolean    Reverse (if DNA)
+   -sask1              boolean    Ask for begin/end/reverse
+   -snucleotide1       boolean    Sequence is nucleotide
+   -sprotein1          boolean    Sequence is protein
+   -slower1            boolean    Make lower case
+   -supper1            boolean    Make upper case
+   -sformat1           string     Input sequence format
+   -sdbname1           string     Database name
+   -sid1               string     Entryname
+   -ufo1               string     UFO features
+   -fformat1           string     Features format
+   -fopenfile1         string     Features file name
+
+   "-outfile" associated qualifiers
+   -odirectory2        string     Output directory
+
+   General qualifiers:
+   -auto               boolean    Turn off prompts
+   -stdout             boolean    Write standard output
+   -filter             boolean    Read standard input, write standard output
+   -options            boolean    Prompt for standard and additional values
+   -debug              boolean    Write debug output to program.dbg
+   -verbose            boolean    Report some/full command line options
+   -help               boolean    Report command line options. More
+                                  information on associated and general
+                                  qualifiers can be found with -help -verbose
+   -warning            boolean    Report warnings
+   -error              boolean    Report errors
+   -fatal              boolean    Report fatal errors
+   -die                boolean    Report dying program messages
+
+</pre>
+</td></tr></table>
+<P>
+<table border cellspacing=0 cellpadding=3 bgcolor="#ccccff">
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=2>Standard (Mandatory) qualifiers</th>
+<th align="left">Allowed values</th>
+<th align="left">Default</th>
+</tr>
+
+<tr>
+<td>[-sequence]<br>(Parameter 1)</td>
+<td>Nucleotide sequence filename and optional format, or reference (input USA)</td>
+<td>Readable sequence</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>[-outfile]<br>(Parameter 2)</td>
+<td>Vienna RNALfold output file</td>
+<td>Output file</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=2>Additional (Optional) qualifiers</th>
+<th align="left">Allowed values</th>
+<th align="left">Default</th>
+</tr>
+
+<tr>
+<td colspan=4>(none)</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=2>Advanced (Unprompted) qualifiers</th>
+<th align="left">Allowed values</th>
+<th align="left">Default</th>
+</tr>
+
+<tr>
+<td>-constraintfile</td>
+<td>Vienna RNA structure contraints file (optional)</td>
+<td>Input file</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>-paramfile</td>
+<td>Vienna RNA parameters file (optional)</td>
+<td>Input file</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>-separation</td>
+<td>Maximum allowed separation</td>
+<td>Any integer value</td>
+<td>150</td>
+</tr>
+
+<tr>
+<td>-temperature</td>
+<td>Temperature</td>
+<td>Any numeric value</td>
+<td>37.0</td>
+</tr>
+
+<tr>
+<td>-[no]gu</td>
+<td>Allow GU pairs</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-[no]closegu</td>
+<td>Allow GU pairs at end of helices</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-[no]lp</td>
+<td>Allow lonely pairs</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-[no]convert</td>
+<td>Convert T to U</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-nsbases</td>
+<td>Non-standard bases</td>
+<td>Any string is accepted</td>
+<td><i>An empty string is accepted</i></td>
+</tr>
+
+<tr>
+<td>-[no]tetraloop</td>
+<td>Stabilizing energies for tetra-loops</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-energy</td>
+<td>Rarely used option to fold sequences from the ABCD... alphabet</td>
+<td><table><tr><td>0</td> <td><i>(BP)</i></td></tr><tr><td>1</td> <td><i>(Any with GC)</i></td></tr><tr><td>2</td> <td><i>(Any with AU parameters)</i></td></tr></table></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>-scale</td>
+<td>Estimate of ensemble free energy</td>
+<td>Any numeric value</td>
+<td>1.07</td>
+</tr>
+
+<tr>
+<td>-dangles</td>
+<td>Method</td>
+<td><table><tr><td>0</td> <td><i>(Ignore)</i></td></tr><tr><td>1</td> <td><i>(Only unpaired bases for just one dangling end)</i></td></tr><tr><td>2</td> <td><i>(Always use dangling energies)</i></td></tr><tr><td>3</td> <td><i>(Allow coaxial stacking of adjacent helices)</i></td></tr></table></td>
+<td>1</td>
+</tr>
+
+</table>
+
+<!--
+DON'T WRITE ANYTHING HERE.
+IT IS DONE FOR YOU.
+-->
+
+
+
+
+
+
+
+
+<H2>
+    Input file format
+</H2>
+
+<!-- 
+        This includes example input file formats.
+        This should be a detailed description and example - assume
+        someone will want to parse this file and will want to know what
+        happens in unusual cases - null input, etc. 
+   -->
+
+<b>vrnalfold</b> reads any normal sequence USAs.
+
+<p>
+
+
+<a name="input.1"></a>
+<h3>Input files for usage example </h3>
+
+'tembl:hsts1' is a sequence entry in the example nucleic acid database 'tembl'
+<p>
+<p><h3>Database entry: tembl:hsts1</h3>
+<table width="90%"><tr><td bgcolor="#FFCCFF">
+<pre>
+ID   HSTS1      standard; DNA; HUM; 18596 BP.
+XX
+AC   D00596;
+XX
+SV   D00596.1
+XX
+DT   17-JUL-1991 (Rel. 28, Created)
+DT   27-OCT-1998 (Rel. 57, Last updated, Version 2)
+XX
+DE   Homo sapiens gene for thymidylate synthase, exons 1, 2, 3, 4, 5, 6, 7,
+DE   complete cds.
+XX
+KW   thymidylate syntase.
+XX
+OS   Homo sapiens (human)
+OC   Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi; Mammalia;
+OC   Eutheria; Primates; Catarrhini; Hominidae; Homo.
+XX
+RN   [1]
+RP   1-18596
+RX   MEDLINE; 91056070.
+RA   Kaneda S., Nalbantoglu J., Takeishi K., Shimizu K., Gotoh O., Seno T.,
+RA   Ayusawa D.;
+RT   "Structural and Functional Analysis of the Human Thymidylate Synthase
+RT   Gene";
+RL   J. Biol. Chem. 265:20277-20284(1990).
+XX
+DR   SWISS-PROT; P04818; TYSY_HUMAN.
+XX
+CC   These data kindly submitted in computer readable form by:
+CC   Sumiko Kaneda
+CC   National Institute of Genetics
+CC   1111 Yata
+CC   Mishima 411
+CC   Japan
+CC   Phone:  +81-559-72-2732
+CC   Fax:    +81-559-71-3651
+XX
+FH   Key             Location/Qualifiers
+FH
+FT   source          1..18596
+FT                   /chromosome="18"
+FT                   /db_xref="taxon:9606"
+FT                   /sequenced_mol="DNA"
+FT                   /organism="Homo sapiens"
+FT                   /clone="lambdaHTS-1 and lambdaHTS-3"
+FT                   /map="18p11.32"
+FT   repeat_unit     1..148
+FT                   /note="Alu sequence"
+FT   repeat_unit     202..477
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+     ttttgttttt agcttcagcg agaacccaga cctttcccaa agctcaggat tcttcgaaaa     15660
+     gttgagaaaa ttgatgactt caaagctgaa gactttcaga ttgaagggta caatccgcat     15720
+     ccaactatta aaatggaaat ggctgtttag ggtgctttca aaggagctcg aaggatattg     15780
+     tcagtcttta ggggttgggc tggatgccga ggtaaaagtt ctttttgctc taaaagaaaa     15840
+     aggaactagg tcaaaaatct gtccgtgacc tatcagttat taatttttaa ggatgttgcc     15900
+     actggcaaat gtaactgtgc cagttctttc cataataaaa ggctttgagt taactcactg     15960
+     agggtatctg acaatgctga ggttatgaac aaagtgagga gaatgaaatg tatgtgctct     16020
+     tagcaaaaac atgtatgtgc atttcaatcc cacgtactta taaagaaggt tggtgaattt     16080
+     cacaagctat ttttggaata tttttagaat attttaagaa tttcacaagc tattccctca     16140
+     aatctgaggg agctgagtaa caccatcgat catgatgtag agtgtggtta tgaactttaa     16200
+     agttatagtt gttttatatg ttgctataat aaagaagtgt tctgcattcg tccacgcttt     16260
+     gttcattctg tactgccact tatctgctca gttccttcct aaaatagatt aaagaactct     16320
+     ccttaagtaa acatgtgctg tattctggtt tggatgctac ttaaaagagt atattttaga     16380
+     aataatagtg aatatatttt gccctatttt tctcatttta actgcatctt atcctcaaaa     16440
+     tataatgacc atttaggata gagttttttt tttttttttt taaactttta taaccttaaa     16500
+     gggttatttt aaaataatct atggactacc attttgccct cattagcttc agcatggtgt     16560
+     gacttctcta ataatatgct tagattaagc aaggaaaaga tgcaaaacca cttcggggtt     16620
+     aatcagtgaa atatttttcc cttcgttgca taccagatac ccccggtgtt gcacgactat     16680
+     ttttattctg ctaatttatg acaagtgtta aacagaacaa ggaattattc caacaagtta     16740
+     tgcaacatgt tgcttatttt caaattacag tttaatgtct aggtgccagc ccttgatata     16800
+     gctatttttg taagaacatc ctcctggact ttgggttagt taaatctaaa cttatttaag     16860
+     gattaagtag gataacgtgc attgatttgc taaaagaatc aagtaataat tacttagctg     16920
+     attcctgagg gtggtatgac ttctagctga actcatcttg atcggtagga ttttttaaat     16980
+     ccatttttgt aaaactattt ccaagaaatt ttaagccctt tcacttcaga aagaaaaaag     17040
+     ttgttggggc tgagcactta attttcttga gcaggaagga gtttcttcca aacttcacca     17100
+     tctggagact ggtgtttctt tacagattcc tccttcattt ctgttgagta gccgggatcc     17160
+     tatcaaagac caaaaaaatg agtcctgtta acaaccacct ggaacaaaaa cagattttat     17220
+     gcatttatgc tgctccaaga aatgctttta cgtctaagcc agaggcaatt aattaatttt     17280
+     tttttttttg acatggagtc actgtccgtt gcccaggctg cagtgcagtg gcgcaatctt     17340
+     ggctcactgc aacctccacc tcccaggttc aagtgattct cctgcctcag cctcccatgt     17400
+     agctgggatc acaggcacct gccaccatgc ccggctaatt ttttgtattt tttgtagaga     17460
+     cagggtttca ccatgttggc caggctggtc tcaaacacct gacctcaaat gatccacctg     17520
+     cctcagcctc ccaaagtgtt gggattacag gcgtaagcca ccatgcccag ccctgaatta     17580
+     atatttttaa aataagtttg gagactgttg gaaataatag ggcagaggaa catattttac     17640
+     tggctacttg ccagagttag ttaactcatc aaactctttg ataatagttt gacctctgtt     17700
+     ggtgaaaatg agccatgatc tcttgaacat gatcagaata aatgccccag ccacacaatt     17760
+     gtagtccaaa ctttttaggt cactaacttg ctagatggtg ccaggttttt ttgcacaagg     17820
+     agtgcaaatg ttaagatctc cactagtgag gaaaggctag tattacagaa gccttgtcag     17880
+     aggcaattga acctccaagc cctggccctc aggcctgagg attttgatac agacaaactg     17940
+     aagaaccgtt tgttagtgga tattgcaaac aaacaggagt caaagcttgg tgctccacag     18000
+     tctagttcac gagacaggcg tggcagtggc tggcagcatc tcttctcaca ggggccctca     18060
+     ggcacagctt accttgggag gcatgtagga agcccgctgg atcatcacgg gatacttgaa     18120
+     atgctcatgc aggtggtcaa catactcaca caccctagga ggagggaatc agatcggggc     18180
+     aatgatgcct gaagtcagat tattcacgtg gtgctaactt aaagcagaag gagcgagtac     18240
+     cactcaattg acagtgttgg ccaaggctta gctgtgttac catgcgtttc taggcaagtc     18300
+     cctaaacctc tgtgcctcag gtccttttct tctaaaatat agcaatgtga ggtggggact     18360
+     ttgatgacat gaacacacga agtccctctg agaggttttg tggtgccctt taaaagggat     18420
+     caattcagac tctgtaaata tccagaatta tttgggttcc tctggtcaaa agtcagatga     18480
+     atagattaaa atcaccacat tttgtgatct atttttcaag aagcgtttgt attttttcat     18540
+     atggctgcag cagctgccag gggcttgggg tttttttggc aggtagggtt gggagg         18596
+//
+</pre>
+</td></tr></table><p>
+
+
+
+
+
+<H2>
+    Output file format
+</H2>
+
+<!-- 
+        This includes example output file formats.
+        This should be a detailed description and example - assume
+        someone will want to parse this file and will want to know what
+        happens in unusual cases - null output, errors etc. 
+
+        If you wish to include the standard description of the avalable
+	report formats, use:
+#include file="inc/reportformats.ihtml"
+   -->
+
+<b>vrnalfold</b> 
+outputs a graph to the specified graphics device. 
+outputs a report format file. The default format is ...
+
+
+<p>
+
+
+<a name="output.1"></a>
+<h3>Output files for usage example </h3>
+<p><h3>File: hsts1.vrnalfold</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+.....((..((..((((((((....(((..((.((((((((((((((......))))..)))))))))).)).....(((.(..(((......)))..).)))....)))))))))))))..))...((((..((.......))..)))). (-32.80) 18446
+.((((((.((((((........))))))....((((((((....(((..((.((((((((((((((......))))..)))))))))).)).....(((.(..(((......)))..).)))....)))))))))))...)))))). (-32.60) 18427
+.((((((((.((((........))))....)))))))). ( -7.80) 18421
+.(((((((((((.....))))......((....((((........)))).........((((.(((((.(....)))))).)))).)).......))))))). (-23.40) 18398
+.((((((((......((((.((((.....)))))))).......)))).........)))). (-13.52) 18386
+.((((((...((((...))))...(((((((((((.....))))......((....((((........)))).........((((.(((((.(....)))))).)))).)).......))))))).)))))). (-31.60) 18375
+.(((..(((...(((((((..((((...)))))))))))...((((.....)))).)))..))). (-16.00) 18364
+.((.((((((((((.((.........))))))))))))...((((......((((.((((.....)))))))).......))))........)). (-27.52) 18350
+.(((.((((.((((((.........((((....))))....((((((((((.((.........))))))))))))..)))))).)))).))). (-27.40) 18313
+.(((((((...((((((((..((((((.((.((...............))..)).)))))).(((((((((.((.........)))))))))))....))))))))..((((.((((.....)))))))).....)))).))). (-43.46) 18293
+.((((((((.(....).))........((((((((..((((((.((.((...............))..)).)))))).(((((((((.((.........)))))))))))....)))))))).)))))). (-39.26) 18277
+.((((..((((((..((((......))))..))))))........((((((((..((((((.((.((...............))..)).)))))).(((((((((.((.........)))))))))))....))))))))..)))). (-43.06) 18259
+.(((((...(((....)))..))))). (-10.40) 18250
+.(((((((((.....))).....(((((...(((....)))..)))))..........)))))). (-17.10) 18228
+.(((...((...(((.....))).....(((((...(((....)))..)))))....)).))). (-18.60) 18223
+.(((((.........(((((....)))))...((((((........((((((((..(((..........)))..)))))))).......(((((...(((....)))..))))).............))).)))...))))). (-42.20) 18162
+.((((((((((..(((....((((......))))((((.(((..(((((....)))))...))).))))......((((((((..(((..........)))..)))))))).....)))..)))))))))). (-42.40) 18133
+.(((....))). ( -2.50) 18121
+.((((((((((.((((...))))...(((....))))))))))..............((((......))))...))). (-16.70) 18096
+(((((((((...((((.((......))))))...)))).......))))). (-13.41) 18081
+.((..(((((.(((...)))..(((.(((..(((((((((...((((.((......))))))...)))).......)))))..(((((......)).)))...))).)))..)))))..)). (-36.71) 18050
+.((((.....(((((((((..(((((((....)))...(.((((((...(((.(((.((((...((((.((......))))))...))))..))))))....)))))).)..............))))..))))))))).)))). (-44.20) 18029
+((.((.(((...))).)))). ( -6.10) 18018
+.((((.(.(((((....(((((.......)))))....)))))).)))). (-16.80) 17990
+.(((.........((((.((........)))))).(((((....(((((.......)))))....)))))...))). (-21.00) 17963
+(((.(((........)))..))). ( -1.20) 17959
+.(((....(((((((((.(..(...)..).))))))).))..))). (-10.00) 17938
+.(((...(....)..(((((((((.(..(...)..).))))))).)).))). (-10.60) 17931
+(((..(((.(((((((.(((.....))).....(((((((((.(..(...)..).))))))).)).))))))))))(.((((((((.((((.(((.....))))))))))).)))).).))). (-34.10) 17913
+.(((..((((((((.(((((....((.(((.((((((.............(((((((.(..(...)..).))))))).((((.((........))))))...)))).))))).))..))))).))..)).))))))). (-43.20) 17898
+.(((((((((((((....))))..)))..((((((.(((.....))).....(((((((((.(..(...)..).))))))).)).)))))))))))). (-29.60) 17894
+(((((.(((..(((......))))))))))). (-13.30) 17876
+.(((((.((((((...........))))))(((((.(((..(((......)))))))))))))))). (-22.30) 17846
+.((.((((((((((........))))))....(((..(((((....))))).((..((((((..((.((((.....)))).))))))..))..)).........))).......(((((((.(..(...)..).))))))).)))))). (-39.50) 17834
+.((((((((((..((....(((((.((((((...........))))))(((((.(((..(((......))))))))))))))))....))..)))))))))). (-33.10) 17828
+.((((..(((..............((((((........)))))).........(((((....)))))..)))...)))). (-20.10) 17818
+.(((((((((((((.....)))))..((((((((((..((....(((((.((((((...........))))))(((((.(((..(((......))))))))))))))))....))..))))))))))..........)))))))). (-47.90) 17803
+.((((((((((.....((..((((.(((....((((((((((((((.....)))))))....))))))))))))))..))..((((((...........))))))(((((.(((..(((......))))))))))).....)))))))))). (-51.40) 17771
+.(((((...((((...........(.((..........)).).....((..((((.(((....((((((((((((((.....)))))))....))))))))))))))..))....)))).))))). (-33.30) 17740
+.(((.((......))))). ( -0.50) 17720
+.(((((..........))))). ( -4.10) 17715
+(((....(((..((((.((....)).)))).)))........((....))..))). ( -9.30) 17702
+.((((((((..(.(((((((....(((..((((.((....)).)))).)))........((....))))).)))).)..)).)))))). (-18.50) 17685
+.(((((.....))))). ( -1.70) 17667
+.(((((((......(((((....))))).(((((((.((....)).))))))).....(((((.(....(((..((((.((....)).)))).))).........).))))).........)))).))). (-27.72) 17640
+.((((.((((...........(((((.....)))))..............(((((((.((....)).))))))))))).(((((.(....(((..((((.((....)).)))).))).........).)))))............)))). (-36.82) 17619
+(((((.........((((((((...........(((((.....)))))..............(((((((.((....)).)))))))))))))))........(((..((((.((....)).)))).)))...........))))). (-38.60) 17607
+.(((..(((.(((((((((....((((....)))).))))))))).)))..))). (-12.30) 17572
+.(((((......((((((......(((((((((....((((....)))).))))))))).)))))).((((...........(((((.....)))))..............(((((((.((....)).)))))))))))...))))). (-40.90) 17558
+.(((((..((.((((((......(((....)))......)))))).)).......(((((((((....((((....)))).)))))))))...))).)). (-30.20) 17527
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+.((.(((......((((((((....(((((((((.(((....((..(.(((((((.(((.....))).))))))))..))....))).))...)).)))))...(((.((.((....)).)).)))))))..))))....))).)). (-69.10)  961
+.((((((...((.(((......(((..((.((.((..(((((((((.(((....((..(.(((((((.(((.....))).))))))))..))....))).))...)).)))))..)).)))).)))..))).)))))))). (-63.80)  949
+(((.((.(((((((((((.(((......))).............((....((.(((....((..(.(((((((.(((.....))).))))))))..))....))).))...)).))))))))..))).)).))). (-56.20)  943
+.((((..((((((........(((((((.(((......))).............((....((.(((....((..(.(((((((.(((.....))).))))))))..))....))).))...)).)))))))))))))..)))). (-61.10)  933
+(((..((....((..(((.(((..((..((....))...))..))).)))..))...))..))). (-17.50)  915
+.((((..(((((.((.........)).).))))..)))). (-13.50)  907
+.(((((....(((((((((..(((((...((((..((((.....(((..((....))...)))))))....))))..))).))...))).))))))......))))). (-45.30)  871
+.(((((.(((.(((((((..(((((....(((((((((..(((((...((((..((((.....(((..((....))...)))))))....))))..))).))...))).))))))......)))))..))))))).)))))))). (-78.80)  852
+.((.(((((((..((((.((.(((((((((((..(((((..(((((((((((..(((((...((((..........))))..))).))...))).))))))..))..)))))..)))))))).))).)).)))).)))).))).)). (-79.30)  838
+.((.((((....((((.((.(((.(((((((.(((((((((((..(((((..(((..((((((...((......)).))))))..)))..)))))..)))))))).)))(((....))))))))))..))).)))).))....))))..)). (-81.40)  827
+.((((((..((...)).)))))). (-12.80)  818
+(((.(.(((((....))))).).))). (-16.10)  802
+.((((((((.(((((.......))))).(((((....))))))))))))). (-27.00)  780
+.((((((...((.((((((((((.(((((....)))))...((((((.......)))))).......)))))))))).)))))))). (-42.10)  748
+.(((....(((((......)))))...((.(((((((.(((...(((...(.(((((....))))).)..)))...))).........(((((....))))).))))))).)).))). (-47.40)  720
+.(((.......(((((.((.((((....)))).....(((((......)))))...)).)))))...((.((((((((((.(((((....)))))...((((((.......)))))).......)))))))))).)).....))). (-56.00)  691
+(((((((..(..(((((((((.((.((((....)))).....(((((......)))))...)).)))))..))))....)..))))))). (-37.90)  686
+.(((((((.......(((((..((((((((((...))))))....(((((.((.((((....)))).....(((((......)))))...)).)))))..))))..)))))))))))). (-47.01)  657
+((((..(((((((.((((.(.(((..((((....((((....((((((...))))))...))))...((....)).....)))).)))).))))))))).))..)))). (-36.80)  641
+(((((..((..(..((((((.(.((((((((((((((((((((..(.(((((((((.((((((....))))......)).))).).))))).))))))..)))...))))...)))))))).)))))))..).)).))))). (-50.10)  608
+.(((((.(((.(......)))).))))). ( -5.60)  602
+.((.((((((....)))))).)). ( -8.30)  599
+.(((.............(....)............((.((((((....)))))).)).))). (-12.50)  565
+.(((.............(((((..((........))..))))).((((((....)))))).))). (-13.00)  559
+(((..(((..(((((.(........(((........))).............(....).).)))))....((.((((((....)))))).)).))).))). (-19.30)  530
+.(((((...((((...((((..(((..........(((........))).......(((((..((........))..)))))..)))..))))...))))))))). (-23.30)  520
+((((((......(.(((.....((((((...(((.((.(((((.(..(....)..)...))))))).))).)))))).....(((((.....))))).......)))).....((.((((((....)))))).))..)))))). (-30.50)  487
+.((((.(((((((...((((.....((((((((..........(((((((.(((.((((.((....)))))).))).)))..))))....(((((.....)))))................)))))))).)))).))))))))))). (-39.00)  479
+.(((.....))). ( -3.10)  467
+.(..((.((((....(((....))).....))))))..). (-15.00)  441
+.(((...((....)).........((((....(((....))).....)))).))). (-14.80)  424
+(((((((....((...((....))...))....))))))). ( -8.90)  415
+.(((((.(.((((....)))).)......(((((..(((......................(((....)))...((.....)))))..))))).......))))). (-33.70)  395
+(((((.(.((...(((((.....(((((.......))))).((....)).......))))).....(((....)))..)).).))))). (-28.50)  390
+.(((.((((.(((.(((...((.(.((((....)))).).)).))).)))..((....)).........)))).))). (-26.60)  379
+.(((((............(((.((((.(((...((.(.((((....)))).).)).))).)))).)))))))). (-29.10)  366
+.((((((((.....(((((............(((.((((.(((...((.(.((((....)))).).)).))).)))).))))))))....)))))))). (-33.00)  353
+.((.((...((((((..(.(((((((.(((((((..((.(((.((((((..(((((.((..(((.(((..(((.....)))))))))..))))))).)).)))).))).)).....))))))).)))))))).)))))).)).)). (-51.70)  323
+.(((((.((((((.....))).....(((((...(((.......)))...)))))....)))))))). (-15.10)  264
+.((((((.((....((((.((..(((((......(((.....))).....(((((...(((.......)))...))))).)))))...)))))).)))))))). (-31.70)  240
+((......)). ( -0.20)  228
+.((((...(((..........................(((((((.......))))).)).((((((..(((.(((.((..((.(((((......(((.....)))...))))).))..)).)))....)))..))))))...)))..)))). (-36.40)  180
+.((((..(((.((((((....(((((((.((....)).)))))))....)))))).)))..........(((((.......))))))))). (-19.00)  150
+.((((((((((((.(((((((((((..((((((((((((((((((((((((((((((((((....(..........)....))))))))))))))............))))))))))))))))))))))))))))))).)))))))))))). (-93.50)   95
+.((((((((..(((((((.((((....)).))))))))))))).)))). (-31.00)   54
+.((((..........((((....))))....((((..(((((((.((((....)).))))))))))))).)))). (-33.80)   28
+.(((.....((((...)))).......((((....))))..))). (-10.60)   16
+.(((.(((((.(....).))))).))). (-13.30)    6
+.((((.(((.(((((.(....).))))).))).)))). (-18.40)    1
+CCUGUAGUCCCAGCUACGCGAGAGGCUGAGGCAGCAGAAUUACUUGAACCCAGGAGGCGGAGGUUGCAGUGAGCCGAGAUCGCGCCACUGCACUCCAGCCUGGGUGAGAGAGCGAGACUCUGUCUCAAAAAAAAAAAAAAAAGACCGCCAGGGCUCAAACAAAAAACCUCGGAAAAGCCCUGGCGGUCUUUUUUUUUUUUUUUUUUUUUUUUUUUUGGGACAGUCUUGCUCUGUCGCCCAGGCUGGAGUACAAUGGUCGGAUCUUGGCUCACUGCAACCUCUGCCUCCCAGGUUCAAGCAAUUCUUCUGCCUCAGCCUCCCAAGUAGCCACCACGCCCAGCUAAUUUUUGUACUUUUAGUAGAGACGGGGGUUUCACCAUGUUGUCCAGGCUGGUCUUGAACUCCUGACCUCAGGUGAUCCACCCGCCUCGGCCCCCCAAAGUACUAGGAUUACAGGCGUGAGCCACCGCGUCCAGCGCCCUGGCGGUUUUUAAUCAAGUAGAAAAGCUGCAUUAUACCACUUGCUUCGGUUGCUUCAGUGAGAACGAAGAAAUGGAAAUGCAAAUCCCUUAUUAGUUGUAGGAAACAGAUCUCAAACAGCAGUUUUGUUGACAAGACCGCAGGAAAACGUGGGAACUGUGCUGCUGGCUUAGAGAAGGCGCGGUCGACCAGACGGUUCCCAAAGGGCGCAGUCCUUCCCAGCCACCGCACCUGCAUCCAGGUUCCCGGGUUUCCUAAGACUCUCAGCUGUGGCCCUGGGCUCCGUUCUGUGCCACACCCGUGGCUCCUGCGUUUCCCCCUGGCGCACGCUCUCUAGAGCGGGGGCCGCCGCGACCCCGCCGAGCAGGAAGAGGCGGAGCGCGGGACGGCCGCGGGAAAAGGCGCGCGGAAGGGGUCCUGCCACCGCGCCACUUGGCCUGCCUCCGUCCCGCCGCGCCACUUGGCCUGCCUCCGUCCCGCCGCGCCACUUCGCCUGCCUCCGUCCCCCGCCCGCCGCGCCAUGCCUGUGGCCGGCUCGGAGCUGCCGCGCCGGCCCUUGCCCCCCGCCGCACAGGAGCGGGACGCCGAGCCGCGUCCGCCGCACGGGGAGCUGCAGUACCUGGGGCAGAUCCAACACAUCCUCCGCUGCGGCGUCAGGAAGGACGACCGCACGGGCACCGGCACCCUGUCGGUAUUCGGCAUGCAGGCGCGCUACAGCCUGAGAGGUGACGCCGCGGGCCCCUGCGGGACGGGUGGCGGGAAGGAGGGAGGCGCGGCUGGGGAGAGCGCUCGGGAGCUGCCGGGCGCUGCGGACCCCGUUUAGUCCUAACCUCAAUCCUGCCAGGGAGGGGACGCAUCGUCCUCCUCGCCUUACAGACGCCGAAACGGAGGGUCCCAUUAGGGACGUGACUGGCGCGGGCAACACACACAGCAGCGACAGCCGGGAGGUAAGCCGCGUCCCAGCGGCUCCGCGGCCGGGCUCGCAGUCGCCCCAGUGAUGCCGUGGCCCCCGAGGCGGGCGUCAUCGGGCAGCGUUUGCCCAGUGCUGGAGGGUUAGGGAGAGCUGCCUGGGCUUGACCGCGCGCCGGUCUCAAAGUCCUGGCUUUGGCCCCUCCUCCGUUUUCCCCUGUGGACCAUUCCGCUUCGCAGCGUUUUCAAAAACUGGAGCGAAAGUGAUGUGGGCGGGGCAAAGGCGGCGGGAAGAGGACAGCACUGAAGCUGGCGCGGGAACUUGGUUUCCUGGUGGCCUCCCAUCCAAUCCCCACGAACCAGCUUUCCUCUUAAACCUUGAAAAGAGAAAUUCGGGAGUUCGAGUUCUUAGUCGUCCUUUCCUCUUUCCUUUCCGACAGGAGCACCCCAGGCAAAAAAUGUCUCGCGGGUCAUUGGCGCCAGGCUUUCAGGGGACAGUGGGGCGGGGCGGGGUGGGCACAGGACGUUAGGCAGCCGUUGGCCCUCCCUAAGGCCACACCGUCCUGCCGUCCUGGAUCCUGCGCCAGCUGCGCGGGGGAGGGGACUCGAAGGUGUGUGAGCCAGGGGCUGACCUUGACCGCUCAGAUAAAUGGAGCGCAGCCUUGACACAGGGGUGGAGGUGGUUUUGAAUGGGGAAACCCAUUCGUGGUGAAGCAGAUUCACUGUAGCUAGCGGAAAAGCCCUCCGGCCCACGGACCCAUCUAGAGACGAAUACAUAGCAGCUGCUGUGGCUGAUUGGCGUGGGACAGCGUGGGGAGUUUUGUCUGAGGAGAGGGAUCCACUUUUCUGCAGCUCCAAGCCCAGGGGCCUUUGAUGAGCCAUAGACCUCAUUUUUAACCCACCUUUCUGCUUAGACAUUGAGCAAGUUACUUCUCAUAUAGCUUCCCUAUAUGUUAAAAAUGGAGAAAAUAAUGCUUAGUAGGCAAUUCUGAUAAAAGCAGGUGCUUGCAAAAAUCUCUCUGUUGUCUGAAUAUAAACUGUACCACAAGCGAGUGCGGAUGAACGAGGACUGCAUUUAAAGAUAAGUUUUUACACUUUCAUUUCUCUGUGGCUCGACACUUCUGAUGCCUCCCUUUUUGUUCCUGGGACACAUGCUUGGUGUUGUCUUCACACCUUUGUGACAGGAUUAGCACUAGUGGGCAGUGGAUGAUAGCUCCUCCUCCCUUUUGCCACAUGUUCAUCCCUGCCCUCGCCACCAUCUCACUGUGUGGAAUUCCUGUGUCCACUGGUCACCGGGGCACAGAAGUGCUGUCUCAGCCUGAAUCGGGCCACUGAUGGGACUUGCAGCCUGGGAGCUCCACCGUGAUCUCUGGCCCACUUUGCGGGAGUCUAGGCUUUCUGGAUGCUCCAGGCCUCACGUCCCAGGGCAGUUUUCUUCCCUGAAGAAAGUUGGAUGGCAUGAUCUGUCUUCCCAUCUUGAAACCGUAUGGCAAAUUGUUUUUCAGAUGAAUUCCCUCUGCUGACAACCAAACGUGUGUUCUGGAAGGGUGUUUUGGAGGAGUUGCUGUGGUUUAUCAAGGUAAAGAAGUCGCUGCUAUUAGAAGUCAGUAGUCUGUUCUCAACACAGCAGCCAGUGAGAUCCUUUCAAAACUCAAAGCAGCCAGGUGUGGUGGCUCACGCCUGUAAUCCCACCGCUUUGGGAGGCUGAGUCAGAUCACCUGAGGUUAGGAAUUUGGGACCAGCCUGGCCAACAUGGCGACACCCCAGUCUCUACUAAUAACACAAAAAAUUAGCCAGGUGUGCUGGUGCAUGUCUGUAAUCCCAGCUACUCAGGAGGCUGAGGCAUGAGAAUUGCUCACGAGGCGGAGGUUGUAGUGAGCUGAGAUCGUGGCACUGUACUCCAGCCUGGCGACAGAGGGAGAACCCAUGUCAAAAACAAAAAAAGACACCACCAAAGGUCAAAGCAUAUCAUUCCUCACCCUCAAGCCCUUAGUGGCUCCAUUUCACUCAGUAAGAGCCACGGUCCUUAUGGUGUCCGUUUUUCAGCUCUGACCUUAGCUGCUGCUCUCUGCACCACCCUGCUGUUCUUGUGAGUUUUUGAGCACACCGGGACAUCCCCACUCCCUGGAACCUUCUUCCCCCACACUUGGCUUCUUCCUUUGAGUCUCUACUCCACUCGGGCAAGCCUUCCUAGACCUCCUGAUUUAAAACUGUGACUCUCCCCCAACCUCCUUGGUGUUUCUCCGUAGACGAACAUCACCAUCUGAUGUAUGUCAGCCUUUCCCUUCCCCUGUUAGAAGGGGGACAGCAGGUAGUAAAAGUGAAAUGUGCUGUAAGCUUUAUGAGGGCAGAGGAUUUGUUUCUCGUGUUCACUGUUGUAUCGCCAGGGCCUCAAACACAGCCUGCCACAUAGUAGGAGUCAACAUAUAUUGAUCACUAAAUGUAGAUACCACCUGUGUUCCCAUGUUCAUAUAAAUUCUAGAAGAGUCUCUUCAGUAACAAGGUGAACCCCUUCCAGAGGGCUGAGUAGGUACCUCAGGCCGGGGCCAGAGUGCUGUGAAGACAGCAGCAGCCCAGACCAAGCUUCUCUGUGUUCCGUGUCCUGGUCUAGAACCAGCGAUGUUCUUUCUGACCAGUGCUUUUUGGAAGGUGGCUGAGGUCUGGGCUCAGGUCUGGGCCAUACUAGAAGCUGGGAUCCCUUCUAUAGAGCACUUGGUAUGGCUUGUAUGGUCUUGGGGCAAGCCAGACCCAAGCCCUCUUAUCCCAUUUUAGAAAGGGCUUCAAUUUGGAUCCAGCCCCAGGUCUGCCUUAGCUCUGUAUUCUUGGGGUAUUUUGUUCUGUAUUGGCCUAUCUUGACUAACAAUGAGCCUUGGAUUUGAAACAUAUCAUCAGAAACCUCAGAAGACAACAUUCUUAAACUGGCUAGAGCCUGGUCUGAAUGGAUGAAAAGGAGAGACUUUUGAAGCAAUAUGUAAAAGAUUGAGAAAUGAUUUGUUGGAAAUUUCUCAAUUGGAGAAAUUUCUUUGAUUUGUUGGAAAUUUCUUUGAUUCUUUCUCAAUCAAAGAAAAUCGGGACAAACUCAACAAUAGAAAGGGAGGAAGCAAGAUACUCAGAAAUAAAAUGCAUUCCCCUGUUUCAACUUAAUGCUUCAAUUCAGGAUUCUAAGGAAUCCUUGCCAGGAAUGUCAGACUCACCUUGAUAGUUGGAGUUACUCCAUUGGUGACUCGAUCAAAUACAGGAGUUGAGGCACCUGCACUGUAAAAUACUGAUUAGUCUGAUCAUUAGGAAUAUCCUGUAUGCCAGGUAGAAGAUACAUUGAACAGAUUGCAUGUAGGCAUUAAAUUCAUUUUGGGGUAUUACAUAUAGACAACACAUUUCAUUAAGAAACAUAAAACUGUCAGAUCGGUGGAAUACUUAAAAGCACUUGGAGGUGUUUAGCCUAAAAAGCUUAGUUGAGGGGAAUGGAAGAAAAGAUCUGGGAGGGUGGUUCCAAAGAAGGGAUCAGACUAUCCUAAAGCCCUCAGGAAUCUGGGCUGGGACCACCUACUUAAAGAUAGGAUGGGCAGCUGGGUGUGGUGGCUCACGCCUGUAAUCCCAGCACUUCGGGAGGCCGAAGCGGGCGGAUCACCUGAGGUCAGGAGUUCGAGGCCAGCCUGACCAACAUGGAGAAACGCUGUCUCUACUAAAAAUACAAAAUUAGCUGGGUGUAGUGGCGCAUGCCUGUAAUCCCAGCUACUCGGGAGGCUGAGGCAGGGGAAUCGCUUGAACCUGGGAGGUGGAGGGUGCCGUGAGCCACGAUCGCGCCAUUGCACUCCAGCCUGGGCAACAAGAGCGAAACUCUCAAAAAACAAAAAAAAGGAUGGGUUCCAUAUGGGUGGUGUCAAGUGCCCACCUCCUAGCAAGUCAGCAGGGGCCAGAGGCCCUUGUAAGUGGUGUCUCGGGGGGAUCAACUGAGAUGGCUUAAGAUUUACCUGGAUGCCUGCUCUGCUCUCCCCAUCUCUUCCAGGGAUCCACAAAUGCUAAAGAGCUGUCUUCCAAGGGAGUGAAAAUCUGGGAUGCCAAUGGAUCCCGAGACUUUUUGGACAGCCUGGGAUUCUCCACCAGAGAAGAAGGGGACUUGGGCCCAGUUUAUGGCUUCCAGUGGAGGCAUUUUGGGGCAGAAUACAGAGAUAUGGAAUCAGGUGAGGAGAUAGAACAAUGCCUUCCAUUUCCGGGUGCCCUUCCUAGCACGUGUUUGCUCCGUUGUUUUAGAUAAGGUCUGGGGGAUGAGUCAAUGUCACAGGAGCUGAUGUAUAGCUUUGACCUUGUGAGGGGUGGUGCCAGGUUGAAGCCACAAUUAACGCCUACUGAAGGCCGUUUCACAUCUUUUUUUUUUUUUUUUUUUUAAUUAUUAUACUUUAAGUUUUAGGGUACAUGUGCACAAUGUGCAGGUUAGUUACAUAUGUAUACAUGUGCCAUGCUGGUGCGCUGCACCACUAACUCACCAUCUAGCAUCAGGUAUAUCUCCCAAUGCUAUCCCUCCCCCCUCCUCCCACCCCACAACAUCCCCAGAGUGUGAUGUUCCCCUUCCUGUGUCCAUAUGUUCUCGUUGUUCGAUUCCCACUAUGAGUGAGAAUAUGCGGUGUUUGGUUUUUUGUUCUUGCGAUAGUUUACUGAGAAUGAUGAUUUCCAUUUCACCACGUCCCUACAGAGGACAUGAACUCAUCAUUUUUUAUGGCUGCAUAGUAUUCCAUGGUGUAUAUGUGCCACAUUUUCUUAAUCCAGUCUAUCAUGUUGGACAUUUGGGUUGGUUCCAAGUCUUUGCCUAUUGUGAAUAGUGCCACAAUAAACAUACGUGUGCAUGUGUCUUUAUAGCAGCAUGAUUUAAUAGUCCUUUGGGUAUAUACCCAGUAAUGGGAUGGCUGGGUCAAAUGGUAUUUCUAGUUCUAGAUCCCCGAGGAAUCGCCACACUGACUUCCACAAUGGUUGAACUAGUUUACAGUCCCACCAACAGUGUCAAAGUGUCCUAUUUCUCCACAUCCUCUCCAGCACCUGUUGUUUCCUGACUUUUUAAUGAUUGCCAUUCUAACUGGUGUGAGAUGGUAUCUCAUUGUGGUUUUGAUUUGCGUUUCUCUGAUGGCCAGUGAUGGUGAGCAUUUUUUCAUGUGUUUUUUGGCUGCAUAAAUGUCUUCUUUUGAGAAGUGUCUGUUCAUGUCCUUCGCCCACUUUUUGAUGGGGUUGUUUUUUUCUUAUAAAUUUGUUUGAGUUCAUUGUAGAUUCUGGAUAUUAGCCCUUUGUCAGAUGAGUAGGUUGCAAAAAUGUUCUCCCAUUUUGUGGGUUGCCUGUUCACUCUGAUGGUAGUUUCUUUUGCUGUGCAGAAGCUCUUUAGUUUAAUUAGAUCCCAUUUGUCAAUUUUGGCUUUUGUUGCCAUUGCUUUUGGCAUAGGCAUGAAGUCCUUGCCCAUGCCUAUGUCCUGAAUGGUAAUGCCUAGGUUUUCUUCUAGGGUUUUUAUGGUUUUAGGUCUAACGUUUAAGUCUUUAAUCCAUCUUGAAUUGAUUUUUGUAUAAGGUGUAAGGAAGGGAUCCAGUUUCAGCUUUUUACAUAUGGCUAGCCAGUUUUCCCAGCACCAUUUAUUACAUAGGGAAUCCUUUCCCCAUUGCUUGUUUUUCUCAGGUUUGUCAAAGAUCAGAUAGUUGUAGAUAUGCGGCGUUAUUUCUGAGGGCUCUGUUCUGUUCCAUUGAUCUAUGUGUCUGUUUUGGUACCAGUACCAUACUGUUUUGGUUACUGUAGCCUUGUAGUAUAGUUUGAAGUCAGGUAGCGUGAUGCCUCCAGCUUUGUUCUUUUGGCUUAGGAUUGACUUGGCGAUGCGGGCUCUUUUUUGGUUCCAUAUGAACUUUAAAGUAGUUUUUUCCAAUUCUGUGAAGAAAGUCAUUGGUAGCUUGAUGGGGAUGGCAUUGAAUCUAUAAAUUACCUUGGGCAGUAUGGCCAUUUUCACGAUAUUGAUUCUUCCUACCCAUGAGCAUGGAAUGGUCUUCCAUUUCUUUGUAUCCUCUUUUAUUUCAUUGAGCAGUGGUUUGUAGUUCUCCUUGAAGAGGUCCUUCACAUCCCUUUUAAGGUGGAUUCCUAGGUAUUUUAUUCUCUUUGAAGCAAUUGUGAGUGGAAGUUCACUCAUGAUUUGGCUCUCUGUUUGUCUGUUAUUGGUGUAUAAGAAUGCUUGUGAUUUUUGCAGAUUGAUUUUAUAUCCUGAGACUUUGCUGAAGCUGCUUAUCAGCUUAAGGAGAUUUUGGGCUGAGACAAUGGGGUUUUCUAGAUAUACAAUCAUGUCGUCUGCAAACAGGGACAAUUUGACUUCCUCUUUUCCUAAUUGAAUACCCUUUAUUUCCUUCUCCUGCCUAAUUGCCCUGGCCAGAACUUCCAACACUAUGUUGAAUAGGAGUGGUGAGAGAGGGCAUCCCUGUCUUGUGCCAGUUUUCAAAGGGAAUGCUUCCAGUUUUUGCCCAUUCACUAUGAUAUUGGCUGUGGCUUUGUCAUAGAUAGCUCUUAUUAUUUUGAAAUAUGUUCCAUCAAUACCUAAUUUAUUGAGAGUUUUUAGCAUGAUGUGUUGUUGAAUUUUGUCAAAGGCUUUUUCUGCAUCUAUUGAGAUAAUCAUGUGGUUUUUGUCUUUGGAUCUGUUUAUAUGCUGGAUUACAUUUAUUGAUUUGCGUAUAUUGAACCAGCCUUGCAUCCUAGGGAUGAAGCCCACAUGAUCAUGGUGGAUAAGCUUUUUGAUGUGCUGCUGGAUUCGGUUUGCCAGUAUUUUAUUGAGGAUUUUUGCAUCAAUGUUCAUCAAGGAUAUUGGUCUAAAAUUCUCUUUUUUGGUGUGUCUCUGCCCAGCUUUGGUAUCAGGAUGAUGUUGGCUUCAUAAAAUGAGUUAGGGAGGAUUCCCUCUUUUUCUAUUGAUUGGAAUAGUUUCAGAAGGAAUGGUACCAGUUCCUCUUUGUACCUCUGGAGAAUUCGGCUGUGAAUCCAUCUGGUCCUGGACUCUCUUUGGUUGGUAAGCUAUUGAUUAUUGCCACAAUUUCAGCUCCUGUUAUUGGUCUAUUCAGAGAUUCAACUUCUUCCUGGUUUAGUCUUGGGAGAGUGUAUGUGUCAAGGAAUUUAUCCAUUUCUUCUAGAUUUUCUAGUUUAUUUGCGUAGAGGUGUUUGUAGUAAUCUCUGAUGGUAGUUUGUAUUUCUGUGGGAUCGGUGGUGAUAUCCCCUUUAUCAUUUUUUAUUGCGUCUAUUUGAUUCUUCUCUUUUUCUUUAUUAGUCUUGCUAGCGGUCUAUAAAUUUUGUUGAUCCUUUCAAAAAACCAGCUCCUGGAUUCAUUAAUUUUUUGAAGGGUUUUUUGUGUCUCUAUUUCCUUCAGUUCUGCUCUGAUUUUAGUUAUUUCUUGCCUUCUGCUAGCUUUUGAAUAUGUUUGCUCUUGCUUUUCUAGUUCUUUUAAUUGUGAUGUUAGGGUGUCAAUUUUGGAUCUUUCCUGCUUUCUCUUGUGGGCAUUUAGUGCUAUAAAUUUCCCUCUACACACUGCUUUGAAUGUGUCCCAGAGGUUCUGGUAUGUUGUGUCUUUGUUCUUGUUGGUUUCAAAGAACAUCUUUAUUUCUGCCUUCAUUUCGUUAUGUACCCAGUAGUCAUUCAGGAGCAGGUUGUUCAGUUUCCAUGUAGUUGAGCAGUUUUGAGUGAGAUUCUUAAUCCUGAGUUCUAGUUUGAUUGCACUGUGGUCUGAGAGAUAGUUUGUUAUAAUUUCUGUUCUUUUACAUUUGCUGAGGAGAGCUUUACUUCCAACUAUGUGGUCGGUUUUGGAAUAGGUGUGGUGUGGUGCUGAAAAAAAUGUAUAUUCUGUUGAUUUGGGAUGGAGUUCUGUAGAUGUCUAUUAGGUCUGCUUGGUGCAGAGCUGAGUUCAAUUCCUGGGUAUCCUUGUUGACUUUCUGUCUCGUUGAUCUGUGUACUGUUGACAGUGGGUGUUAAAGUCUCCCAUUAUUAAUGUGUGGAGUCUAAGUCUCUUUGUAGGUCACUCAGAUGAUUGGCACUUACUGGGCGCUUGGCACUUUCCAUACUGUGUCAUCGGCAGAUAGCUGCAUGGUUGGUGUUCGUGCUGGGGAAUGGGAAGUUCAUCGGUGGGACAAGGACAAAAUGCCCCCAUUGCUUUGUUGUGGCUUUAAUCUCCCUUUCGAGGCUGAGCCACAGCGUGCUGUAGGUGGCGCUGCUGUGAAGCGCAGUACCAGGGUCACACUCCACUCCCAGCUCUGCAGAGGUGGAGAAAGAAUGAAACAUCUCACUCCUGGACUUCCACUUUCCUGUCACUGUUGGUGUCACCUCUUACUGGAUGUCACAGAGCCCAGCCCCUCCCACCUGUGCCUAGGAAAAGCAGAUGCCACCUUGGAAUGUGGGGUUUGUGUGUGCAAUUUACUAGCUGGGCAGAGACCAGCAACCUGGAGAGCAGGUGUCUCGUCUAAGGGGACAGUCACAUUUCACCUCCAGCCACCUGGAGGAAUUUGGGCCUGGUGAUGUCAGAAUUCUUCAAUAAAAGCCUAAAAUCUAUAUUUUAUGUGCGGUCAUGAGAUCUGUUAAAUGUUAGCAACUUCAGGAAGUUUAAAAAUGCUGUGUGGACCUAGAAUAGGCAAGUUCUUAAAGGCAGAAAGUGGAAUGCUAGUUUCCAGGGACUGGGGAACAGGGAGGAAUGGGGAGUUCAUGUUUAAUGGGCACAGAGGUUUUGUUAGGGAUGACGAAAAAGUUCGGGAGAUGGUGAUGGUGAUGGAGAUGGUGAUGGUGAUGGAGAUGGUGAUGGUGAUGGUGAUGGUGAUGGGUGAUGGUGAUGGUGAUGGUGAUGGUGAUGGAGAUGGUGAUGGUGAUGGUGAUGGAGAUGGUGAUGGUGAUGGUGAUGGUGAUGGAGAUGGUGAUGGUGAUGGAGAUGGUGAUGGUGAUGGUGAUGGAGAUGGUGAUGGUGAUGGUGAUGGUGAUGGUGAUGGUGAUGGUGAUGGAGAUGGAGAUGGUGAUGGUGAUGGUUGCCUAACAUCAGGAACGUGCUUAAUGCUUCUGAAUUGCACACAAAAAUGGCAAGUUUAAUAUUAUGUGUACUUUAUCACAAUGAAAAAAGCUGCUGCGUGGGCCAAGUUACUUGUGCAGGUAAUGUUCUGCAGGUGGUUGCCUGCACCUCAGUUGUAGGGUGUCCGUAGGAUGUGAGGCCAGUCCCCGGGCUUAAUGAUGCUUUAAAUCCUGCCUAGUAUUCAAUUAUUUCUUGUCGCUUAAAAGGCCUAAUAAAAUUAUGGUCUUAGUUUACAGUGGUAUGAAUGCUUAGCUGUUGGAUUUUAGUAGGAAAGUUCGUCCCUUUUUGUUUUUAAUUUUGUUUUACAGAUUCACAGGAAUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUAAUGCACAGAAAGUUUCCCUGGACUCUCUACCCAGUUUCCCCAGUGAUAAUAUCUUGGGUAACAUCCUGUAUACAUUCACAUUGGUGCAUUCCUCAGAGUUGUCAGAUUUUGCUAGUUUUACGUGCACUUGUGUAUGUGUGUAUUUGCAAUUUUAGCACGUGUAGACUCUUGUAACCACUACAAUCAAGUUACAGAACUACACUACCAAGGUUCAUCUUUUUAAAAUCUUUGAUGUUACCUUUUUUGGAACAGUGACCAUGAGAGGACUUUCCUCCCAAAAUUUUGAAAACUACUGAACCAGAAUAUAGUCUGACACUAAUAGGUAGAAAUUUAACCAAAGGAGAUUAUGAAGCUCUGCACUUGAGUUAACAAAAUCACUUCUCAGCUUCCAGUUCCAUCUCAGAAGGAAGGAAAAGGGAUUAAAAAUCCAGAGACCAGAAAAUGGGAGCAAAGUACAAGGUGGUGUAAUCAUUACAGAGGUUUCCUGAUGUUUCCAAGUCAGUCGUGUGUUGAGCUGCUAAACUCUAAAGUAAUUUUAGGUGGAAUGUUGGAAACAUGCUGCUGAGGUGAUAGAAAGGAAUCCAUGGUCCUCUGUUAGUUGGAAAGUAUAUGGAAUACUAUAUUCUACAUAAGAUACAAUACUCUCUGUGAGACAAGGAUAAAGUAGAUUUUGUCAGUGAAAUUGUGACAAGAAUCGCUGAUGGGUUUAGAGCCUAAGUUUGCGAGGAGCACUGGAAGAAAUUAAGAUUGUUGAGAUUGGAAAGGGUUAGCUAUGGGGGAACAGGAGGAGGUGACUCCAUGACAGACCAAAUAUUCAAAGGACUGUGUAGAAGAGGAAAAAGACUUUGUUAGGGCUCCAGAGGACAGAGCCAGGAGUCAGACAGGGCCUUGAACUCAACCCACCGAGAUCUGCAAACUUUGCAGGAUGCACCAGAUGUCUUGUAGCCAUGGGUCAAGGGGGGACCCUGGGUAAGAGACUGUAAUAGAUGACCUCUAAGGCCAUCUCAUGACAUGUGUGAUUAAUGUAUGUACCUGUCCUCUCUUUUUGACAAUUCUACAGAUUAUUCAGGACAGGGAGUUGACCAACUGCAAAGAGUGAUUGACACCAUCAAAACCAACCCUGACGACAGAAGAAUCAUCAUGUGCGCUUGGAAUCCAAGAGGUUGAAAGAACCCCGUCGUCUUCAUUUAUACUAACCAUACUCUUAGAGGGAAGCAAUCUGGUUUUGUGCAGAGGCACUGAGGGAGGCAGGACCCUGGGCAACUUCCCCCAGCCACAUGGUUGUGUGACGUUGGGCAAGUCACAUUUUGCUGCACUUUCACCUUCAGAUCAUGAGGUUGGGCCCAGAGGAUUUUUUUUUUUUUUUUUUUUUUUGAGACAGAGUUUUGCUCUGUUGCCCAGGCUGGAAUGCAACGGCGUGAUCUUGGCUCACUGUAACCUCUGCCUCCUGGGUUCGAGUGAUUCUCCUGCCUCAGCCUCCAAGUAGCUGGGAUUACAGCAUGUGCCACCAUGCCUGGCUAAUUUUGUAUUUUUAGUAGAGACGGGUUCACAUGUUGGUCAGGCUGGUCUUGACUCCUGACCCUCAGAUGAUCUGCCUUGCCUCAGCCUCCCAACCGAGUGAUCUUAAGUUGUGUAUUAUACUCAUUCUUACACAAAAAGGGCUUUAAAUGCCUAGAAACUACAUGAAGAUGUUAACAUUUUAAAUGGAAGCAGAUGAAGUUCCAGCUCGCUGCCACCUCACUAACAUUUUUAACAAUUAUAUUGUAAAAUUCAACUCUACCAGGGUGUAGAGCCAGGUGUGGUGGCUCACACCUGUAAUUCCAACAACUCCAGAGGCCAAGGCGAGAGGAUCAUUUGAACCCACGGAAUUUGAGGCUGUAGUGAGUCAUGAUCACGCCAUUGCACUCCAUCCUGGGCAACAGAGUGAGACCCUGAAUAUUUAAAAACAACAACAACAACAAAACUCUAUCAGGAUAUCAUAAGUACUUAGAGUGAAAUACUUGCAUCUGUAAUAGAGACUUAUUUUUUUUUUUUUUGAGACACAGUCUCACCCUGUUGCCCAGGCUGGAGUGCAGUGGUUUGAUCUCCGCUCACGGCAACCUCCAUCUCCCAGGUUCAAGUGAGUUCCCAUUCCUCAGCCCCAGAGCUGGGACCACAGGCGCGCGAAUUUUUGUAUUUUUAGCAGAGACGGGGUUUCACUAUGUUGGCCAGGCUAGUCUCAAACUCAAGUUGGCCUCAAGUGAUCUGCCCACCCUGGCGUCCCAGUGUUGGGAUUUCAGGCAUGAGCCACUGUGCCUGGCCAUGUAAUAGAGACUUUUAAUAUAGGAGGGUGUACCAGAAGCACCAGUUUCCUGUGGCAAACAGAAUUAUUCCUGCUGUAUUUGUAAUUUGGUGCCACGAGGUAGCCCAGAUCCCUUCAGCUCUGAUGGAAGAGCAUUGCUUCAGCCGUAAAUGGACACCUGCAGAAACCUUGCACCGAUGGAUAGUCUCCCUCAGCUCCGUGCCAUCGCUGCAGGGGCUGUUAUGGACAUCACUGCAGCCCAGUGGCUCUCUCUCCUGGUCUCCACCAUAUGAGUUGGCUUCUGUUUCUCUCCUGUUUUACUUUGCCUUUAGCUGUGGUCUUUCAAACCACCAUCCCUCCUUAUCUUCCUCUGCUGGUUCCUCAGAUCUUCCUCUGAUGGCGCUGCCUCCAUGCCAUGCCCUCUGCCAGUUCUAUGUGGUGAACAGUGAGCUGUCCUGCCAGCUGUACCAGAGAUCGGGAGACAUGGGCCUCGGUGUGCCUUUCAACAUCGCCAGCUACGCCCUGCUCACGUACAUGAUUGCGCACAUCACGGGCCUGAAGGUGGGCUGUCUCGGGAAGGGUGACUUGCCAGCCUACCACAUGAGCUCUUCAGUUCUUUAAUAUGGGAAAACAAAUUGCAGAGUUUAGUCUCUGAUUAGCUUUUAAAUUUGAUAUGUGUAAGUAAGACAUGAACCAGCUUUUACUUUGAAACCUUCCUUUUCUGGAAGGUUUUCUGGCCCUGUGGUAUAUGCACUAACAGAUCUAUACAGGUUGUUUGUGAUACAGCUUCUAUGGAUCUUCUCAAAAGCUAUGCUGAGGUUGGGUAUGGUGGCUCAUGCCUGUAAUCCCAGCACUUUGGAAGACUGAGACAGGAGCAAUUGCUUGAGGUCUGGAGUUCAAUACCAGCCUGGGCAACAUAACAAGAUGCUGUUGCUACAAAAAAAUGGAAAAGCUACACUAAAUUAUUUUUUUAAAAAAAGCCUUGCGGUGUCUGCAUAUUCUAAUGUUUUUAAAUGAUGUUUUAAAGAAUUGAAACUAACAUACUGUUCUGCUUUCUCCCGGUUUAUAGCCAGGUGACUUUAUACACACUUUGGGAGAUGCACAUAUUUACCUGAAUCACAUCGAGCCACUGAAAAUUCAGGUAAGAAUUAGAUGUUAUACUUUUGGGUUUGGUACCUUCUCUUGAUAAAAGGUUGACUGUGGAACAGGUAUCUGCUCAAUGCUGUGUCCAAGAUAAAGAUGACUGCUCCAAAUGUGGGGCUUCAGUUUAGGGAGAAGUGGUGGGCAGGUGGGCAGGACAAGGCAGGCAUCUGCCUCAGCAACCAUGGCACUUAACUUGUCAGGUGCUGUGAGGUACUAAGCACCAGUACCAGAGAGGGAAGAGCCACAUUCAAGCCAGGGGAUUGUCCAAAAGGAGGCAUUUUAACUCAUUUUAACUUGAAGGAGAAUUGAAGUGCAAAUGUUUUUCCUUUUCUUUUUUUUUGAGAUGGAGUCUUUCUCUGUCGGCCAGGCUGGAGUGUGCCGUGGUGCGAUCUCAGCUCACUGCAACCUCCACCUCCCGGGUUCAAGCAAUUCUUCUGCCUCAGCCUCCCAGGUAGCUGGGAUUACAGGCACAUGCCACCACACCCAGCUAAUUUUUUGUAUUAUUAGUAGAGAUGGGGUUUCGUCAUGUUGGCCAGGCUGAUCUCAAACUCCUGACUUCAAGUGUACCACCUGCCUCAGCCUCCGAAAGUUCUGGAAUUACAGGCAUAAGCCACCACCCUGGCCAUAAAUAUUUUUUGUUAAUUUUACAUUAAGUACAAUAUUUAGGUCCAAACUUCAAAAGUCUGUUGAAAUCCCUGAAGUUAUAGCAGCCAACAAUUGAUAUGAAAUGGCAAUAAAAAUGUAAGUUCAUCUGCUUCAUGAGCCUUAAGGAAAAAAACUCAGAACCAGACACUUUUUAGCCCCUUCCAGGUUAGAUCCAGGUUUUAAAAGUUAUUCCUUUGAGGGAGUUUGGCUGCUUUUGAGUGGAGGUGACUUCAGGCUUAUUCUCUCUGGCUCUCUGCUCUGGUCAUUUUUAGACAUAGUAAUAGGUUGUGACCUGUCUUCACAUCCUAAUUGCCACUGUCUGUUCAUCCCAGGAAUCCUGGCUUUCAUCCCUUUCUGUUCACUGUCCAUGCAUGUCAUCUUUCCUUCUUUCUGCCAGGGACCAGAUGGGUUAGGGAUUGUGAAUUCAAGUAAACGUAGAGCUACUAUGAGUUACAGAUUGACUGUGUUCCUGUCUUUAAUAAAUUUGCCAAGAGUGGUUAUAAGAACUUACACCUGAUGAGGCACCAGGCUCCUGAUGCUGUGUAAUGUCACAAAAUACCCCUCACUCUCGAUCUGUGCAAGAGAACAGCUGGUUGCGCUCCAAUCAUGUUACAUAACCUACGCGAAGGUAUCGACAGGAUCAUACUCCUGUAAAAUAGAACUUUGUUGAUCACAUCCUGUGUACUUGUUUCACGGACAUGAGGAGCAAUUACAACAGGUCGUACAAUUAUGGCAAAAUAAUGGCCUUAUUUUGUUUUUAGCUUCAGCGAGAACCCAGACCUUUCCCAAAGCUCAGGAUUCUUCGAAAAGUUGAGAAAAUUGAUGACUUCAAAGCUGAAGACUUUCAGAUUGAAGGGUACAAUCCGCAUCCAACUAUUAAAAUGGAAAUGGCUGUUUAGGGUGCUUUCAAAGGAGCUCGAAGGAUAUUGUCAGUCUUUAGGGGUUGGGCUGGAUGCCGAGGUAAAAGUUCUUUUUGCUCUAAAAGAAAAAGGAACUAGGUCAAAAAUCUGUCCGUGACCUAUCAGUUAUUAAUUUUUAAGGAUGUUGCCACUGGCAAAUGUAACUGUGCCAGUUCUUUCCAUAAUAAAAGGCUUUGAGUUAACUCACUGAGGGUAUCUGACAAUGCUGAGGUUAUGAACAAAGUGAGGAGAAUGAAAUGUAUGUGCUCUUAGCAAAAACAUGUAUGUGCAUUUCAAUCCCACGUACUUAUAAAGAAGGUUGGUGAAUUUCACAAGCUAUUUUUGGAAUAUUUUUAGAAUAUUUUAAGAAUUUCACAAGCUAUUCCCUCAAAUCUGAGGGAGCUGAGUAACACCAUCGAUCAUGAUGUAGAGUGUGGUUAUGAACUUUAAAGUUAUAGUUGUUUUAUAUGUUGCUAUAAUAAAGAAGUGUUCUGCAUUCGUCCACGCUUUGUUCAUUCUGUACUGCCACUUAUCUGCUCAGUUCCUUCCUAAAAUAGAUUAAAGAACUCUCCUUAAGUAAACAUGUGCUGUAUUCUGGUUUGGAUGCUACUUAAAAGAGUAUAUUUUAGAAAUAAUAGUGAAUAUAUUUUGCCCUAUUUUUCUCAUUUUAACUGCAUCUUAUCCUCAAAAUAUAAUGACCAUUUAGGAUAGAGUUUUUUUUUUUUUUUUUUAAACUUUUAUAACCUUAAAGGGUUAUUUUAAAAUAAUCUAUGGACUACCAUUUUGCCCUCAUUAGCUUCAGCAUGGUGUGACUUCUCUAAUAAUAUGCUUAGAUUAAGCAAGGAAAAGAUGCAAAACCACUUCGGGGUUAAUCAGUGAAAUAUUUUUCCCUUCGUUGCAUACCAGAUACCCCCGGUGUUGCACGACUAUUUUUAUUCUGCUAAUUUAUGACAAGUGUUAAACAGAACAAGGAAUUAUUCCAACAAGUUAUGCAACAUGUUGCUUAUUUUCAAAUUACAGUUUAAUGUCUAGGUGCCAGCCCUUGAUAUAGCUAUUUUUGUAAGAACAUCCUCCUGGACUUUGGGUUAGUUAAAUCUAAACUUAUUUAAGGAUUAAGUAGGAUAACGUGCAUUGAUUUGCUAAAAGAAUCAAGUAAUAAUUACUUAGCUGAUUCCUGAGGGUGGUAUGACUUCUAGCUGAACUCAUCUUGAUCGGUAGGAUUUUUUAAAUCCAUUUUUGUAAAACUAUUUCCAAGAAAUUUUAAGCCCUUUCACUUCAGAAAGAAAAAAGUUGUUGGGGCUGAGCACUUAAUUUUCUUGAGCAGGAAGGAGUUUCUUCCAAACUUCACCAUCUGGAGACUGGUGUUUCUUUACAGAUUCCUCCUUCAUUUCUGUUGAGUAGCCGGGAUCCUAUCAAAGACCAAAAAAAUGAGUCCUGUUAACAACCACCUGGAACAAAAACAGAUUUUAUGCAUUUAUGCUGCUCCAAGAAAUGCUUUUACGUCUAAGCCAGAGGCAAUUAAUUAAUUUUUUUUUUUUUGACAUGGAGUCACUGUCCGUUGCCCAGGCUGCAGUGCAGUGGCGCAAUCUUGGCUCACUGCAACCUCCACCUCCCAGGUUCAAGUGAUUCUCCUGCCUCAGCCUCCCAUGUAGCUGGGAUCACAGGCACCUGCCACCAUGCCCGGCUAAUUUUUUGUAUUUUUUGUAGAGACAGGGUUUCACCAUGUUGGCCAGGCUGGUCUCAAACACCUGACCUCAAAUGAUCCACCUGCCUCAGCCUCCCAAAGUGUUGGGAUUACAGGCGUAAGCCACCAUGCCCAGCCCUGAAUUAAUAUUUUUAAAAUAAGUUUGGAGACUGUUGGAAAUAAUAGGGCAGAGGAACAUAUUUUACUGGCUACUUGCCAGAGUUAGUUAACUCAUCAAACUCUUUGAUAAUAGUUUGACCUCUGUUGGUGAAAAUGAGCCAUGAUCUCUUGAACAUGAUCAGAAUAAAUGCCCCAGCCACACAAUUGUAGUCCAAACUUUUUAGGUCACUAACUUGCUAGAUGGUGCCAGGUUUUUUUGCACAAGGAGUGCAAAUGUUAAGAUCUCCACUAGUGAGGAAAGGCUAGUAUUACAGAAGCCUUGUCAGAGGCAAUUGAACCUCCAAGCCCUGGCCCUCAGGCCUGAGGAUUUUGAUACAGACAAACUGAAGAACCGUUUGUUAGUGGAUAUUGCAAACAAACAGGAGUCAAAGCUUGGUGCUCCACAGUCUAGUUCACGAGACAGGCGUGGCAGUGGCUGGCAGCAUCUCUUCUCACAGGGGCCCUCAGGCACAGCUUACCUUGGGAGGCAUGUAGGAAGCCCGCUGGAUCAUCACGGGAUACUUGAAAUGCUCAUGCAGGUGGUCAACAUACUCACACACCCUAGGAGGAGGGAAUCAGAUCGGGGCAAUGAUGCCUGAAGUCAGAUUAUUCACGUGGUGCUAACUUAAAGCAGAAGGAGCGAGUACCACUCAAUUGACAGUGUUGGCCAAGGCUUAGCUGUGUUACCAUGCGUUUCUAGGCAAGUCCCUAAACCUCUGUGCCUCAGGUCCUUUUCUUCUAAAAUAUAGCAAUGUGAGGUGGGGACUUUGAUGACAUGAACACACGAAGUCCCUCUGAGAGGUUUUGUGGUGCCCUUUAAAAGGGAUCAAUUCAGACUCUGUAAAUAUCCAGAAUUAUUUGGGUUCCUCUGGUCAAAAGUCAGAUGAAUAGAUUAAAAUCACCACAUUUUGUGAUCUAUUUUUCAAGAAGCGUUUGUAUUUUUUCAUAUGGCUGCAGCAGCUGCCAGGGGCUUGGGGUUUUUUUGGCAGGUAGGGUUGGGAGG
+ (-5376.62)
+</pre>
+</td></tr></table><p>
+
+
+
+
+
+<H2>
+    Data files
+</H2>
+
+
+
+For details of Vienna RNA file formats, see the original documentation
+http://www.tbi.univie.ac.at/~ivo/RNA/
+
+
+
+<H2>
+    Notes
+</H2>
+
+<!-- 
+        Restrictions.
+        Interesting behaviour.
+        Useful things you can do with this program.
+   -->
+
+None.
+
+
+
+
+
+
+
+<H2>
+    References
+</H2>
+
+<!-- 
+        Bibliography for methods used.
+   -->
+
+None.
+
+
+
+
+
+
+
+
+<H2>
+    Warnings
+</H2>
+
+<!-- 
+        Potentially stupid things the program will let you do.
+   -->
+
+None.
+
+
+
+
+
+
+
+<H2>
+    Diagnostic Error Messages
+</H2>
+
+<!-- 
+        Error messages specific to this program, eg:
+        "FATAL xxx" - means you have not set up the xxx data using program <b>prog</b>.<p>
+   -->
+
+None.
+
+
+
+
+
+
+
+<H2>
+    Exit status
+</H2>
+
+<!-- 
+        Description of the exit status for various error conditions
+   -->
+
+It always exits with status 0.
+
+
+
+
+
+
+
+
+<H2>
+    Known bugs
+</H2>
+
+
+<!-- 
+        Bugs noted but not yet fixed.
+   -->
+
+None.
+
+
+
+
+
+
+
+
+<!--
+<H2>
+    See also
+</H2>
+-->
+<h2><a name="See also">See also</a></h2>
+<table border cellpadding=4 bgcolor="#FFFFF0">
+<tr><th>Program name</th><th>Description</th></tr>
+<tr>
+<td><a href="vrnaalifold.html">vrnaalifold</a></td>
+<td>RNA alignment folding</td>
+</tr>
+
+<tr>
+<td><a href="vrnaalifoldpf.html">vrnaalifoldpf</a></td>
+<td>RNA alignment folding with partition</td>
+</tr>
+
+<tr>
+<td><a href="vrnacofold.html">vrnacofold</a></td>
+<td>RNA cofolding</td>
+</tr>
+
+<tr>
+<td><a href="vrnacofoldconc.html">vrnacofoldconc</a></td>
+<td>RNA cofolding with concentrations</td>
+</tr>
+
+<tr>
+<td><a href="vrnacofoldpf.html">vrnacofoldpf</a></td>
+<td>RNA cofolding with partitioning</td>
+</tr>
+
+<tr>
+<td><a href="vrnadistance.html">vrnadistance</a></td>
+<td>RNA distances</td>
+</tr>
+
+<tr>
+<td><a href="vrnaduplex.html">vrnaduplex</a></td>
+<td>RNA duplex calculation</td>
+</tr>
+
+<tr>
+<td><a href="vrnaeval.html">vrnaeval</a></td>
+<td>RNA eval</td>
+</tr>
+
+<tr>
+<td><a href="vrnaevalpair.html">vrnaevalpair</a></td>
+<td>RNA eval with cofold</td>
+</tr>
+
+<tr>
+<td><a href="vrnafold.html">vrnafold</a></td>
+<td>Calculate secondary structures of RNAs</td>
+</tr>
+
+<tr>
+<td><a href="vrnafoldpf.html">vrnafoldpf</a></td>
+<td>Secondary structures of RNAs with partition</td>
+</tr>
+
+<tr>
+<td><a href="vrnaheat.html">vrnaheat</a></td>
+<td>RNA melting</td>
+</tr>
+
+<tr>
+<td><a href="vrnainverse.html">vrnainverse</a></td>
+<td>RNA sequences matching a structure</td>
+</tr>
+
+<tr>
+<td><a href="vrnaplot.html">vrnaplot</a></td>
+<td>Plot vrnafold output</td>
+</tr>
+
+<tr>
+<td><a href="vrnasubopt.html">vrnasubopt</a></td>
+<td>Calculate RNA suboptimals</td>
+</tr>
+
+</table>
+<!-- 
+        Add any comments about other associated programs (to prepare
+        data files?) that seealso doesn't find. 
+   -->
+
+
+
+
+
+
+
+
+
+
+<H2>
+    Author(s)
+</H2>
+
+This program is an EMBOSS conversion of a program written by Ivo Hofacker
+as part of his VIENNA package.
+
+<p>
+Although we take every care to ensure that the results of the EMBOSS
+version are identical to those from the original package, we recommend
+that you check your inputs give the same results in both versions
+before publication.
+
+<p>
+Please report all bugs in the EMBOSS version to the EMBOSS bug team,
+not to the original author.
+
+<H2>
+    History
+</H2>
+
+Converted (October 2005) by Alan Bleasby
+
+
+
+<H2>
+    Target users
+</H2>
+
+<!--
+        For general users, requested by one user, for EMBOSS site
+        maintainers, for EMBOSS developers etc.
+        eg:
+        "This program is intended to be used by everyone and everything,
+        from naive users to embedded scripts." 
+	Which is easy to include using:
+   -->
+
+This program is intended to be used by everyone and everything, from naive users to embedded scripts.
+
+
+<H2>
+    Comments
+</H2>
+
+
+</BODY>
+</HTML>
+
