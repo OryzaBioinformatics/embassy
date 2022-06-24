@@ -6,6 +6,8 @@ application: domainreso [
   batch: "yes"
   cpu: "low"
   embassy: "domainatrix"
+  relations: "EDAM:0000736 topic Protein domains"
+  relations: "EDAM:0002234 operation Structure editing"
 ]
 
 section: input [
@@ -27,7 +29,8 @@ section: input [
     default: "./"
     extension: "ccf"
     knowntype: "domain clean coordinates"
-    relations:  "EDAM: Protein tertiary structure"                     
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM:0001468 data Protein domain"
   ]
 
   infile: dcfinfile [
@@ -40,7 +43,7 @@ section: input [
            SCOPPARSE and CATHPARSE. Domain sequence information can be added
            to the file by using DOMAINSEQS."
     knowntype: "domain classification"
-    relations:  "EDAM: EMBASSY domain classification record"           
+    relations: "EDAM:0000900 data Protein domain classification"
   ]
 
 endsection: input
@@ -57,7 +60,7 @@ section: required [
            (Angstroms). Domains exceeding the threshold for inclusion
            (Angstroms) will not be given in the output file."
     default: "2.8"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002146 data Threshold"
   ]
 
 endsection: required
@@ -78,7 +81,7 @@ section: output [
            to the file by using DOMAINSEQS."
     default: "test.scop"
     knowntype: "domain classification"
-    relations:  "EDAM: EMBASSY domain classification record"           
+    relations: "EDAM:0000900 data Protein domain classification"
   ]
 
 endsection: output

@@ -41,6 +41,7 @@
 
 
 
+#include <config.h>
 #include "emboss.h"
 
 
@@ -574,7 +575,7 @@ static AjBool domainseqs_FindDomainLimits(AjPSeq sp_seq,
     const char* b;
 
     ajint no_gaps_sp  = 0;   /* The number of gaps in the swissprot sequence. */
-    ajint no_gaps_pdb = 0;   /* The number of gaps in the pdb sequence. */
+    /*ajint no_gaps_pdb = 0;*/   /* The number of gaps in the pdb sequence. */
     
     ajDebug("embAlignReportGlobal %d %d\n", start1, start2);
     ajDebug("  sp_seq: '%S' \n", ajSeqGetSeqS(sp_seq));
@@ -674,10 +675,10 @@ static AjBool domainseqs_FindDomainLimits(AjPSeq sp_seq,
     end1 = start1 - ajStrCalcCountK(m, '-') + ajStrGetLen(m);
     end2 = start2 - ajStrCalcCountK(n, '-') + ajStrGetLen(n);
 
-    /* Find the domain boundries form the sequence alignment. */
+    /* Find the domain boundaries from the sequence alignment. */
 
     no_gaps_sp  = (alen + (end1 - ajStrGetLen(sp_seq->Seq)));
-    no_gaps_pdb = (blen + (end2 - ajStrGetLen(pdb_seq->Seq)));
+    /*no_gaps_pdb = (blen + (end2 - ajStrGetLen(pdb_seq->Seq)));*/
     
     *end = (((*start + (end2-start2)) - no_gaps_sp));
    

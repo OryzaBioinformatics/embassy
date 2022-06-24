@@ -1,10 +1,13 @@
 application: domainseqs [
   documentation: "Adds sequence records to a DCF file."
-  groups: "Utils:Database creation"
+  groups: "Utils:Database creation, Protein:Domains"
   gui: "yes"
   batch: "yes"
   cpu: "medium"
   embassy: "domainatrix"
+  relations: "EDAM:0000091 topic Data handling"
+  relations: "EDAM:0000736 topic Protein domains"
+  relations: "EDAM:0002234 operation Structure editing"
 ]
 
 section: input [
@@ -22,7 +25,7 @@ section: input [
            SCOPPARSE and CATHPARSE. Domain sequence information can be added
            to the file by using DOMAINSEQS."
     knowntype: "domain classification"
-    relations:  "EDAM: EMBASSY domain classification record"           
+    relations: "EDAM:0000900 data Protein domain classification"
   ]
 
   directory: dpdbdir [
@@ -39,14 +42,15 @@ section: input [
     default: "./"
     extension: "ccf"
     knowntype: "domain clean coordinates"
-    relations:  "EDAM: Protein tertiary structure"                     
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM:0001468 data Protein domain"
   ]
 
   toggle: getswiss [
     standard: "Y"
     information: "Retrieve swissprot sequence."
     default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   infile: pdbtospfile [
@@ -58,7 +62,7 @@ section: input [
            PDBTOSP"
     knowntype: "swissprot pdb equivalence table"
     nullok: "Y"
-    relations:  "EDAM: SwissProt to PDB mapping"                       
+    relations: "EDAM:0000954 data Database cross-mapping"
   ]
 
   matrixf: datafile [
@@ -67,7 +71,7 @@ section: input [
     help: "This option specifies the residue substitution matrix,
            which is used for sequence comparison."
     default: "EBLOSUM62"
-    relations: "EDAM: Float comparison matrix"                             
+    relations: "EDAM:0001449 data Comparison matrix (amino acid)"
   ]
 
 endsection: input
@@ -97,7 +101,7 @@ section: additional [
            on the choice of comparison matrix. The default value assumes you
            are using the EBLOSUM62 matrix for protein sequences, and the
            EDNAFULL matrix for nucleotide sequences."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0001397 data Gap opening penalty"
   ]
 
   float: gapextend [
@@ -113,7 +117,7 @@ section: additional [
            gap. This is how long gaps are penalized. Usually you will expect
            a few long gaps rather than many short gaps, so the gap extension
            penalty should be lower than the gap penalty."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0001398 data Gap extension penalty"
   ]
 
 endsection: additional
@@ -134,7 +138,7 @@ section: output [
            to the file by using DOMAINSEQS."
     default: "domainseqs.out"
     knowntype: "domain classification"
-    relations:  "EDAM: EMBASSY domain classification record"           
+    relations: "EDAM:0000900 data Protein domain classification"
   ]
 
   outfile: logfile [
@@ -145,7 +149,7 @@ section: output [
            domainseqs ran."
     default: "domainseqs.log"
     knowntype: "domainatrix log"
-    relations:  "EDAM: Domainatrix log file"                           
+    relations:  "EDAM:0001678 data Tool log"
   ]
 
 endsection: output

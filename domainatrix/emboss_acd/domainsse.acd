@@ -1,11 +1,14 @@
 application: domainsse [
   documentation: "Add secondary structure records to a DCF
                   file."
-  groups: "Utils:Database creation"
+  groups: "Utils:Database creation, Protein:Domains"
   gui: "yes"
   batch: "yes"
   cpu: "medium"
   embassy: "domainatrix"
+  relations: "EDAM:0000091 topic Data handling"
+  relations: "EDAM:0000736 topic Protein domains"
+  relations: "EDAM:0002234 operation Structure editing"
 ]
 
 section: input [
@@ -23,7 +26,7 @@ section: input [
            SCOPPARSE and CATHPARSE. Domain sequence information can be added
            to the file by using DOMAINSEQS."
     knowntype: "domain classification"
-    relations:  "EDAM: EMBASSY domain classification record"           
+    relations: "EDAM:0000900 data Protein domain classification"
   ]
 
   directory: dccfdir [
@@ -41,7 +44,8 @@ section: input [
     default: "./"
     extension: "ccf"
     knowntype: "domain clean coordinates"
-    relations:  "EDAM: Protein tertiary structure"                     
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM:0001468 data Protein domain"
   ]
 
 endsection: input
@@ -76,7 +80,7 @@ section: output [
            DOMAINSEQS."
     knowntype: "domain classification"
     information: "Domain classification output file"
-    relations:  "EDAM: EMBASSY domain classification record"           
+    relations: "EDAM:0000900 data Protein domain classification"
   ]
 
   outfile: logfile [
@@ -85,7 +89,7 @@ section: output [
     default: "domainsse.log"
     knowntype: "domainatrix log"
     information: "Domainatrix log output file"
-    relations:  "EDAM: Domainatrix log file"                           
+    relations:  "EDAM:0001678 data Tool log"
   ]
 
 endsection: output

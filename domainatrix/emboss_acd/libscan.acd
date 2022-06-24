@@ -8,6 +8,9 @@ application: libscan [
   external: "rpsblast NCBI toolkit and blast executables"
   external: "hmmscore SAM Hidden Markov Model package"
   external: "prophet EMBOSS"
+  relations: "EDAM:0000736 topic Protein domains"
+  relations: "EDAM:0000180 topic Protein fold recognition"
+  relations: "EDAM:0000303 operation Protein fold recognition"
 ]
 
 
@@ -23,7 +26,7 @@ list: mode  [
   information: "Select mode of operation "
   button: "Y"
   help: "libscan runs in one of two modes either (i) database search mode or (ii) library screen mode. In database search mode libscan reads one or more directories each containing a single type of discriminating element, the permitted types are sparse sequence signature, Gribskov profile, Henikoff profile or hidden Markov model.  In library screen mode, libscan reads a sequence set, screens each sequence against the library (directories of discriminating elements) and writes a library scan file (of top-scoring families) for each one."
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM: Generic string array"
 ]
 
 boolean: grib
@@ -31,7 +34,7 @@ boolean: grib
   standard: "Y"
   information: "Use Gribskov profile "
   default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
 ]
 
 
@@ -40,7 +43,7 @@ boolean: henik
   standard: "Y"
   information: "Use Henikoff profile "
   default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
 ]
 
 boolean: hmm
@@ -48,7 +51,7 @@ boolean: hmm
   standard: "Y"
   information: "Use HMM profile "
   default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
 ]
 
 boolean: sam
@@ -56,7 +59,7 @@ boolean: sam
   standard: "Y"
   information: "Use SAM HMM profile "
   default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
 ]
 
 boolean: pssm
@@ -64,7 +67,7 @@ boolean: pssm
   standard: "Y"
   information: "Use PSSM profile "
   default: "Y"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
 ]
 
 boolean: sig
@@ -72,7 +75,7 @@ boolean: sig
   standard: "Y"
   information: "Use signature "
   default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
 ]
 
 
@@ -83,7 +86,9 @@ string: hmmpath
   standard: "$(hmm)"
   information: "Location of HMM profile files (input)"
   default: "./lib/"
-    relations: "EDAM: Generic string"                                      
+    relations:  "EDAM:0001049 data Directory name"
+    relations:  "EDAM:0001364 data Hidden Markov model"
+
 ]
 
 string: hmmextn 
@@ -91,7 +96,7 @@ string: hmmextn
   standard: "$(hmm)"
   information: "Extension of HMM profile files (input)"
   default: ".hmm"
-    relations: "EDAM: Generic string"                                      
+    relations: "EDAM:0001059 data File name extension"
 ]
 
 string: hmmoutpath 
@@ -99,7 +104,9 @@ string: hmmoutpath
   standard: "$(hmm)"
   information: "Location of signature hits/library scan files for hmm searches (output)"
   default: "./"
-    relations: "EDAM: Generic string"                                      
+    relations:  "EDAM:0001049 data Directory name"
+    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM:0001219 data Pure protein sequence"
 ]
 
 string: hmmoutextn 
@@ -107,7 +114,7 @@ string: hmmoutextn
   standard: "$(hmm)"
   information: "Extension of signature hits/library scan files for hmm searches (output)"
   default: ".hmmout"
-    relations: "EDAM: Generic string"                                      
+    relations: "EDAM:0001059 data File name extension"
 ]
 
 
@@ -118,7 +125,8 @@ string: sampath
   standard: "$(sam)"
   information: "Location of SAM HMM profile files (input)"
   default: "./"
-    relations: "EDAM: Generic string"                                      
+    relations:  "EDAM:0001049 data Directory name"
+    relations:  "EDAM:0001364 data Hidden Markov model"
 ]
 
 string: samextn 
@@ -126,7 +134,7 @@ string: samextn
   standard: "$(sam)"
   information: "Extension of SAM HMM profile files (input)"
   default: ".mod"
-    relations: "EDAM: Generic string"                                      
+    relations: "EDAM:0001059 data File name extension"
 ]
 
 string: samoutpath 
@@ -134,7 +142,9 @@ string: samoutpath
   standard: "$(sam)"
   information: "Location of signature hits/library scan files for sam hmm searches (output)"
   default: "./"
-    relations: "EDAM: Generic string"                                      
+    relations:  "EDAM:0001049 data Directory name"
+    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM:0001219 data Pure protein sequence"
 ]
 
 string: samoutextn 
@@ -142,7 +152,7 @@ string: samoutextn
   standard: "$(sam)"
   information: "Extension of signature hits/library scan files for sam hmm searches (output)"
   default: ".samout"
-    relations: "EDAM: Generic string"                                      
+    relations: "EDAM:0001059 data File name extension"
 ]
 
 
@@ -152,7 +162,7 @@ string: pssmpath
   standard: "$(pssm)"
   information: "Location of PSSM profile files (input)"
   default: "/data/structure/lib/pssm/"
-    relations: "EDAM: Generic string"                                      
+    relations:  "EDAM:0001049 data Directory name"
 ]
 
 string: pssmextn 
@@ -160,15 +170,15 @@ string: pssmextn
   standard: "$(pssm)"
   information: "Extension of PSSM profile files (input)"
   default: ".chk"
-    relations: "EDAM: Generic string"                                      
+    relations: "EDAM:0001059 data File name extension"
 ]
 
 integer: niter
 [
   standard: "$(pssm)"
-  information: " No. of iterations (input)"
+  information: "No. of iterations (input)"
   default: "1"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001693 data Number of iterations"
 ]
 
 float: thresh 
@@ -176,7 +186,7 @@ float: thresh
   standard: "$(pssm)"
   information: "E-value threshold (input)"
   default: "100"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002146 data Threshold"
 ]
 
 integer: maxhit 
@@ -184,7 +194,7 @@ integer: maxhit
   standard: "$(pssm)"
   information: "Maximum No. of hits to database (input)"
   default: "1000"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001694 data Number of output entities"
 ]
 
 string: pssmoutpath 
@@ -192,7 +202,9 @@ string: pssmoutpath
   standard: "$(pssm)"
   information: "Location of signature hits/library scan files for pssm searches (output)"
   default: "./"
-    relations: "EDAM: Generic string"                                      
+    relations:  "EDAM:0001049 data Directory name"
+    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM:0001219 data Pure protein sequence"
 ]
 
 string: pssmoutextn 
@@ -200,7 +212,7 @@ string: pssmoutextn
   standard: "$(pssm)"
   information: "Extension of signature hits/library scan files for pssm searches (output)"
   default: ".pssmout"
-    relations: "EDAM: Generic string"                                      
+    relations: "EDAM:0001059 data File name extension"
 ]
 
 
@@ -211,7 +223,7 @@ string: gbvpath
   standard: "$(grib)"
   information: "Location of Gribskov profile files (input)"
   default: "./"
-    relations: "EDAM: Generic string"                                      
+    relations:  "EDAM:0001049 data Directory name"
 ]
 
 
@@ -220,8 +232,7 @@ string: gbvextn
   standard: "$(grib)"
   information: "Extension of Gribskov profile files (input)"
   default: ".grib"
-
-    relations: "EDAM: Generic string"                                      
+    relations: "EDAM:0001059 data File name extension"
 ]
 
 float: gbvgapo 
@@ -229,7 +240,7 @@ float: gbvgapo
   standard: "$(grib)"
   default: "10.0"
   information: "Gap insertion penalty "
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0001397 data Gap opening penalty"
 ]
 
 float: gbvgape 
@@ -237,7 +248,7 @@ float: gbvgape
   standard: "$(grib)"
   default: "0.5"
   information: "Gap extension penalty "
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0001398 data Gap extension penalty"
 ]
 
 string: gbvoutpath 
@@ -245,7 +256,9 @@ string: gbvoutpath
   standard: "$(grib)"
   information: "Location of signature hits/library scan files for Gribskov profile searches (output)"
   default: "./"
-    relations: "EDAM: Generic string"                                      
+    relations:  "EDAM:0001049 data Directory name"
+    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM:0001219 data Pure protein sequence"
 ]
 
 string: gbvoutextn 
@@ -253,7 +266,7 @@ string: gbvoutextn
   standard: "$(grib)"
   information: "Extension of signature hits/library scan files for Gribskov profile searches (output)"
   default: ".gribout"
-    relations: "EDAM: Generic string"                                      
+    relations: "EDAM:0001059 data File name extension"
 ]
 
 
@@ -263,21 +276,21 @@ string: hnfpath [
   standard: "$(henik)"
   information: "Location of Hennikoff profile files (input)"
   default: "./"
-    relations: "EDAM: Generic string"                                      
+    relations:  "EDAM:0001049 data Directory name"
 ]
 
 string: hnfextn [
   standard: "$(henik)"
   information: "Extension of Hennikoff profile files (input)"
   default: ".henik"
-    relations: "EDAM: Generic string"                                      
+    relations: "EDAM:0001059 data File name extension"
 ]
 
 float: hnfgapo [
   standard: "$(henik)"
   default: "10.0"
   information: "Gap insertion penalty "
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0001397 data Gap opening penalty"
 ]
 
 float: hnfgape 
@@ -286,7 +299,7 @@ float: hnfgape
   default: "0.5"
 
   information: "Gap extension penalty "
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0001398 data Gap extension penalty"
 ]
 
 string: hnfoutpath 
@@ -294,7 +307,9 @@ string: hnfoutpath
   standard: "$(henik)"
   information: "Location of signature hits/library scan files for Henikoff profile searches (output)"
   default: "./"
-    relations: "EDAM: Generic string"                                      
+    relations:  "EDAM:0001049 data Directory name"
+    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM:0001219 data Pure protein sequence"
 ]
 
 string: hnfoutextn 
@@ -302,7 +317,7 @@ string: hnfoutextn
   standard: "$(henik)"
   information: "Extension of signature hits/library scan files for Henikoff profile searches (output)"
   default: ".henikout"
-    relations: "EDAM: Generic string"                                      
+    relations: "EDAM:0001059 data File name extension"
 ]
 
 
@@ -313,7 +328,7 @@ string: sigpath
   standard: "$(sig)"
   information: "Location of signature files (input)"
   default: "./"
-    relations: "EDAM: Generic string"                                      
+    relations:  "EDAM:0001049 data Directory name"
 ]
 
 string: sigextn 
@@ -321,7 +336,7 @@ string: sigextn
   standard: "$(sig)"
   information: "Extension of signature files (input)"
   default: ".sig"
-    relations: "EDAM: Generic string"                                      
+    relations: "EDAM:0001059 data File name extension"
 ]
 
 list: nterm  
@@ -335,14 +350,14 @@ list: nterm
   codedelimiter: ":"
   header: "N-terminal matching options"
   information: "Select number"
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
 ]
 
 matrixf: sub  [
-  standard: "$(sig)" 
+  standard: "$(sig)"
   information: "Residue substitution matrix"
   default: "EBLOSUM62"
-    relations: "EDAM: Float comparison matrix"                             
+    relations: "EDAM:0001449 data Comparison matrix (amino acid)"
 ]
 
 float: siggapo 
@@ -351,7 +366,7 @@ float: siggapo
 
   default: "10.0"
   information: "Gap insertion penalty "
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0001397 data Gap opening penalty"
 ]
 
 float: siggape 
@@ -359,23 +374,27 @@ float: siggape
   standard: "$(sig)"
   default: "0.5"
   information: "Gap extension penalty "
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0001398 data Gap extension penalty"
 ]
 
 string: sigoutpath 
 [
   standard: "$(sig)"
-  information: "Location of signature hits/library scan files for signature searches (output)"
+  information: "Location of signature hits/library scan files for
+                signature searches (output)"
   default: "./"
-    relations: "EDAM: Generic string"                                      
-]
+    relations:  "EDAM:0001049 data Directory name"
+    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM:0001219 data Pure protein sequence"
+   ]
 
 string: sigoutextn 
 [
   standard: "$(sig)"
-  information: "Extension for signature hits/library scan files for signature searches (output)"
+  information: "Extension for signature hits/library scan files for
+                signature searches (output)"
   default: ".sigout"
-    relations: "EDAM: Generic string"                                      
+    relations: "EDAM:0001059 data File name extension"
 ]
 
 
@@ -385,7 +404,8 @@ seqset: db  [
   information: "File containing sequences to search or screen"
   help: "In database search mode libscan scans each discriminating element against a sequence set.  In library screen mode, libscan reads a sequence set and screens each sequence against the library (directories of disciminating elements)"
   default: "49142.vdhf"
-    relations: "EDAM: Sequence record"                                     
+    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM:0001219 data Pure protein sequence"
 ]
 
 # other parameters
@@ -395,6 +415,6 @@ infile: scopf
   information: "SCOP classification file (input)"
   help: "In either mode, a 'scop classification file' is required as a source of family classification data.  A scop classification file contains classification and other data for domains from the scop database.  The file is in embl-like format and is generated by scopparse.  Domain sequence information can be added to the file by using scopseqs."
 default: "/data/structure/dcf/scop_raw.dcf"
-    relations: "EDAM: Free text file"                                      
+    relations: "EDAM:0000900 data Protein domain classification"
 ]
 

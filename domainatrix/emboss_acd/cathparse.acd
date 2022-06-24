@@ -1,10 +1,14 @@
 application: cathparse [
   documentation: "Generates DCF file from raw CATH files."
-  groups: "Utils:Database creation"
+  groups: "Utils:Database creation, Protein:Domains"
   gui: "yes"
   batch: "yes"
   cpu: "low"
   embassy: "domainatrix"
+  relations: "EDAM:0000091 topic Data handling"
+  relations: "EDAM:0000736 topic Protein domains"
+  relations: "EDAM:0000335 operation File reformatting"
+  relations: "EDAM:0002234 operation Structure editing"
 ]
 
 section: input [
@@ -21,7 +25,7 @@ section: input [
            ftp.biochem.ucl.ac.uk (/pub/cathdata/v2.4)."
     default: "caths.list.v2.4"
     knowntype: "Raw cath list"
-    relations: "EDAM: Free text file"                                      
+    relations: "EDAM:0002236 data Raw CATH domain classification"
   ]
 
   infile: domfile [
@@ -33,7 +37,7 @@ section: input [
            ftp.biochem.ucl.ac.uk (/pub/cathdata/v2.4)."
     default: "domlist.v2.4"
     knowntype: "Raw cath domlist"
-    relations: "EDAM: Free text file"                                      
+    relations: "EDAM:0002236 data Raw CATH domain classification"
   ]
 
   infile: namesfile [
@@ -45,7 +49,7 @@ section: input [
            ftp.biochem.ucl.ac.uk (/pub/cathdata/v2.4)."
     default: "CAT.names.all.v2.4"
     knowntype: "Raw cath names"
-    relations: "EDAM: Free text file"                                      
+    relations: "EDAM:0002236 data Raw CATH domain classification"
   ]
 
 endsection: input
@@ -66,7 +70,7 @@ section: output [
            to the file by using DOMAINSEQS."
     default: "Ecath.dat"
     knowntype: "domain classification"
-    relations:  "EDAM: EMBASSY domain classification record"           
+    relations: "EDAM:0000900 data Protein domain classification"
   ]
 
   outfile: logfile [
@@ -75,7 +79,7 @@ section: output [
     help: "This option specifies the name of the CATHPARSE log file."
     default: "cathparse.log"
     knowntype: "domainatrix log"
-    relations:  "EDAM: Domainatrix log file"                           
+    relations:  "EDAM:0001678 data Tool log"
   ]
 
 endsection: output
