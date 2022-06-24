@@ -59,7 +59,6 @@ SeqEntry *NextSeqEntry(SeqSpec *);
 static Boolean  NextIndSpec(SeqSpec *, SeqSpec *);
 static Boolean  NextDBSpec(SeqSpec *, SeqSpec *);
 static Boolean  NextUserSpec(SeqSpec *, SeqSpec *);
-static Boolean  NextUserCode(char *,char *, int, Boolean, SeqSpec *);
 
 /***  NextSeqEntry  **********************************************************
 **
@@ -85,12 +84,12 @@ SeqSpec *thisSpec;
 	thisSpec = NewSeqSpec();
 
 	if ( wildName->file[0] == '@' ) {
-	  if ( NextIndSpec(wildName, thisSpec) == false ) return(NULL);
+	  if ( NextIndSpec(wildName, thisSpec) == 0 ) return(NULL);
 	} else {
 	  if ( wildName->isUser ) {
-	    if ( NextUserSpec(wildName, thisSpec) == false ) return(NULL);
+	    if ( NextUserSpec(wildName, thisSpec) == 0 ) return(NULL);
 	  } else {
-	    if ( NextDBSpec(wildName, thisSpec) == false ) return(NULL);
+	    if ( NextDBSpec(wildName, thisSpec) == 0 ) return(NULL);
 	  }
 	}
 
@@ -113,7 +112,7 @@ static Boolean NextIndSpec(SeqSpec *indSpec, SeqSpec *thisSpec)
 	char *cPos, line[256];
 	int i;
 
-	static SeqSpec tempSpec = {NULL,NULL,NULL,NULL,false,false,false,UNDEF};
+	static SeqSpec tempSpec = {NULL,NULL,NULL,NULL,0,0,0,UNDEF};
 
 	static char options[5][80], currIndFName[256];
 	static int depth;
@@ -135,7 +134,7 @@ static Boolean NextIndSpec(SeqSpec *indSpec, SeqSpec *thisSpec)
 	  if ( indSpec->file) strcpy(currIndFName, indSpec->file);
 	  if ( indSpec->options) strcpy(options[depth],indSpec->options);
 	  if ( (file[depth] = fopen(&indSpec->file[1], "r")) == NULL )
-	    return(false);
+	    return(0);
 	  while ( fgets(line, 255, file[depth]) )
 	    if ( StrIndex("..", line) ) break;
 	  if ( feof(file[depth]) ) rewind(file[depth]);
@@ -150,10 +149,10 @@ NextSeqSpec:
 
 	if ( tempSpec.isUser ) {
 	  if ( NextUserSpec(&tempSpec, thisSpec) )
-	    return(true);
+	    return(1);
 	} else {
 	  if ( NextDBSpec(&tempSpec, thisSpec) )
-	    return(true);
+	    return(1);
 	}
 /*
 ** Get a line from the indirect file(s), goto NextSeqSpec until it
@@ -164,18 +163,18 @@ NextSeqSpec:
 NextLine:
 	while ( depth >= 0 ) {
 	  while ( fgets(line, 255, file[depth]) ) {
-	    if ( cPos = strchr(line, ' ') ) *cPos = '\0';  /* First token */
-	    if ( cPos = strchr(line, '!') ) *cPos = '\0';  /* Uncomment   */
-	    if ( cPos = strchr(line, '\n') )*cPos = '\0';  /* String-ize  */
+	    if ( (cPos = strchr(line, ' ')) ) *cPos = '\0';  /* First token */
+	    if ( (cPos = strchr(line, '!')) ) *cPos = '\0';  /* Uncomment   */
+	    if ( (cPos = strchr(line, '\n')) )*cPos = '\0';  /* String-ize  */
 	    if ( line[0] == '\0' ) continue;               /* Blank line  */
 	    if ( line[0] == '@' ) {                        /* Another FOSS*/
 	      if ( depth < 5 ) {
 	        depth++;
-	        if ( cPos = strchr(line,'/') ) {
+	        if ( (cPos = strchr(line,'/')) ) {
 	          strcpy(options[depth],cPos);
 	          *cPos = '\0';
 	        }
-	        if ( file[depth] = fopen(&line[1], "r") ) {
+	        if ( (file[depth] = fopen(&line[1], "r")) ) {
 	          while ( fgets(line, 255, file[depth]) )
 	            if ( StrIndex("..", line) ) break;
 	          if ( feof(file[depth]) ) rewind(file[depth]);
@@ -200,7 +199,7 @@ NextLine:
 **  of the FOSS files are finished.
 */
 	currIndFName[0] = '\0';
-	return(false);
+	return(0);
 }
 /* End of NextIndSpec */
 
@@ -226,14 +225,14 @@ extern Boolean SetDataBase(char *, char *);              /* ReadEntry.c */
 
 	if ( strcmp(wildName->code, currCode) ||
 	     strcmp(wildName->file, currDB) )  {    /* New WildName */
-	  if ( SetDataBase(wildName->file, errMsg) == false ) return(false);
+	  if ( SetDataBase(wildName->file, errMsg) == 0 ) return(0);
 	  strcpy(currCode,wildName->code);
 	  strcpy(currDB,wildName->file);
 	} else {
-	  if ( wildName->isWildCode == false ) {
+	  if ( wildName->isWildCode == 0 ) {
 	    currCode[0] = '\0';
 	    currDB[0] = '\0';
-	    return(false);
+	    return(0);
 	  }
 	}
 
@@ -243,12 +242,12 @@ extern Boolean SetDataBase(char *, char *);              /* ReadEntry.c */
 ** it as is.
 */
 	if ( wildName->isWildCode ) {
-	  while ( cPos = (char*)(*NextCode)() ) {
+	  while ( (cPos = (char*)(*NextCode)()) ) {
 	    if ( StrWildMatch(wildName->code, cPos) ) goto Match;
 	  }
 	  currCode[0] = '\0';
 	  currDB[0] = '\0';
-	  return(false);
+	  return(0);
 	} else 
 	  cPos = wildName->code;
 
@@ -265,7 +264,7 @@ Match:
 	if ( cPos ) {
 	  thisSpec->code = CALLOC(strlen(cPos)+1,char);
 	  strcpy(thisSpec->code, cPos);
-	  if ( cPos = strchr(thisSpec->code, ' ') ) *cPos = EOS;
+	  if ( (cPos = strchr(thisSpec->code, ' ')) ) *cPos = EOS;
 	}
 	if ( wildName->file ) {
 	  thisSpec->file = CALLOC(strlen(wildName->file)+1,char);
@@ -280,11 +279,11 @@ Match:
 	  strcpy(thisSpec->options, wildName->options);
 	}
 
-	thisSpec->isUser = false;
-	thisSpec->isWildCode = false;
-	thisSpec->isWildFile = false;
+	thisSpec->isUser = 0;
+	thisSpec->isWildCode = 0;
+	thisSpec->isWildFile = 0;
 	thisSpec->format = PIR;
-	return(true);
+	return(1);
 }
 /* End of NextDBSpec */
 
@@ -322,7 +321,7 @@ Match:
 static Boolean NextUserSpec(SeqSpec *wildName, SeqSpec *thisSpec)
 
 {
-	return false;    
+	return 0;    
 #if COMMENTED_OUT
 static char code[256];
 static char file[256];
@@ -352,30 +351,30 @@ int seqFormat;
 	  strcpy(code, wildName->code);
 	  isWildCode = wildName->isWildCode;
 	  format = wildName->format;
-	  badFileName = true;
+	  badFileName = 1;
 	  NextVMSFile("", file);  /* Flush NextVMSFile */
 
         NextFile:
 	  if ( NextVMSFile(wildName->file, file) ) {
-	    badFileName = false;
+	    badFileName = 0;
 	    if ( strcmp(file, currFName) != 0 ) {
 	      strcpy(currFName, file);	  
 	      if ( userFile ) fclose(userFile);
 	      if ( (userFile = fopen(file, "r")) == 0 )
-	        badFileName = true;  /* Cannot open */
+	        badFileName = 1;  /* Cannot open */
 	    }
 	  } else {
 	    if ( badFileName ) {
 	        sprintf(temp, "File \"%s\" not found.", wildName->file);
 	        PostError(1,temp);
-	        return(false);
+	        return(0);
 	    }
 	    currCode[0]='\0';
 	    currFile[0]='\0';
-	    return(false);
+	    return(0);
 	  }
 	}
-	if ( badFileName ) return(false);
+	if ( badFileName ) return(0);
 
 /*
 ** Using the current file name obtained in the section above.  Run down
@@ -401,136 +400,12 @@ int seqFormat;
 	    strcpy(thisSpec->options, wildName->options);
 	  }
 	  thisSpec->format = wildName->format;
-	  thisSpec->isUser = true;
-	  thisSpec->isWildCode = false;
-	  thisSpec->isWildFile = false;
-	  return(true);
+	  thisSpec->isUser = 1;
+	  thisSpec->isWildCode = 0;
+	  thisSpec->isWildFile = 0;
+	  return(1);
 	}
 	goto NextFile;
 #endif
 }
 /* End of NextUserSpec */
-
-/***  NextUserCode   *******************************************************
-**
-**  Returns the sequence entry from a user entry file. For multiple entry
-**  formats like PIR and IG we have to search through the file to find
-**  codeword that match the wildcode.  For single entry formats like GCG,
-**  RAW, etc. we return the sequence entry, there is no ambiguity below
-**  the filename level.
-**
-**  NB: Multiple entries for IG format files has not been implemented.
-**
-**    William A. Gilbert, Whitehead Institute
-**
-***************************************************************************/
-
-static Boolean NextUserCode(char *code, char *file, int format,
-                            Boolean isWildCode, SeqSpec *thisSpec)
-{
-char kode[256], line[256];
-char temp[80];
-char *cPos;
-static char currCode[512], currFile[512];
-static Boolean codeIsBlank;
-
-/*
-**   If we have a New WildName...
-**    (1) Set the read pointer to the beginning of the file
-**    (2) Get the Codeword portion of the wildname and see if it too is wild.
-**
-**   If it's the old wildname then we are still returning codes from the current
-**    file which statisfy the code in WildName. If, however, the code is not
-**    wild then we are done.
-*/
-
-	if ( strcmp(code, currCode) ||
-	     strcmp(file, currFile) )  {    /* New Wild name */
-	  rewind(userFile);                 /* maybe same file, new codeword */
-	  strcpy(currCode,code);
-	  strcpy(currFile,file);
-	} else {
-	  if ( isWildCode == false ) {
-	    currCode[0] = '\0';
-	    currFile[0] = '\0';
-	    return(false);
-	  }
-	}
-
-/*
-**  Read lines from the user file until you hit bottom. If you happen to
-**  find a header line, upcase the codeword and test against the possibly
-**  ambiguous code from WildName.
-**
-**  For multiple entry formats like PIR, we will do the user a favor and
-**  return the first entry in the file is the codeword is blank.
-*/
-
-	switch (format) {
-	  case PIR:
-	    codeIsBlank = StrIsBlank(code);
-	    while ( fgets(line, 512, userFile) != NULL ) {
-	      if ( line[0] != '>' ) continue;                /* Not a header */
-	      if ( cPos = strchr(line, '\n') ) *cPos = '\0'; /* Stringize */
-	      if ( cPos = strchr(line, ' ') ) *cPos = '\0';  /* first token */
-	      StrToUpper(strcpy(kode, &line[4]));            /* Upcase for match*/
-	      if ( isWildCode ) {
-	        if ( StrWildMatch(code, kode) ) goto CodeMatch;
-	      } else {
-	        if ( codeIsBlank || strcmp(code,kode) == 0 ) /* user 1st codeword */
-	          goto CodeMatch;
-	      }
-            }
-
-/*
-** End of file falls through to here, Reset the current code/file flags 
-** because we are done.
-** Returning false means we've exhausted the list and are done.
-** On the other hand, if we were looking for a specific code, i.e. isWildCode
-** was not wild, then we get to here we have failed to find it and must
-** report this as an error.
-*/
-
-	    currCode[0] = '\0';
-	    currFile[0] = '\0';
-	    if ( isWildCode ) return(false);
-
-	    sprintf(temp, "Code \"%s\" not found in file \"%s\"", 
-	      code, file);
-	    PostError(1,temp);
-	    return(false);
-
-/*
-**  All other formats consist of single entries, so return true.
-*/
-	  default:   
-	    line[0] = '\0';
-	    kode[0] = '\0';
-	    goto CodeMatch;
-	}
-
-/*
-** If we get to here we have either, found the correct codword or found a
-** member of the ambiguous set of codewords for PIR format.  For all other 
-** formats we were simple able to open the file.
-**
-** Allocate storage for the the code and filename and put them into the
-** current SeqSpec which we are preparing.
-*/
-
-CodeMatch:
-
-	strcpy(headerLine, line);
-	StrToUpper(headerLine);
-
-	thisSpec->code = CALLOC(strlen(kode)+1,char);
-	strcpy(thisSpec->code, kode);
-
-	thisSpec->file = CALLOC(strlen(file)+1,char);
-	strcpy(thisSpec->file, file);
-
-	return(true);
-}
-
-/* End of NextUserCode */
-

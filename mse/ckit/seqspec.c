@@ -21,6 +21,7 @@ extern    char *StrToUpper(char *);                          /* Strings.c */
 extern    char *StrCollapse(char *);                         /* Strings.c */
 extern    char *DePath(char *);                              /* VMS.c     */
 extern Boolean  GetOSSymbol(char *, char *);                /* VMS.c     */
+extern char *StrIndex(char *Pattern, char *String );
 
 /*
 **  Function declarations and function prototypes for this file
@@ -57,9 +58,9 @@ SeqSpec *temp;
 	temp->file = NULL;
 	temp->frag = NULL;
 	temp->options = NULL;
-	temp->isUser = false;
-	temp->isWildCode = false;
-	temp->isWildFile = false;
+	temp->isUser = 0;
+	temp->isWildCode = 0;
+	temp->isWildFile = 0;
 	temp->format = UNDEF;
 	
 	return(temp);
@@ -134,7 +135,7 @@ static int defSeqFormat = UNDEF;
 
 
 
-ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB);
+/* ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB); */
 /*
 ** Cleanup and leftover data in case this structure is being reused
 */
@@ -145,11 +146,11 @@ ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB);
 /*
 ** Find out what the User has define as his/her default format for
 ** his/her user-entry sequences.  If it's not defined, set it to
-** GCG. RAW makes a more theoritcal choice but GCG a more practical one.
+** GCG. RAWSEQ makes a more theoretical choice but GCG a more practical one.
 */
 
 	if ( defSeqFormat == UNDEF ) {          
-	  if ( GetOSSymbol("CKitSeqFormat",tempStr) == false )
+	  if ( GetOSSymbol("CKitSeqFormat",tempStr) == 0 )
 	    strcpy(tempStr, "GCG");
 
 	  defSeqFormat = EncodeFormat(StrToUpper(tempStr));
@@ -160,7 +161,7 @@ ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB);
 ** remove them as they get in the way
 */
 
-	if ( cPos = strchr(line, '!') ) {
+	if ( (cPos = strchr(line, '!')) ) {
 	  spec->options = CALLOC(strlen(cPos)+1,char);
 	  strcpy(spec->options, cPos);
 	  *cPos = '\0'; 
@@ -172,7 +173,7 @@ ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB);
 ** first code in that file by putting an equals sign at the beginning
 */
 
-ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB);
+/* ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB); */
 	if( strchr(line, '.') && line[0] != '@' )
 	  if( strchr(line, '=') == NULL ) {
 	    for( i = strlen(line); i>=0; i--)
@@ -180,7 +181,7 @@ ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB);
 	    line[0] = '=';
 	  }
 
-ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB);
+/* ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB); */
 /*
 ** If this is an indirect file spec, save the filename with the "@"
 ** character.  Set both wild flags to true, as we really don't know
@@ -194,32 +195,32 @@ ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB);
 	if ( line[0] == '@' ) {
 	  spec->file = CALLOC(strlen(line)+1,char);
 	  strcpy(spec->file, line);
-	  spec->isWildCode = true;
-	  spec->isWildFile = true;
+	  spec->isWildCode = 1;
+	  spec->isWildFile = 1;
 	} else {
 	  spec->code = CodeSpec(line);
 	  spec->file =  FileSpec(line,defaultDB);
 	  spec->frag =  FragSpec(line);
 	  spec->isUser = IsUser(line);
 
-	  spec->isWildCode = false;
-	  if ( strchr(spec->code, '*') ) spec->isWildCode = true;
-	  if ( strchr(spec->code, '%') ) spec->isWildCode = true;
+	  spec->isWildCode = 0;
+	  if ( strchr(spec->code, '*') ) spec->isWildCode = 1;
+	  if ( strchr(spec->code, '%') ) spec->isWildCode = 1;
 
-	  spec->isWildFile = false;
-	  if ( strchr(spec->file, '*') ) spec->isWildFile = true;
-	  if ( strchr(spec->file, '%') ) spec->isWildFile = true;
+	  spec->isWildFile = 0;
+	  if ( strchr(spec->file, '*') ) spec->isWildFile = 1;
+	  if ( strchr(spec->file, '%') ) spec->isWildFile = 1;
 	}
-ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB);
+/* ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB); */
 /*
 ** If the Spec is a database entry don't waste time, assign format as 
 ** PIR, exit now.
 */
 
-	if ( spec->isUser == false ) {
+	if ( spec->isUser == 0 ) {
 	  spec->format = PIR;
 	  StrToUpper(spec->code);
-	  ajDebug("spec->format = PIR\n");
+/*	  ajDebug("spec->format = PIR\n"); */
 	  return;
 	}
 	
@@ -239,7 +240,7 @@ ajDebug("MakeSeqSpec line= %s, defaultDB = %s\n",line,defaultDB);
 	  else if ( StrIndex("/IBI",spec->options) )
 	    spec->format = IBI;
 	  else if ( StrIndex("/RAW",spec->options) )
-	    spec->format = RAW;
+	    spec->format = RAWSEQ;
 	  else if ( StrIndex("/STA",spec->options) )
 	    spec->format = STADEN;
 	  else if ( StrIndex("/GCG",spec->options) )
@@ -271,7 +272,7 @@ Choice EncodeFormat(char *string)
 
 	if (      strcmp(string,"PIR")==0 )      return(PIR);
 	else if ( strcmp(string,"NBRF")==0 )     return(PIR);
-	else if ( strcmp(string,"RAW")==0 )      return(RAW);
+	else if ( strcmp(string,"RAW")==0 )      return(RAWSEQ);
 	else if ( strcmp(string,"STADEN")==0 )   return(STADEN);
 	else if ( strcmp(string,"GCG")==0 )      return(GCG);
 	else if ( strcmp(string,"IG")==0 )       return(IG);
@@ -296,7 +297,7 @@ char *DecodeFormat(int format)
 {
 	switch ( format ) {
 	  case     PIR: return((char *)"PIR");
-	  case     RAW: return((char *)"Raw");
+	  case  RAWSEQ: return((char *)"Raw");
 	  case  STADEN: return((char *)"Staden");
 	  case     GCG: return((char *)"GCG");
 	  case      IG: return((char *)"IG");
@@ -321,9 +322,9 @@ static Boolean IsUser(char *spec)
 
 {
 	while ( *spec && *spec != '/' )
-	  if ( *spec++ == '=' ) return(true);
+	  if ( *spec++ == '=' ) return(1);
 
-	return(false);
+	return(0);
 
 }  /* End of IsUser */
 
@@ -344,17 +345,17 @@ char *cPos;
 char temp[256];
 
 	strcpy(temp,spec);
-	if( cPos = strchr(temp, '/') ) *cPos = '\0';
+	if( (cPos = strchr(temp, '/')) ) *cPos = '\0';
 
 	if( IsUser(temp) ) {
-	  if( cPos = strchr(temp, '=') ) *cPos = '\0';
+	  if( (cPos = strchr(temp, '=')) ) *cPos = '\0';
         } else {
-	  if( cPos = strchr(temp, ':') ) strcpy(temp, cPos+1);
+	  if( (cPos = strchr(temp, ':')) ) strcpy(temp, cPos+1);
 	}
 /* 
 **Remove FragSpec 
 */
-	if( cPos = strchr(temp, '(') ) *cPos = '\0';
+	if( (cPos = strchr(temp, '(')) ) *cPos = '\0';
 
 	cPos = CALLOC(strlen(temp)+1,char);
 	strcpy(cPos,temp);
@@ -381,12 +382,12 @@ char *cPos;
 char temp[256];
 
 	strcpy(temp,spec);
-	if( cPos = strchr(temp,'/')) *cPos = '\0';
+	if( (cPos = strchr(temp,'/'))) *cPos = '\0';
 	
 	if ( IsUser(temp) ) {
-	  if ( cPos = strchr(temp,'=') ) strcpy(temp, cPos+1);
+	  if ( (cPos = strchr(temp,'=')) ) strcpy(temp, cPos+1);
 	} else {
-	  if ( cPos = strchr(temp,':') ) {
+	  if ( (cPos = strchr(temp,':')) ) {
 	    *cPos = '\0';
 	  } else {
 	    if ( StrIsBlank(defaultDB) )
@@ -422,11 +423,11 @@ char *cPos;
 char temp[256];
 
 	strcpy(temp, spec);
-	if ( cPos = strchr(temp, '/') ) *cPos = '\0';
+	if ( (cPos = strchr(temp, '/')) ) *cPos = '\0';
 
-	if ( cPos = strchr(temp, '(') ) {
+	if ( (cPos = strchr(temp, '(')) ) {
 	  strcpy(temp, cPos);
-	  if ( cPos = strrchr(temp,')') )
+	  if ( (cPos = strrchr(temp,')')) )
 	    *(cPos+1) = '\0';
 	  else
 	   return(NULL);

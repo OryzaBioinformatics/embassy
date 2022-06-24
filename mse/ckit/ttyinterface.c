@@ -17,6 +17,9 @@
 #include "seqentry.h"
 #include "ckittypes.h"
 #include "macros.h"
+#include <unistd.h>
+#include <stdlib.h>
+
 /*
 **  Declaration and prototypes for functions within this file
 */
@@ -38,6 +41,7 @@ extern    char *StrCollapse(char *);                       /* Strings.c */
 extern Boolean  StrIsBlank(char *);                        /* Strings.c */
 extern    char *BooleanToStr(Boolean value, Choice style); /* Strings.c */
 extern Boolean GetOSSymbol(char* , char*);           /* <os>.c */
+extern    char  *StrTrim(char *String);
 
 
 /**  GetInput  ************************************************************
@@ -59,7 +63,7 @@ char newString[512];
 int length;
 Boolean start;
 
-	start = true;
+	start = 1;
 
 /* 
 ** Read one line
@@ -75,7 +79,7 @@ Get:	if ( gets(newString) == NULL ) { printf("\n"); exit(0);}
 	length = strlen(newString);
 	if ( length > 0 ) {
 	  if ( start ) *string = '\0';            /* Write over existing */
-	  start = false;
+	  start = 0;
 	  if( newString[length-1] == '-' ) {      /* Continuation character */
 	    newString[length-1] = '\0';           /* Process and get more   */
 	    strcat(string, newString);
@@ -103,15 +107,15 @@ Boolean GetBoolean(char *prompt, Boolean def)
 {
 char string[256];
 
-	while(true) {
+	while(1) {
 	  strcpy(string,BooleanToStr(def,0));
 	  StrToUpper(StrCollapse(GetInput(prompt,string)));
-	  if ( *string == 'Y' ) return(true);
-	  if ( *string == 'N' ) return(false);
-	  if ( *string == 'T' ) return(true);
-	  if ( *string == 'F' ) return(false);
-	  if ( *string == '1' ) return(true);
-	  if ( *string == '0' ) return(false);
+	  if ( *string == 'Y' ) return(1);
+	  if ( *string == 'N' ) return(0);
+	  if ( *string == 'T' ) return(1);
+	  if ( *string == 'F' ) return(0);
+	  if ( *string == '1' ) return(1);
+	  if ( *string == '0' ) return(0);
 	  printf("\n You must answer YES or NO. Try again: ");
 
 	}
@@ -154,13 +158,13 @@ Try:	if ( StrIsBlank(StrCollapse(GetInput(prompt,string))) )
 	value = 0;
 	for ( i=0; string[i]; i++ ) {
 	  if ( string[i] == '.' ) break;
-	  if ( isdigit(string[i]) )
+	  if ( isdigit((int)string[i]) )
 	    value = (value * 10.) + (string[i] -'0');
 	}
 
 	power = 1.0;
 	for (; string[i]; i++ )
-	  if ( isdigit(string[i]) ) {
+	  if ( isdigit((int)string[i]) ) {
 	    value = (value * 10.) + (string[i] -'0');
 	    power *= 10.0;
 	  }
@@ -205,11 +209,11 @@ Try:	if ( StrIsBlank(StrCollapse(GetInput(prompt,string))) )
 	if ( string[0] == '+' || string[0] == '-')
 	  sign = (string[0]=='+') ? 1: -1;
 
-	if ( cPos = strchr(string,'.') ) *cPos = '\0';
+	if ( (cPos = strchr(string,'.')) ) *cPos = '\0';
 
 	value = 0;
 	for ( i=0; string[i]; i++ )
-	  if ( isdigit(string[i]) )
+	  if ( isdigit((int)string[i]) )
 	    value = (value * 10) + (string[i] -'0');
 
 	value *= sign;
@@ -245,21 +249,21 @@ Boolean reverse;
 
 	*begin = ( seq->length ) ? 1 : 0;
 	*end = seq->length;
-	reverse = false;
+	reverse = 0;
 
 	*begin = GetInteger("\n                  Begin", *begin, *begin, seq->length);
 
 	sprintf(temp,"End [%ld] ?  ", *end);
 	sprintf(format,"%30s",temp);
-	if ( cPos = strrchr(format,'[') ) *(cPos-1) = EOS;
+	if ( (cPos = strrchr(format,'[')) ) *(cPos-1) = EOS;
 
 	*end = GetInteger(format, *end, *begin, seq->length);
 
-	if ((*begin != 1) || *end != seq->length) seq->circular = false;
+	if ((*begin != 1) || *end != seq->length) seq->circular = 0;
 
 	if ( seq->type >= DNA ) {
-	  if (GetBoolean("  From reverse strand",false)) {
-	    reverse = true;
+	  if (GetBoolean("  From reverse strand",0)) {
+	    reverse = 1;
 	  }
 	}
 

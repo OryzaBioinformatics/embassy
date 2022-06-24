@@ -62,6 +62,7 @@ extern     char *NucToProtein(int, char *, long *);        /* Sequence.c */
 extern      int  CheckSum(char *);                         /* Sequence.c */
 extern      int  CompBase(char);                           /* Sequence.c */
 extern     char *DePath(char *);                           /* VMS.c      */
+extern     void DeleteSeqEntry(SeqEntry *seq);
 
 /*
 **  Function declarations and prototypes for this file.  This file has only
@@ -113,7 +114,7 @@ FILE *file;
 ** the deallocate memory for the SeqEntry and return a null pointer.
 */
 
-	if ( FindSeqSpec(spec, seq) == false ) {
+	if ( FindSeqSpec(spec, seq) == 0 ) {
 	  seq->spec = NULL;
 	  DeleteSeqEntry(seq);
 	  return(NULL);
@@ -151,12 +152,12 @@ GetLine:
 	  }
 
 	  cPtr = oneLine;
-	  while( seqChar=seqCharSet[(spec->format)-1][(*cPtr)&0x7F] ) {
+	  while( (seqChar=seqCharSet[(spec->format)-1][(*cPtr)&0x7F]) ) {
 	    cPtr++;
 	    switch (seqChar) {
 	      case ENDSEQ:
 	        if (spec->format == IG) 
-	          seq->circular = (*(cPtr-1)=='2') ? true : false;
+	          seq->circular = (*(cPtr-1)=='2') ? 1 : 0;
 	        goto Done;
 	      case NEXTENTRY:
 	        PostError(1,"End of sequence marker not found.");
@@ -220,19 +221,21 @@ Done:
 */
 
 	if (spec->format == PIR )
-	  if ( ReadTxt(spec,seq) == false )
+	  if ( ReadTxt(spec,seq) == 0 )
 	    return(NULL);
 
 /*
 ** Process any fragment spec, if the sequence was Circular, set it to Linear 
 */
 
-	if ( spec->frag )
+	if ( (spec->frag) )
+        {
      	  if( Fragment(spec->frag, seq) ) {
-	    seq->circular = false;
+	    seq->circular = 0;
 	    seq->checkSum = CheckSum(seq->mem);
 	  } else
 	    return (NULL);
+        }
 
 /*
 ** read and process Options flags here 
@@ -256,19 +259,19 @@ Done:
 	    seq->type = RNA;
 	  }
 	  if ( StrIndex("/CIR",spec->options) ) {
-	    seq->circular = true;
+	    seq->circular = 1;
 	  }
 	  if ( StrIndex("/LIN",spec->options) ) {
-	    seq->circular = false;
+	    seq->circular = 0;
 	  }
 	  if ( StrIndex("/TRA",spec->options) ) {
 	    StrChange(seq->mem, '-', ' ');
 	    seq->length = strlen(StrCollapse(seq->mem));
 	    strcpy(oneLine, StrIndex("/TRA",spec->options)+1);
-	    if ( pPos = strchr(oneLine,'/') ) *pPos = '\0';
-	    if ( pPos = StrIndex("=SGC",oneLine) )
+	    if ( (pPos = strchr(oneLine,'/')) ) *pPos = '\0';
+	    if ( (pPos = StrIndex("=SGC",oneLine)) )
 	      sgCode = (*(pPos+4))-48;
-	    else if ( pPos = StrIndex("(SGC", seq->title) )
+	    else if ( (pPos = StrIndex("(SGC", seq->title)) )
 	      sgCode = (*(pPos+4))-48;
 	    else 
 	      sgCode = 0;
@@ -368,7 +371,7 @@ char *cPos;
 
 	  if( userFile == 0 ) {
 	    PostError(1,"User File not found");
-	    return(false);
+	    return(0);
 	  }
 
 /*
@@ -379,23 +382,23 @@ char *cPos;
 	  switch (spec->format) {
 	    case  PIR:
 	      if ( fgets(title, 256, userFile) ) {
-	        if ( cPos = strchr(title, '\n') ) *cPos = '\0';
+	        if ( (cPos = strchr(title, '\n')) ) *cPos = '\0';
 	      } else {
 	        strcpy(errMsg,"Code not found in user-entry file");
 	        PostError(1,errMsg);
-	        return (false);
+	        return (0);
 	      }
 	      break;
 	    case IG:
-	      if ( ReadTxt(spec,seq) == false ) return(false);
+	      if ( ReadTxt(spec,seq) == 0 ) return(0);
 	      if ( fgets(title, 256, userFile) == NULL ) {
 	        PostError(1,"EOF reached in IG format file.");
-	        return(false);
+	        return(0);
 	      }
 	      sprintf(title, "IG format file: %s", DePath(spec->file));
 	      break;
-	    case RAW:
-	      if ( ReadTxt(spec,seq) == false ) return(false);
+	    case RAWSEQ:
+	      if ( ReadTxt(spec,seq) == 0 ) return(0);
 	      sprintf(title,"Raw format file: %s", DePath(spec->file));
 	      break;
 	    case STADEN:
@@ -407,11 +410,11 @@ char *cPos;
 	      sprintf(title,"DNA Strider format file: %s", DePath(spec->file));
 	      break;
 	    case GCG:
-	      if ( ReadTxt(spec,seq) == false ) return(false);
+	      if ( ReadTxt(spec,seq) == 0 ) return(0);
 	      sprintf(title,"GCG format file: %s", DePath(spec->file));
 	      break; 
 	    case IBI:
-	      if ( ReadTxt(spec,seq) == false ) return(false);
+	      if ( ReadTxt(spec,seq) == 0 ) return(0);
 	      fgets(line, 256, userFile);
 	      strcpy(title,&line[6]);
 	      StrTrim(title);
@@ -422,11 +425,11 @@ char *cPos;
 
 	  if( (*SetDBPointers)(spec) ) {
 	      fgets(headerLine, 512, seqFile);
-	      if ( cPos = strchr(headerLine, '\n') ) *cPos = '\0';
+	      if ( (cPos = strchr(headerLine, '\n')) ) *cPos = '\0';
 	      fgets(title, 512, seqFile);
-	      if ( cPos = strchr(title, '\n') ) *cPos = '\0';
+	      if ( (cPos = strchr(title, '\n')) ) *cPos = '\0';
 	  } else
-	    return (false);
+	    return (0);
 
 	}
 
@@ -436,14 +439,14 @@ char *cPos;
 */
 
 	switch ( spec->format ) {
-	  case RAW:
+	  case RAWSEQ:
 	  case GCG:
 	  case STADEN:
 	  case IBI:
 	  case STRIDER:
 	   strcpy(spec->code, spec->file);
 	   DePath(spec->code);
-	   if ( cPos = strchr(spec->code,'.') ) *cPos = '\0';
+	   if ( (cPos = strchr(spec->code,'.')) ) *cPos = '\0';
 	}
 
 /*
@@ -474,14 +477,14 @@ char *cPos;
 	    break;
 
 	  case IG:
-	  case RAW:
+	  case RAWSEQ:
 	  case STADEN:
 	  case GCG:
 	  case IBI:
 	  case STRIDER:
 	  default:
 	    seq->type = UNDEF;
-	    seq->circular = false;
+	    seq->circular = 0;
 	    strcpy(name,DePath(spec->file));
 	}
 
@@ -495,7 +498,7 @@ char *cPos;
 	seq->title = CALLOC(strlen(title)+1,char);
 	strcpy(seq->title,title);
 
-	return(true);
+	return(1);
 
 } /* End of FindSeqSpec */
 
@@ -526,7 +529,7 @@ long workLength, start, stop, k;
 Boolean reverse;
 
 
-	if ( frag == NULL ) return(true);
+	if ( frag == NULL ) return(1);
 
 /*
 ** Make a copy of the fragment spec. Remove surrounding paren's
@@ -542,11 +545,11 @@ Boolean reverse;
 ** the (C) operator using blanks
 */
 
-	reverse = false;
-	if ( cPos = StrIndex("(C)", fSpec) ) {  /* Test for rev-comp */
+	reverse = 0;
+	if ( (cPos = StrIndex("(C)", fSpec)) ) {  /* Test for rev-comp */
 	  for ( k=0; k<3; k++ )
 	   *(cPos+k) = ' ';
-	  reverse = true;
+	  reverse = 1;
 	}
 /*
 ** Handle the special case of ((C)) by setting the range to the entire
@@ -580,7 +583,7 @@ Boolean reverse;
 	workSize = 0;
 	tokens = numTokens;
 	for (pFSpec = fSpec;  tokens; tokens--) {
-	  if ( cPos = strchr(pFSpec, ',') ) *cPos = '\0';
+	  if ( (cPos = strchr(pFSpec, ',')) ) *cPos = '\0';
 	  if ( *pFSpec == '\"' || *pFSpec == '\'' ) { /* Literal */
 	    for (k=1; *(pFSpec+k+1) ; k++)
 	      workSize++;
@@ -588,7 +591,7 @@ Boolean reverse;
 	    continue;
 	  }
 
-	  if ( pPos = strchr(pFSpec, '-') ) {           /* Range */
+	  if ( (pPos = strchr(pFSpec, '-')) ) {           /* Range */
             strcpy(stopTok,pPos+1);
 	    *pPos = '\0';
 	    strcpy(startTok,pFSpec);
@@ -633,7 +636,7 @@ Boolean reverse;
 
 	if ( (workStrand = CALLOC(workSize,char)) == NULL) {
 	  PostError(2,"Fragment - Memory allocation failure");
-	  return(false);
+	  return(0);
 	}
 	seqPos = workStrand;
 
@@ -643,7 +646,7 @@ Boolean reverse;
 
 	tokens = numTokens;
 	for (pFSpec = fSave;  tokens; tokens--) {
-	  if ( cPos = strchr(pFSpec, ',') ) *cPos = '\0';
+	  if ( (cPos = strchr(pFSpec, ',')) ) *cPos = '\0';
 	  if ( *pFSpec == '\"' || *pFSpec == '\'' ) { /* Literal */
 	    for (k=1; *(pFSpec+k+1) ; k++)
 	      *seqPos++ = *(pFSpec+k);
@@ -651,7 +654,7 @@ Boolean reverse;
 	    continue;
 	  }
 
-	  if ( pPos = strchr(pFSpec, '-') ) {           /* Range */
+	  if ( (pPos = strchr(pFSpec, '-')) ) {           /* Range */
             strcpy(stopTok,pPos+1);
 	    *pPos = '\0';
 	    strcpy(startTok,pFSpec);
@@ -705,7 +708,7 @@ Boolean reverse;
 	dispose(seq->mem);
 	seq->mem = workStrand;
 	seq->strand = seq->mem-1;
-	return(true);
+	return(1);
 
 } /* End of Fragment */
 
@@ -748,7 +751,7 @@ FILE *file;
 
 	if ( (temp = CALLOC(tempSize,char)) == NULL ) {
       	  PostError(2,"ReadTxt - Failed to allocate memory."); 
-	  return(false);
+	  return(0);
 	}
 	seq->text = temp;
 	seq->tSize = tempSize;
@@ -757,14 +760,14 @@ FILE *file;
 	strcpy(seq->text,"");
 	backRec = ftell(file);
 
-GetLine:
+
 	while ( fgets(oneLine, 512, file) != NULL ) {
 	  n += strlen(oneLine);
 	  if ( n > seq->tSize ) {
 	    tempSize = seq->tSize + 512;
 	    if ( (temp = REALLOC(seq->text,tempSize,char)) == NULL ) {
 	      PostError(2,"ReadTxt - Failed to allocate memory."); 
-	      return(false);
+	      return(0);
 	    }
 	    seq->text = temp;
 	    seq->tSize= tempSize;
@@ -787,10 +790,10 @@ GetLine:
 	      strcat(seq->text,oneLine);
 	      break;
 	    case GCG:
-	      if ( StrIndex("..",oneLine) ) return(true);
+	      if ( StrIndex("..",oneLine) ) return(1);
 	      strcat(seq->text,oneLine);
 	      break;
-	    case RAW:
+	    case RAWSEQ:
 	    case STRIDER:
 	    case STADEN:
  	      goto Done;
@@ -805,21 +808,21 @@ GetLine:
 
 	switch (spec->format) {
 	  case PIR:
-	    return(true);
+	    return(1);
 	  case GCG:
 	    sprintf(errMsg,"Missing \"..\" between text and sequence in file \"%s\".", spec->file);
 	    PostError(1,errMsg);
-	    return(false);
+	    return(0);
 	  case IBI:
 	    sprintf(errMsg, "Missing keyword \"ORIGIN\" in file \"%s\".", spec->file);
 	    PostError(1,errMsg);
-	    return(false);
-	  case RAW:
-	    return(true);
+	    return(0);
+	  case RAWSEQ:
+	    return(1);
 	  default:
 	    sprintf(errMsg, "End of File while reading Text: \"%s\"", spec->file);
 	    PostError(1,errMsg);
-	    return(false);
+	    return(0);
 	}
 
 /*
@@ -829,7 +832,7 @@ GetLine:
 Done:
 	fseek(file, backRec, SEEK_SET);
 
-	return (true);
+	return (1);
 
 } /* End of ReadTxt */
 

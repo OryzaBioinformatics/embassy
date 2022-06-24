@@ -6,8 +6,10 @@
 
 char *SeqToSpecName(SeqEntry *, int);
 char *WriteSeq(char *, SeqEntry *, int);
+Boolean NewFileType(char *fileName, char *type);
 
 extern void PostError(int severity, char *errMsg);             /* Error.c */
+extern int CheckSum(char *strand);
 
 
 /***  SeqToSpecName  *********************************************************
@@ -44,7 +46,7 @@ static char outSpec[256];
 	  case      IG: NewFileType(outSpec, ".IG");  break;
 	  case     IBI: NewFileType(outSpec, ".IBI");  break;
 	  case STRIDER: NewFileType(outSpec, ".STR");  break;
-	  case     RAW:
+	  case  RAWSEQ:
 	       default:  NewFileType(outSpec, ".RAW"); break;
 	}
 
@@ -100,7 +102,7 @@ extern char *StrChange(), *DecodeType(int), *GetTime();
 	  case GCG:
 	    doText = (seq->text != NULL); break;
 	  default:
-	    doText = false; break;
+	    doText = 0; break;
 	}
 
 /*
@@ -128,26 +130,26 @@ extern char *StrChange(), *DecodeType(int), *GetTime();
 **                code=filename.ext     OR    filename.ext
 */
 
-	if ( cPos = strchr(outSpec,';') ) *cPos = '\0'; /* Remove version */
+	if ( (cPos = strchr(outSpec,';')) ) *cPos = '\0'; /* Remove version */
 
 	strcpy(code,outSpec);
-	if ( cPos = strchr(code,'=') ) *cPos = '\0'; /* code=filename.ext */
-	if ( cPos = strchr(code,'.') ) *cPos = '\0'; /* filename.ext */
+	if ( (cPos = strchr(code,'=')) ) *cPos = '\0'; /* code=filename.ext */
+	if ( (cPos = strchr(code,'.')) ) *cPos = '\0'; /* filename.ext */
 	StrToUpper(code);
 	strcpy(outFName,outSpec);
-	if ( cPos = strchr(outFName,'=') ) strcpy(outFName, ++cPos);
+	if ( (cPos = strchr(outFName,'=')) ) strcpy(outFName, ++cPos);
 
 /*
 **  Are we dealing with a new or old sequence file?  Test for an existing
 **  file set "twoFiles" flag accordingly.
 */
 
-	if ( inFile = fopen(outFName, "r") ) {
+	if ( (inFile = fopen(outFName, "r")) ) {
 	  if ( !(outFile = fopen(outFName, "w")) ) goto Error;
-	  twoFiles = true;
+	  twoFiles = 1;
 	} else {
 	  if ( !(outFile = fopen(outFName, "w")) ) goto Error;
-	  twoFiles = false;
+	  twoFiles = 0;
 	}
 
 /*
@@ -171,7 +173,7 @@ extern char *StrChange(), *DecodeType(int), *GetTime();
 **
 **  STRIDER- Write out strider header line and sequnce title.
 **
-**  RAW    - Do nothing.
+**  RAWSEQ - Do nothing.
 */
 
 	switch ( format ) {
@@ -201,7 +203,7 @@ extern char *StrChange(), *DecodeType(int), *GetTime();
 	      while ( fgets(line, 255, inFile) ) {
 	        if( line[0] == '>') {
 	          strcpy(testCode, &line[4]);
-	          if ( cPos = strchr(testCode, '\n') ) *cPos = '\0';
+	          if ( (cPos = strchr(testCode, '\n')) ) *cPos = '\0';
 	          StrToUpper(StrCollapse(testCode));
 	          if( strcmp(testCode,code) == 0 ) break;
 	        }  
@@ -267,7 +269,7 @@ extern char *StrChange(), *DecodeType(int), *GetTime();
 
 	    StrChange(seq->mem,'-','.');
 	    seq->checkSum = CheckSum(seq->mem);
-	    fprintf(outFile, "  %s  Length: %d  %s  Check: %d ..\n",
+	    fprintf(outFile, "  %s  Length: %ld  %s  Check: %d ..\n",
 	            outFName, seq->length, GetTime(3), seq->checkSum);
 	    fprintf(outFile,"        1 ");
 	    break;
@@ -276,7 +278,7 @@ extern char *StrChange(), *DecodeType(int), *GetTime();
 
 	  case IBI:
 	    fprintf(outFile,
-	      "LOCUS       %s         %d BP           UPDATED  %s\n",
+	      "LOCUS       %s         %ld BP           UPDATED  %s\n",
 	       code, seq->length, GetTime(0));
 	    if ( twoFiles && !doText ) {
 	      while ( fgets(line, 255, inFile) ) {
@@ -285,9 +287,9 @@ extern char *StrChange(), *DecodeType(int), *GetTime();
                 fputs(line,outFile);
 	      }
 	    } else if ( doText && seq->text ) {
-	      if ( cPos = StrIndex("LOCUS     ",seq->text) )
+	      if ( (cPos = StrIndex("LOCUS     ",seq->text)) )
 	        strcpy(seq->text,strchr(cPos,'\n'));
-	      if ( cPos = StrIndex("\nORIGIN",seq->text) )
+	      if ( (cPos = StrIndex("\nORIGIN",seq->text)) )
 	        *cPos = '\0';
 	      fputs(seq->text,outFile);
 	    }
@@ -299,7 +301,7 @@ extern char *StrChange(), *DecodeType(int), *GetTime();
 
 	   case STRIDER:
 	    fprintf(outFile,"; ### from DNA Strider  %s\n",GetTime(3));
-	    fprintf(outFile,"; %s sequence  %s length %d",
+	    fprintf(outFile,"; %s sequence  %s length %ld",
 	      DecodeType(seq->type),seq->name,seq->length);
 	    if ( seq->type <= PROTEIN )
 	      fprintf(outFile," a.a. complete sequence\n; %s\n",seq->title);
@@ -309,7 +311,7 @@ extern char *StrChange(), *DecodeType(int), *GetTime();
 
 	/****************************************************************/
 
-	  case RAW:
+	  case RAWSEQ:
 	  default:
 	    break;
 
@@ -467,7 +469,7 @@ Boolean NewFileType(char *fileName, char *type)
 {
 char *pChr;
 
-	if ( pChr = strrchr(fileName, '.') ) *pChr = '\0';
+	if ( (pChr = strrchr(fileName, '.')) ) *pChr = '\0';
 
 	if ( *type == '.' )
 	  strcat(fileName, type);
@@ -476,7 +478,7 @@ char *pChr;
 	  strcat(fileName, type);
 	}
 
-	return(true);
+	return(1);
 
 }  /* End of NewFileType */
 /****  SetOSSymbol  *********************************************************
@@ -506,7 +508,7 @@ Boolean SetOSSymbol(char *symbol, char *value)
 *****************************************************************************/
 Boolean GetOSSymbol(char *symbol, char *value)
 {
-  return(false);
+  return(0);
 	
 
 } /* End of GetOSSymbol */
@@ -525,7 +527,7 @@ char *DePath(char *fileName)
 {
 char *cPos;
 
-	if( cPos = strrchr(fileName, '/') ) strcpy(fileName, cPos+1);
+	if( (cPos = strrchr(fileName, '/')) ) strcpy(fileName, cPos+1);
 
 	return(fileName);
 
@@ -646,7 +648,7 @@ Boolean TransName(char* translation, char* logicalName)
 {
 
         strcpy(translation,logicalName);
-	return(true);
+	return(1);
 
 }
   
