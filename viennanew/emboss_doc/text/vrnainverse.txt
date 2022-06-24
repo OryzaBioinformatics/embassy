@@ -50,7 +50,7 @@ Vienna RNAfold output file [rna3.vrnainverse]:
 Command line arguments
 
 RNA sequences matching a structure
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers:
   [-structuresfile]    infile     Vienna RNA structures file
@@ -145,23 +145,23 @@ Output file format
 
   File: rna3.vrnainverse
 
-UGUUUUAUUGGUCUCGUCGCUGACCUGGGUGUAUCGAUCAUCUUGUACGGGCUCCAAGCGGGUUCUAGGACACACU   2
-8   d = 1.000000
-UCCUUUAUCGCAGAUACAGCCCUGCCCAUGUUAGCCACACAUGCGAUUCACCAUUCCGACUGGUGUAGAGGGUGCG   2
-7
-GUUAUUUAUGCGGCAGGACCACCGCGGAGUAGUUCUUAUAUUCACACACUGGUAUUUGCGACCGGGAGUAGCGGCC   1
-9
+UUCUAGACCGGUCUGAUCUAUGGCCCUUCUGAUGAGUACAGAGACGCGAGGAGAAAACUACUCCUUCUAGGAGCCU   2
+5
+GUAGACUCUGAACAAGGCUCAGUUCCGAGGCGAUACCGGUCUCAUUUUUUACUCUUUACCAGUGAGGUCUACACCC   2
+6   d = 1.000000
+UCAGUUUUAAUAUCUCCGACGGUAUGCCCUUGGCCGCAAAGGGAUUGACGCACACCUCGCGUGCGGAGCUGGUCAG   2
+3   d = 1.000000
 
   Output files for usage example 2
 
   File: rna3.vrnainverse
 
-UAUGUGUGUCUGCUUUAACCCGCAGCAACCGGGAUCGACGGUUAUAUGUUUGAUUAACGUUCAAAGCACAUGGUGA   2
+UUCUAGACCGGUCUGAUCUAUGGCCCUUCUGAUGAGUACAGAGACGCGAGGAGAAAACUACUCCUUCUAGGAGCCU   2
 5
-GUUGUGAAAGCACAACCUAACGUGCCCUGUGAUCGAUACAUAGUAGUAUGCAAACCACCCUUGUAUCGCGACCUGC   3
-1
-GUGAAUUGAGGCGACGAGGUAUGCUAGGGGCCCAACAAGCCCCAACUCCCGCGGCCCUUACGUGGAGUUCAUAUUA   2
-1
+GCCUAAGACGAUCUGUACUGUGAUCACUUCGUACGAUUUGAAGCUCGAGAAUGCCUGUGCCAUUCCUUAGGUCCCC   2
+8
+CCCGGUCCUAGACUCCAGGUUGUCUUCGUCGGUUAGGGUGAUGUUAUGUUGCGAAAUGUAUGCAAGACCGGGAUCU   2
+9
 
 Data files
 
@@ -217,13 +217,8 @@ Author(s)
                     This program is an EMBOSS conversion of a program written by Ivo
                     Hofacker as part of his VIENNA package.
 
-                    Although we take every care to ensure that the results of the EMBOSS
-                    version are identical to those from the original package, we recommend
-                    that you check your inputs give the same results in both versions
-                    before publication.
-
-                    Please report all bugs in the EMBOSS version to the EMBOSS bug team,
-                    not to the original author.
+                    Please report all bugs to the EMBOSS bug team
+                    (emboss-bug (c) emboss.open-bio.org) not to the original author.
 
 History
 
