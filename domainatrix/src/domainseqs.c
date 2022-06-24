@@ -140,7 +140,7 @@ int main(int argc, char **argv)
 
 
     /* Read data from acd */
-    embInitP("domainseqs",argc,argv,"DOMAINATRIX");
+    embInitPV("domainseqs",argc,argv,"DOMAINATRIX",VERSION);
 
     domain_inf    = ajAcdGetInfile("dcfinfile");
     getswiss    = ajAcdGetToggle("getswiss");
@@ -448,11 +448,11 @@ static AjBool domainseqs_AlignDomain(AjPSeq sp_seq,
     m = ajStrNew();    
     n = ajStrNew();    
 
-    gapopen   = ajRoundF(gapopen,8);
-    gapextend = ajRoundF(gapextend,8);
+    gapopen   = ajRoundFloat(gapopen,8);
+    gapextend = ajRoundFloat(gapextend,8);
 
-    sub = ajMatrixfArray(matrix);
-    cvt = ajMatrixfCvt(matrix);
+    sub = ajMatrixfGetMatrix(matrix);
+    cvt = ajMatrixfGetCvt(matrix);
 
 
     begina  = ajSeqGetBegin(sp_seq)+ajSeqGetOffset(sp_seq);

@@ -117,7 +117,7 @@ int main(int argc, char **argv)
 
 
     /* Read data from acd */
-    embInitP("ssematch",argc,argv,"DOMAINATRIX");
+    embInitPV("ssematch",argc,argv,"DOMAINATRIX",VERSION);
     dcfin       = ajAcdGetInfile("dcfinfile");
     ssin       = ajAcdGetInfile("ssinfile");
     max_hits      = ajAcdGetInt("maxhits");
@@ -408,10 +408,10 @@ static AjBool  ssematch_NWScore(AjPScop temp_scop,
     AJCNEW(compass, maxarr);
     pstr = ajStrNew();    
     qstr = ajStrNew();    
-    gapopen   = ajRoundF(gapopen,8);
-    gapextend = ajRoundF(gapextend,8);
-    sub = ajMatrixfArray(matrix);
-    cvt = ajMatrixfCvt(matrix);
+    gapopen   = ajRoundFloat(gapopen,8);
+    gapextend = ajRoundFloat(gapextend,8);
+    sub = ajMatrixfGetMatrix(matrix);
+    cvt = ajMatrixfGetCvt(matrix);
 
 
     
