@@ -66,8 +66,9 @@ Command line arguments
 
    General qualifiers:
    -auto               boolean    Turn off prompts
-   -stdout             boolean    Write standard output
-   -filter             boolean    Read standard input, write standard output
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
@@ -120,7 +121,7 @@ Output file format
 
 !!NA_MULTIPLE_ALIGNMENT 1.0
 
-  mse.msf MSF: 120 Type: N 15/07/07 CompCheck: 2784 ..
+  mse.msf MSF: 120 Type: N 15/07/08 CompCheck: 2784 ..
 
   Name: MSFM1      Len: 120  Check: 8587 Weight: 1.00
   Name: MSFM2      Len: 120  Check: 5766 Weight: 1.00
@@ -173,14 +174,16 @@ Known bugs
 
 See also
 
-   Program name                        Description
-   edialign     Local multiple alignment of sequences
-   emma         Multiple alignment program - interface to ClustalW program
-   infoalign    Information on a multiple sequence alignment
-   plotcon      Plot quality of conservation of a sequence alignment
-   prettyplot   Displays aligned sequences, with colouring and boxing
-   showalign    Displays a multiple sequence alignment
-   tranalign    Align nucleic coding regions given the aligned proteins
+   Program name Description
+   edialign Local multiple alignment of sequences
+   emma Multiple sequence alignment (ClustalW wrapper)
+   infoalign Display basic information about a multiple sequence
+   alignment
+   plotcon Plot conservation of a sequence alignment
+   prettyplot Draw a sequence alignment with pretty formatting
+   showalign Display a multiple sequence alignment in pretty format
+   tranalign Generate an aligment of nucleic coding regions from aligned
+   proteins
 
 Author(s)
 
