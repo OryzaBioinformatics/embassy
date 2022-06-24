@@ -184,7 +184,7 @@ int main(int argc, char **argv)
     qse = ajStrNew();
     qss = ajStrNew();
     
-    while(ajFileReadLine(ssin,&line))
+    while(ajReadlineTrim(ssin,&line))
     {
         /* SE string */
         if(ajStrPrefixC(line,"SE"))
@@ -197,7 +197,7 @@ int main(int argc, char **argv)
         /* SS string */
 	else if(ajStrPrefixC(line,"SS"))
 	{
-            while((ajFileReadLine(ssin,&line)) && !ajStrPrefixC(line,"XX"))
+            while((ajReadlineTrim(ssin,&line)) && !ajStrPrefixC(line,"XX"))
                 ajStrAppendS(&qss,line);
             ajStrRemoveWhite(&qss);
 
@@ -462,14 +462,14 @@ static AjBool  ssematch_NWScore(AjPScop temp_scop,
     embAlignPathCalc(p,q,lenp,lenq, gapopen,
 		     gapextend,path,sub,cvt,compass,show);
 
-    embAlignScoreNWMatrix(path,pseq, qseq,sub,cvt,
-			  lenp,lenq,gapopen,
-			  compass,gapextend,&start1,&start2);
+    /*embAlignScoreNWMatrix(path,compass,gapopen,gapextend,
+                          pseq, qseq,
+			  lenp,lenq,sub,cvt,
+			  &start1,&start2);*/
 
     embAlignWalkNWMatrix(path,pseq,qseq,&pstr,&qstr,
-			 lenp,lenq,
-			 &start1,&start2,gapopen,gapextend,cvt,
-			 compass,sub);
+			 lenp,lenq,&start1,&start2,
+                         gapopen,gapextend,compass);
 
     embAlignCalcSimilarity(pstr,qstr,sub,cvt,lenp,
 			   lenq,&id,&sim,&idx, &simx);

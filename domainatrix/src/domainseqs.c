@@ -173,11 +173,11 @@ int main(int argc, char **argv)
 	ajFmtPrint("//\n%-15S\n", ajDomainGetId(domain));  
 	
 
-	if(!(dpdb_inf=ajFileNewDirF(dpdb_path, dpdb_name)))
+	if(!(dpdb_inf=ajFileNewListinDirPre(dpdb_path, dpdb_name)))
 	{
 	    ajStrAssignS(&msg, dpdb_name);
 	    ajStrAppendC(&msg, ".");
-	    ajStrAppendS(&msg,ajDirExt(dpdb_path));
+	    ajStrAppendS(&msg,ajDirGetExt(dpdb_path));
 	    ajFmtPrintF(errf, "%-15s\n", "FILE_OPEN");  
 	    ajWarn("Could not open ccf file %S", msg);
 	    ajDomainDel(&domain);
@@ -474,15 +474,15 @@ static AjBool domainseqs_AlignDomain(AjPSeq sp_seq,
     
     
     /* Call alignment functions. */
-    embAlignPathCalc(p,q,lena,lenb, gapopen,gapextend,path,sub,cvt,
+    score = embAlignPathCalc(p,q,lena,lenb, gapopen,gapextend,path,sub,cvt,
 		     compass,show);
 
-    score =  embAlignScoreNWMatrix(path,sp_seq,pdb_seq,sub,cvt,lena, 
-				   lenb,gapopen,compass,gapextend,
-				   &start1,&start2);
+    /*score =  embAlignScoreNWMatrix(path,compass,gapopen,gapextend,
+                                   sp_seq,pdb_seq,lena,lenb,
+				   sub,cvt,&start1,&start2);*/
 
     embAlignWalkNWMatrix(path,sp_seq,pdb_seq,&m,&n,lena,lenb,&start1,
-			 &start2,gapopen,gapextend,cvt,compass,sub);
+			 &start2,gapopen,gapextend,compass);
 
     embAlignCalcSimilarity(m,n,sub,cvt,lena,lenb,&id,&sim,&idx, &simx);
 
