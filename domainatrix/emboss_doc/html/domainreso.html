@@ -227,7 +227,7 @@ DOMAINRESO does not use any data files.
  
 <pre>
 Remove low resolution domains from a DCF file.
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers:
   [-cpdbpath]          dirlist    [./] This option specifies the location of
@@ -269,6 +269,9 @@ Version: EMBOSS:6.2.0
    Additional (Optional) qualifiers: (none)
    Advanced (Unprompted) qualifiers: (none)
    Associated qualifiers:
+
+   "-cpdbpath" associated qualifiers
+   -extension1         string     Default file extension
 
    "-dcfoutfile" associated qualifiers
    -odirectory3        string     Output directory
@@ -356,6 +359,19 @@ Version: EMBOSS:6.2.0
 
 <tr bgcolor="#FFFFCC">
 <th align="left" colspan=5>Associated qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-cpdbpath" associated dirlist qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension1<br>-extension_cpdbpath</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>ccf</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -706,7 +722,7 @@ None.
 
 <tr>
 <td><a href="/embassy/signature/sigscanlig.html">sigscanlig</a></td>
-<td>Searches ligand-signature library & writes hits (LHF file)</td>
+<td>Searches ligand-signature library and writes hits (LHF file)</td>
 </tr>
 
 </table>

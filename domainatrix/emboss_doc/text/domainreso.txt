@@ -137,7 +137,7 @@ CH   A CHAIN; . START; . END;
   6.1 COMMAND LINE ARGUMENTS
 
 Remove low resolution domains from a DCF file.
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers:
   [-cpdbpath]          dirlist    [./] This option specifies the location of
@@ -179,6 +179,9 @@ Version: EMBOSS:6.2.0
    Additional (Optional) qualifiers: (none)
    Advanced (Unprompted) qualifiers: (none)
    Associated qualifiers:
+
+   "-cpdbpath" associated qualifiers
+   -extension1         string     Default file extension
 
    "-dcfoutfile" associated qualifiers
    -odirectory3        string     Output directory
