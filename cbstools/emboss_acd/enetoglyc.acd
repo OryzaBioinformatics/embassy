@@ -2,6 +2,7 @@ application: enetoglyc [
   documentation: "Reports mucin type GalNAc O-glycosylation sites in mammalian proteins"
   groups: "Protein:Motifs"
   embassy: "cbstools"
+  external: "netOglyc CBStools website http://www.cbs.dtu.dk/services/"
 ]
 
 section: input [

@@ -2,6 +2,7 @@ application: eyinoyang [
   documentation: "Reports O-(beta)-GlcNAc attachment sites"
   groups: "Protein:Motifs"
   embassy: "cbstools"
+  external: "yinOyang CBStools website http://www.cbs.dtu.dk/services/"
 ]
 
 section: input [

@@ -2,6 +2,7 @@ application: esignalp [
   documentation: "Reports protein signal cleavage sites"
   groups: "Protein:Motifs"
   embassy: "cbstools"
+  external: "signalp CBStools website http://www.cbs.dtu.dk/services/"
 ]
 
 section: input [

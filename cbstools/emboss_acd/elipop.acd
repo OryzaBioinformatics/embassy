@@ -2,6 +2,7 @@ application: elipop [
   documentation: "Prediction of lipoproteins"
   groups: "Protein:Motifs"
   embassy: "cbstools"
+  external: "LipoP CBStools website http://www.cbs.dtu.dk/services/"
 ]
 
 section: input [

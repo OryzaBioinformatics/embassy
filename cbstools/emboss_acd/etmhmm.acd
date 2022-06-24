@@ -2,6 +2,7 @@ application: etmhmm [
   documentation: "Reports transmembrane helices"
   groups: "Protein:Motifs"
   embassy: "cbstools"
+  external: "tmhmm CBStools website http://www.cbs.dtu.dk/services/"
 ]
 
 section: input [

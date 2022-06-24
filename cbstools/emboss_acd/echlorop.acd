@@ -2,6 +2,7 @@ application: echlorop [
   documentation: "Reports presence of chloroplast transit peptides"
   groups: "Protein:Motifs"
   embassy: "cbstools"
+  external: "chlorop CBStools website http://www.cbs.dtu.dk/services/"
 ]
 
 section: input [

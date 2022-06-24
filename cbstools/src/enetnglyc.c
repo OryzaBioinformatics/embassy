@@ -37,23 +37,22 @@ int main(int argc, char **argv)
     AjBool    plot   = ajFalse;
     AjBool    asp    = ajFalse;
     AjBool    thresh = ajFalse;
-    const AjPStr ofn = NULL;
     AjPStr    fn     = NULL;
     AjPStr    stmp   = NULL;
     
-    AjPFile outf = NULL;
+    AjPStr  outfname = NULL;
     
     
     embInitPV("enetnglyc", argc, argv, "CBSTOOLS", VERSION);
 
 
     seqset  = ajAcdGetSeqset("sequence");
-    outf    = ajAcdGetOutfile("outfile");
+    outfname= ajAcdGetOutfileName("outfile");
     plot    = ajAcdGetBoolean("plot");
     thresh  = ajAcdGetBoolean("thresholds");
     asp     = ajAcdGetBoolean("asparagines");
     
-    cl   = ajStrNewC("netNglyc ");
+    cl   = ajStrNewS(ajAcdGetpathC("netNglyc"));
     fn   = ajStrNew();
     stmp = ajStrNew();
     
@@ -80,27 +79,22 @@ int main(int argc, char **argv)
     ajFmtPrintS(&stmp," %S",fn);
     ajStrAppendS(&cl,stmp);
 
-    ofn = ajFileGetNameS(outf);
-    ajFmtPrintS(&stmp," > %S",ofn);
-    ajStrAppendS(&cl,stmp);
-    ajFileClose(&outf);
-
 #if 0
-   ajFmtPrint("%S\n",cl);
+    ajFmtPrint("%S\n",cl);
 #endif
 
 #if 1
-   if(system(ajStrGetPtr(cl)) == -1)
-       ajFatal("Command %S failed",cl);
+    ajSysExecOutnameAppendS(cl, outfname);
 #endif
 
-    ajSysFileUnlink(fn);
+    ajSysFileUnlinkS(fn);
 
     ajStrDel(&cl);
     ajStrDel(&fn);
     ajStrDel(&stmp);
     ajSeqoutDel(&seqout);
     ajSeqsetDel(&seqset);
+    ajStrDel(&outfname);
 
     embExit();
 

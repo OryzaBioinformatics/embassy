@@ -2,6 +2,7 @@ application: eprop [
   documentation: "Reports propeptide cleavage sites in proteins"
   groups: "Protein:Motifs"
   embassy: "cbstools"
+  external: "prop CBStools website http://www.cbs.dtu.dk/services/"
 ]
 
 section: input [

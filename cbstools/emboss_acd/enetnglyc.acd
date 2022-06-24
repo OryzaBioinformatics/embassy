@@ -2,6 +2,7 @@ application: enetnglyc [
   documentation: "Reports N-glycosylation sites in human proteins"
   groups: "Protein:Motifs"
   embassy: "cbstools"
+  external: "netNglyc CBStools website http://www.cbs.dtu.dk/services/"
 ]
 
 section: input [

@@ -38,27 +38,26 @@ int main(int argc, char **argv)
     AjBool    html   = ajFalse;
     AjBool    sht    = ajFalse;
     AjBool    one    = ajFalse;
-    const AjPStr ofn = NULL;
     AjPStr    fn     = NULL;
     AjPStr    stmp   = NULL;
     
-    AjPFile outf = NULL;
+    AjPStr  outfname = NULL;
     
     
     embInitPV("etmhmm", argc, argv, "CBSTOOLS", VERSION);
 
 
     seqset  = ajAcdGetSeqset("sequence");
-    outf    = ajAcdGetOutfile("outfile");
+    outfname= ajAcdGetOutfileName("outfile");
     plot    = ajAcdGetBoolean("plot");
     html    = ajAcdGetBoolean("html");
     sht     = ajAcdGetBoolean("short");
     one     = ajAcdGetBoolean("one");
     
-    cl   = ajStrNewC("tmhmm ");
+    cl   = ajStrNewS(ajAcdGetpathC("tmhmm"));
     fn   = ajStrNew();
     stmp = ajStrNew();
-    
+
 
 
     ajFilenameSetTempname(&fn);
@@ -92,27 +91,22 @@ int main(int argc, char **argv)
     ajFmtPrintS(&stmp," %S",fn);
     ajStrAppendS(&cl,stmp);
 
-    ofn = ajFileGetNameS(outf);
-    ajFmtPrintS(&stmp," > %S",ofn);
-    ajStrAppendS(&cl,stmp);
-    ajFileClose(&outf);
-
 #if 0
-   ajFmtPrint("%S\n",cl);
+    ajFmtPrint("%S\n",cl);
 #endif
 
 #if 1
-   if(system(ajStrGetPtr(cl)) == -1)
-       ajFatal("Command %S failed",cl);
+    ajSysExecOutnameAppendS(cl, outfname);
 #endif
 
-    ajSysFileUnlink(fn);
+    ajSysFileUnlinkS(fn);
 
     ajStrDel(&cl);
     ajStrDel(&fn);
     ajStrDel(&stmp);
     ajSeqoutDel(&seqout);
     ajSeqsetDel(&seqset);
+    ajStrDel(&outfname);
 
     embExit();
 

@@ -36,7 +36,6 @@ int main(int argc, char **argv)
     AjPSeqout seqout = NULL;
     AjPStr    type   = NULL;
     AjBool    plot   = ajFalse;
-    const AjPStr ofn = NULL;
     AjPStr    fn     = NULL;
     AjPStr    stmp   = NULL;
     AjPStr    method = NULL;
@@ -48,7 +47,7 @@ int main(int argc, char **argv)
 
     
 
-    AjPFile outf = NULL;
+    AjPStr  outfname = NULL;
     
     
     embInitPV("esignalp", argc, argv, "CBSTOOLS", VERSION);
@@ -62,12 +61,13 @@ int main(int argc, char **argv)
     synver  = ajAcdGetListSingle("synver");
     keep    = ajAcdGetBoolean("keepall");
     trunc   = ajAcdGetInt("truncate");
-    outf    = ajAcdGetOutfile("outfile");    
+    outfname= ajAcdGetOutfileName("outfile");    
 
-    cl   = ajStrNewC("signalp -t ");
+    cl   = ajStrNewS(ajAcdGetpathC("signalp"));
     fn   = ajStrNew();
     stmp = ajStrNew();
     
+    ajStrAppendC(&cl, " -t");
 
     ajFilenameSetTempname(&fn);
     seqout = ajSeqoutNew();
@@ -77,15 +77,15 @@ int main(int argc, char **argv)
     ajSeqoutWriteSet(seqout,seqset);
     ajSeqoutClose(seqout);
 
+    if(ajStrMatchC(type,"euk"))
+        ajStrAppendC(&cl," euk");
+    else if(ajStrMatchC(type,"gramp"))
+        ajStrAppendC(&cl," ""gram+""");
+    else
+        ajStrAppendC(&cl," ""gram-""");
+
     if(plot)
         ajStrAppendC(&cl," -g");
-
-    if(ajStrMatchC(type,"euk"))
-        ajStrAppendC(&cl,"euk");
-    else if(ajStrMatchC(type,"gramp"))
-        ajStrAppendC(&cl,"""gram+""");
-    else
-        ajStrAppendC(&cl,"""gram-""");
 
     ajFmtPrintS(&stmp," -m %S",method);
     ajStrAppendS(&cl,stmp);
@@ -116,21 +116,15 @@ int main(int argc, char **argv)
         ajStrAppendS(&cl,stmp);
     }
     
-    ofn = ajFileGetNameS(outf);
-    ajFmtPrintS(&stmp," > %S",ofn);
-    ajStrAppendS(&cl,stmp);
-    ajFileClose(&outf);
-
 #if 0
-   ajFmtPrint("%S\n",cl);
+    ajFmtPrint("%S\n",cl);
 #endif
 
 #if 1
-   if(system(ajStrGetPtr(cl)) == -1)
-       ajFatal("Command %S failed",cl);
+    ajSysExecOutnameAppendS(cl, outfname);
 #endif
 
-    ajSysFileUnlink(fn);
+    ajSysFileUnlinkS(fn);
 
     ajStrDel(&cl);
     ajStrDel(&type);
@@ -142,6 +136,7 @@ int main(int argc, char **argv)
     ajStrDel(&fn);
     ajSeqoutDel(&seqout);
     ajSeqsetDel(&seqset);
+    ajStrDel(&outfname);
 
     embExit();
 

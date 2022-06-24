@@ -2,6 +2,7 @@ application: enetphos [
   documentation: "Reports ser, thr and tyr phosphorylation sites in eukaryotic proteins"
   groups: "Protein:Motifs"
   embassy: "cbstools"
+  external: "netphos CBStools website http://www.cbs.dtu.dk/services/"
 ]
 
 section: input [
