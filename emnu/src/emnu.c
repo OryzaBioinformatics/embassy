@@ -59,6 +59,9 @@ embGrpGetProgGroups
 
 */
 
+#include <config.h>
+
+
 /* the name of this program */
 #define PROGRAM_NAME "emnu"
 
@@ -607,8 +610,6 @@ ARGS:
 static void
 shellout(WINDOW *curwin, char *cmd)
 {
-    int result;
-
     WINDOW *w;
     char *home = getenv("HOME");
 
@@ -630,15 +631,13 @@ shellout(WINDOW *curwin, char *cmd)
     printf("%% %s\n", cmd);fflush(stdout);
     if (!strncmp(cmd, "cd ", 3)) {
         stripstartstr(&cmd[3]);	/* make sure there are no more spaces before dir name */
-    	result = chdir(&cmd[3]);
+    	chdir(&cmd[3]);
     } else if (!strncmp(cmd, "cd", 2)) {
-    	result = chdir(home);
+    	chdir(home);
 /* STOP USER RUNNING THE MENU RECURSIVELY - implemented 9 Feb 2001 - GWW */
     } else if (!strcmp(cmd, PROGRAM_NAME)) {
     	printf("You are trying to run '%s' from within '%s'\n", PROGRAM_NAME, PROGRAM_NAME);
     	printf("This can get confusing, so it is not allowed.\n\n");
-    	result = 0;
-
     } else {
 
 /* get the time so we can note files created by this command */
