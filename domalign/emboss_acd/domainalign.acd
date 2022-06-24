@@ -6,6 +6,11 @@ application: domainalign [
   batch: "yes"
   cpu: "medium"
   embassy: "domalign"
+  external: "stamp STAMP package http://www.compbio.dundee.ac.uk/"
+  external: "sorttrans STAMP package http://www.compbio.dundee.ac.uk/"
+  external: "transform STAMP package http://www.compbio.dundee.ac.uk/"
+  external: "poststamp STAMP package http://www.compbio.dundee.ac.uk/"
+  external: "ver2hor STAMP package http://www.compbio.dundee.ac.uk/"
 ]
 
 section: input [

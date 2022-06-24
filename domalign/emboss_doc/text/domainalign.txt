@@ -531,7 +531,7 @@ Replaced ' ' in STAMP alignment with 'X'
   6.1 COMMAND LINE ARGUMENTS
 
 Generate alignments (DAF file) for nodes in a DCF file.
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-dcfinfile]         infile     This option specifies the name of DCF file
@@ -600,6 +600,18 @@ Version: EMBOSS:6.2.0
    Additional (Optional) qualifiers: (none)
    Advanced (Unprompted) qualifiers: (none)
    Associated qualifiers:
+
+   "-pdbdir" associated qualifiers
+   -extension2         string     Default file extension
+
+   "-dafoutdir" associated qualifiers
+   -extension3         string     Default file extension
+
+   "-singletsoutdir" associated qualifiers
+   -extension          string     Default file extension
+
+   "-superoutdir" associated qualifiers
+   -extension          string     Default file extension
 
    "-logfile" associated qualifiers
    -odirectory         string     Output directory

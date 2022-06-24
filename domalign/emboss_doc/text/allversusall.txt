@@ -85,7 +85,7 @@ CONTENTS
   6.1 COMMAND LINE ARGUMENTS
 
 Sequence similarity data from all-versus-all comparison.
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers:
   [-seqinpath]         dirlist    [./] Sequence directories
@@ -130,6 +130,12 @@ Version: EMBOSS:6.2.0
 
    Advanced (Unprompted) qualifiers: (none)
    Associated qualifiers:
+
+   "-seqinpath" associated qualifiers
+   -extension1         string     Default file extension
+
+   "-datoutdir" associated qualifiers
+   -extension2         string     Default file extension
 
    "-logfile" associated qualifiers
    -odirectory         string     Output directory
