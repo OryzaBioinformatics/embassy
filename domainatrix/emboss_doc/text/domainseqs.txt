@@ -21,7 +21,7 @@ CONTENTS
 
 1.0 SUMMARY
 
-   Adds sequence records to a DCF file
+   Add sequence records to a DCF file
 
 2.0 INPUTS & OUTPUTS
 
@@ -97,7 +97,7 @@ XX
 CH   A CHAIN; . START; . END;
 //
 
-  File: ../pdbtosp-keep/Epdbtosp.dat
+  File: ../pdbtosp-domainatrix/Epdbtosp.dat
 
 EN   101M
 XX
@@ -259,8 +259,8 @@ NO_ACCESSION_NUMBER
 
   6.1 COMMAND LINE ARGUMENTS
 
-Adds sequence records to a DCF file.
-Version: EMBOSS:6.4.0.0
+Add sequence records to a DCF file.
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-dcfinfile]         infile     This option specifies the name of DCF file

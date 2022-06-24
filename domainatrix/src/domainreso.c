@@ -39,9 +39,6 @@
 **  
 ******************************************************************************/
 
-
-
-
 #include <config.h>
 #include <math.h>
 
@@ -55,12 +52,13 @@
 ** PROTOTYPES  
 **
 ******************************************************************************/
-static ajint domainreso_StrBinSearchDomain(AjPStr id, 
-					   AjPStr *arr, 
-					   ajint siz);
 
-static ajint domainreso_StrComp(const void *str1, 
-				const void *str2);
+static ajint domainreso_StrBinSearchDomain(AjPStr identifier, 
+					   AjPStr *array, 
+					   ajint size);
+
+static ajint domainreso_StrComp(const void *item1, 
+				const void *item2);
 
 
 
@@ -72,6 +70,7 @@ static ajint domainreso_StrComp(const void *str1,
 ** classification file).
 **
 ******************************************************************************/
+
 int main(ajint argc, char **argv)
 {
 
@@ -92,25 +91,24 @@ int main(ajint argc, char **argv)
     AjPDomain   domain     = NULL; /* Domain structure                       */
  
 
-    float       threshold  = 0.0;  /* Resolution threshold                   */
+    float       threshold  = 0.0F; /* Resolution threshold                   */
     ajint       num        = 0;    /* number of nodes in list                */
 
-    ajint       type       = 0;    /* Type of domain (ajSCOP or ajCATH) in 
-				      the DCF file                           */
-
-
-    
-    
+    AjEDomainType type = ajEDomainTypeNULL; /* Type of domain
+                                            ** (ajEDomainTypeSCOP or
+                                            ** ajEDomainTypeCATH) in 
+                                            ** the DCF file
+                                            */
+        
                                            
-    /* Read data from acd */
     embInitPV("domainreso",argc,argv,"DOMAINATRIX",VERSION);
+    
+    /* Read data from acd */
+    
     cpdb_path     = ajAcdGetDirlist("cpdbpath");    
     threshold     = ajAcdGetFloat("threshold");
     dcfin         = ajAcdGetInfile("dcfinfile");
     dcfout        = ajAcdGetOutfile("dcfoutfile");
-
-
-
 
     
     /* Allocate strings etc. */
@@ -138,17 +136,16 @@ int main(ajint argc, char **argv)
  found then the domain structure data is written the new DCF file.    
 */
 
-
     type = ajDomainDCFType(dcfin);
-
 
     /* Start of main application loop                         */
     /* Produce list of pdb codes with resolution              */
     /* ABOVE the threshold.                                   */
-    while(ajListPop(cpdb_path,(void **)&temp))
+    
+    while(ajListPop(cpdb_path, (void**) &temp))
     {
         /* Open coordinate file. */
-        if((fptr_cpdb=ajFileNewInNameS(temp))==NULL)
+        if((fptr_cpdb = ajFileNewInNameS(temp)) == NULL)
         {
 	    ajWarn("Could not open cpdb file");
             ajStrDel(&temp);
@@ -167,7 +164,7 @@ int main(ajint argc, char **argv)
         if(pdb->Reso > threshold)
 	{
 	    /* assign ID to list. */
-	    temp2=ajStrNew();
+	    temp2 = ajStrNew();
 	    ajStrAssignS(&temp2, pdb->Pdb);
 	    ajListPush(entry, (AjPStr) temp2);
 	}        
@@ -181,7 +178,7 @@ int main(ajint argc, char **argv)
     
 
     /* Sort the list of pdb codes & convert to an array. */
-    ajListSort(entry, domainreso_StrComp);
+    ajListSort(entry, &domainreso_StrComp);
     ajListToarray(entry, (void ***)&entryarr);
     
     
@@ -192,7 +189,7 @@ int main(ajint argc, char **argv)
 	/* DOMAIN id not found in the list of domains with resolution 
 	   above the threshold, so include it in the output file. */
 	if((domainreso_StrBinSearchDomain(ajDomainGetId(domain), 
-					  entryarr, num))==-1)
+					  entryarr, num)) == -1)
 	    ajDomainWrite(dcfout, domain);
 
         /* Delete domain structure. */
@@ -213,47 +210,45 @@ int main(ajint argc, char **argv)
   
     /* Return. */
     ajExit();
+
     return 0;
 }
 
 
 
 
-
-/* @funcstatic domainreso_StrBinSearchDomain ********************************
+/* @funcstatic domainreso_StrBinSearchDomain **********************************
 **
 ** Performs a binary search for a DOMAIN domain code over an array of AjPStr
 ** (which of course must first have been sorted, e.g. by domainreso_StrComp). 
 ** This is a case-insensitive search.
 **
-** @param [r] id  [AjPStr]      Search term
-** @param [r] arr [AjPStr*]     Array of AjPStr objects
-** @param [r] siz [ajint]       Size of array
+** @param [r] identifier [AjPStr] Search term
+** @param [r] array [AjPStr*] Array of AjPStr objects
+** @param [r] size [ajint] Size of array
 **
 ** @return [ajint] Index of first AjPStr object found with an PDB code
 ** matching id, or -1 if id is not found.
 ** @@
 ******************************************************************************/
-static ajint domainreso_StrBinSearchDomain(AjPStr id, 
-					   AjPStr *arr,
-					   ajint siz)	
+
+static ajint domainreso_StrBinSearchDomain(AjPStr identifier, 
+					   AjPStr* array,
+					   ajint size)	
 {
-    int l;
-    int m;
-    int h;
-    int c;
+    ajint l = 0;
+    ajint m = 0;
+    ajint h = size - 1;
+    ajint c;
 
-
-    l = 0;
-    h = siz-1;
-    while(l<=h)
+    while(l <= h)
     {
-        m = (l+h)>>1;
+        m = (l + h) >> 1;
 
-        if((c=ajStrCmpCaseS(id, arr[m])) < 0)
-	    h = m-1;
-        else if(c>0) 
-	    l = m+1;
+        if((c = ajStrCmpCaseS(identifier, array[m])) < 0)
+	    h = m - 1;
+        else if(c > 0) 
+	    l = m + 1;
         else 
 	    return m;
     }
@@ -266,32 +261,21 @@ static ajint domainreso_StrBinSearchDomain(AjPStr id,
 
 /* @funcstatic domainreso_StrComp *********************************************
 **
-** Function to sort strings.
+** Function to compare AJAX String objects.
 **
-** @param [r] str1  [const void*] AjPStr 1
-** @param [r] str2  [const void*] AjPStr 2
+** @param [r] item1 [const void*] AJAX String address 1
+** @param [r] item2 [const void*] AJAX String address 2
 **
 ** @return [ajint] -1 if str1 should sort before str2, +1 if the str2 should 
 ** sort first. 0 if they are identical in length and content. 
 ** @@
 ******************************************************************************/
 
-static ajint domainreso_StrComp(const void *str1,
-				const void *str2)
+static ajint domainreso_StrComp(const void* item1,
+				const void* item2)
 {
-    AjPStr p = NULL;
-    AjPStr q = NULL;
-
-    p = (*(AjPStr*)str1);
-    q = (*(AjPStr*)str2);
+    AjPStr str1 = *(AjOStr* const*) item1;
+    AjPStr str2 = *(AjOStr* const*) item2;
     
-    return ajStrCmpS(p, q);
+    return ajStrCmpS(str1, str2);
 }
-
-
-
-
-
-
-
-

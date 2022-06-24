@@ -219,8 +219,8 @@ D1CS4A_
 
   6.1 COMMAND LINE ARGUMENTS
 
-Removes redundant domains from a DCF file.
-Version: EMBOSS:6.4.0.0
+Remove redundant domains from a DCF file.
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-dcfinfile]         infile     This option specifies name of DCF file

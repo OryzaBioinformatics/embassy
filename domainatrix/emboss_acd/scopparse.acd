@@ -5,10 +5,10 @@ application: scopparse [
   batch: "yes"
   cpu: "low"
   embassy: "domainatrix"
-  relations: "EDAM:0000091 topic Data handling"
-  relations: "EDAM:0000736 topic Protein domains"
-  relations: "EDAM:0000335 operation File reformatting"
-  relations: "EDAM:0002234 operation Structure editing"
+  relations: "EDAM_topic:0091 Data handling"
+  relations: "EDAM_topic:0736 Protein domains and folds"
+  relations: "EDAM_operation:0335 File reformatting"
+  relations: "EDAM_operation:2234 Structure file processing"
 ]
 
 section: input [
@@ -24,7 +24,7 @@ section: input [
            http://scop.mrc-lmb.cam.ac.uk/scop/parse/dir.cla.scop.txt_1.57."
     knowntype: "Raw scop classification"
     parameter: "Y"
-    relations: "EDAM:0002235 data Raw SCOP domain classification"
+    relations: "EDAM_data:0900 Protein domain classification"
   ]
 
   infile: desinfile [
@@ -35,7 +35,7 @@ section: input [
            http://scop.mrc-lmb.cam.ac.uk/scop/parse/dir.des.scop.txt_1.57."
     knowntype: "raw scop description"
     parameter: "Y"
-    relations: "EDAM:0002235 data Raw SCOP domain classification"
+    relations: "EDAM_data:0900 Protein domain classification"
   ]
 
 endsection: input
@@ -53,7 +53,7 @@ section: required [
            more than one segment. This is necessary if a continuous residue
            sequence is required."
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: nomultichain [
@@ -64,7 +64,7 @@ section: required [
            segments from more than one chain. This is necessary if a
            continuous residue sequence is required."
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: required
@@ -86,7 +86,7 @@ section: additional [
            beta proteins (a+b)'). This is necessary or appropriate for many
            analyses."
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: additional
@@ -107,7 +107,7 @@ section: output [
     default: "test.scop"
     knowntype: "domain classification"
     parameter: "Y"
-    relations: "EDAM:0000900 data Protein domain classification"
+    relations: "EDAM_data:0900 Protein domain classification"
   ]
 
 endsection: output

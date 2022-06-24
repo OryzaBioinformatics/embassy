@@ -38,13 +38,8 @@
 **  
 ****************************************************************************/
 
-
-
-
-
 #include <config.h>
 #include "emboss.h"
-
 
 
 
@@ -54,18 +49,17 @@
 ** PROTOTYPES  
 **
 ******************************************************************************/
-static ajint   ssematch_CompScoreInv(const void *scop1, 
-				     const void *scop2);
 
-static AjBool         ssematch_NWScore(AjPScop temp_scop, 
+static ajint ssematch_CompScoreInv(const void *item1, const void *item2);
+
+static AjBool ssematch_NWScore(AjPScop temp_scop, 
 				AjPSeq pseq,
 				ajint mode,
 				AjPMatrixf matrix,
 				float gapopen,
 				float gapextend);
 
-static AjPSeq         ssematch_convertbases(AjPStr qse);
-
+static AjPSeq ssematch_convertbases(AjPStr qse);
 
 
 
@@ -76,6 +70,7 @@ static AjPSeq         ssematch_convertbases(AjPStr qse);
 ** matches.
 **
 ****************************************************************************/
+
 int main(int argc, char **argv)
 {
     /* Variables declarations */
@@ -86,12 +81,12 @@ int main(int argc, char **argv)
     AjPFile out_se       = NULL; /* For se top matches*/
     AjPFile outfile      = NULL; /* Output file*/
     AjPFile logf         = NULL; /* Log file */
-    float gapopen_sss    = 0.0;  /* Gap insertion penalty */
-    float gapopen_sse    = 0.0;
-    float gapopen        = 0.0;
-    float gapextend_sss  = 0.0;  /* Gap extension penalty */
-    float gapextend_sse  = 0.0;
-    float gapextend      = 0.0;
+    float gapopen_sss    = 0.0F; /* Gap insertion penalty */
+    float gapopen_sse    = 0.0F;
+    float gapopen        = 0.0F;
+    float gapextend_sss  = 0.0F; /* Gap extension penalty */
+    float gapextend_sse  = 0.0F;
+    float gapextend      = 0.0F;
     ajint max_hits       = 0;    /* number of top alignments to display*/
     ajint mode           = 0;
     ajint x              = 0;
@@ -114,13 +109,11 @@ int main(int argc, char **argv)
     AjPSeq    query      = NULL;
     
 
-
-
+    embInitPV("ssematch", argc, argv, "DOMAINATRIX", VERSION);
 
     /* Read data from acd */
-    embInitPV("ssematch",argc,argv,"DOMAINATRIX",VERSION);
-    dcfin       = ajAcdGetInfile("dcfinfile");
-    ssin       = ajAcdGetInfile("ssinfile");
+    dcfin         = ajAcdGetInfile("dcfinfile");
+    ssin          = ajAcdGetInfile("ssinfile");
     max_hits      = ajAcdGetInt("maxhits");
     matrix        = ajAcdGetMatrixf("datafile");
     gapopen_sss   = ajAcdGetFloat("rgapopen");
@@ -129,23 +122,18 @@ int main(int argc, char **argv)
     gapextend_sse = ajAcdGetFloat("egapextend");
     out_ss        = ajAcdGetOutfile("outssfile");
     out_se        = ajAcdGetOutfile("outsefile");
-    logf       = ajAcdGetOutfile("logfile");
-
-
-
-
+    logf          = ajAcdGetOutfile("logfile");
 
 
     /* Create list of scop objects for entire input domain classification file. */
-    scop_list  = ajListNew();
-    while((temp_scop = (ajScopReadCNew(dcfin, "*"))))
-        ajListPushAppend(scop_list,temp_scop);
+    scop_list = ajListNew();
+    while((temp_scop = ajScopReadCNew(dcfin, "*")))
+        ajListPushAppend(scop_list, temp_scop);
 
 
     /* Error handing if domain classification file was empty. */
-    if(!(ajListGetLength(scop_list)))
+    if(!ajListGetLength(scop_list))
     {
-      
         ajWarn("Empty list from scop input file\n");
 	ajFileClose(&dcfin);
 	ajFileClose(&ssin);
@@ -159,6 +147,7 @@ int main(int argc, char **argv)
         ajListIterDel(&iter);    
 	
 	ajExit();
+        
 	return 1;
     }
 
@@ -178,6 +167,7 @@ int main(int argc, char **argv)
         ajListIterDel(&iter);    
 	
 	ajExit();
+
 	return 1; 
     }      
     
@@ -231,7 +221,7 @@ int main(int argc, char **argv)
 
         /* Iterate through list of scop objects & calculate alignment scores. */
         iter=ajListIterNew(scop_list);
-        while((temp_scop=(AjPScop)ajListIterGet(iter)))
+        while((temp_scop = (AjPScop) ajListIterGet(iter)))
         {
             /* The function extracts the se (mode 0) or ss (mode 1) subject 
 	       sequences from the scop object, performs a Needleman-Wunsch 
@@ -239,7 +229,6 @@ int main(int argc, char **argv)
 	       to the Score element of the scop object*/ 
 
 	    if(!(ssematch_NWScore(temp_scop , query, mode, matrix, gapopen, gapextend)))
-
 	    {
                 ajFmtPrintF(logf, "%-15s\n", "ALIGNMENT");
                 ajFmtPrintF(logf, "Could not align sequence in scop domain %S\n ", 
@@ -257,7 +246,7 @@ int main(int argc, char **argv)
 
 
         /* Sort list of Scop objects by Score */
-        ajListSort(scop_list, ssematch_CompScoreInv);
+        ajListSort(scop_list, &ssematch_CompScoreInv);
 	
 	
         iter=ajListIterNew(scop_list);
@@ -299,14 +288,11 @@ int main(int argc, char **argv)
     ajSeqDel(&q3se);
     ajSeqDel(&q3ss);
     
-
     ajExit();
+
     return 0;
 }
     
-
-
-
 
 
 
@@ -314,32 +300,27 @@ int main(int argc, char **argv)
 **
 ** Function to sort AjOScop objects by Score element.
 **
-** @param [r] scop1  [const void*] Pointer to AjOScop object 1
-** @param [r] scop2  [const void*] Pointer to AjOScop object 2
+** @param [r] item1 [const void*] AJAX SCOP address 1
+** @param [r] item2 [const void*] AJAX SCOP address 2
+** @see ajListSort
 **
 ** @return [ajint] +1 if Score1 should sort before Score2, -1 if the Score2
 ** should sort first. 0 if they are identical in value.
 ** @@
 ******************************************************************************/
 
-
-static ajint ssematch_CompScoreInv(const void *scop1, const void *scop2)
+static ajint ssematch_CompScoreInv(const void* item1, const void* item2)
 {
-    AjPScop p  = NULL;
-    AjPScop q  = NULL;
+    AjPScop scop1 = *(AjOScop* const*) item1;
+    AjPScop scop2 = *(AjOScop* const*) item2;
 
-    p = (*  (AjPScop*)scop1);
-    q = (*  (AjPScop*)scop2);
-
-    if(p->Score < q->Score)
+    if(scop1->Score < scop2->Score)
 	return 1;
-    else if(p->Score == q->Score)
+    else if(scop1->Score == scop2->Score)
 	return 0;
     else
 	return -1;
 }
-
-
 
 
 
@@ -365,8 +346,6 @@ static AjBool  ssematch_NWScore(AjPScop temp_scop,
 				AjPMatrixf matrix,
 				float gapopen, 
 				float gapextend)
-
-
 {
     ajint         start1  =0;	/* Start of seq 1, passed as arg but not used.*/
     ajint         start2  =0;	/* Start of seq 2, passed as arg but not used.*/
@@ -379,10 +358,10 @@ static AjBool  ssematch_NWScore(AjPScop temp_scop,
     const char       *q;        /* Subject sequence from scop object.         */
 
     float     **sub;
-    float       id       =0.;	/* Passed as arg but not used here.           */
-    float       sim      =0.;	
-    float       idx      =0.;	/* Passed as arg but not used here.           */
-    float       simx     =0.;	/* Passed as arg but not used here.           */
+    float       id      = 0.0F;	/* Passed as arg but not used here.           */
+    float       sim     = 0.0F;	
+    float       idx     = 0.0F;	/* Passed as arg but not used here.           */
+    float       simx    = 0.0F;	/* Passed as arg but not used here.           */
     float      *path;
 
     AjPStr      pstr = NULL;	/*  m walk alignment for first sequence 
@@ -399,10 +378,6 @@ static AjBool  ssematch_NWScore(AjPScop temp_scop,
 
     AjPSeqCvt   cvt  = 0;
     AjBool      show = ajFalse; /*Passed as arg but not used here.            */
-
-
-
-
 
 
     AJCNEW(path, maxarr);
@@ -428,9 +403,6 @@ static AjBool  ssematch_NWScore(AjPScop temp_scop,
     lenq = ajSeqGetLen(qseq); /* Length of subject sequence. */
    
 
-   
-
-
     /* Start of main application loop */
     /* Intitialise variables for use by alignment functions*/	    
     len = (lenp * lenq);
@@ -445,8 +417,8 @@ static AjBool  ssematch_NWScore(AjPScop temp_scop,
     p = ajSeqGetSeqC(pseq); 
     q = ajSeqGetSeqC(qseq); 
 
-    ajStrAssignC(&pstr,"");
-    ajStrAssignC(&qstr,"");
+    ajStrAssignC(&pstr, "");
+    ajStrAssignC(&qstr, "");
 
 
     /* Check that no sequence length is 0. */
@@ -499,8 +471,6 @@ static AjBool  ssematch_NWScore(AjPScop temp_scop,
 
 
 
-
-
 /* @funcstatic ssematch_convertbases ******************************************
 **
 ** Convert AjPStr of stride-assigned secondary structures to AjPSeq of 
@@ -512,6 +482,7 @@ static AjBool  ssematch_NWScore(AjPScop temp_scop,
 **
 ** @@
 ******************************************************************************/
+
 static AjPSeq ssematch_convertbases(AjPStr qs)
 {
     AjIStr     iter = NULL;
@@ -525,8 +496,6 @@ static AjPSeq ssematch_convertbases(AjPStr qs)
     /* helices H, G, I -> G & I are changed to H 
        extended conformation -> E stays as E
        bridge B/b, turn T, coil C -> all changed to L */
-
-
 
     iter    = ajStrIterNew(qs);
     tmp_str = ajStrNew();
@@ -557,6 +526,3 @@ static AjPSeq ssematch_convertbases(AjPStr qs)
 
     return tmp_seq;
 }
-
-
-

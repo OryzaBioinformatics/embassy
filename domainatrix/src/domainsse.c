@@ -49,15 +49,8 @@
 **
 ******************************************************************************/
 
-
-
-
-
-
 #include <config.h>
 #include "emboss.h"
-
-
 
 
 
@@ -111,7 +104,7 @@ int main(int argc, char **argv)
 
     /* Start of main application loop.  ajScopReadC creates a Scop
        object from a scop file in embl-like format. */
-    while((scop=(ajScopReadCNew(dcf_inf, "*"))))
+    while((scop = (ajScopReadCNew(dcf_inf, "*"))))
     {
         /* construct name of domain coordinate file*/
 	ajStrAssignS(&dccf_name,scop->Entry);
@@ -122,7 +115,7 @@ int main(int argc, char **argv)
 	
 	/*ajFileNewDF opens domain files dir, looks for named domain file, 
 	  returns new file object */
-	if(!(dccf_inf=ajFileNewListinDirPre(dccf, dccf_name)))
+	if(!(dccf_inf = ajFileNewListinDirPre(dccf, dccf_name)))
 	{
 	    ajFmtPrintF(errf, "%-15s\n", "FILE_OPEN");
             ajFmtPrintF(errf, "Could not open dccf file %S\n", dccf_name);  
@@ -133,7 +126,7 @@ int main(int argc, char **argv)
 	}
 	
 	/* Read the coordinate file for the domain. */
-	if(!(pdb=ajPdbReadFirstModelNew(dccf_inf)))
+	if(!(pdb = ajPdbReadFirstModelNew(dccf_inf)))
 	{
 	    ajFmtPrintF(errf, "%-15s\n", "FILE_READ"); 
             ajFmtPrintF(errf, "Could not read dccf file %S", dccf_name); 
@@ -148,16 +141,16 @@ int main(int argc, char **argv)
         /* Construct SSE string from data in pdb object. */
 
 	/* Initialise an sse string object. */
-        sse =ajStrNew();
+        sse = ajStrNew();
 
         /* Initialise the iterator. */
         /* iter=ajListIterNew(pdb->Chains[0]->Atoms); */
-	iter=ajListIterNew(pdb->Chains[0]->Residues);
+	iter = ajListIterNew(pdb->Chains[0]->Residues);
 
         /* Iiterate through the list of residues in the Pdb object,
 	   temp_res is an AjPResidue used to point to the current residue. */
-        num=0;
-        while((temp_res=(AjPResidue)ajListIterGet(iter)))
+        num = 0;
+        while((temp_res = (AjPResidue) ajListIterGet(iter)))
 	{
 	    /* If this residue is part of a new element.
 	       eNum is the Serial number of the STRIDE-assigned element. */
@@ -169,6 +162,7 @@ int main(int argc, char **argv)
                 num++;
             }
 	}
+        
 	/* Add the completed sse to the scop structure. */
         ajStrAssignS(&scop->Sse, sse);
 	
@@ -177,14 +171,14 @@ int main(int argc, char **argv)
         /* Construct SSS string from data in pdb object. */
        
         /* Initialise an sss string object. */
-        sss =ajStrNew();
+        sss = ajStrNew();
 
         /* Initialise the iterator. */
-/*        iter=ajListIterNew(pdb->Chains[0]->Atoms); */
-        iter=ajListIterNew(pdb->Chains[0]->Residues);
+/*        iter = ajListIterNew(pdb->Chains[0]->Atoms); */
+        iter = ajListIterNew(pdb->Chains[0]->Residues);
 
         /* Iiterate through the list of residues in the Pdb object. */
-        while((temp_res=(AjPResidue)ajListIterGet(iter)))
+        while((temp_res = (AjPResidue) ajListIterGet(iter)))
 	{
             /* Idx is the Residue number - index into sequence. */
 	    /* Append one instance of eType for each new residue to make ss
@@ -239,5 +233,6 @@ int main(int argc, char **argv)
     ajDirDel(&dccf);
 
     embExit();
+
     return 0;
 }

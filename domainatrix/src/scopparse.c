@@ -39,14 +39,8 @@
 **  na.
 ******************************************************************************/
 
-
-
-
-
 #include <config.h>
 #include "emboss.h"
-
-
 
 
 
@@ -56,6 +50,7 @@
 ** Converts raw scop classification files to a file in embl-like format.
 **
 ******************************************************************************/
+
 int main(int argc, char **argv)
 {
     AjPFile inf1         = NULL;
@@ -66,13 +61,10 @@ int main(int argc, char **argv)
     AjBool  nosegments   = ajFalse;
     AjBool  nomultichain = ajFalse;
     AjBool  nominor      = ajFalse;
-       
-
-
-
+    
+    embInitPV("scopparse", argc, argv, "DOMAINATRIX",VERSION);
 
     /* Read data from acd. */
-    embInitPV("scopparse", argc, argv, "DOMAINATRIX",VERSION);
     inf1         =  ajAcdGetInfile("classfile");
     inf2         =  ajAcdGetInfile("desinfile");
     outf         = ajAcdGetOutfile("dcffile");
@@ -89,9 +81,9 @@ int main(int argc, char **argv)
 
     /* Main body of code. */
     list = ajScopReadAllRawNew(inf1, inf2, nomultichain);
-    while(ajListPop(list, (void **) &tmp))
+    while(ajListPop(list, (void**) &tmp))
     {
-	if(((!nosegments) || (tmp->N == 1)) &&
+	if(((!nosegments) || (tmp->Number == 1)) &&
 	   ((!nominor) || ((tmp->Sunid_Class == 46456) ||  /* All alpha*/
 			   (tmp->Sunid_Class == 48724) ||  /* All beta */
 			   (tmp->Sunid_Class == 51349) ||  /* a/b      */
@@ -105,21 +97,10 @@ int main(int argc, char **argv)
     ajFileClose(&outf);
     ajFileClose(&inf1);
     ajFileClose(&inf2);
+
     ajListFree(&list);
 
     ajExit();
+
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -6,9 +6,9 @@ application: domainsse [
   batch: "yes"
   cpu: "medium"
   embassy: "domainatrix"
-  relations: "EDAM:0000091 topic Data handling"
-  relations: "EDAM:0000736 topic Protein domains"
-  relations: "EDAM:0002234 operation Structure editing"
+  relations: "EDAM_topic:0091 Data handling"
+  relations: "EDAM_topic:0736 Protein domains and folds"
+  relations: "EDAM_operation:2234 Structure file processing"
 ]
 
 section: input [
@@ -26,7 +26,7 @@ section: input [
            SCOPPARSE and CATHPARSE. Domain sequence information can be added
            to the file by using DOMAINSEQS."
     knowntype: "domain classification"
-    relations: "EDAM:0000900 data Protein domain classification"
+    relations: "EDAM_data:0900 Protein domain classification"
   ]
 
   directory: dccfdir [
@@ -44,8 +44,8 @@ section: input [
     default: "./"
     extension: "ccf"
     knowntype: "domain clean coordinates"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations:  "EDAM:0001468 data Protein domain"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations:  "EDAM_data:1468 Protein domain"
   ]
 
 endsection: input
@@ -80,7 +80,7 @@ section: output [
            DOMAINSEQS."
     knowntype: "domain classification"
     information: "Domain classification output file"
-    relations: "EDAM:0000900 data Protein domain classification"
+    relations: "EDAM_data:0900 Protein domain classification"
   ]
 
   outfile: logfile [
@@ -89,7 +89,7 @@ section: output [
     default: "domainsse.log"
     knowntype: "domainatrix log"
     information: "Domainatrix log output file"
-    relations:  "EDAM:0001678 data Tool log"
+    relations:  "EDAM_data:1678 Tool log"
   ]
 
 endsection: output

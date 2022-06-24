@@ -40,13 +40,8 @@
 **  na.
 ****************************************************************************/
 
-
-
-
 #include <config.h>
 #include "emboss.h"
-
-
 
 
 
@@ -66,45 +61,35 @@ int main(int argc, char **argv)
     AjPFile outf     = NULL; /* Output file.                            */
     AjPFile logf     = NULL; /* Log file.                               */
     AjPList list     = NULL; /* List of CATH objects.                   */
-    AjPCath tmp      = NULL; /* Temp. pointer.                          */
+    AjPCath cath     = NULL; /* Temp. pointer.                          */
     
     
-    embInitPV("cathparse", argc, argv, "DOMAINATRIX",VERSION);
+    embInitPV("cathparse", argc, argv, "DOMAINATRIX", VERSION);
 
     listf  =  ajAcdGetInfile("listfile");   
     domf   =  ajAcdGetInfile("domfile");    
     namesf =  ajAcdGetInfile("namesfile");  
     outf   =  ajAcdGetOutfile("outfile");   
     logf   =  ajAcdGetOutfile("logfile");   
-
     
     list = ajCathReadAllRawNew(listf, domf, namesf, logf);
-    while(ajListPop(list, (void **) &tmp))
+
+    while(ajListPop(list, (void **) &cath))
     {	
-	ajCathWrite(outf, tmp);
-	ajCathDel(&tmp);
+	ajCathWrite(outf, cath);
+	ajCathDel(&cath);
     }
-
-
 
     /* Close CATH parsable files and output file */
     ajFileClose(&listf); 
     ajFileClose(&domf); 
     ajFileClose(&namesf); 
     ajFileClose(&outf); 
-    ajFileClose(&logf); 
+    ajFileClose(&logf);
+
     ajListFree(&list);
 
     ajExit();
+
     return 0;
 }
-
-
-
-
-
-
-
-
-
-

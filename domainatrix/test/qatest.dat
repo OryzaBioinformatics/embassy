@@ -1,0 +1,356 @@
+#########################################################
+#
+# EMBASSY (DOMAINATRIX)
+#
+#########################################################
+
+ID pdbtosp-domainatrix
+AY structure
+DL keep
+AX pdbtosp
+IN ../../data/structure/pdbtosp.txt
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI Epdbtosp.dat
+FC = 49
+FZ = 422
+FP 7 /^EN   /
+FP /^IN   XYLA_ACTMI ID; P12851 ACC;\n/
+//
+
+
+ID scopparse-keep
+AB domainatrix
+DL keep
+AA scopparse
+IN ../../data/structure/scop.cla.raw
+IN ../../data/structure/scop.des.raw
+IN Y
+IN N
+IN all.scop
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI all.scop
+FC = 52
+FZ = 809
+FP 2 /^ID   /
+//
+
+
+ID pdbparse-domainatrix
+AY structure
+DL keep
+TI 120
+AX pdbparse
+IN ../../data/structure
+IN
+IN Y
+IN
+IN
+IN
+FI stdout
+FC = 3
+FP 3 /^Processing /
+FI stderr
+FC = 2
+FP 0 /^Warning:/
+FP 0 /^Error:/
+FP 0 /^Died:/
+FI pdbparse.log
+FC = 18
+FP 2 /^SEQRESLENDIF/
+FP 2 /^SECSTART       1 1 ILE 384\n/
+FP 3 /^SECBOTH/
+FP /^SECBOTH        1 1 VAL 78 ILE 81\n/
+FI 1cs4.ccf
+FC = 537
+FZ = 51361
+FP 475 /^AT /
+FI 1ii7.ccf
+FC = 462
+FZ = 44223
+FP 402 /^AT /
+FI 2hhb.ccf
+FC = 5398
+FZ = 533177
+FP 4779 /^AT /
+//
+
+ID pdbplus-domainatrix
+AY structure
+DL keep
+AX pdbplus
+RQ stride
+RQ naccess
+CC Requires stride
+CC Requires naccess
+IN ../pdbparse-domainatrix/
+IN ../../data/structure/
+IN  
+IN 3
+IN 4
+IN
+IN
+IN
+IN
+FI stderr
+FC = 6
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 11
+FP 3 /\S+naccess \S+\.ent/
+FP 2 /failures: 0\n/
+FI pdbplus.log
+FC = 28
+FP 3 /stride output for/
+FP 2 /failures: 0\n/
+FI stride.log
+FC = 0
+FZ = 0
+FI naccess.log
+FC = 6
+##
+## Yes, naccess does have a typo 'defual' in the message ...
+##
+FP 3 /naccess: using defualt vdw\.radii\n/
+FP 3 /naccess: using default STD FILE\n/
+FI 1cs4.ccf
+FC = 537
+FZ = 51361
+FP /^SQ   SEQUENCE    52 AA;   5817 MW;  D8CCAE0E1FC0849A CRC64;\n/
+FI 1ii7.ccf
+FC = 462
+FZ = 44223
+FP /^SQ   SEQUENCE    65 AA;   7395 MW;  75FBE75B22FD3678 CRC64;\n/
+FI 2hhb.ccf
+FC = 5398
+FZ = 533177
+FP /^SQ   SEQUENCE   141 AA;  15126 MW;  34D13618E62A33C1 CRC64;\n/
+//
+
+
+ID domainer-domainatrix
+AY structure
+DL keep
+AX domainer
+IN ../scopparse-keep/all.scop
+IN ../pdbplus-domainatrix/
+IN
+IN
+IN 1
+IN domainer_embl.log
+IN domainer_pdb.log
+FI stderr
+FC = 5
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 2
+FP /^D1CS4A_\n/
+FP /^D1II7A_\n/
+FI domainer_embl.log
+FZ = 0
+FI domainer_pdb.log
+FZ = 0
+FI d1cs4a_.ent
+FZ = 29889
+FC = 369
+FP /^ATOM\s+31\s+CA\s+PHE\s+A\s\d+\s+60\.914 -11\.143  59\.200  1\.00 58\.07\s+C\s+\n/
+FI d1cs4a_.ccf
+FZ = 40517
+FC = 418
+FP /SQ   SEQUENCE    52 AA;   5817 MW;  D8CCAE0E1FC0849A CRC64;\n/
+FI d1ii7a_.ent
+FZ = 29727
+FC = 367
+FP /ATOM      1  N   ASP A   8       7\.977  32\.254  19\.055  1\.00 26\.65           N  /
+FI d1ii7a_.ccf
+FZ = 39756
+FC = 413
+FP /SQ   SEQUENCE    65 AA;   7395 MW;  75FBE75B22FD3678 CRC64;/
+//
+
+ID cathparse-ex
+AB domainatrix
+AA cathparse
+IN ../../data/structure/caths.list.small
+IN ../../data/structure/domlist.small
+IN ../../data/structure/CAT.names.all.small
+IN 
+IN
+FI stderr
+FC = 2
+FP 0 /^Warning:/
+FP 0 /^Error:/
+FP 0 /^Died:/
+FI Ecath.dat
+FC = 48
+FZ = 606
+FP 2 /^ID/
+FP /CH   0 CHAIN; 156 START; 203 END;\n/
+FP /CH   0 CHAIN; 159 START; 202 END;\n/
+FP /NR   48\n/
+FP /NR   44\n/
+FP 2 /SF   DNA helicase RuvA subunit, C-terminal domain\n/
+FI cathparse.log
+FC = 8
+FZ = 64
+FP 4 /^1\.10\.8/
+//
+
+ID domainseqs-keep
+AB domainatrix
+DL keep
+AA domainseqs
+IN ../scopparse-keep/all.scop
+IN ../domainer-domainatrix
+IN Y
+IN ../pdbtosp-domainatrix/Epdbtosp.dat
+IN all_s.scop
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 4
+FZ = 38
+FP 2 /^\/\/\n/
+FI all_s.scop
+FC = 59
+FZ = 1080
+FP 2 /^ID   /
+FI domainseqs.log
+FC = 6
+FZ = 78
+FP 2 /^NO_ACCESSION_NUMBER\n/
+FP 2 /\/\/\n/
+FP /^D1CS4A_ +\n/
+FP /^D1II7A_ +\n/
+//
+
+ID domainnr-ex
+AB domainatrix
+AA domainnr
+IN ../domainseqs-keep/all_s.scop
+IN
+IN 1
+IN 1
+IN 5
+IN all_nr.scop
+IN 
+FI stdout
+FC = 3
+FP 1 /^\/\/ /
+FP 2 /^D1/
+FI stderr
+FC = 15
+FP 0 /Error: /
+FP 0 /Died: /
+FI all_nr.scop
+FC = 30
+FZ = 535
+FP 1 /^ID/
+FI domainnr.log
+FC = 7
+FZ = 117
+FP 1 /^Retained/
+FP 1 /^Rejected/
+FP 1 /^\/\/ /
+//
+
+
+ID domainreso-ex
+AB domainatrix
+AA domainreso
+IN ../domainer-domainatrix/
+IN ../scopparse-keep/all.scop
+IN 2.3
+IN all_2.3.scop
+FI stdout
+FC = 2
+FP 2 /\.ccf\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI all_2.3.scop
+FC = 26
+FZ = 390
+FP 1 /^ID/
+FP /SI   53931 CL; 56299 FO; 56300 SF; 64427 FA; 64428 DO; 64429 SO; 62415 DD;\n/
+//
+
+
+
+ID domainsse-keep
+AB domainatrix
+DL keep
+AA domainsse
+IN ../scopparse-keep/all.scop
+IN ../domainer-domainatrix
+IN domainsse.out
+IN domainsse.log
+FI stdout
+FC = 6
+FP 2 /^Processing/
+FI stderr
+FC = 2
+FP 0 /^Warning:/
+FP 0 /^Error:/
+FP 0 /^Died:/
+FI domainsse.out
+FC = 62
+FZ = 1068
+FP 2 /^ID   /
+FI domainsse.log
+FZ = 0
+//
+
+
+
+ID ssematch-ex
+AB domainatrix
+AA ssematch
+IN ../../data/structure/sse.in
+IN ../domainsse-keep/domainsse.out
+IN 1
+IN res.dcf
+IN elm.dcf
+IN
+FI stderr
+FC = 2
+FP 0 /^Warning:/
+FP 0 /^Error:/
+FP 0 /^Died:/
+FI res.dcf
+FC = 33
+FZ = 551
+FP 1 /^ID /
+FI elm.dcf 
+FC = 33
+FZ = 581
+FP 1 /^ID /
+FP /^SE   HH\n/
+FI ssematch.log 
+FC = 0
+FZ = 0
+//
+
+
+
+
+
+

@@ -6,9 +6,9 @@ application: ssematch [
   batch: "yes"
   cpu: "medium"
   embassy: "domainatrix"
-  relations: "EDAM:0000091 topic Data handling"
-  relations: "EDAM:0000736 topic Protein domains"
-  relations: "EDAM:0000500 operation Secondary structure alignment"
+  relations: "EDAM_topic:0091 Data handling"
+  relations: "EDAM_topic:0736 Protein domains and folds"
+  relations: "EDAM_operation:0500 Secondary structure alignment construction"
 ]
 
 section: input [
@@ -22,7 +22,7 @@ section: input [
     help: "This option specifies the name of the file of secondary
            structure (input)."
     knowntype: "Secondary structure"
-    relations: "EDAM:0000876 data Protein features (secondary structure)"
+    relations: "EDAM_data:0876 Protein features (secondary structure)"
   ]
 
   infile: dcfinfile [
@@ -35,7 +35,7 @@ section: input [
            SCOPPARSE and CATHPARSE. Domain sequence information can be added
            to the file by using DOMAINSEQS."
     knowntype: "Domain classification"
-    relations: "EDAM:0000900 data Protein domain classification"
+    relations: "EDAM_data:0900 Protein domain classification"
   ]
 
   matrixf: datafile [
@@ -44,7 +44,7 @@ section: input [
     help: "This option specifies the secondary structure substitution
            matrix."
     default: "SSSUB"
-    relations: "EDAM:0001449 data Comparison matrix (amino acid)"
+    relations: "EDAM_data:1449 Comparison matrix (amino acid)"
   ]
 
 endsection: input
@@ -60,7 +60,7 @@ section: required [
     help: "This option specifies the number of top-scoring matches to
            report."
     default: "5"
-    relations: "EDAM:0001694 data Number of output entities"
+    relations: "EDAM_data:1694 Number of output entities"
   ]
 
 endsection: required
@@ -85,7 +85,7 @@ section: additional [
            choice of comparison matrix. The default value assumes you are
            using the EBLOSUM62 matrix for protein sequences, and the EDNAFULL
            matrix for nucleotide sequences."
-     relations: "EDAM:0001397 data Gap opening penalty"
+     relations: "EDAM_data:1397 Gap opening penalty"
   ]
 
   float: rgapextend [
@@ -103,7 +103,7 @@ section: additional [
            is how long gaps are penalized. Usually you will expect a few
            long gaps rather than many short gaps, so the gap extension
            penalty should be lower than the gap penalty."
-    relations: "EDAM:0001398 data Gap extension penalty"
+    relations: "EDAM_data:1398 Gap extension penalty"
   ]
 
   float: egapopen [
@@ -121,7 +121,7 @@ section: additional [
            choice of comparison matrix. The default value assumes you are
            using the EBLOSUM62 matrix for protein sequences, and the EDNAFULL
            matrix for nucleotide sequences."
-     relations: "EDAM:0001397 data Gap opening penalty"
+     relations: "EDAM_data:1397 Gap opening penalty"
   ]
 
   float: egapextend [
@@ -139,7 +139,7 @@ section: additional [
            residue in the gap. This is how long gaps are penalized. Usually
            you will expect a few long gaps rather than many short gaps, so
            the gap extension penalty should be lower than the gap penalty."
-    relations: "EDAM:0001398 data Gap extension penalty"
+    relations: "EDAM_data:1398 Gap extension penalty"
   ]
 
 endsection: additional
@@ -158,7 +158,7 @@ section: output [
            classification file' contains classification and other data for
            domains from SCOP or CATH, in DCF format (EMBL-like)."
     knowntype: "domain classification"
-    relations: "EDAM:0000900 data Protein domain classification"
+    relations: "EDAM_data:0900 Protein domain classification"
   ]
 
   outfile: outsefile [
@@ -171,7 +171,7 @@ section: output [
            classification and other data for domains from SCOP or CATH, in
            DCF format (EMBL-like)."
     knowntype: "domain classification"
-    relations: "EDAM:0000900 data Protein domain classification"
+    relations: "EDAM_data:0900 Protein domain classification"
   ]
 
   outfile: logfile [
@@ -181,7 +181,7 @@ section: output [
            (output)."
     default: "ssematch.log"
     knowntype: "domainatrix log"
-    relations:  "EDAM:0001678 data Tool log"
+    relations:  "EDAM_data:1678 Tool log"
   ]
 
 endsection: output
