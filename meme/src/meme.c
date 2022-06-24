@@ -633,4 +633,4 @@ extern PRIORS *create_priors(
   return priors;
 }
 
-/* $Header: /packages/emboss/MASTER/emboss/emboss/embassy/meme/src/meme.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $ */
+/* $Header: /home/repository/emboss/emboss/emboss/embassy/meme/src/meme.c,v 1.1 2000/11/05 21:47:55 ajb Exp $ */

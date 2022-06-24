@@ -192,5 +192,5 @@ typedef int BOOLEAN;
 #define fprintf if (mpMyID() == 0) fprintf
 #endif
 
-/* $Header: /packages/emboss/MASTER/emboss/emboss/embassy/meme/src/INCLUDE/macros.h,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $ */
+/* $Header: /home/repository/emboss/emboss/emboss/embassy/meme/src/INCLUDE/macros.h,v 1.2 2000/11/05 22:27:29 ajb Exp $ */
 

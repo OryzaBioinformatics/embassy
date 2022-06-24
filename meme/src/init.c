@@ -141,7 +141,7 @@ extern void init_meme(
   ajAcdInitP("meme",argc,argv,"MEME");
 
 
-  seqall = ajAcdGetSeqall("datafile");
+  seqall = ajAcdGetSeqall("sequence");
 
   datnam = ajStrNewC(ajStrStr(seqall->Seqin->Usa));
 
@@ -884,4 +884,4 @@ extern void init_meme(
   *debug_file_p = debug_file;
 }
 
-/* $Header: /packages/emboss/MASTER/emboss/emboss/embassy/meme/src/init.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $ */
+/* $Header: /home/repository/emboss/emboss/emboss/embassy/meme/src/init.c,v 1.2 2003/10/06 09:03:21 rice Exp $ */

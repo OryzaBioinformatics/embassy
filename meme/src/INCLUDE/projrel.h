@@ -5,4 +5,4 @@
 	a project is released.
 */
 /*#define VERSION "2.3.beta"*/
-#define ARCHIVE_DATE "$Date: 2001/12/24 09:05:38 $" 
+#define ARCHIVE_DATE "$Date: 2000/11/05 21:47:56 $" 

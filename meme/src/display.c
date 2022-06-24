@@ -1358,4 +1358,4 @@ ajFmtPrintF(outf,"%c",(d==1) ? unhash(eseq[j]) : unhash(dna_comp(eseq[j])));
   free(sites);
 } /* print_sites */
 
-/* $Header: /packages/emboss/MASTER/emboss/emboss/embassy/meme/src/display.c,v 1.1.1.1 2001/12/24 09:05:38 ableasby Exp $ */
+/* $Header: /home/repository/emboss/emboss/emboss/embassy/meme/src/display.c,v 1.1 2000/11/05 21:47:55 ajb Exp $ */
