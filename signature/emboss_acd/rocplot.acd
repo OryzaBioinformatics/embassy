@@ -1,5 +1,5 @@
 application: rocplot [
-  documentation: "Performs ROC analysis on hits files."
+  documentation: "Performs ROC analysis on hits files"
   groups: "Protein:3D Structure"
   gui: "yes"
   batch: "yes"
@@ -169,7 +169,7 @@ section: output [
            written."
     default: "./"
     knowntype: "output general"
-    information: "General output file directory"
+    information: "General output file output directory"
   ]
 
   string: rocbasename [
@@ -230,6 +230,7 @@ section: output [
 
   outfile: logfile [
     default: "rocplot.log"
+    information: "Domainatrix log output file"
     knowntype: "domainatrix log"
   ]
 
