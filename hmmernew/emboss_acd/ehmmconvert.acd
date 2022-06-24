@@ -1,0 +1,61 @@
+application: ehmmconvert [
+  documentation: "Convert between profile HMM file formats"
+  groups: "HMM"
+  embassy: "hmmernew"
+]
+
+section: input [
+  information: "Input section"
+  type: "page"
+]
+
+  infile: oldhmmfile [
+    parameter: "Y"
+    knowntype: "hmm"
+    information: "HMMER hidden markov model file"
+    help: "HMM input file"
+  ]
+
+endsection: input
+
+section: required [
+  information: "Required section"
+  type: "page"
+]
+
+  list: format [
+    standard: "Y"
+    default: "A"
+    minimum: "1"
+    maximum: "1"
+    values: "A:ascii,B:binary,G:gcg,X:xsw"
+    delimiter: ","
+    codedelimiter: ":"
+    header: "HMM format"
+    information: "Select format"
+    button: "Y"
+  ]
+
+endsection: required
+
+section: advanced [
+  information: "Advanced section"
+  type: "page"
+]
+
+endsection: advanced
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+  outfile: newhmmfile [
+    parameter: "Y"
+    knowntype: "hmm"
+    help: "HMM output file"
+    append: "N"
+    information: "HMMER hidden markov model output file"
+  ]
+
+endsection: output
