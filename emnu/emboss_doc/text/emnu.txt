@@ -481,7 +481,7 @@ Simple menu of EMBOSS applications
 Command line arguments
 
 Simple menu of EMBOSS applications
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers: (none)
    Additional (Optional) qualifiers:
