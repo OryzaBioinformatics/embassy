@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Reports protein signal cleavage sites
+   Report protein signal cleavage sites
 
 Description
 
@@ -28,7 +28,7 @@ Usage
 
 
 % esignalp
-Reports protein signal cleavage sites
+Report protein signal cleavage sites
 Input (aligned) protein sequence set: test.seq
 Organism
        euk : euk
@@ -65,8 +65,8 @@ Output file [test.esignalp]:
 
 Command line arguments
 
-Reports protein signal cleavage sites
-Version: EMBOSS:6.4.0.0
+Report protein signal cleavage sites
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqset     (Aligned) protein sequence set filename and
@@ -103,7 +103,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -288,21 +291,21 @@ Known bugs
 See also
 
    Program name     Description
-   echlorop         Reports presence of chloroplast transit peptides
-   elipop           Prediction of lipoproteins
-   enetnglyc        Reports N-glycosylation sites in human proteins
+   echlorop         Report presence of chloroplast transit peptides
+   elipop           Predict lipoproteins
+   enetnglyc        Report N-glycosylation sites in human proteins
    enetoglyc        Reports mucin type GalNAc O-glycosylation sites in mammalian
                     proteins
-   enetphos         Reports ser, thr and tyr phosphorylation sites in eukaryotic
+   enetphos         Report Ser, Thr and Tyr phosphorylation sites in eukaryotic
                     proteins
-   eprop            Reports propeptide cleavage sites in proteins
+   eprop            Report propeptide cleavage sites in proteins
    etmhmm           Reports transmembrane helices
-   eyinoyang        Reports O-(beta)-GlcNAc attachment sites
-   sigcleave        Reports on signal cleavage sites in a protein sequence
-   siggenlig        Generates ligand-binding signatures from a CON file
-   sigscan          Generates hits (DHF file) from a signature search
+   eyinoyang        Report O-(beta)-GlcNAc attachment sites
+   sigcleave        Report on signal cleavage sites in a protein sequence
+   siggenlig        Generate ligand-binding signatures from a CON file
+   sigscan          Generate hits (DHF file) from a signature search
    tmap             Predict and plot transmembrane segments in protein sequences
-   topo             Draws an image of a transmembrane protein
+   topo             Draw an image of a transmembrane protein
 
 Author(s)
 

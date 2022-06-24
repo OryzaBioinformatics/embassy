@@ -36,7 +36,7 @@ Please help by correcting and extending the Wiki pages.
 <H2>
     Function
 </H2>
-Reports ser, thr and tyr phosphorylation sites in eukaryotic proteins
+Report Ser, Thr and Tyr phosphorylation sites in eukaryotic proteins
 <!--
 DON'T WRITE ANYTHING HERE.
 IT IS DONE FOR YOU.
@@ -70,7 +70,7 @@ Here is a sample session with <b>enetphos</b>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
 % <b>enetphos </b>
-Reports ser, thr and tyr phosphorylation sites in eukaryotic proteins
+Report Ser, Thr and Tyr phosphorylation sites in eukaryotic proteins
 Input (aligned) protein sequence set: <b>EFTU_HUMAN.fsa</b>
 Output file [eftu_human.enetphos]: <b></b>
 
@@ -86,8 +86,8 @@ Output file [eftu_human.enetphos]: <b></b>
 
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
-Reports ser, thr and tyr phosphorylation sites in eukaryotic proteins
-Version: EMBOSS:6.4.0.0
+Report Ser, Thr and Tyr phosphorylation sites in eukaryotic proteins
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqset     (Aligned) protein sequence set filename and
@@ -121,7 +121,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -257,7 +260,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-sequence" associated seqset qualifiers
+<td align="left" colspan=5>"-sequence" associated seqset qualifiers
 </td>
 </tr>
 
@@ -326,11 +329,35 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
+<td> -scircular1<br>-scircular_sequence</td>
+<td>boolean</td>
+<td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td> -sformat1<br>-sformat_sequence</td>
 <td>string</td>
 <td>Input sequence format</td>
 <td>Any string</td>
 <td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -iquery1<br>-iquery_sequence</td>
+<td>string</td>
+<td>Input query fields or ID list</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -ioffset1<br>-ioffset_sequence</td>
+<td>integer</td>
+<td>Input start position offset</td>
+<td>Any integer value</td>
+<td>0</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -374,7 +401,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outfile" associated outfile qualifiers
+<td align="left" colspan=5>"-outfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -796,7 +823,7 @@ None.
 <th>Description</th></tr>
 <tr>
 <td><a href="enetnglyc.html">enetnglyc</a></td>
-<td>Reports N-glycosylation sites in human proteins</td>
+<td>Report N-glycosylation sites in human proteins</td>
 </tr>
 
 <tr>
@@ -806,17 +833,17 @@ None.
 
 <tr>
 <td><a href="eprop.html">eprop</a></td>
-<td>Reports propeptide cleavage sites in proteins</td>
+<td>Report propeptide cleavage sites in proteins</td>
 </tr>
 
 <tr>
 <td><a href="esignalp.html">esignalp</a></td>
-<td>Reports protein signal cleavage sites</td>
+<td>Report protein signal cleavage sites</td>
 </tr>
 
 <tr>
 <td><a href="eyinoyang.html">eyinoyang</a></td>
-<td>Reports O-(beta)-GlcNAc attachment sites</td>
+<td>Report O-(beta)-GlcNAc attachment sites</td>
 </tr>
 
 </table>

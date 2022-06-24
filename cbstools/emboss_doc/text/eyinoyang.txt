@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Reports O-(beta)-GlcNAc attachment sites
+   Report O-(beta)-GlcNAc attachment sites
 
 Description
 
@@ -26,7 +26,7 @@ Usage
 
 
 % eyinoyang
-Reports O-(beta)-GlcNAc attachment sites
+Report O-(beta)-GlcNAc attachment sites
 Input (aligned) protein sequence set: CBG_HUMAN.fsa
 Output file [cbg_human.eyinoyang]:
 
@@ -38,7 +38,7 @@ Output file [cbg_human.eyinoyang]:
 
 
 % eyinoyang
-Reports O-(beta)-GlcNAc attachment sites
+Report O-(beta)-GlcNAc attachment sites
 Input (aligned) protein sequence set: LEUK_RAT.fsa
 Output file [leuk_rat.eyinoyang]:
 
@@ -48,8 +48,8 @@ Output file [leuk_rat.eyinoyang]:
 
 Command line arguments
 
-Reports O-(beta)-GlcNAc attachment sites
-Version: EMBOSS:6.4.0.0
+Report O-(beta)-GlcNAc attachment sites
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqset     (Aligned) protein sequence set filename and
@@ -76,7 +76,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -313,13 +316,13 @@ Known bugs
 See also
 
    Program name     Description
-   enetnglyc        Reports N-glycosylation sites in human proteins
+   enetnglyc        Report N-glycosylation sites in human proteins
    enetoglyc        Reports mucin type GalNAc O-glycosylation sites in mammalian
                     proteins
-   enetphos         Reports ser, thr and tyr phosphorylation sites in eukaryotic
+   enetphos         Report Ser, Thr and Tyr phosphorylation sites in eukaryotic
                     proteins
-   eprop            Reports propeptide cleavage sites in proteins
-   esignalp         Reports protein signal cleavage sites
+   eprop            Report propeptide cleavage sites in proteins
+   esignalp         Report protein signal cleavage sites
 
 Author(s)
 

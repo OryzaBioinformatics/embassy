@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Prediction of lipoproteins
+   Predict lipoproteins
 
 Description
 
@@ -25,7 +25,7 @@ Usage
 
 
 % elipop
-Prediction of lipoproteins
+Predict lipoproteins
 Input (aligned) protein sequence set: 5h2a_crigr.fsa
 Output file [5h2a_crigr.elipop]:
 
@@ -35,8 +35,8 @@ Output file [5h2a_crigr.elipop]:
 
 Command line arguments
 
-Prediction of lipoproteins
-Version: EMBOSS:6.4.0.0
+Predict lipoproteins
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqset     (Aligned) protein sequence set filename and
@@ -62,7 +62,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -156,29 +159,29 @@ Known bugs
 See also
 
    Program name     Description
-   antigenic        Finds antigenic sites in proteins
-   echlorop         Reports presence of chloroplast transit peptides
+   antigenic        Find antigenic sites in proteins
+   echlorop         Report presence of chloroplast transit peptides
    eiprscan         Motif detection
    emast            Motif detection
-   ememe            Multiple EM for Motif Elicitation
-   ememetext        Multiple EM for Motif Elicitation. Text file only
-   epestfind        Finds PEST motifs as potential proteolytic cleavage sites
-   esignalp         Reports protein signal cleavage sites
+   ememe            Multiple EM for motif elicitation
+   ememetext        Multiple EM for motif elicitation, text file only
+   epestfind        Find PEST motifs as potential proteolytic cleavage sites
+   esignalp         Report protein signal cleavage sites
    etmhmm           Reports transmembrane helices
    fuzzpro          Search for patterns in protein sequences
    fuzztran         Search for patterns in protein sequences (translated)
    omeme            Motif detection
-   patmatdb         Searches protein sequences with a sequence motif
+   patmatdb         Search protein sequences with a sequence motif
    patmatmotifs     Scan a protein sequence with motifs from the PROSITE
                     database
    preg             Regular expression search of protein sequence(s)
-   pscan            Scans protein sequence(s) with fingerprints from the PRINTS
+   pscan            Scan protein sequence(s) with fingerprints from the PRINTS
                     database
-   sigcleave        Reports on signal cleavage sites in a protein sequence
-   siggenlig        Generates ligand-binding signatures from a CON file
-   sigscan          Generates hits (DHF file) from a signature search
+   sigcleave        Report on signal cleavage sites in a protein sequence
+   siggenlig        Generate ligand-binding signatures from a CON file
+   sigscan          Generate hits (DHF file) from a signature search
    tmap             Predict and plot transmembrane segments in protein sequences
-   topo             Draws an image of a transmembrane protein
+   topo             Draw an image of a transmembrane protein
 
 Author(s)
 

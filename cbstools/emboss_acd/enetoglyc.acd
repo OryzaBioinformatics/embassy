@@ -3,8 +3,9 @@ application: enetoglyc [
   groups: "Protein:Modifications"
   embassy: "cbstools"
   external: "netOglyc CBStools website http://www.cbs.dtu.dk/services/"
-  relations: "EDAM:0000601 topic Protein modifications"
-  relations: "EDAM:0000417 operation Protein post-translation modification prediction"
+  relations: "EDAM_topic:0601 Protein modifications"
+  relations: "EDAM_operation:0417 Protein post-translation modification
+                                     site prediction"
 ]
 
 section: input [
@@ -16,7 +17,7 @@ section: input [
     parameter: "Y"
     type: "gapprotein"
     aligned: "Y"
-    relations: "EDAM:0001384 data Sequence alignment (protein)"
+    relations: "EDAM_data:1384 Sequence alignment (protein)"
   ]
 
 endsection: input
@@ -36,13 +37,13 @@ section: advanced [
   boolean: plot [
     default: "N"
     information: "Produce graphics"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: signalp [
     default: "N"
     information: "Run signalp on the sequences"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 
@@ -56,8 +57,8 @@ section: output [
   outfile: outfile [
     parameter: "Y"
     knowntype: "enetoglyc output"
-    relations:  "EDAM:0001324 data Protein features
-                                   (post-translation modification sites)"
+    relations:  "EDAM_data:1324 Protein features
+                                   (post-translation modifications)"
   ]
 
 endsection: output

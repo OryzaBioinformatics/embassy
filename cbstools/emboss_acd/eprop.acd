@@ -1,10 +1,10 @@
 application: eprop [
-  documentation: "Reports propeptide cleavage sites in proteins"
+  documentation: "Report propeptide cleavage sites in proteins"
   groups: "Protein:Modifications"
   embassy: "cbstools"
   external: "prop CBStools website http://www.cbs.dtu.dk/services/"
-  relations: "EDAM:0000601 topic Protein modifications"
-  relations: "EDAM:0000422 operation Protein cleavage site prediction"
+  relations: "EDAM_topic:0601 Protein modifications"
+  relations: "EDAM_operation:0422 Protein cleavage site prediction"
 ]
 
 section: input [
@@ -16,7 +16,7 @@ section: input [
     parameter: "Y"
     type: "gapprotein"
     aligned: "Y"
-    relations: "EDAM:0001384 data Sequence alignment (protein)"
+    relations: "EDAM_data:1384 Sequence alignment (protein)"
   ]
 
 endsection: input
@@ -36,19 +36,19 @@ section: advanced [
   boolean: plot [
     default: "N"
     information: "Produce graphics"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: pcprediction [
     default: "N"
     information: "Perform proprotein convertase prediction"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: signalp [
     default: "N"
     information: "Include signal peptide cleavage site prediction"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: advanced
@@ -61,7 +61,7 @@ section: output [
   outfile: outfile [
     parameter: "Y"
     knowntype: "eprop output"
-    relations:  "EDAM:0001323 data Protein features (cleavage sites)"
+    relations:  "EDAM_data:1323 Protein features (cleavage sites)"
   ]
 
 endsection: output

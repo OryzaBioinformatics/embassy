@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Reports propeptide cleavage sites in proteins
+   Report propeptide cleavage sites in proteins
 
 Description
 
@@ -26,7 +26,7 @@ Usage
 
 
 % eprop
-Reports propeptide cleavage sites in proteins
+Report propeptide cleavage sites in proteins
 Input (aligned) protein sequence set: EDA_HUMAN.fsa
 Output file [eda_human.eprop]:
 
@@ -36,8 +36,8 @@ Output file [eda_human.eprop]:
 
 Command line arguments
 
-Reports propeptide cleavage sites in proteins
-Version: EMBOSS:6.4.0.0
+Report propeptide cleavage sites in proteins
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqset     (Aligned) protein sequence set filename and
@@ -62,7 +62,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -230,13 +233,13 @@ Known bugs
 See also
 
    Program name     Description
-   enetnglyc        Reports N-glycosylation sites in human proteins
+   enetnglyc        Report N-glycosylation sites in human proteins
    enetoglyc        Reports mucin type GalNAc O-glycosylation sites in mammalian
                     proteins
-   enetphos         Reports ser, thr and tyr phosphorylation sites in eukaryotic
+   enetphos         Report Ser, Thr and Tyr phosphorylation sites in eukaryotic
                     proteins
-   esignalp         Reports protein signal cleavage sites
-   eyinoyang        Reports O-(beta)-GlcNAc attachment sites
+   esignalp         Report protein signal cleavage sites
+   eyinoyang        Report O-(beta)-GlcNAc attachment sites
 
 Author(s)
 

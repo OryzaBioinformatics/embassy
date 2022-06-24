@@ -34,7 +34,7 @@ Output file [5h2a_crigr.etmhmm]:
 Command line arguments
 
 Reports transmembrane helices
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqset     (Aligned) protein sequence set filename and
@@ -59,7 +59,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -170,14 +173,14 @@ Known bugs
 See also
 
                     Program name                         Description
-                    echlorop     Reports presence of chloroplast transit peptides
-                    elipop       Prediction of lipoproteins
-                    esignalp     Reports protein signal cleavage sites
-                    sigcleave    Reports on signal cleavage sites in a protein sequence
-                    siggenlig    Generates ligand-binding signatures from a CON file
-                    sigscan      Generates hits (DHF file) from a signature search
+                    echlorop     Report presence of chloroplast transit peptides
+                    elipop       Predict lipoproteins
+                    esignalp     Report protein signal cleavage sites
+                    sigcleave    Report on signal cleavage sites in a protein sequence
+                    siggenlig    Generate ligand-binding signatures from a CON file
+                    sigscan      Generate hits (DHF file) from a signature search
                     tmap         Predict and plot transmembrane segments in protein sequences
-                    topo         Draws an image of a transmembrane protein
+                    topo         Draw an image of a transmembrane protein
 
 Author(s)
 

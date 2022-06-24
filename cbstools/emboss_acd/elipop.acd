@@ -1,12 +1,13 @@
 application: elipop [
-  documentation: "Prediction of lipoproteins"
+  documentation: "Predict lipoproteins"
   groups: "Protein:Functional sites, Protein:Motifs"
   embassy: "cbstools"
   external: "LipoP CBStools website http://www.cbs.dtu.dk/services/"
-  relations: "EDAM:0000748 topic Protein functional sites"
-  relations: "EDAM:0000158 topic Sequence motifs"
-  relations: "EDAM:0002232 topic Lipoproteins"
-  relations: "EDAM:0000417 operation Protein post-translation modification prediction"
+  relations: "EDAM_topic:0748 Protein sites and features"
+  relations: "EDAM_topic:0158 Sequence motifs"
+  relations: "EDAM_topic:2232 Lipoproteins"
+  relations: "EDAM_operation:0417 Protein post-translation modification
+                                     site prediction"
 ]
 
 section: input [
@@ -18,7 +19,7 @@ section: input [
     parameter: "Y"
     type: "gapprotein"
     aligned: "Y"
-    relations: "EDAM:0001384 data Sequence alignment (protein)"
+    relations: "EDAM_data:1384 Sequence alignment (protein)"
   ]
 
 endsection: input
@@ -46,31 +47,31 @@ section: advanced [
   boolean: plot [
     default: "N"
     information: "Produce graphics"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: short [
     default: "N"
     information: "Short output"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: html [
     default: "N"
     information: "Html output"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: format [
     default: "N"
     information: "Run LipoPformat script"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: cutoff [
     default: "-3"
     information: "Log-odds cutoff"
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
 endsection: advanced
@@ -83,7 +84,7 @@ section: output [
   outfile: outfile [
     parameter: "Y"
     knowntype: "elipop output"
-    relations:  "EDAM:0001322 data Protein features (signal peptides)"
+    relations:  "EDAM_data:1322 Protein features (signal peptides)"
   ]
 
 endsection: output

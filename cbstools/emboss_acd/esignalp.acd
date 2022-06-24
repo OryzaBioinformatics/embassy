@@ -1,12 +1,12 @@
 application: esignalp [
-  documentation: "Reports protein signal cleavage sites"
+  documentation: "Report protein signal cleavage sites"
   groups: "Protein:Functional sites, Protein:Modifications"
   embassy: "cbstools"
   external: "signalp CBStools website http://www.cbs.dtu.dk/services/"
-  relations: "EDAM:0000748 topic Protein functional sites"
-  relations: "EDAM:0000601 topic Protein modifications"
-  relations: "EDAM:0000140 topic Protein targeting and localization"
-  relations: "EDAM:0000418 operation Protein signal peptide detection"
+  relations: "EDAM_topic:0748 Protein sites and features"
+  relations: "EDAM_topic:0601 Protein modifications"
+  relations: "EDAM_topic:0140 Protein targeting and localization"
+  relations: "EDAM_operation:0418 Protein signal peptide detection"
 ]
 
 section: input [
@@ -18,7 +18,7 @@ section: input [
     parameter: "Y"
     type: "gapprotein"
     aligned: "Y"
-    relations: "EDAM:0001384 data Sequence alignment (protein)"
+    relations: "EDAM_data:1384 Sequence alignment (protein)"
   ]
 
 endsection: input
@@ -38,7 +38,7 @@ section: required [
     delimiter: ","
     codedelimiter: ":"
     information: "Organism type to use"
-    relations: "EDAM:0001868 identifier Taxon"
+    relations: "EDAM_identifier:1868 Taxon"
   ]
 
   list: method [
@@ -51,7 +51,7 @@ section: required [
     delimiter: ","
     codedelimiter: ":"
     information: "Method to use"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: format [
@@ -64,7 +64,7 @@ section: required [
     delimiter: ","
     codedelimiter: ":"
     information: "Output format"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: gmode [
@@ -77,7 +77,7 @@ section: required [
     delimiter: ","
     codedelimiter: ":"
     information: "Graphics output"
-    relations: "EDAM:0002129 identifier File format name"
+    relations: "EDAM_identifier:2129 File format name"
   ]
 
   list: synver [
@@ -89,7 +89,7 @@ section: required [
     delimiter: ","
     codedelimiter: ":"
     information: "Signalp version weights"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: required
@@ -103,14 +103,14 @@ section: advanced [
     default: "0"
     minimum: "0"
     information: "Truncate sequence to n N-terminal residues (0=off)"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 
   boolean: keepall [
     default: "N"
     information: "Keep all gnuplot files"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: advanced
@@ -123,7 +123,7 @@ section: output [
   outfile: outfile [
     parameter: "Y"
     knowntype: "esignalp output"
-    relations:  "EDAM:0001322 data Protein features (signal peptides)"
+    relations:  "EDAM_data:1322 Protein features (signal peptides)"
   ]
 
 endsection: output

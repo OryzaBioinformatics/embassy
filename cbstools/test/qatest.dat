@@ -1,0 +1,250 @@
+###############################################################
+#
+# CBS TOOLS
+# Need to be installed individually
+#
+###############################################################
+
+ID echlorop-ex
+AB cbstools
+AA echlorop
+RQ chlorop
+IN ../../data/cbs/test1.fsa
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI test1.echlorop
+FC = 10
+FP /^P48786;                 1088	   0\.434   -	 -0\.663	    28\n/
+//
+
+ID echlorop-full
+AB cbstools
+AA echlorop
+RQ chlorop
+CL -full
+IN ../../data/cbs/test1.fsa
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI test1.echlorop
+FC = 1106
+FP /^P48786;                 1088	   0\.434   -	 -0\.663	    28\n/
+FP /^   29 Q   0\.144 0\.008	-0\.663\n/
+//
+
+ID echlorop-ex2
+AB cbstools
+AA echlorop
+RQ chlorop
+IN ../../data/cbs/test12.fsa
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI test12.echlorop
+FC = 21
+FP /^P48786;                 1088	   0\.434   -	 -0\.663	    28\n/
+//
+
+ID echlorop-full2
+AB cbstools
+AA echlorop
+RQ chlorop
+CL -full
+IN ../../data/cbs/test12.fsa
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI test12.echlorop
+FC = 4188
+FP /^P48786;                 1088	   0\.434   -	 -0\.663	    28\n/
+FP /^   29 Q   0\.144 0\.008	-0\.663\n/
+//
+
+
+ID elipop-ex
+AB cbstools
+AA elipop
+RQ lipop
+IN ../../data/cbs/5h2a_crigr.fsa
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI 5h2a_crigr.elipop
+FC = 5
+FP /5H2A_CRIGR	LipoP1\.0	SEQUENCE	1	70	0	\+	\.	\#you can have comments after the ID\n/
+FP /^5H2A_CRIGR	LipoP1\.0:Signal	CYT	1	1	-0\.200913	\+	0	\#M\n/
+//
+
+ID enetnglyc-ex
+AB cbstools
+AA enetnglyc
+RQ netNglyc
+IN ../../data/cbs/LEUK_RAT.fsa
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI leuk_rat.enetnglyc
+FC = 40
+FP /    Warning: This sequence may not contain a signal peptide\!\!/
+FP /^  LEUK_RAT              0\.112  32 N  0\.088  16 N  0\.362   8 N  0\.119 N  0\.104 N\n/
+FP /^LEUK_RAT       274 NGTV		0\.7323		\(9\/9\)		  \+\+\n/
+FP /^LEUK_RAT       300 NKSS		0\.5404		\(6\/9\)		   \+\n/
+//
+
+ID enetoglyc-ex
+AB cbstools
+AA enetoglyc
+RQ netOglyc
+IN ../../data/cbs/LEUK_RAT.fsa
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI leuk_rat.enetoglyc
+FC = 129
+FP 45 /^LEUK_RAT\s+T\s+.*\s+T\s+/
+FP 8 /^LEUK_RAT\s+T\s+.*\s+\.\s+/
+FP 35 /^LEUK_RAT\s+S\s+.*\s+S\s+/
+FP 24 /^LEUK_RAT\s+S\s+.*\s+\.\s+/
+FP 112 /^LEUK_RAT\s+/
+FP /LEUK_RAT                      S     25   0\.502   0\.029   S   -\n/
+//
+
+
+ID enetphos-ex
+AB cbstools
+AA enetphos
+IN ../../data/cbs/EFTU_HUMAN.fsa
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI eftu_human.enetphos
+FC = 748
+FP /^# EFTU_HUMAN               5 T   MAAATLLRA   0.776   PKC        YES\n/
+//
+
+ID eprop-ex
+AB cbstools
+AA eprop
+RQ prop
+IN ../../data/cbs/EDA_HUMAN.fsa
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI eda_human.eprop
+FC = 73
+FP /EDA_HUMAN        8    GYPEVER\|RE  0\.057    \.\n/
+//
+
+
+ID esignalp-ex
+AB cbstools
+RQ signalp
+AA esignalp
+IN ../../data/cbs/test.seq
+IN
+IN
+IN
+IN
+IN
+IN
+FI stderr
+FC = 24
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI test.esignalp
+FC = 168
+FP /trained on eukaryotes/
+FP /^\# Measure  Position  Value  Cutoff  signal peptide\?\n/
+FP /^  max\. C    26       0\.681   0\.32   YES\n/
+FP /^  max\. Y    26       0\.731   0\.33   YES\n/
+FP /^  max\. S    18       0\.982   0\.87   YES\n/
+FP /^  mean S     1-25    0\.832   0\.48   YES\n/
+FP /^       D     1-25    0\.782   0\.43   YES\n/
+FP /^\# Most likely cleavage site between pos. 25 and 26: VSS-TE\n/
+//
+
+ID etmhmm-ex
+AB cbstools
+AA etmhmm
+RQ tmhmm
+IN ../../data/cbs/5h2a_crigr.fsa
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI 5h2a_crigr.etmhmm
+FC = 20
+FP /^# 5H2A_CRIGR Length: 471\n/
+FP /^# 5H2A_CRIGR Number of predicted TMHs:  7\n/
+FP /^# 5H2A_CRIGR Exp number of AAs in TMHs: 159\.47336\n/
+FP /^# 5H2A_CRIGR Exp number, first 60 AAs:  0\.01677\n/
+FP /^# 5H2A_CRIGR Total prob of N-in:        0\.00629\n/
+FP /^5H2A_CRIGR	TMHMM2\.0	outside	     1    76\n/
+FP /^5H2A_CRIGR	TMHMM2\.0	TMhelix	    77    99\n/
+//
+
+
+ID eyinoyang-ex
+AB cbstools
+AA eyinoyang
+RQ yinoyang
+IN ../../data/cbs/CBG_HUMAN.fsa
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI cbg_human.eyinoyang
+FC = 39
+FP /^  CBG_HUMAN             0\.645  23 Y  0\.717  23 Y  0\.981  13 Y  0\.886 Y  0\.801 Y\n/
+//
+
+ID eyinoyang-ex2
+AB cbstools
+AA eyinoyang
+RQ yinoyang
+IN ../../data/cbs/LEUK_RAT.fsa
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI leuk_rat.eyinoyang
+FC = 74
+FP /^LEUK_RAT        6  S    \+\+       0\.5334    0\.4196   0\.5159\n/
+//
+
+
