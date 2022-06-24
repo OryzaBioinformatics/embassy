@@ -6,6 +6,8 @@ application: ehmmalign [
   cpu: "medium"
   embassy: "hmmernew"
   external: "hmmalign HMMER 2.3.2 available from http://hmmer.wustl.edu/"
+  relations:  "EDAM:0000188 topic Sequence profiles and HMMs"
+  relations:  "EDAM:0000300 operation Sequence-profile alignment"
 ]
 
 section: input [
@@ -18,7 +20,7 @@ section: input [
     knowntype: "hmm"
     information: "HMMER hidden markov model file"
     help: "File containing a HMM profile"
-    relations:  "EDAM: HMMER hidden Markov model"                      
+    relations:  "EDAM:0001364 data Hidden Markov model"
   ]
 
   seqset: seqfile [
@@ -26,7 +28,7 @@ section: input [
     type: "gapstopprotein"
     help: "File containing a (set of) sequence(s)"
     aligned: "N"
-    relations: "EDAM: Protein sequence record"                             
+    relations: "EDAM:0002886 data Sequence record (protein)"
   ]
 
   infile: mapali [
@@ -43,7 +45,7 @@ section: input [
            HMM was constructed from the alignment. The alignment in the file
            must be exactly the alignment that the HMM was built from. Compare
            the -withali option."
-    relations:  "EDAM: HMMER sequence alignment file"                  
+    relations: "EDAM:0001384 data Sequence alignment (protein)"
   ]
 
   infile: withali [
@@ -61,7 +63,7 @@ section: input [
            was constructed (though it should be quite close). However, any
            alignment can be used, not just the alignment that the HMM was
            built from. Compare the -mapali option."
-    relations:  "EDAM: HMMER sequence alignment file"                  
+    relations: "EDAM:0001384 data Sequence alignment (protein)"
   ]
 
 endsection: input
@@ -89,7 +91,7 @@ section: output [
     parameter: "Y"
     help: "Multiple sequence alignment output file."
     aformat: "fasta"
-    relations: "EDAM: Sequence alignment data"                             
+    relations: "EDAM:0001384 data Sequence alignment (protein)"
   ]
 
   boolean: m [
@@ -98,7 +100,7 @@ section: output [
     information: "Only show match state alignment symbols."
     help: "Include in the alignment only those symbols aligned to
            match states. Do not show symbols assigned to insert states."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: q [
@@ -107,7 +109,7 @@ section: output [
     information: "Suppress all output except the alignment."
     help: "Quiet; suppress all output except the alignment itself.
            Useful for piping or redirecting the output."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: output

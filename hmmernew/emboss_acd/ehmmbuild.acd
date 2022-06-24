@@ -6,6 +6,8 @@ application: ehmmbuild [
   cpu: "medium"
   embassy: "hmmernew"
   external: "hmmbuild HMMER 2.3.2 available from http://hmmer.wustl.edu/"
+  relations:  "EDAM:0000188 topic Sequence profiles and HMMs"
+  relations:  "EDAM:0000296 operation Sequence profile generation"
 ]
 
 section: input [
@@ -17,7 +19,7 @@ section: input [
     parameter: "Y"
     type: "gapstopprotein"
     aligned: "Y"
-    relations: "EDAM: Protein sequence alignment data"                     
+    relations: "EDAM:0002886 data Sequence record (protein)"
   ]
 
   infile: prior [
@@ -29,7 +31,7 @@ section: input [
            mixture Dirichlet. The format of prior files is documented in the
            User's Guide, and an example is given in the Demos directory of
            the HMMER distribution."
-    relations:  "EDAM: HMMER Dirichlet prior record"                   
+    relations:  "EDAM:0001347 data Dirichlet distribution"
   ]
 
   infile: null [
@@ -43,7 +45,7 @@ section: input [
            base and p1 = 1000/1001. For documentation of the format of the
            null model file and further explanation of how the null model is
            used, see the User's Guide."
-    relations:  "EDAM: HMMER NULL hidden Markov model"                 
+    relations: "EDAM:0001364 data Hidden Markov model"
   ]
 
   infile: pam [
@@ -58,7 +60,7 @@ section: input [
            prior are unaffected. Therefore in principle you could combine
            -prior with -pam but this isn't recommended, as it hasn't been
            tested. ( -pam itself hasn't been tested much!)"
-    relations:  "EDAM: Amino acid comparison matrix"                   
+    relations: "EDAM:0001449 data Comparison matrix (amino acid)"
   ]
 
   float: pamwgt [
@@ -70,7 +72,7 @@ section: input [
            contriubuted by the heuristic prior. Very high values of <x> can
            force a scoring system that is entirely driven by the substitution
            matrix, making HMMER somewhat approximate Gribskov profiles."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: input
@@ -90,7 +92,7 @@ section: required [
            about command line lengths frst)."
     word: "Y"
     knowntype: "name"
-    relations:  "EDAM: Generic string"                                 
+    relations:  "EDAM:0001115 identifier Sequence profile ID"
   ]
 
   list: strategy [
@@ -117,7 +119,7 @@ section: required [
            to the HMM. Analogous to the old hmms program of HMMER 1. (S)
            Single domain per sequence, local alignments with respect to the
            HMM. Analogous to the old hmmsw program of HMMER 1."
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: required
@@ -140,7 +142,7 @@ section: advanced [
            (at the cost of compute time, set <n> to be something larger than
            the number of sequences in your alignment. <n> is a positive
            integer; the default is 1000."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002146 data Threshold"
   ]
 
   float: archpri [
@@ -154,7 +156,7 @@ section: advanced [
            conservation in a column to make a column a 'consensus' match
            column in the model architecture. The 0.85 default has been chosen
            empirically as a reasonable setting."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: binary [
@@ -162,7 +164,7 @@ section: advanced [
     information: "Write HMM as binary."
     help: "Write the HMM to file in HMMER binary format instead of
            readable ASCII text."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: fast [
@@ -174,7 +176,7 @@ section: advanced [
            0.5, and it can be changed using the --gapmax option. The default
            construction algorithm is a maximum a posteriori (MAP) algorithm,
            which is slower."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: gapmax [
@@ -187,7 +189,7 @@ section: advanced [
            0.5. Higher values of <x> mean more columns get assigned to
            consensus, and models get longer; smaller values of <x> mean fewer
            columns get assigned to consensus, and models get smaller."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: hand [
@@ -199,7 +201,7 @@ section: advanced [
            used to specify the architecture. Any column marked with a non-gap
            symbol (such as an 'x', for instance) is assigned as a consensus
            (match) column in the model."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: sidlevel [
@@ -215,7 +217,9 @@ section: advanced [
            <x> is a fraction from 0 to 1, and by default is set to 0.62
            (corresponding to the clustering level used in constructing the
            BLOSUM62 substitution matrix)."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM:0001412 data Sequence identity"
+
   ]
 
   boolean: noeff [
@@ -226,7 +230,7 @@ section: advanced [
            the true number of sequences instead. This will usually reduce
            the sensitivity of the final model (so don't do it without good
            reason!)"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: swentry [
@@ -245,7 +249,7 @@ section: advanced [
            also activated, this option has no effect. You have independent
            control over local/global alignment behavior for the N/C (5'/3')
            termini of your target sequences using --swentry and --swexit."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: swexit [
@@ -265,7 +269,7 @@ section: advanced [
            independent control over local/global alignment behavior for the
            N/C (5'/3') termini of your target sequences using -swentry and
            -swexit."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: verbosity [
@@ -273,7 +277,7 @@ section: advanced [
     information: "Verbosity."
     help: "Print more possibly useful stuff, such as the individual
            scores for each sequence in the alignment."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   list: weighting [
@@ -303,7 +307,7 @@ section: advanced [
            weighting scheme. (V) (-wvoronoi in HMMER) Use the Sibbald/Argos
            Voronoi sequence weighting algorithm in place of the default GSC
            weighting. (N) (-wnone in HMMER) Turn off all sequence weighting."
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: advanced
@@ -318,7 +322,7 @@ section: output [
     knowntype: "hmm"
     append: "Y"
     information: "HMMER hidden markov model output file"
-    relations:  "EDAM: HMMER hidden Markov model"                      
+    relations:  "EDAM:0001364 data Hidden Markov model"
   ]
 
   outfile: o [
@@ -334,7 +338,7 @@ section: output [
            saving the final alignment and comparing to the starting
            alignment can let you view these alterations. See the User's Guide
            for more information on this arcane side effect."
-    relations:  "EDAM: Multiple sequence alignment record"             
+    relations: "EDAM:0001384 data Sequence alignment (protein)"
   ]
 
   outfile: cfile [
@@ -349,7 +353,7 @@ section: output [
            states). This option is used in HMMER development for generating
            data files useful for training new Dirichlet priors. The format of
            count files is documented in the User's Guide."
-    relations:  "EDAM: HMMER emission and transition count report"     
+    relations:  "EDAM:0001348 data HMM emission and transition counts"
   ]
 
 endsection: output
