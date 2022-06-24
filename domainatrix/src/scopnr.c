@@ -302,7 +302,7 @@ int main(int argc, char **argv)
 
     
     /* Start of main application loop */
-    while((ajXyzScopReadC(scop_inf, "*", &scop)))
+    while((scop=(ajScopReadCNew(scop_inf, "*"))))
     {
 	/* If we are on to a new family*/
 /*	if(ajStrMatch(last_fam, scop->Family)==ajFalse) */
@@ -323,10 +323,10 @@ int main(int argc, char **argv)
 		{
 		    /* Remove redundancy from list_seqs*/
 		    if(moden==1)
-			ret=embXyzSeqsetNR(list_seqs, &keep, &nsetnr, matrix, gapopen, 
+			ret=embDmxSeqNR(list_seqs, &keep, &nsetnr, matrix, gapopen, 
 					   gapextend,thresh);
 		    else
-			ret=embXyzSeqsetNRRange(list_seqs, &keep, &nsetnr, matrix, gapopen, 
+			ret=embDmxSeqNRRange(list_seqs, &keep, &nsetnr, matrix, gapopen, 
 					   gapextend,threshlow, threshup);		    
 		    if(!ret)
 		    {
@@ -338,34 +338,34 @@ int main(int argc, char **argv)
 			ajFileClose(&scop_outf);	    
 			ajStrDel(&mode[0]);
 			AJFREE(mode);
-			ajFatal("Unexpected embXyzSeqsetNR error");
+			ajFatal("Unexpected embDmxSeqNR error");
 		    }
 		    
 
 		    /* Write file with SCOP entries that are retained*/
-		    for(iter=ajListIter(list_scop), x=0;
+		    for(iter=ajListIterRead(list_scop), x=0;
 			(scop_tmp=(AjPScop)ajListIterNext(iter));
 			x++)
 			if(ajIntGet(keep,x))
-			    ajXyzScopWrite(scop_outf, scop_tmp);
-		    ajListIterFree(iter);	
+			    ajScopWrite(scop_outf, scop_tmp);
+		    ajListIterFree(&iter);	
 
 
 		    /* Write diagnostic */
  		    ajFmtPrintF(errf, "Retained\n");
-		    for(iter=ajListIter(list_scop), x=0;
+		    for(iter=ajListIterRead(list_scop), x=0;
 			(scop_tmp=(AjPScop)ajListIterNext(iter));
 			x++)
 			if(ajIntGet(keep,x))
 			    ajFmtPrintF(errf, "%S\n", scop_tmp->Entry);
-		    ajListIterFree(iter);
+		    ajListIterFree(&iter);
 		    ajFmtPrintF(errf, "Rejected\n");
-		    for(iter=ajListIter(list_scop), x=0;
+		    for(iter=ajListIterRead(list_scop), x=0;
 			(scop_tmp=(AjPScop)ajListIterNext(iter));
 			x++)
 			if(!(ajIntGet(keep,x)))
 			    ajFmtPrintF(errf, "%S\n", scop_tmp->Entry);
-		    ajListIterFree(iter);	
+		    ajListIterFree(&iter);	
 
 		    
 		    /* Write diagnostic */
@@ -377,18 +377,18 @@ int main(int argc, char **argv)
 
 
 		/* Free up the scop list and create a new one*/
-		iter=ajListIter(list_scop);
+		iter=ajListIterRead(list_scop);
 		while((scop_tmp=(AjPScop)ajListIterNext(iter)))
-		    ajXyzScopDel(&scop_tmp);
-		ajListIterFree(iter);	
+		    ajScopDel(&scop_tmp);
+		ajListIterFree(&iter);	
 		ajListDel(&list_scop);	    
 
 
 		/* Free up the seqs list and create a new one*/
-		iter=ajListIter(list_seqs);
+		iter=ajListIterRead(list_seqs);
 		while((seq=(AjPSeq)ajListIterNext(iter)))
 		    ajSeqDel(&seq);
-		ajListIterFree(iter);	
+		ajListIterFree(&iter);	
 		ajListDel(&list_seqs);	    
 	    }
 	    else
@@ -463,53 +463,53 @@ int main(int argc, char **argv)
     {
 	/* Remove redundancy from list_seqs*/
 	if(moden==1)
-	    embXyzSeqsetNR(list_seqs, &keep, &nsetnr, matrix, gapopen, 
+	    embDmxSeqNR(list_seqs, &keep, &nsetnr, matrix, gapopen, 
 			   gapextend,thresh);		
 	else
-	    embXyzSeqsetNRRange(list_seqs, &keep, &nsetnr, matrix, gapopen, 
+	    embDmxSeqNRRange(list_seqs, &keep, &nsetnr, matrix, gapopen, 
 				gapextend,threshlow, threshup);		
 
 	/* Write file with SCOP entries that are retained*/
-	for(iter=ajListIter(list_scop), x=0;
+	for(iter=ajListIterRead(list_scop), x=0;
 	    (scop_tmp=(AjPScop)ajListIterNext(iter));
 	    x++)
 	    if(ajIntGet(keep,x))
-		ajXyzScopWrite(scop_outf, scop_tmp);
-	ajListIterFree(iter);	
+		ajScopWrite(scop_outf, scop_tmp);
+	ajListIterFree(&iter);	
     
 
 
 	/* Write diagnostic */
 	ajFmtPrintF(errf, "Retained\n");
-	for(iter=ajListIter(list_scop), x=0;
+	for(iter=ajListIterRead(list_scop), x=0;
 	    (scop_tmp=(AjPScop)ajListIterNext(iter));
 	    x++)
 	    if(ajIntGet(keep,x))
 		ajFmtPrintF(errf, "%S\n", scop_tmp->Entry);
-	ajListIterFree(iter);	
+	ajListIterFree(&iter);	
 	ajFmtPrintF(errf, "Rejected\n");
-	for(iter=ajListIter(list_scop), x=0;
+	for(iter=ajListIterRead(list_scop), x=0;
 	    (scop_tmp=(AjPScop)ajListIterNext(iter));
 	    x++)
 	    if(!(ajIntGet(keep,x)))
 		ajFmtPrintF(errf, "%S\n", scop_tmp->Entry);
-	ajListIterFree(iter);	
+	ajListIterFree(&iter);	
     }
 
     
     /* Free up the scop list */
-    iter=ajListIter(list_scop);
+    iter=ajListIterRead(list_scop);
     while((scop_tmp=(AjPScop)ajListIterNext(iter)))
-	ajXyzScopDel(&scop_tmp);
-    ajListIterFree(iter);	
+	ajScopDel(&scop_tmp);
+    ajListIterFree(&iter);	
     ajListDel(&list_scop);	    
     
     
     /* Free up the seqs list */
-    iter=ajListIter(list_seqs);
+    iter=ajListIterRead(list_seqs);
     while((seq=(AjPSeq)ajListIterNext(iter)))
 	ajSeqDel(&seq);
-    ajListIterFree(iter);	
+    ajListIterFree(&iter);	
     ajListDel(&list_seqs);	    
     
     

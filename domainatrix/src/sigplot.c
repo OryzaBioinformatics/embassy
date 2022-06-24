@@ -298,10 +298,8 @@ AjBool	sigplot_AlignSeqExtract(AjPFile sigalignfile, AjPInt truehits, AjPInt2d r
 				ajint num_true, ajint file_hitnum); 
 void sigplot_ScopdataDel(AjPScopdata *pthis);
 AjPScopdata  sigplot_ScopdataNew();
-
-
-
-
+AjBool     sigplot_SignatureHitsWriteHitlist(AjPFile outf, 
+					     AjPHitlist hits, ajint n);
 
 
 
@@ -499,7 +497,7 @@ int main(int argc, char **argv)
     {
 	/* Create merged list and hitlist for holding merged results*/
 	mrglist = ajListNew();
-	outhitlist = ajXyzHitlistNew(0);
+	outhitlist = embHitlistNew(0);
 	
 
 	
@@ -519,7 +517,7 @@ int main(int argc, char **argv)
 
 	    /* Read hits file ... Get SCOP info.
 	                      ... push hits onto merged list */
-	    if(!(tmphitlist = ajXyzSignatureHitsRead(hitsin)))
+	    if(!(tmphitlist = embSignatureHitsRead(hitsin)))
 		ajFatal("Signature hits file with no hits!");
 	    
 
@@ -583,7 +581,7 @@ int main(int argc, char **argv)
 
 	    /* Tidy up memory */
 	    tmphitlist->N=0;
-	    ajXyzHitlistDel(&tmphitlist);
+	    embHitlistDel(&tmphitlist);
 	    
 	    
 	    ajStrDel(&hitname);
@@ -593,7 +591,7 @@ int main(int argc, char **argv)
 /*	printf("1.mrglist list length = %d\n", ajListstrLength(mrglist));
 	fflush(stdout); */
 
-	ajListSort(mrglist, ajXyzCompScore);
+	ajListSort(mrglist, embMatchScore);
 	outhitlist->N=ajListToArray(mrglist, (void ***)&(outhitlist->hits));	
 	
 
@@ -630,7 +628,7 @@ int main(int argc, char **argv)
 
     /* Write & close temporary file and push its name onto list */
     tmpfile = ajFileNewOut(tmpname);
-    ajXyzSignatureHitsWriteHitlist(tmpfile, outhitlist, roc_val);
+	sigplot_SignatureHitsWriteHitlist(tmpfile, outhitlist, roc_val);
     
 
 /*	printf("2. Sanity check, list length = %d\n", ajListstrLength(list));
@@ -649,7 +647,7 @@ int main(int argc, char **argv)
     
     /* Free merged list */
     while(ajListPop(mrglist, (void **)&tmphit))
-	ajXyzHitDel(&tmphit);
+	embHitDel(&tmphit);
     ajListDel(&mrglist);
     }
     
@@ -924,11 +922,11 @@ int main(int argc, char **argv)
 /*	    ajFmtPrint("alignfile = %S\n", ajFileGetName(alignfile)); */
 	    
 	    /* Read alignment file, write Scopalgn structure */ 
-	    ajXyzScopalgRead(alignfile, &alg);
-/*	    printf("done ajXyzScopalgRead\n"); */
+	    ajDmxScopalgRead(alignfile, &alg);
+/*	    printf("done ajDmxScopalgRead\n"); */
 
 	    /* Extract sequences from alignment */
-	    nseqs=ajXyzScopalgGetseqs(alg, &seed_array);
+	    nseqs=ajDmxScopalgGetseqs(alg, &seed_array);
 	 
 
 	    
@@ -955,7 +953,8 @@ int main(int argc, char **argv)
 /*	    printf("done sigplot_SeedIdCalc\n"); */
 
 	    /* Call sigplot_HitIdCalc */
-	    sigplot_HitIdCalc(seedlist, hitlist, alg, matrixout, submat, gapopen, gapextn,
+	    sigplot_HitIdCalc(seedlist, hitlist, alg, matrixout, 
+			      submat, gapopen, gapextn,
 			      &codes, rank);
 
 /*	    printf("done sigplot_HitIdCalc\n"); */
@@ -979,19 +978,19 @@ int main(int argc, char **argv)
 
 	    ajFileClose(&sigalignfile);
 	    ajFileClose(&matrixout);
-	    ajXyzScopalgDel(&alg);
+	    ajDmxScopalgDel(&alg);
 	    alg = NULL;
 	    
 
 	    /*delete and clean up seedlist */
-	    iter=ajListIter(seedlist);
-	    iter2=ajListIter(hitlist);
+	    iter=ajListIterRead(seedlist);
+	    iter2=ajListIterRead(hitlist);
 	    while((seed_seq=(AjPSeq)ajListIterNext(iter)))
 		ajSeqDel(&seed_seq);
 	    while((hit_seq=(AjPSeq)ajListIterNext(iter2)))
 		ajSeqDel(&hit_seq);
-	    ajListIterFree(iter);
-	    ajListIterFree(iter2);
+	    ajListIterFree(&iter);
+	    ajListIterFree(&iter2);
 	    ajListDel(&seedlist);
 	    ajListDel(&hitlist);
 	    ajSeqDel(&seed_seq);
@@ -1029,7 +1028,7 @@ int main(int argc, char **argv)
 /* Cannot unlink using this because we've added the file extension ajSysUnlink(&tmpname); */
 	cmd=ajStrNew();
 	ajFmtPrintS(&cmd, "rm %S", tmpname);
-	ajSystem(&cmd);
+	ajSystem(cmd);
 	ajStrDel(&cmd);
     }
     
@@ -3131,8 +3130,8 @@ AjBool  sigplot_SeedIdCalc(AjPList seedlist,  AjPScopalg alg, AjPFile matrixout,
     ajint   	nin;			/*Number of sequences in input list*/
     ajint     	*compass;
 
-    char       	*p;
-    char       	*q;
+    const char  *p;
+    const char  *q;
 
     float     **sub;
     float       id       	= 0.; 	/*Passed as arg but not used here*/
@@ -3394,8 +3393,8 @@ AjBool  sigplot_HitIdCalc(AjPList seedlist, AjPList hitlist, AjPScopalg alg,
     ajint	num		= 0;
     
 
-    char       	*p;
-    char       	*q;
+    const char  *p;
+    const char  *q;
 
     float     **sub;
     float       id       	= 0.; 	/*Passed as arg but not used here*/
@@ -3654,7 +3653,87 @@ void sigplot_ScopdataDel(AjPScopdata *pthis)
 
 
 
+
+/* @func sigplot_SignatureHitsWriteHitlist *************************************
+**
+** Identical to embSignatureHitsWrite except that the signature itself is
+** not used as a source of data for printing.
+**
+** @param [w] outf [AjPFile]      Output file stream
+** @param [r] hits [AjPHitlist]   Hitlist objects with hits from scan
+** @param [r] n    [ajint]        Max. no. false hits to output
+**
+** @return [AjBool] True if file was written
+** @@
+****************************************************************************/
+
+AjBool sigplot_SignatureHitsWriteHitlist(AjPFile outf, AjPHitlist hits, ajint n)
+{
+    ajint  x  = 0;
+    ajint  nf = 0;
+    
+    
+    /* Check args */
+    if(!outf || !hits)
+	return ajFalse;
+
+    
+    /* Print header info */
+    ajFmtPrintF(outf, "DE   Results of signature search\nXX\n");
+
+
+    /* Print SCOP classification records of signature */
+    ajFmtPrintF(outf,"CL   %S",hits->Class);
+    ajFmtPrintSplit(outf,hits->Fold,"\nXX\nFO   ",75," \t\n\r");
+    ajFmtPrintSplit(outf,hits->Superfamily,"XX\nSF   ",75," \t\n\r");
+    ajFmtPrintSplit(outf,hits->Family,"XX\nFA   ",75," \t\n\r");
+    ajFmtPrintF(outf,"XX\nSI   %d\n", hits->Sunid_Family);
+    ajFmtPrintF(outf,"XX\n");
+    
+    
+    /* Loop through list and print out data */
+    for(x=0;x<hits->N; x++)
+    {
+	if(ajStrMatchC(hits->hits[x]->Typeobj, "FALSE"))
+	    nf++;
+	if(nf==n)
+	    break;
+	if(MAJSTRLEN(hits->hits[x]->Acc))
+	    ajFmtPrintF(outf, "HI  %-6d%-10S%-5d%-5d%-15S%-10S%-10S%-7.1f"
+			"%-7.3f%-7.3f\n", 
+			x+1, hits->hits[x]->Acc, 
+			hits->hits[x]->Start+1, hits->hits[x]->End+1,
+			hits->hits[x]->Group, 
+			hits->hits[x]->Typeobj, hits->hits[x]->Typesbj, 
+			hits->hits[x]->Score, hits->hits[x]->Pval,
+			hits->hits[x]->Eval);
+	else
+	    ajFmtPrintF(outf, "HI  %-6d%-10S%-5d%-5d%-15S%-10S%-10S"
+			"%-7.1f%-7.3f%-7.3f\n", 
+			x+1, hits->hits[x]->Spr, 
+			hits->hits[x]->Start+1, hits->hits[x]->End+1,
+			hits->hits[x]->Group, 
+			hits->hits[x]->Typeobj, hits->hits[x]->Typesbj, 
+			hits->hits[x]->Score, hits->hits[x]->Pval,
+			hits->hits[x]->Eval);
+    }
+    
+    /* Print tail info */
+    ajFmtPrintF(outf, "XX\n//\n");
+    
+    
+    return ajTrue;
+}
+
+
+
+
  
+
+
+
+
+
 
 
 

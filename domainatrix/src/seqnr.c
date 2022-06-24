@@ -1,4 +1,4 @@
-/* @source seqnr application
+/* @Sourcex seqnr application
 **
 ** Reads a scop families file and a scop ambiguities file and writes (i) a 
 ** non-redundant scop families file and (ii) a scop validation file.
@@ -175,13 +175,13 @@
 **  Name of validation file (output) [test.valid.out]: /test_data/scop.all
 **  Name seqnr log file (output) [seqnr.log]: /test_data/seqnr.log
 **  Processing 55074
-**  Warning: Sequence length smaller than overlap limit in ajXyzScophitsOverlapAcc
-**  Warning: Sequence length smaller than overlap limit in ajXyzScophitsOverlapAcc
-**  Warning: Zero length sequence in SeqsetNR
+**  Warning: Sequence length smaller than overlap limit in embDmxScophitsOverlapAcc
+**  Warning: Sequence length smaller than overlap limit in embDmxScophitsOverlapAcc
+**  Warning: Zero length sequence in SeqNR
 **  Processing 54894
-**  Warning: Sequence length smaller than overlap limit in ajXyzScophitsOverlapAcc
-**  Warning: Sequence length smaller than overlap limit in ajXyzScophitsOverlapAcc
-**  Warning: Zero length sequence in SeqsetNR
+**  Warning: Sequence length smaller than overlap limit in embDmxScophitsOverlapAcc
+**  Warning: Sequence length smaller than overlap limit in embDmxScophitsOverlapAcc
+**  Warning: Zero length sequence in SeqNR
 **  Unix % 
 **  
 **  Scop famililes and validation files called /test_data/scop.fam
@@ -433,7 +433,6 @@
 
 
 
-
 /* @prog seqnr **************************************************************
 **
 ** Reads a scop families file and a scop ambiguities file and writes (i) a 
@@ -525,7 +524,8 @@ int main(int argc, char **argv)
     inf       = ajAcdGetInfile("inf");
 
     vinf      = ajAcdGetInfile("vinf");
-    voutfname = ajAcdGetString("voutfname");
+    voutfname = ajAcdGetString("voutfname"); 
+/*    voutf = ajAcdGetInfile("voutfname"); */
     scop_inf  = ajAcdGetInfile("scopin");
     alignpath = ajAcdGetString("alignpath");
     alignextn = ajAcdGetString("alignextn");
@@ -553,24 +553,24 @@ int main(int argc, char **argv)
 
     /* Copy contents of validation input file to create validation output file, 
        open the output file.*/
-    ajFmtPrintS(&exec, "cp %S %S\n", ajFileGetName(vinf), voutfname);
+    ajFmtPrintS(&exec, "cp %S %S\n", ajFileGetName(vinf), voutfname); 
     system(ajStrStr(exec));
     voutf=ajFileNewApp(voutfname);
 
     /* Create list of scop objects for entire Escop.dat */
     scop_list  = ajListNew();
-    while((ajXyzScopReadC(scop_inf,"*",&tmp_scop)))
+    while((tmp_scop = (ajScopReadCNew(scop_inf,"*"))))
         ajListPushApp(scop_list,tmp_scop);
     
     /* Order the list of Scop objects by Domain Id and create an array */
-    ajListSort(scop_list, ajXyzScopCompId);
+    ajListSort(scop_list, ajScopMatchScopid);
     scop_dim = ajListToArray(scop_list,(void ***)&scop_arr);
 
 
     /* Error handing if Escop.dat was empty */
     if(!scop_dim)
     {
-        ajWarn("Empty list in ajXyzScopalgToScop\n");
+        ajWarn("Empty list in embDmxScopalgToScop\n");
 	ajFileClose(&logf);
 	ajFileClose(&inf);
 	if(ajStrChar(*mode, 0) == '2')
@@ -597,7 +597,7 @@ int main(int argc, char **argv)
     
     /* Read Hitlist for the family from the scop families that will be processed, 
        each entry delimited by a "//" is read and processed in turn */
-    while(ajXyzHitlistRead(inf,"//",&famin)) 
+    while((famin = embHitlistRead(inf)))
     {
 	ajFmtPrint("Processing %d\n", famin->Sunid_Family);
 	ajFmtPrintF(logf, "//\n%d\n", famin->Sunid_Family);
@@ -629,14 +629,14 @@ int main(int argc, char **argv)
         }
 
         /* Read seed alignment into scopalg structure */
-        ajXyzScopalgRead(aln_inf,&align);
+        ajDmxScopalgRead(aln_inf,&align);
 
 
         /* Construct list of scop objects from the alignment file */
         scop_align = ajListNew();
         
-        if(!ajXyzScopalgToScop(align,scop_arr,scop_dim,&scop_align))
-	    ajFatal("ajXyzScopalgToScop");
+        if(!embDmxScopalgToScop(align,scop_arr,scop_dim,&scop_align))
+	    ajFatal("embDmxScopalgToScop");
 	
 	/* scop_align must be freed.
 	   scop_align points to data in scop_arr so do NOT free nodes
@@ -648,17 +648,17 @@ int main(int argc, char **argv)
 	   is freed seperately.
 	   Convert this list to a list of Scophit objects.
 	   Must pop famin_hits and free the nodes that are allocated by 
-	   ajXyzHitlistToScophits  	 */
+	   embDmxHitlistToScophits  	 */
 
         ajListPushApp(famin_list,famin);
-        ajXyzHitlistToScophits(famin_list,&famin_hits);
+        embDmxHitlistToScophits(famin_list,&famin_hits);
 
 
         /* Add the scop objects from the alignment file to the main list */
         while(ajListPop(scop_align,(void **)&tmp_scop))
         {
-            align_hit = ajXyzScophitNew(); 
-            ajXyzScopToScophit(tmp_scop,&align_hit);
+            align_hit = ajDmxScophitNew(); 
+            embDmxScopToScophit(tmp_scop,&align_hit);
 
 	    if(ajStrMatchC(align_hit->Acc, "Not_available"))
 		ajFmtPrintF(logf, "No swissprot sequence for domain %S from alignment "
@@ -680,7 +680,7 @@ int main(int argc, char **argv)
 	    ajStrAssC(&(align_hit->Typeobj), "SEED");
 
 
-            ajXyzScophitTarget(&align_hit);
+            ajDmxScophitTarget(&align_hit);
             ajListPushApp(famin_hits,align_hit);
 	    
 	    /*The memory here will be freed when famin_hits is popped and the nodes are freed */
@@ -688,7 +688,7 @@ int main(int argc, char **argv)
 
         /* Delete original Hitlist and the derived list
            We now just have a list of Scophit's called <famin_hits> */
-        ajXyzHitlistDel(&famin);
+        embHitlistDel(&famin);
 	famin=NULL;
 	ajListDel(&famin_list);
 	famin_list=NULL;
@@ -701,26 +701,26 @@ int main(int argc, char **argv)
 	   will have been processed by seqsort.
 
 	   Accession number and start/end point will not be available 
-	   for some alignment sequences - ajXyzScophitsOverlapAcc will
+	   for some alignment sequences - embDmxScophitsOverlapAcc will
 	   return ajFalse for these.
 
 	   */
         
 	
-	/* JON ajListSort(famin_hits,ajXyzScophitCompAcc); */
-	ajListSort2(famin_hits,ajXyzScophitCompAcc, ajXyzScophitCompStart);
+	/* JON ajListSort(famin_hits,ajDmxScophitCompAcc); */
+	ajListSort2(famin_hits,ajDmxScophitCompAcc, ajDmxScophitCompStart);
 	   
 	
 	/* DIAGNOSTICS 
 	ajFmtPrint("\n\n\nContents of famin_hits list\n");
-	iter= ajListIter(famin_hits);
+	iter= ajListIterRead(famin_hits);
 	while((hit1=(AjPScophit)ajListIterNext(iter)))
 	    ajFmtPrint("%S (%d-%d, %S, %B %B)\n", 
 		       hit1->Acc, hit1->Start, hit1->End, hit1->Typeobj, hit1->Target, hit1->Target2);
-	ajListIterFree(iter);
+	ajListIterFree(&iter);
 	*/
 
-	iter = ajListIter(famin_hits);
+	iter = ajListIterRead(famin_hits);
 	hit1 = (AjPScophit)ajListIterNext(iter);
 	   
 	while((hit2=(AjPScophit)ajListIterNext(iter)))
@@ -740,7 +740,7 @@ int main(int argc, char **argv)
 		       hit2->Acc, hit2->Typeobj);  */
 	    
 	    
-	    if(ajXyzScophitsOverlapAcc(hit1,hit2,overlap))
+	    if(embDmxScophitsOverlapAcc(hit1,hit2,overlap))
 	    {
 		/*target the hit that is not a SEED  */
 		isseed1 = ajStrMatchC(hit1->Typeobj, "SEED");
@@ -753,13 +753,13 @@ int main(int argc, char **argv)
 			   "Only one will be given in the validation file.");
 		    ajFmtPrintF(logf, "Overlap between 2 SEEDs (acc. %S) from alignment file.\n", 
 				hit1->Acc);
-		    ajXyzScophitTarget2(&hit1);
+		    ajDmxScophitTarget2(&hit1);
 		}
 		else if(!isseed1 && !isseed2)
 		    ajFatal("Overlap between two non-SEED's which should never happen");
 		else if(!isseed1)
 		    {
-			ajXyzScophitTarget2(&hit1);
+			ajDmxScophitTarget2(&hit1);
 
 			/*DIAGNOSTICS
 			ajFmtPrint("Targetted hit1   %S (%d-%d, %B %B) : %S (%d-%d, %B %B)\n", 
@@ -771,7 +771,7 @@ int main(int argc, char **argv)
 		
 		else if(!isseed2)
 		{
-			ajXyzScophitTarget2(&hit2);
+			ajDmxScophitTarget2(&hit2);
 
 		    /*DIAGNOSTICS
 			ajFmtPrint("Targetted hit2   %S (%d-%d, %B %B) : %S (%d-%d, %B %B)\n", 
@@ -787,25 +787,25 @@ int main(int argc, char **argv)
 	    hit1 = hit2;
 	}
 	   
-	ajListIterFree(iter);
+	ajListIterFree(&iter);
 	iter=NULL;
 
 	/* DIAGNOSTICS
 	printf("\n\n");
-	iter = ajListIter(famin_hits);
+	iter = ajListIterRead(famin_hits);
 	while((hit2=(AjPScophit)ajListIterNext(iter)))
 	{
 	    ajFmtPrint("%S (%B)\n", hit2->Acc, hit2->Target2);
 	}
 	printf("\n\n");
-	ajListIterFree(iter);
+	ajListIterFree(&iter);
 	iter=NULL;
 	*/
 
 
 
 	/* Construct a sequence set from the main list of Scophit's */
-        iter = ajListIter(famin_hits);        
+        iter = ajListIterRead(famin_hits);        
         while((tmp_hit=(AjPScophit)ajListIterNext(iter)))
         {
 	    /* Do not want to include domains from the alignment that 
@@ -819,7 +819,7 @@ int main(int argc, char **argv)
             ajListPushApp(famin_seqs,tmp_seq);
 	    /* famin_seqs must be popped and the nodes freed */
         }
-        ajListIterFree(iter);
+        ajListIterFree(&iter);
         iter=NULL;
 	
 
@@ -829,18 +829,18 @@ int main(int argc, char **argv)
 
         /* Remove the redundancy from the sequence set */
 /*JISON*/        keep        = ajIntNew();
-        embXyzSeqsetNR(famin_seqs, &keep, &nsetnr, matrix, gapopen, gapextend, thresh);
+        embDmxSeqNR(famin_seqs, &keep, &nsetnr, matrix, gapopen, gapextend, thresh);
 
         /* clean up famin_seqs */
-        iter=ajListIter(famin_seqs);
+        iter=ajListIterRead(famin_seqs);
         while((tmp_seq=(AjPSeq)ajListIterNext(iter)))
             ajSeqDel(&tmp_seq);
-        ajListIterFree(iter);
+        ajListIterFree(&iter);
         ajListDel(&famin_seqs);
 	
 
         /* Create a list of Scophit objects that has been processed */
-        for(iter = ajListIter(famin_hits), i = 0;
+        for(iter = ajListIterRead(famin_hits), i = 0;
 	    (tmp_hit = (AjPScophit)ajListIterNext(iter));i++)
         {
 	    /* Redundancy will not have been calculated for domains from the alignment that
@@ -886,19 +886,19 @@ int main(int argc, char **argv)
 
 /*JISON*/        ajIntDel(&keep);
 	
-        ajListIterFree(iter);
+        ajListIterFree(&iter);
         iter = NULL;
 
 
 	/* DIAGNOSTICS
 	printf("\n\n");
-	iter = ajListIter(famin_hits);
+	iter = ajListIterRead(famin_hits);
 	while((hit2=(AjPScophit)ajListIterNext(iter)))
 	{
 	    ajFmtPrint("%S (%B)\n", hit2->Acc, hit2->Target2);
 	}
 	printf("\n\n");
-	ajListIterFree(iter);
+	ajListIterFree(&iter);
 	iter=NULL;
 	*/
 
@@ -908,7 +908,7 @@ int main(int argc, char **argv)
 	   This corresponds to famin_hits before redundant domains and 
 	   hits targetted for removal have been removed (garbage collection).  
 	   
-	   ajXyzScophitsAccToHitlist will only write hits to the Hitlist 
+	   embDmxScophitsAccToHitlist will only write hits to the Hitlist 
 	   if an accession number is given.
 	   
 	   Also, any hits that overlap with an alignment sequence with identical 
@@ -921,46 +921,46 @@ int main(int argc, char **argv)
 	   */
 
 	/* famout_valid and iter must be NULL in this context */
-        ajXyzScophitsAccToHitlist(famin_hits,&famout_valid,&iter);
+        embDmxScophitsAccToHitlist(famin_hits,&famout_valid,&iter);
         ajListDel(&famin_hits);
-        ajListIterFree(iter);
+        ajListIterFree(&iter);
         iter = NULL;
 
 	/* Write validation file */
-        ajXyzHitlistWrite(voutf,famout_valid);
-        ajXyzHitlistDel(&famout_valid);
+        embHitlistWrite(voutf,famout_valid);
+        embHitlistDel(&famout_valid);
         famout_valid = NULL;
 
 	
 
         /* Remove targeted hits ... i.e. the ones from the alignment*/
-        ajListGarbageCollect(famout_hits,ajXyzScophitDelWrap,
-			     (int(*)(const void*))ajXyzScophitCheckTarget);
+        ajListGarbageCollect(famout_hits,ajDmxScophitDelWrap,
+			     (int(*)(const void*))ajDmxScophitCheckTarget);
 
 
 
         /* write a hitlist of the processed scophits */
 	/* famout and iter must be NULL in this context */
-        ajXyzScophitsToHitlist(famout_hits,&famout,&iter);
+        embDmxScophitsToHitlist(famout_hits,&famout,&iter);
 	/* famout must be freed */
 	
-        ajListIterFree(iter);
+        ajListIterFree(&iter);
         iter = NULL;
 
         /* free the nodes in famout_hits and the list itself  */
-        iter=ajListIter(famout_hits);
+        iter=ajListIterRead(famout_hits);
         while((tmp_hit=(AjPScophit)ajListIterNext(iter)))
-            ajXyzScophitDel(&tmp_hit);
-        ajListIterFree(iter);
+            ajDmxScophitDel(&tmp_hit);
+        ajListIterFree(&iter);
         ajListDel(&famout_hits);
 
 
 	/* We are now done with the main list of Scophit's. Memory in tmp_list 
 	   can also be freed*/
-        iter=ajListIter(tmp_list);
+        iter=ajListIterRead(tmp_list);
         while((tmp_hit=(AjPScophit)ajListIterNext(iter)))
-            ajXyzScophitDel(&tmp_hit);
-        ajListIterFree(iter);
+            ajDmxScophitDel(&tmp_hit);
+        ajListIterFree(&iter);
         ajListDel(&tmp_list);
 	iter=NULL;
 
@@ -968,17 +968,17 @@ int main(int argc, char **argv)
         /* write the processed family (hitlist) to file in EMBL format */
 	if(ajStrChar(*mode, 0) == '2')
 	{
-	    ajXyzHitlistWrite(outf,famout);
+	    embHitlistWrite(outf,famout);
 	}
 	
-        ajXyzHitlistDel(&famout);
+        embHitlistDel(&famout);
         famout = NULL;
 
 
 
         /* clean up */
 /*JISON        ajIntDel(&keep); */
-        ajXyzScopalgDel(&align);
+        ajDmxScopalgDel(&align);
         ajFileClose(&aln_inf);
         ajListDel(&scop_align);
         
@@ -1007,10 +1007,10 @@ int main(int argc, char **argv)
     ajStrDel(&exec);
     
 
-    iter=ajListIter(scop_list);
+    iter=ajListIterRead(scop_list);
     while((tmp_scop=(AjPScop)ajListIterNext(iter)))
-        ajXyzScopDel(&tmp_scop);
-    ajListIterFree(iter);
+        ajScopDel(&tmp_scop);
+    ajListIterFree(&iter);
     ajListDel(&scop_list);
     ajListDel(&tmp_list);
     
@@ -1024,9 +1024,6 @@ int main(int argc, char **argv)
     return 0;
 
 }
-
-
-
 
 
 

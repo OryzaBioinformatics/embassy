@@ -59,8 +59,8 @@
 **  
 **  
 **  Known bugs & warnings
-**  
-**  
+**  Must document threshold ignore distance option.
+**  Must document skip option.
 **  
 **  Description
 **  This program is part of a suite of EMBOSS applications that directly or 
@@ -94,26 +94,26 @@
 **  Unix % contacts
 **  Reads coordinate files and writes files of intra-chain residue-residue
 **  contact data.
-**  Location of coordinate files (embl format input) [./]: /test_data
-**  Extension of coordinate files [.pxyz]: .dxyz
-**  Name of data file with van der Waals radii [Evdw.dat]: 
-**  Threshold contact distance [1.0]: 
-**  Location of contact files for output [./]: /test_data
-**  Extension of contact files [.con]: 
-**  Name of log file for the build [contacts.log]: /test_data/contacts.log
-**  D1II7A_
+**  Location of coordinate files (embl-like format input) [./]: testdata
+**  Name of data file with van der Waals radii [Evdw.dat]:
+**  Threshold contact distance [1.0]:
+**  Location of contact files (output) [./]: testdata
+**  Name of log file for the build [contacts.log]: testdata/contacts.log
 **  D1CS4A_
-**  Unix % 
+**  D1II7A_
+**  Unix %
 **  
-**  Coordinate files with the extension .dxyz were read from 
-**  /test_data and the contact files d1cs4a_.con and d1ii7a_.con
-**  were written to the same directory.  van der Waals radii were taken from 
+**  Coordinate files of file extension defined in the ACD file were read from 
+**  testdata and the contact files (e.g. d1cs4a_.con and d1ii7a_.con)
+**  were written to the same directory (the file extension .con would be set 
+**  in the ACD file)  van der Waals radii were taken from 
 **  the emboss data file Evdw.dat and the default contact distance of 1 
 **  Angstrom was used to determine contacts.  The log file 
-**  test_data/contacts.log was written.
+**  testdata/contacts.log was written.
 **  
 **  The following command line would achieve the same result.
-**  contacts /test_data .dxyz /test_data .con -thresh 1.0 -conerrf /test_data/contacts.log
+**  contacts testdata testdata -thresh 1.0 -conerrf 
+**  testdata/contacts.log -vdwf Evdw.dat
 **
 **  
 **  
@@ -149,12 +149,15 @@
 **  number of amino acid residues comprising the chain (or the chains from 
 **  which a domain is comprised) is given after NR. The number of residue-residue
 **  contacts is given after NSMCON. 
-**  (8) SM - Line of residue contact data. Pairs of amino acid identifiers and 
+**  (8) SQ - domain or protein sequence. The number of residues is given before 
+**  AA on the first line.  The sequece is given on subsequent lines. 
+**  (9) SM - Line of residue contact data. Pairs of amino acid identifiers and 
 **  residue numbers are delimited by a ';'. Residue numbers are taken from the 
 **  clean coordinate file and give a correct index into the sequence (i.e. they
-**  are not necessarily the same as the original pdb file).
-**  (9) XX - used for spacing.
-**  (10) // - given on the last line of the file only.
+**  are not necessarily the same as the original pdb file).  This sequence is 
+**  given in the contact file itself (SQ record).
+**  (10) XX - used for spacing.
+**  (11) // - given on the last line of the file only.
 ** 
 **  Note - SM records are used for contacts between either either side-chain 
 **  or main-chain atoms as defined above.  In a future implementation, SS will
@@ -173,6 +176,9 @@
 **  CN   [1]
 **  XX
 **  IN   ID B; NR 146; NSMCON 2514;
+**  XX
+**  SQ   SEQUENCE    146 AA;   5817 MW;  47362A43 CRC32;
+**       VHLTPEEKLA VQCTAQELVM TLNELFARFD KLAAENHCLR IKILGDCYYC VS
 **  XX
 **  SM   VAL 1 ; HIS 2
 **  SM   VAL 1 ; LEU 3
@@ -286,14 +292,16 @@
 #include "math.h"
 
 static AjBool contacts_WriteFile(AjPFile logf, AjPFile outf, float thresh, 
-				     float ignore, AjPPdb pdb, AjPVdwall vdw);
+				 float ignore, AjPPdb pdb, AjPVdwall vdw, 
+				 AjBool skip);
 
 static AjBool contacts_ContactMapWrite(AjPFile outf, AjPInt2d mat, char *txt, 
 				       ajint mod, ajint chn, AjPPdb pdb);
 
 static AjBool contacts_ContactMapCalc(AjPInt2d *mat, ajint *ncon, ajint dim, 
 				       float thresh, float ignore, ajint mod, 
-				      ajint chn, AjPPdb pdb, AjPVdwall vdw);
+				      ajint chn, AjPPdb pdb, AjPVdwall vdw, 
+				      AjBool skip);
 
 
 
@@ -308,11 +316,9 @@ static AjBool contacts_ContactMapCalc(AjPInt2d *mat, ajint *ncon, ajint dim,
 
 int main(ajint argc, char **argv)
 {
-    AjPStr     cpdb_path     =NULL;	/* Path of cpdb files */
-    AjPStr     cpdb_extn     =NULL;	/* Extn. of cpdb files */
+    AjPList     cpdb_path     =NULL;	/* Directory of cpdb files */
     AjPStr     cpdb_name     =NULL;	/* Name of cpdb file */
-    AjPStr     con_path      =NULL;	/* Path of contact files */
-    AjPStr     con_extn      =NULL;	/* Extn. of contact files */
+    AjPDir     con_path      =NULL;	/* Directory of contact files */
     AjPStr     con_name      =NULL;	/* Name of contact file */
     AjPStr     msg           =NULL;	/* Error message */
     AjPStr     temp          =NULL;	/* Temp string */
@@ -325,11 +331,11 @@ int main(ajint argc, char **argv)
     
     AjPPdb     pdb           =NULL;
 
-    AjPList    list          =NULL;       
-
     float      thresh        =0;
     float      ignore        =0;
-    
+    AjBool     skip          = ajFalse; /* Whether to calculate contacts 
+					   between residue adjacenet in 
+					   sequence. */
     AjPVdwall  vdw           =NULL;     /* Structure for vdw radii */
     
 
@@ -341,52 +347,25 @@ int main(ajint argc, char **argv)
     /* Initialise strings */
     temp          = ajStrNew();
     msg           = ajStrNew();
-    cpdb_path     = ajStrNew();
-    cpdb_extn     = ajStrNew();
     cpdb_name     = ajStrNew();
-    con_path      = ajStrNew();
-    con_extn      = ajStrNew();
     con_name      = ajStrNew();
 /*    vdwfstr       = ajStrNew(); */
-
+    
 
     /* Read data from acd */
     ajNamInit("emboss");
     ajAcdInitP("contacts",argc,argv,"DOMAINATRIX"); 
-    cpdb_path     = ajAcdGetString("cpdb");
-    cpdb_extn     = ajAcdGetString("cpdbextn");
-    con_path      = ajAcdGetString("con");
-    con_extn      = ajAcdGetString("conextn");
+    cpdb_path     = ajAcdGetDirlist("cpdb");
+    con_path      = ajAcdGetDirectory("con");
     logf          = ajAcdGetOutfile("conerrf");
     thresh        = ajAcdGetFloat("thresh");
+    skip          = ajAcdGetBool("skip");
     ignore        = ajAcdGetFloat("ignore");
 /*    vdwfstr       = ajAcdGetString("vdwf");*/
-    vdwf       = ajAcdGetInfile("vdwf");
+    vdwf       = ajAcdGetDatafile("vdwf");
 
 
-    /* Check directories*/
-    if(!ajFileDir(&cpdb_path))
-	ajFatal("Could not open cpdb directory");
 
-    if(!ajFileDir(&con_path))
-	ajFatal("Could not open contact directory");
-
-
-    /* Create list of files in cpdb directory */
-    list = ajListNew();
-    ajStrAssC(&temp, "*");	
-    if((ajStrChar(cpdb_extn, 0)=='.'))
-	ajStrApp(&temp, cpdb_extn);    
-    else
-    {
-	ajStrAppC(&temp, ".");    
-	ajStrApp(&temp, cpdb_extn);    
-    }
-    ajFileScan(cpdb_path, temp, &list, ajFalse, ajFalse, NULL, NULL, 
-	       ajFalse, NULL); 
-
-
-    ajStrDel(&temp);
     
     /* Allocate and read Vdwall object */
     /*
@@ -394,13 +373,13 @@ int main(ajint argc, char **argv)
     if(!vdwf)
 	ajFatal("Cannot open %S",vdwfstr); */
 
-    if(!ajXyzVdwallRead(vdwf, &vdw))
+    if(!(vdw=ajVdwallReadNew(vdwf)))
 	ajFatal("Error reading vdw radii file\n");
 
 
 
     /*Start of main application loop*/
-    while(ajListPop(list,(void **)&temp))
+    while(ajListPop(cpdb_path,(void **)&temp))
     {
 /* 
 This error was also reported - could easily be more like this
@@ -452,13 +431,13 @@ rm /data/structure/con_new/d1qjha_.conD1G1XA_
 
 
 	/* Read pdb structure */
-	if(!ajXyzCpdbRead(cpdb_inf, &pdb))	       
+	if(!(pdb=ajPdbReadNew(cpdb_inf)))
 	{
 	    ajFmtPrintS(&msg, "ERROR file read error %S", temp);
 	    ajWarn(ajStrStr(msg));
 	    ajFmtPrintF(logf, "ERROR  file read error %S\n", temp);
 	    ajFileClose(&cpdb_inf);
-	    ajXyzPdbDel(&pdb);
+	    ajPdbDel(&pdb);
 	    ajStrDel(&temp);	
 	    continue;
 	}
@@ -471,12 +450,9 @@ rm /data/structure/con_new/d1qjha_.conD1G1XA_
 
 
 	/* Open contact file for writing*/
-	ajStrAss(&con_name, con_path);
-
-	ajStrApp(&con_name, pdb->Pdb);
+	ajStrAssS(&con_name, pdb->Pdb);
 	ajStrToLower(&con_name);
-	ajStrAppC(&con_name, ajStrStr(con_extn));
-	if(!(con_outf=ajFileNewOut(con_name)))
+	if(!(con_outf=ajFileNewOutDir(con_path, con_name)))
 	{
 	    ajFmtPrintS(&msg, "ERROR file open error %S", 
 			con_name);
@@ -484,14 +460,15 @@ rm /data/structure/con_new/d1qjha_.conD1G1XA_
 	    ajFmtPrintF(logf, "ERROR file open error %S\n", con_name);
 	    ajFileClose(&cpdb_inf);
 	    ajFileClose(&con_outf);
-	    ajXyzPdbDel(&pdb);
+	    ajPdbDel(&pdb);
 	    ajStrDel(&temp);	
 	    continue;
 	}  
-    
+
 	
 	/* Write contacts file */
-	if(!contacts_WriteFile(logf, con_outf, thresh, ignore, pdb, vdw))
+	if(!contacts_WriteFile(logf, con_outf, thresh, ignore, pdb, vdw, 
+			       skip))
 	{
 	    ajFmtPrintS(&msg, "ERROR  file write error %S", con_name);
 	    ajWarn(ajStrStr(msg));
@@ -499,21 +476,20 @@ rm /data/structure/con_new/d1qjha_.conD1G1XA_
 
 	    ajFmtPrintS(&temp, "rm %S", con_name);
 	    ajFmtPrint("%S", temp);
-	    ajSystem(&temp);
+	    ajSystem(temp);
 
 	    ajFileClose(&cpdb_inf);
 	    ajFileClose(&con_outf);
-	    ajXyzPdbDel(&pdb);
+	    ajPdbDel(&pdb);
 	    ajStrDel(&temp);	
 	    continue;
 	}
 
-	
 
 	/* Tidy up*/
 	ajFileClose(&cpdb_inf);
 	ajFileClose(&con_outf);
-	ajXyzPdbDel(&pdb);
+	ajPdbDel(&pdb);
 	ajStrDel(&temp);	
     }
     /*End of main application loop*/    
@@ -521,11 +497,9 @@ rm /data/structure/con_new/d1qjha_.conD1G1XA_
 
 
     /*Tidy up */
-    ajStrDel(&cpdb_path);
-    ajStrDel(&cpdb_extn);
+    ajListDel(&cpdb_path);
     ajStrDel(&cpdb_name);
-    ajStrDel(&con_path);
-    ajStrDel(&con_extn);
+    ajDirDel(&con_path);
     ajStrDel(&con_name);
     ajStrDel(&msg);
 /*    ajStrDel(&vdwfstr); */
@@ -533,8 +507,7 @@ rm /data/structure/con_new/d1qjha_.conD1G1XA_
     ajFileClose(&logf);
     ajFileClose(&vdwf);
 
-    ajListDel(&list);
-    ajXyzVdwallDel(&vdw);
+    ajVdwallDel(&vdw);
     
 
     /* Return */
@@ -557,6 +530,8 @@ rm /data/structure/con_new/d1qjha_.conD1G1XA_
 ** @param [r] ignore [float]   Threshold ignore distance
 ** @param [r] pdb    [AjPPdb]  Pdb object
 ** @param [r] vdw    [AjPVdwall]   Vdwall object
+** @param [r] skip   [AjBool]     Whether to calculate contacts between 
+**                                residue adjacenet in sequence.
 **
 ** @return [AjBool] True on success
 ** @@
@@ -564,7 +539,8 @@ rm /data/structure/con_new/d1qjha_.conD1G1XA_
 ******************************************************************************/
 
 static AjBool contacts_WriteFile(AjPFile logf, AjPFile outf, float thresh, 
-				     float ignore, AjPPdb pdb, AjPVdwall vdw)
+				 float ignore, AjPPdb pdb, AjPVdwall vdw, 
+				 AjBool skip)
 {
     AjPInt2d    mat   =NULL;		/* Contact map */
     ajint       x,y,z;			/* Loop counters */
@@ -618,20 +594,22 @@ static AjBool contacts_WriteFile(AjPFile logf, AjPFile outf, float thresh,
 	    {
 		/* Allocate memory for the contact map (a SQUARE 2d int array) */
 		mat = ajInt2dNewL((ajint)pdb->Chains[y]->Nres);   	
+
 		for(z=0;z<pdb->Chains[y]->Nres;++z)
 		    ajInt2dPut(&mat, z, pdb->Chains[y]->Nres-1, (ajint) 0);
-
 	    
 		/* Write the contact map */
-	    
+	
 		if(!contacts_ContactMapCalc(&mat, &ncon, pdb->Chains[y]->Nres, 
-					     thresh, ignore, x+1, y+1, pdb,  vdw))
+					    thresh, ignore, x+1, y+1, pdb, vdw, 
+					    skip))
 		{
 		    ajFmtPrintF(logf, "ERROR  Writing contact map\n");
 		    ajInt2dDel(&mat);
 		    return ajFalse;
 		}
 
+	    
 
 		/* Print out chain-specific data */
 		ajFmtPrintF(outf, "%-5s[%d]\n", "CN", y+1);	
@@ -642,7 +620,8 @@ static AjBool contacts_WriteFile(AjPFile logf, AjPFile outf, float thresh,
 			    pdb->Chains[y]->Nres,
 			    ncon);
 		ajFmtPrintF(outf, "XX\n");	
-
+		ajSeqWriteXyz(outf, pdb->Chains[y]->Seq, "SQ");
+		ajFmtPrintF(outf, "XX\n");	
 
 		if(ncon)
 		{
@@ -798,14 +777,17 @@ static AjBool contacts_ContactMapWrite(AjPFile outf, AjPInt2d mat, char *txt,
 ** @param [r] chn    [ajint]      Chain number
 ** @param [r] pdb    [AjPPdb]     Pdb object
 ** @param [r] vdw    [AjPVdwall]  Vdwall object
+** @param [r] skip   [AjBool]     Whether to calculate contacts between 
+**                                residue adjacenet in sequence.
 ** 
 ** @return [AjBool] True if file was succesfully written.
 ** @@
 **
 ****************************************************************************/
 static AjBool contacts_ContactMapCalc(AjPInt2d *mat, ajint *ncon, ajint dim, 
-				       float thresh, float ignore, ajint mod, 
-				      ajint chn, AjPPdb pdb, AjPVdwall vdw)
+				      float thresh, float ignore, ajint mod, 
+				      ajint chn, AjPPdb pdb, AjPVdwall vdw,
+				      AjBool skip)
 {	
     /* Contact is checked for between two residues, residue 1 and residue 2 */
     
@@ -839,6 +821,7 @@ static AjBool contacts_ContactMapCalc(AjPInt2d *mat, ajint *ncon, ajint dim,
     AjBool      done=ajFalse; /* Flag */
     
     float       dis=0.0;      /* Inter-atomic distance */
+    ajint      offset        = 0;
     
 
     /*JC this block */
@@ -872,6 +855,14 @@ static AjBool contacts_ContactMapCalc(AjPInt2d *mat, ajint *ncon, ajint dim,
 	       "contacts_ContactMapCalc");
 	return ajFalse;
     }
+
+
+    if(skip) 
+	offset = 2;
+    else	
+        offset = 1;
+
+
 
     /*JC WAS RETURNING HERE */
 
@@ -959,9 +950,10 @@ static AjBool contacts_ContactMapCalc(AjPInt2d *mat, ajint *ncon, ajint dim,
 	if(!done)
 	    continue;
 		
-
-	/*Loop for second residue */
-	for(res2=res1+1, idx2=idx1; res2<=reslast; res2++)
+	/* Loop for second residue */
+	/* Offset is normally 1 but will be 2 if contacts between adjacent
+	   residue are not calculated */
+	for(res2=res1+offset, idx2=idx1; res2<=reslast; res2++)
 	{
 	    /*Assign position of first atom of res2 */
 	    for(done=ajFalse, idx2first=idx2; idx2first<idxlast; idx2first++)
@@ -989,18 +981,26 @@ static AjBool contacts_ContactMapCalc(AjPInt2d *mat, ajint *ncon, ajint dim,
 		      idx1, idx2,arr[idx1]->Idx, arr[idx2]->Idx);
 		    fflush(xxxtemp->fp); */
 		    
-		    
-/*		    if(ajXyzInContact(arr[idx1], arr[idx2], thresh, vdw))		 */
-		    if((dis = ajXyzAtomDistance(arr[idx1], arr[idx2], vdw))<=thresh)
+
+/*		    if(embAtomInContact(arr[idx1], arr[idx2], thresh, vdw))		 */
+		    if((dis = embAtomDistance(arr[idx1], arr[idx2], vdw))<=thresh)
 		    {
 /*			ajFmtPrintF(xxxtemp, "CONTACT\n");
 			fflush(xxxtemp->fp);  */
 
 			/* Increment no. contacts and write contact map */
 			(*ncon)++;
-  			ajInt2dPut(mat, arr[idx1]->Idx-1, arr[idx2]->Idx-1, (ajint) 1);
-			ajInt2dPut(mat, arr[idx2]->Idx-1, arr[idx1]->Idx-1, (ajint) 1); 
 
+			if((arr[idx1]->Idx==0)||(arr[idx2]->Idx==0))
+			{
+			    ajWarn("Indexing error, contact not written !\n");
+			}
+			else
+			{
+			    ajInt2dPut(mat, arr[idx1]->Idx-1, arr[idx2]->Idx-1, (ajint) 1);
+			    ajInt2dPut(mat, arr[idx2]->Idx-1, arr[idx1]->Idx-1, (ajint) 1); 
+			}
+			
 			done=ajTrue;
 			break;
 		    }
@@ -1031,6 +1031,16 @@ static AjBool contacts_ContactMapCalc(AjPInt2d *mat, ajint *ncon, ajint dim,
     return ajTrue;
 }
 
+
+
+
+
+
+
+
+
+
+
     
     
-    
+

@@ -306,53 +306,148 @@
 
 #include "emboss.h"
 
-AjBool ajXyzHmmSearch(AjPSeqset db, AjPStr hmmfile, AjPList targetlist, AjPStr family, AjPStr superfamily,
-                      AjPStr fold, AjPStr class, ajint sun_id, ajint overlap, ajint maxhits, AjPStr model, 
-		      AjPFile outf, AjPList* mrglist);
-AjBool ajXyzProfileSearch(AjPSeqset db, AjPStr profile, float gapopen, float gapextn, AjPList targetlist,
-                          AjPStr family,AjPStr superfamily, AjPStr fold, AjPStr class, ajint sun_id, ajint overlap, 
-                          ajint maxhits, AjPStr model, AjPFile outf, AjPList* mrglist);
-AjBool ajXyzSignatureSearch(AjPSeqset db, AjPStr sigfile, AjPMatrixf sub, float gapo, float gape,ajint ntop, 
-			    AjPList targetlist, AjPStr family, AjPStr superfamily, AjPStr fold, AjPStr class, 
-			    ajint sun_id, ajint overlap, ajint maxhits, AjPStr model, AjPFile outf, AjPList* mrglist);
 
-AjBool ajXyzProfileLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen, float gapextn,AjPList scoplist, 
-			   AjPStr model,AjPStr profoutpath, AjPStr profoutextn,AjPList* mrglist);
-AjBool ajXyzSignatureLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen,float gapextn,AjPMatrixf sub,ajint ntopt, 
-			     AjPList scoplist, AjPStr model,AjPStr sigoutpath, AjPStr sigoutextn, AjPList* mrglist);
-AjBool ajXyzHmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn, AjPList scoplist, AjPStr model, AjPStr hmmoutpath, 
-		       AjPStr hmmoutextn,AjPList* mrglist);
+/* @data LibscanPCoord *******************************************************
+**
+** Undocumented
+**
+** @alias LibscanOCoord
+** @alias LibscanSCoord
+**
+******************************************************************************/
 
-AjBool ajXyzRunHmmsearch(AjPStr filename, AjPStr db, AjPStr outfname);
-AjBool ajXyzRunProphet(AjPStr profile, AjPStr db, float gapopen, float gapextend, AjPStr outfname);
-
-AjPList ajXyzGetLibrary(AjPStr path, AjPStr extn);
-
-AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, AjPList targetlist, AjPList mrglist, ajint overlap, ajint maxhits, ajint n);
-
-
-AjPList ajXyzCalcDistribution(AjPList listhits, AjPStr class, AjPStr fold, AjPStr superfamily, AjPStr family, ajint sun_id);
-
-AjBool ajXyzHitsWrite(AjPFile outf, AjPHitlist hits, ajint maxhits);
+typedef struct LibscanSCoord
+{
+    AjPStr   Class;        /* SCOP class */
+    AjPStr   Fold;         /* SCOP fold */
+    AjPStr   Superfamily;  /* SCOP superfamily */
+    AjPStr   Family;       /* SCOP family */
+    ajint    Sunid_Family; /* the sun_id for a given SCOP family */
+    AjPStr   Model_Type;   /* The type of model used to generate the scores */
+    AjPStr   Acc;          /* Accession number of sequence entry  */
+    AjPStr   Spr;          /* Swissprot code of sequence entry */
+    ajint    x;            /* The score interval */
+    ajint    y;            /* Frequency of scores */
+} LibscanOCoord, *LibscanPCoord;
 
 
-AjBool ajXyzRunHmmerInModeOne(AjPSeqset db, AjPStr hmmpath, AjPStr hmmextn, AjPStr *mode, ajint overlap, ajint maxhits, AjPStr model,
-                              AjPList targetlist, AjPList scoplist, AjPStr hmmoutpath, AjPStr hmmoutextn, AjPList* mrglist);
-AjBool ajXyzRunHmmerInModeTwo(AjPSeqset db, AjPStr hmmpath, AjPStr hmmextn, AjPStr *mode, AjPList scoplist, AjPStr model, 
-			      AjPStr hmmoutpath, AjPStr hmmoutextn,AjPList* mrglist);
+static ajint libscan_CoordBinSearchScore(float score, LibscanPCoord *arr,
+					 ajint siz);
+static float libscan_ScoreToPvalue (float score, AjPList list);
+static AjBool libscan_SunidToScopInfo (ajint sunid, AjPStr *family,
+				       AjPStr *superfamily, AjPStr *fold,
+				       AjPStr *klass, AjPList list);
+static void libscan_CoordDel(LibscanPCoord *pthis);
+static LibscanPCoord libscan_CoordNew(void);
 
-AjBool ajXyzRunProphetInModeOne(AjPSeqset db, AjPStr profpath, AjPStr profextn, float gapo,float gape, AjPStr *mode, ajint overlap, ajint maxhits, 
-				AjPStr model, AjPList targetlist, AjPList scoplist,AjPStr profoutpath, AjPStr profoutextn, AjPList* mrglist);
-AjBool ajXyzRunProphetInModeTwo(AjPSeqset db, AjPStr profpath, AjPStr profextn, float gapo, float gape, AjPStr *mode, AjPList scoplist, 
-				AjPStr model, AjPStr profoutpath, AjPStr profoutextn, AjPList* mrglist);
+static AjBool libscan_HmmSearch(AjPSeqset db, AjPStr hmmfile,
+				AjPList targetlist, AjPStr family,
+				AjPStr superfamily, AjPStr fold, AjPStr class,
+				ajint sun_id, ajint overlap, ajint maxhits,
+				AjPStr model, AjPFile outf, AjPList* mrglist);
+static AjBool libscan_ProfileSearch(AjPSeqset db, AjPStr profile,
+				    float gapopen, float gapextn,
+				    AjPList targetlist, AjPStr family,
+				    AjPStr superfamily, AjPStr fold,
+				    AjPStr class, ajint sun_id, ajint overlap, 
+				    ajint maxhits, AjPStr model, AjPFile outf,
+				    AjPList* mrglist);
+static AjBool libscan_SignatureSearch(AjPSeqset db, AjPStr sigfile,
+				      AjPMatrixf sub, float gapo, float gape,
+				      ajint ntop, AjPList targetlist,
+				      AjPStr family, AjPStr superfamily,
+				      AjPStr fold, AjPStr class, 
+				      ajint sun_id, ajint overlap,
+				      ajint maxhits, AjPStr model,
+				      AjPFile outf, AjPList* mrglist);
 
-AjBool ajXyzRunSignatureInModeOne(AjPSeqset db, AjPStr sigpath, AjPStr sigextn, float gapo, float gape, AjPMatrixf sub, ajint ntopt, 
-                                  AjPStr *mode, ajint overlap, ajint maxhits, AjPStr model, AjPList targetlist, AjPList scoplist,AjPStr sigoutpath, 
-				  AjPStr sigoutextn, AjPList* mrglist);
-AjBool ajXyzRunSignatureInModeTwo(AjPSeqset db, AjPStr sigpathpath, AjPStr sigextn, float gapo,float gape, AjPMatrixf sub, ajint ntopt, 
-                                  AjPStr *mode, AjPList scoplist, AjPStr model, AjPStr sigoutpath, AjPStr sigoutextn,AjPList* mrglist);
+static AjBool libscan_ProfileLibScan(AjPSeq seq, AjPStr path, AjPStr extn,
+				     float gapopen, float gapextn,
+				     AjPList scoplist, AjPStr model,
+				     AjPStr profoutpath, AjPStr profoutextn,
+				     AjPList* mrglist);
+static AjBool libscan_SignatureLibScan(AjPSeq seq, AjPStr path, AjPStr extn,
+				       float gapopen,float gapextn,
+				       AjPMatrixf sub,ajint ntopt, 
+				       AjPList scoplist, AjPStr model,
+				       AjPStr sigoutpath, AjPStr sigoutextn,
+				       AjPList* mrglist);
+static AjBool libscan_HmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn,
+				 AjPList scoplist, AjPStr model,
+				 AjPStr hmmoutpath, 
+				 AjPStr hmmoutextn,AjPList* mrglist);
 
-AjPList ajXyzCalcLibscanDistribution(AjPList scophits);
+static AjBool libscan_RunHmmsearch(AjPStr filename, AjPStr db,
+				   AjPStr outfname);
+static AjBool libscan_RunProphet(AjPStr profile, AjPStr db,
+				 float gapopen, float gapextend,
+				 AjPStr outfname);
+
+static AjPList libscan_GetLibrary(AjPStr path, AjPStr extn);
+
+static AjBool libscan_CombineScophitsPvalues(ajint mode, AjPStr outpath,
+					     AjPStr outextn,
+					     AjPList targetlist,
+					     AjPList mrglist, ajint overlap,
+					     ajint maxhits, ajint n);
+
+
+static AjPList libscan_CalcDistribution(AjPList listhits, AjPStr class,
+					AjPStr fold, AjPStr superfamily,
+					AjPStr family, ajint sun_id);
+
+
+
+
+static AjBool libscan_RunHmmerInModeOne(AjPSeqset db, AjPStr hmmpath,
+					AjPStr hmmextn, AjPStr *mode,
+					ajint overlap, ajint maxhits,
+					AjPStr model, AjPList targetlist,
+					AjPList scoplist, AjPStr hmmoutpath,
+					AjPStr hmmoutextn, AjPList* mrglist);
+static AjBool libscan_RunHmmerInModeTwo(AjPSeqset db, AjPStr hmmpath,
+					AjPStr hmmextn, AjPStr *mode,
+					AjPList scoplist, AjPStr model, 
+					AjPStr hmmoutpath, AjPStr hmmoutextn,
+					AjPList* mrglist);
+
+static AjBool libscan_RunProphetInModeOne(AjPSeqset db, AjPStr profpath,
+					  AjPStr profextn, float gapo,
+					  float gape, AjPStr *mode,
+					  ajint overlap, ajint maxhits, 
+					  AjPStr model, AjPList targetlist,
+					  AjPList scoplist,AjPStr profoutpath,
+					  AjPStr profoutextn,
+					  AjPList* mrglist);
+static AjBool libscan_RunProphetInModeTwo(AjPSeqset db, AjPStr profpath,
+					  AjPStr profextn, float gapo,
+					  float gape, AjPStr *mode,
+					  AjPList scoplist, 
+					  AjPStr model, AjPStr profoutpath,
+					  AjPStr profoutextn,
+					  AjPList* mrglist);
+
+static AjBool libscan_RunSignatureInModeOne(AjPSeqset db, AjPStr sigpath,
+					    AjPStr sigextn, float gapo,
+					    float gape, AjPMatrixf sub,
+					    ajint ntopt, AjPStr *mode,
+					    ajint overlap, ajint maxhits,
+					    AjPStr model, AjPList targetlist,
+					    AjPList scoplist,
+					    AjPStr sigoutpath, 
+					    AjPStr sigoutextn,
+					    AjPList* mrglist);
+static AjBool libscan_RunSignatureInModeTwo(AjPSeqset db, AjPStr sigpathpath,
+					    AjPStr sigextn, float gapo,
+					    float gape, AjPMatrixf sub,
+					    ajint ntopt, AjPStr *mode,
+					    AjPList scoplist, AjPStr model,
+					    AjPStr sigoutpath,
+					    AjPStr sigoutextn,
+					    AjPList* mrglist);
+
+static AjPList libscan_CalcLibscanDistribution(AjPList scophits);
+
 
 
 int main(int argc, char **argv)
@@ -547,18 +642,18 @@ int main(int argc, char **argv)
 
   
     /* create the scop list */
-    while((ajXyzScopReadC(scopf, "*", &entry)))
+    while((entry = (ajScopReadCNew(scopf, "*"))))
 	ajListPushApp(scoplist,(AjPScop)entry); 
     ajFileClose(&scopf);
   
     /*sort scoplist by Sunid_Family prior to binary search*/
-    ajListSort(scoplist,ajXyzScopCompSunid);
+    ajListSort(scoplist,ajScopMatchSunid);
 
     /* Create the target list */
     if(ajStrChar(*mode,0)=='1')
     {
 	targetlist = ajListNew();
-	while(ajXyzHitlistRead(targetf,"//",&targets))
+	while((targets=embHitlistRead(targetf)))
 	    ajListPush(targetlist, (AjPHitlist) targets);
 	ajFmtPrint("Targets read ok\n");
 	ajFileClose(&targetf); 
@@ -576,9 +671,9 @@ int main(int argc, char **argv)
 	    ajFatal("scoplist not good !\n");
       
 	if(ajStrChar(*mode,0)=='1')
-	    ajXyzRunHmmerInModeOne(db,hmmpath,hmmextn,mode,overlap,maxhits,model,targetlist,scoplist,hmmoutpath,hmmoutextn,&mrglist);
+	    libscan_RunHmmerInModeOne(db,hmmpath,hmmextn,mode,overlap,maxhits,model,targetlist,scoplist,hmmoutpath,hmmoutextn,&mrglist);
 	else
-	    ajXyzRunHmmerInModeTwo(db,hmmpath,hmmextn,mode,scoplist,model,hmmoutpath,hmmoutextn,&mrglist);
+	    libscan_RunHmmerInModeTwo(db,hmmpath,hmmextn,mode,scoplist,model,hmmoutpath,hmmoutextn,&mrglist);
     }
 
     if(do_grib)
@@ -586,10 +681,10 @@ int main(int argc, char **argv)
 	ajStrAssC(&model,"GRIBSKOV");
 
 	if(ajStrChar(*mode,0)=='1')
-	    ajXyzRunProphetInModeOne(db,gbvpath,gbvextn,gbvgapo,gbvgape,mode,overlap,maxhits,model,targetlist,scoplist,
+	    libscan_RunProphetInModeOne(db,gbvpath,gbvextn,gbvgapo,gbvgape,mode,overlap,maxhits,model,targetlist,scoplist,
 				     gbvoutpath,gbvoutextn,&mrglist);
 	else
-	    ajXyzRunProphetInModeTwo(db,gbvpath,gbvextn,gbvgapo,gbvgape,mode,scoplist,model,gbvoutpath,gbvoutextn,&mrglist);
+	    libscan_RunProphetInModeTwo(db,gbvpath,gbvextn,gbvgapo,gbvgape,mode,scoplist,model,gbvoutpath,gbvoutextn,&mrglist);
     }
 
     if(do_henik)
@@ -597,10 +692,10 @@ int main(int argc, char **argv)
 	ajStrAssC(&model,"HENNIKOFF");
 
 	if(ajStrChar(*mode,0)=='1')
-	    ajXyzRunProphetInModeOne(db,hnfpath,hnfextn,hnfgapo,hnfgape,mode,overlap,maxhits,model,targetlist,scoplist,
+	    libscan_RunProphetInModeOne(db,hnfpath,hnfextn,hnfgapo,hnfgape,mode,overlap,maxhits,model,targetlist,scoplist,
 				     hnfoutpath,hnfoutextn,&mrglist);
 	else
-	    ajXyzRunProphetInModeTwo(db,hnfpath,hnfextn,hnfgapo,hnfgape,mode,scoplist,model,hnfoutpath,hnfoutextn,&mrglist);
+	    libscan_RunProphetInModeTwo(db,hnfpath,hnfextn,hnfgapo,hnfgape,mode,scoplist,model,hnfoutpath,hnfoutextn,&mrglist);
     }
 
     if(do_sig)
@@ -608,10 +703,10 @@ int main(int argc, char **argv)
 	ajStrAssC(&model,"SIGNATURE");
 
 	if(ajStrChar(*mode,0)=='1')
-	    ajXyzRunSignatureInModeOne(db,sigpath,sigextn,siggapo,siggape,sub,ntopt,mode,overlap,maxhits,model,targetlist, 
+	    libscan_RunSignatureInModeOne(db,sigpath,sigextn,siggapo,siggape,sub,ntopt,mode,overlap,maxhits,model,targetlist, 
 				       scoplist,sigoutpath,sigoutextn,&mrglist);
 	else
-	    ajXyzRunSignatureInModeTwo(db,sigpath,sigextn,siggapo,siggape,sub,ntopt,mode,scoplist,model,sigoutpath,
+	    libscan_RunSignatureInModeTwo(db,sigpath,sigextn,siggapo,siggape,sub,ntopt,mode,scoplist,model,sigoutpath,
 				       sigoutextn,&mrglist);
     }
 
@@ -621,10 +716,14 @@ int main(int argc, char **argv)
       
 	if(ajStrChar(*mode,0)=='1')
 	    /* Signature hits files will be written */
-	    ajXyzCombineScophitsPvalues(1, mrgoutpath, mrgoutextn, targetlist, mrglist, overlap, maxhits, cnt);
+	    libscan_CombineScophitsPvalues(1, mrgoutpath, mrgoutextn,
+					   targetlist, mrglist, overlap,
+					   maxhits, cnt);
 	else
 	    /*Library scan files will be written */
-	    ajXyzCombineScophitsPvalues(2, mrgoutpath, mrgoutextn, NULL, mrglist, overlap, maxhits, cnt);
+	    libscan_CombineScophitsPvalues(2, mrgoutpath, mrgoutextn,
+					   NULL, mrglist, overlap,
+					   maxhits, cnt);
 
     }
   
@@ -632,23 +731,23 @@ int main(int argc, char **argv)
     if(ajStrChar(*mode,0)=='1')
     {    
 	while(ajListPop(targetlist, (void *) &targets))
-	    ajXyzHitlistDel(&targets);
+	    embHitlistDel(&targets);
 	ajListDel(&targetlist); 
     }
 
     /* clean up scoplist */
-    iter = ajListIter(scoplist);
+    iter = ajListIterRead(scoplist);
     while((entry = (AjPScop)ajListIterNext(iter)))
-	ajXyzScopDel(&entry);
+	ajScopDel(&entry);
     ajListDel(&scoplist);
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
     /* clean up mrglist */
-    iter = ajListIter(mrglist);
+    iter = ajListIterRead(mrglist);
     while((delscophit = (AjPScophit)ajListIterNext(iter)))
-	ajXyzScophitDel(&delscophit);
+	ajDmxScophitDel(&delscophit);
     ajListDel(&mrglist);
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
 
     /* clean up variables */
@@ -706,10 +805,12 @@ int main(int argc, char **argv)
     }
   
     ajSeqsetDel(&db);  
-    ajMatrixfDel(&sub);
+
+/*CORRECTION*/    if(do_sig)
+      ajMatrixfDel(&sub);
 
 
-/*jison*/    ajStrDel(&model);
+/*CORRECTION*/    ajStrDel(&model);
     
   
     return 0;
@@ -718,7 +819,7 @@ int main(int argc, char **argv)
 
 
 
-/* @funcstatic ajXyzHmmSearch ********************************************
+/* @funcstatic libscan_HmmSearch ********************************************
  **
  ** Runs hmmsearch at the command line and writes the results to a specified
  ** file.
@@ -732,10 +833,13 @@ int main(int argc, char **argv)
  
  ** @@
  ** 
- ******************************************************************************/
-AjBool ajXyzHmmSearch(AjPSeqset db, AjPStr hmmfile, AjPList targetlist, AjPStr family, 
-                      AjPStr superfamily,AjPStr fold, AjPStr class, ajint sun_id, ajint overlap, 
-		      ajint maxhits, AjPStr model, AjPFile outf, AjPList* mrglist)
+ *****************************************************************************/
+static AjBool libscan_HmmSearch(AjPSeqset db, AjPStr hmmfile,
+				AjPList targetlist, AjPStr family,
+				AjPStr superfamily, AjPStr fold,
+				AjPStr class, ajint sun_id, ajint overlap, 
+				ajint maxhits, AjPStr model, AjPFile outf,
+				AjPList* mrglist)
 {
     ajint cnt           = 0;
     ajint nhits         = 0;
@@ -790,11 +894,11 @@ AjBool ajXyzHmmSearch(AjPSeqset db, AjPStr hmmfile, AjPList targetlist, AjPStr f
     
     AjIList iter        = NULL;         /* list iterator */
   
-    AjPCoord  delpoint  = NULL;
+    LibscanPCoord  delpoint  = NULL;
   
     if(!db || !hmmfile || !outf)
     {
-        ajWarn("Bad arguments passed to ajXyzHmmSearch\n");
+        ajWarn("Bad arguments passed to libscan_HmmSearch\n");
         return ajFalse;
     }
   
@@ -840,7 +944,7 @@ AjBool ajXyzHmmSearch(AjPSeqset db, AjPStr hmmfile, AjPList targetlist, AjPStr f
         ajFileClose(&hmminf);
     
         /* RUN HMMSEARCH */
-        ajXyzRunHmmsearch(hmmfile, hmminfname, hmmoutfname);
+        libscan_RunHmmsearch(hmmfile, hmminfname, hmmoutfname);
     
 
         inf = ajFileNewIn(hmmoutfname);
@@ -882,7 +986,7 @@ AjBool ajXyzHmmSearch(AjPSeqset db, AjPStr hmmfile, AjPList targetlist, AjPStr f
                     else if((ajStrFindC(line,"Histogram of all scores:")>=0))
                     {
                         /* construct the last  hit */ 
-                        hit = ajXyzHitNew();
+                        hit = embHitNew();
             
                         /* construct the hit */
                         ajStrAssS(&hit->Acc,id);
@@ -908,13 +1012,13 @@ AjBool ajXyzHmmSearch(AjPSeqset db, AjPStr hmmfile, AjPList targetlist, AjPStr f
         }
     
         ajFileClose(&inf);
-        ajSysUnlink(&hmmoutfname);
-        ajSysUnlink(&hmminfname); 
+        ajSysUnlink(hmmoutfname);
+        ajSysUnlink(hmminfname); 
     
     }
 
     /* CONSTRUCT THE HITLIST*/
-    hitlist = ajXyzHitlistNew(0); 
+    hitlist = embHitlistNew(0); 
    
     /* write hit structure */
     ajStrAssS(&hitlist->Class,class);
@@ -929,51 +1033,55 @@ AjBool ajXyzHmmSearch(AjPSeqset db, AjPStr hmmfile, AjPList targetlist, AjPStr f
     hitlist->N = nhits;
 
     if(!(hitlist->N))
-	ajFatal("hitlist->N==0 in ajXyzHmmSearch\n");
+	ajFatal("hitlist->N==0 in libscan_HmmSearch\n");
     
 
     /* CLASSIFY THE HITS ACCORDING TO THE SCOP FAMILIES FILE */
-    if(ajXyzHitlistClassify(&hitlist, targetlist, overlap))
+    if(embHitlistClassify(&hitlist, targetlist, overlap))
         ajFmtPrint("Hit classified ok\n");
     else
-        ajFmtPrint("Program crashed!, Check ajXyzHitlistClassify\n");
+        ajFmtPrint("Program crashed!, Check embHitlistClassify\n");
 
-    /* convert the hitlist to scophits so the related hits can be targetted for removal
-       in order to calculate an unbiased distribution */
+    /* convert the hitlist to scophits so the related hits can be
+       targetted for removal in order to calculate an unbiased
+       distribution */
     ajListPushApp(tmplist,hitlist);
-    ajXyzHitlistToScophits(tmplist,&scophits);
+    embDmxHitlistToScophits(tmplist,&scophits);
     
 
     /* target for removal hits that have a "TRUE" or "CROSS" classification */
-    iter = ajListIter(scophits);
+    iter = ajListIterRead(scophits);
     while((scop = (AjPScophit)ajListIterNext(iter)))
     {   
-        if(ajStrMatchC(scop->Typesbj,"TRUE") || ajStrMatchC(scop->Typesbj,"CROSS"))
-            ajXyzScophitTarget(&scop);  
+        if(ajStrMatchC(scop->Typesbj,"TRUE") ||
+	   ajStrMatchC(scop->Typesbj,"CROSS"))
+            ajDmxScophitTarget(&scop);  
     }
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
     
 
     /* need garbage collection here - CORRECTION BY RAND 
-       ajListGarbageCollect(scophits, ajXyzScophitDelWrap,
-       (const void *) ajXyzScophitCheckTarget); */
+       ajListGarbageCollect(scophits, ajDmxScophitDelWrap,
+       (const void *) ajDmxScophitCheckTarget); */
 
 
-    /* CALCULATE THE DISTRIBUTION WITH THE TRUE HITS AND CROSS HITS REMOVED FROM THE LIST */
-    pointlist = ajXyzCalcDistribution(scophits, class, fold, superfamily, family, sun_id);
+    /* CALCULATE THE DISTRIBUTION WITH THE TRUE HITS AND CROSS HITS
+       REMOVED FROM THE LIST */
+    pointlist = libscan_CalcDistribution(scophits, class, fold, superfamily,
+					 family, sun_id);
 
-    /* convert the original list of hits  to an array for convenience */        
+    /* convert the original list of hits  to an array for convenience */
     nhits = ajListToArray(listhits,(void ***)&hits);
     
     /* DO A SECOND PARSE THROUGH THE HITS FILE AND CALCULATE THE P-VALUES */
     for(i=0;i<nhits;i++)
     {
-        pvalue = ajXyzScoreToPvalue(hits[i]->Score,pointlist);
+        pvalue = libscan_ScoreToPvalue(hits[i]->Score,pointlist);
         hits[i]->Pval = pvalue;
     }
 
     /* NOW RECONSTRUCT THE HIT LIST FOR PRINTING */
-    sechitlist = ajXyzHitlistNew(0); 
+    sechitlist = embHitlistNew(0); 
    
     /* write hit structure */
     ajStrAssS(&sechitlist->Class,class);
@@ -988,26 +1096,27 @@ AjBool ajXyzHmmSearch(AjPSeqset db, AjPStr hmmfile, AjPList targetlist, AjPStr f
     sechitlist->N = nhits2;
 
     if(!(sechitlist->N))
-	ajFatal("hitlist->N==0 in ajXyzHmmSearch\n");
+	ajFatal("hitlist->N==0 in libscan_HmmSearch\n");
     
     
-    /* WRITE HITS CLASSIFICATION OUTPUT FILE FOR SIGPLOT. The hits will be sorted
-       according to scorebut this doesn't matter since the rank is the important 
-       thing. Also the subsequent p-value calculations will reflect this i.e. high 
-       scores will have low p-values and low scores will have high (less significant) 
+    /* WRITE HITS CLASSIFICATION OUTPUT FILE FOR SIGPLOT. The hits
+       will be sorted according to scorebut this doesn't matter since
+       the rank is the important thing. Also the subsequent p-value
+       calculations will reflect this i.e. high scores will have low
+       p-values and low scores will have high (less significant)
        p-values */
     
-    if(ajXyzHitsWrite(outf,sechitlist,maxhits))
+    if(embDmxHitsWrite(outf,sechitlist,maxhits))
         ajFmtPrint("Hits file written ok\n");
     else
-        ajFmtPrint("Program crashed!, Check ajXyzHitsWrite\n");
+        ajFmtPrint("Program crashed!, Check embHitsWrite\n");
     
 
     /* push on to the merge list the SCOPHITS  with the p-values calculated */
-    iter = ajListIter(listhits);
+    iter = ajListIterRead(listhits);
     while((mhit = (AjPHit)ajListIterNext(iter)))
     {
-        newscop = ajXyzScophitNew();
+        newscop = ajDmxScophitNew();
 
 	ajStrAssS(&newscop->Class,class);
         ajStrAssS(&newscop->Fold,fold);
@@ -1025,41 +1134,41 @@ AjBool ajXyzHmmSearch(AjPSeqset db, AjPStr hmmfile, AjPList targetlist, AjPStr f
         ajListPushApp(*mrglist,(AjPScophit) newscop);
 
     }
-    ajListIterFree(iter); 
+    ajListIterFree(&iter); 
 
     /* clean up tmplist / hitlist */
     /* Set N to zero so that the nodes in the list are not freed, 
        the structure itself will be freed though */
     hitlist->N=0;
-    ajXyzHitlistDel(&hitlist);
-/*  jison */
-/* jison */ sechitlist->N=0;
-/* jison */    ajXyzHitlistDel(&sechitlist);
+    embHitlistDel(&hitlist);
+
+/* CORRECTION */ sechitlist->N=0;
+/* CORRECTION */    embHitlistDel(&sechitlist);
     ajListDel(&tmplist);
 
     /* clean up scophits */
-    iter = ajListIter(scophits);
+    iter = ajListIterRead(scophits);
     while((scop = (AjPScophit)ajListIterNext(iter)))
-        ajXyzScophitDel(&scop);
+        ajDmxScophitDel(&scop);
     ajListDel(&scophits);
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
     /* Clean up listhits */
-    iter = ajListIter(listhits);
+    iter = ajListIterRead(listhits);
     while((hit = (AjPHit)ajListIterNext(iter)))
-        ajXyzHitDel(&hit);
+        embHitDel(&hit);
     ajListDel(&listhits);
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
     /* Clean up hits array */
     AJFREE(hits);
 
     /* clean up pointlist */
-    iter = ajListIter(pointlist);
-    while((delpoint = (AjPCoord)ajListIterNext(iter)))
-        ajXyzCoordDel(&delpoint);
+    iter = ajListIterRead(pointlist);
+    while((delpoint = (LibscanPCoord)ajListIterNext(iter)))
+        libscan_CoordDel(&delpoint);
     ajListDel(&pointlist);
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
    
     /* clean up variables */
@@ -1085,24 +1194,29 @@ AjBool ajXyzHmmSearch(AjPSeqset db, AjPStr hmmfile, AjPList targetlist, AjPStr f
 }
 
 
-/* @funcstatic ajXyzProfileSearch ********************************************
- **
- ** Runs prohet at the command line with a profile and writes the results to 
- ** a specified file.
- **
- ** @param [r] filename  [AjPStr]  Name of file containing the gribskov profile.
- 
- ** @paran [r] db        [AjPStr]  The database to be searched.
- ** @param [r] outfname  [AjPStr]  Name of output file for search results.
- **
- ** @return [AjBool] Returns true on completion.
- ** @@
- ** 
- ******************************************************************************/
-AjBool ajXyzProfileSearch(AjPSeqset db, AjPStr profile, float gapopen, float gapextn, 
-                          AjPList targetlist, AjPStr family, AjPStr superfamily, AjPStr fold, 
-			  AjPStr class, ajint sun_id, ajint overlap, ajint maxhits, AjPStr model, 
-			  AjPFile outf, AjPList* mrglist)
+/* @funcstatic libscan_ProfileSearch ******************************************
+**
+** Runs prohet at the command line with a profile and writes the results to 
+** a specified file.
+**
+** @param [r] filename  [AjPStr]  Name of file containing the gribskov profile.
+** 
+** @paran [r] db        [AjPStr]  The database to be searched.
+** @param [r] outfname  [AjPStr]  Name of output file for search results.
+**
+** @return [AjBool] Returns true on completion.
+** @@
+** 
+******************************************************************************/
+
+static AjBool libscan_ProfileSearch(AjPSeqset db, AjPStr profile,
+				    float gapopen, float gapextn, 
+				    AjPList targetlist, AjPStr family,
+				    AjPStr superfamily, AjPStr fold, 
+				    AjPStr class, ajint sun_id,
+				    ajint overlap, ajint maxhits,
+				    AjPStr model, 
+				    AjPFile outf, AjPList* mrglist)
 {
     ajint cnt           = 0;
     ajint nhits         = 0;
@@ -1150,12 +1264,12 @@ AjBool ajXyzProfileSearch(AjPSeqset db, AjPStr profile, float gapopen, float gap
     
     AjIList iter        = NULL;         /* list iterator */
   
-    AjPCoord  delpoint  = NULL;
+    LibscanPCoord  delpoint  = NULL;
   
 
     if(! db || !profile || !outf)
     {
-        ajWarn("Bad arguments passed to ajXyzHmmSearch\n");
+        ajWarn("Bad arguments passed to libscan_HmmSearch\n");
         return ajFalse;
     }
   
@@ -1195,7 +1309,7 @@ AjBool ajXyzProfileSearch(AjPSeqset db, AjPStr profile, float gapopen, float gap
         ajFileClose(&profinf);
     
         /* RUN PROPHET */
-        ajXyzRunProphet(profile, profinfname, gapopen, gapextn, profoutfname);
+        libscan_RunProphet(profile, profinfname, gapopen, gapextn, profoutfname);
     
         inf = ajFileNewIn(profoutfname);
     
@@ -1231,7 +1345,7 @@ AjBool ajXyzProfileSearch(AjPSeqset db, AjPStr profile, float gapopen, float gap
         }
         
         /* create a new hit structure */ 
-        hit = ajXyzHitNew();
+        hit = embHitNew();
     
         ajStrAssS(&hit->Acc,id);
         ajStrAssS(&hit->Model,model);
@@ -1247,13 +1361,13 @@ AjBool ajXyzProfileSearch(AjPSeqset db, AjPStr profile, float gapopen, float gap
         nhits++;
         ajFileClose(&inf);
     
-        ajSysUnlink(&profoutfname);
-        ajSysUnlink(&profinfname);    
+        ajSysUnlink(profoutfname);
+        ajSysUnlink(profinfname);    
     }
   
     /* CONSTRUCT THE HITLIST*/
-    /* hitlist = ajXyzHitlistNew(cnt); */
-    hitlist = ajXyzHitlistNew(0);
+    /* hitlist = embHitlistNew(cnt); */
+    hitlist = embHitlistNew(0);
     
     /* write hit structure */
     ajStrAssS(&hitlist->Class,class);
@@ -1270,33 +1384,37 @@ AjBool ajXyzProfileSearch(AjPSeqset db, AjPStr profile, float gapopen, float gap
 
 
     /* CLASSIFY THE HITS ACCORDING TO THE SCOP FAMILIES FILE */
-    if(ajXyzHitlistClassify(&hitlist, targetlist, overlap))
+    if(embHitlistClassify(&hitlist, targetlist, overlap))
         ajFmtPrint("Hit classified ok\n");
     else
-        ajFmtPrint("Program crashed!, Check ajXyzHitlistClassify\n");
+        ajFmtPrint("Program crashed!, Check embHitlistClassify\n");
 
 
-    /* convert the hitlist to scophits so the related hits can be targetted for removal
-       in order to calculate an unbiased distribution */
+    /* convert the hitlist to scophits so the related hits can be
+       targetted for removal in order to calculate an unbiased
+       distribution */
     ajListPushApp(tmplist,hitlist);
-    ajXyzHitlistToScophits(tmplist,&scophits);
+    embDmxHitlistToScophits(tmplist,&scophits);
     
 
     /* target for removal hits that have a "TRUE" or "CROSS" classification */
-    iter = ajListIter(scophits);
+    iter = ajListIterRead(scophits);
     while((scop = (AjPScophit)ajListIterNext(iter)))
     {   
-        if(ajStrMatchC(scop->Typesbj,"TRUE") || ajStrMatchC(scop->Typesbj,"CROSS")) 
-            ajXyzScophitTarget(&scop);  
+        if(ajStrMatchC(scop->Typesbj,"TRUE") ||
+	   ajStrMatchC(scop->Typesbj,"CROSS")) 
+            ajDmxScophitTarget(&scop);  
     }
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
     /* need garbage collection here */
-    ajListGarbageCollect(scophits, ajXyzScophitDelWrap,
-                         (int(*)(const void*)) ajXyzScophitCheckTarget);
+/*CORRECTION*/    ajListGarbageCollect(scophits, ajDmxScophitDelWrap,
+                         (int(*)(const void*)) ajDmxScophitCheckTarget);
 
-    /* CALCULATE THE DISTRIBUTION WITH THE TRUE HITS AND CROSS HITS REMOVED FROM THE LIST */
-    pointlist = ajXyzCalcDistribution(scophits, class, fold, superfamily, family, sun_id);
+    /* CALCULATE THE DISTRIBUTION WITH THE TRUE HITS AND CROSS HITS
+       REMOVED FROM THE LIST */
+    pointlist = libscan_CalcDistribution(scophits, class, fold, superfamily,
+					 family, sun_id);
 
     /* convert the original list of hits to an array for convenience */ 
     nhits = ajListToArray(listhits,(void ***)&hits);
@@ -1304,12 +1422,12 @@ AjBool ajXyzProfileSearch(AjPSeqset db, AjPStr profile, float gapopen, float gap
     /* DO A SECOND PARSE THROUGH THE HITS FILE AND CALCULATE THE P-VALUES */
     for(i=0;i<nhits;i++)
     {
-        pvalue = ajXyzScoreToPvalue(hits[i]->Score,pointlist);
+        pvalue = libscan_ScoreToPvalue(hits[i]->Score,pointlist);
         hits[i]->Pval = pvalue;
     }
 
  /* NOW RECONSTRUCT THE HIT LIST FOR PRINTING */
-    sechitlist = ajXyzHitlistNew(0); 
+    sechitlist = embHitlistNew(0); 
    
     /* write hit structure */
      ajStrAssS(&sechitlist->Class,class);
@@ -1324,27 +1442,28 @@ AjBool ajXyzProfileSearch(AjPSeqset db, AjPStr profile, float gapopen, float gap
     sechitlist->N = nhits2;
 
     if(!(sechitlist->N))          
-	ajFatal("hitlist->N==0 in ajXyzHmmSearch\n");
+	ajFatal("hitlist->N==0 in ilbscan_HmmSearch\n");
     
     
-    /*WRITE HITS CLASSIFICATION OUTPUT FILE FOR SIGPLOT. The hits will be sorted
-      according to scorebut this doesn't matter since the rank is the important 
-      thing. Also the subsequent p-value calculations will reflect this i.e. high 
-      scores will have low p-values and low scores will have high (less significant) 
+    /*WRITE HITS CLASSIFICATION OUTPUT FILE FOR SIGPLOT. The hits will
+      be sorted according to scorebut this doesn't matter since the
+      rank is the important thing. Also the subsequent p-value
+      calculations will reflect this i.e. high scores will have low
+      p-values and low scores will have high (less significant)
       p-values*/
-    if(ajXyzHitsWrite(outf,sechitlist,maxhits))
+    if(embDmxHitsWrite(outf,sechitlist,maxhits))
         ajFmtPrint("Hits file written ok\n");
     else
-        ajFmtPrint("Program crashed!, Check ajXyzHitsWrite\n");
+        ajFmtPrint("Program crashed!, Check embDmxHitsWrite\n");
 
 
 
 
     /* push on to the merge list the SCOPHITS  with the p-values calculated */
-    iter = ajListIter(listhits);
+    iter = ajListIterRead(listhits);
     while((mhit = (AjPHit)ajListIterNext(iter)))
     {
-        newscop = ajXyzScophitNew();
+        newscop = ajDmxScophitNew();
 
 	ajStrAssS(&newscop->Class,class);	
         ajStrAssS(&newscop->Fold,fold);
@@ -1362,41 +1481,41 @@ AjBool ajXyzProfileSearch(AjPSeqset db, AjPStr profile, float gapopen, float gap
 
         ajListPushApp(*mrglist,(AjPScophit) newscop);
     }
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
 
     /* Set N to zero so that the nodes in the list are not freed, 
        the structure itself will be freed though */
     hitlist->N=0;
-    ajXyzHitlistDel(&hitlist);
-    /* jison */ sechitlist->N = 0;
-    /* jison */ ajXyzHitlistDel(&sechitlist);
+    embHitlistDel(&hitlist);
+    /* CORRECTION */ sechitlist->N = 0;
+    /* CORRECTION */ embHitlistDel(&sechitlist);
     ajListDel(&tmplist);
 
     /* clean up scophits */
-    iter = ajListIter(scophits);
+    iter = ajListIterRead(scophits);
     while((scop = (AjPScophit)ajListIterNext(iter)))
-        ajXyzScophitDel(&scop);
+        ajDmxScophitDel(&scop);
     ajListDel(&scophits);
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
 
     /* Free listhits nodes */
-    iter = ajListIter(listhits);
+    iter = ajListIterRead(listhits);
     while((hit = (AjPHit)ajListIterNext(iter)))
-	ajXyzHitDel(&hit);      
+	embHitDel(&hit);      
     ajListDel(&listhits);
-    ajListIterFree(iter); 
+    ajListIterFree(&iter); 
 
     /* Clean up hits array */
     AJFREE(hits);
 
     /* clean up pointlist */
-    iter = ajListIter(pointlist);
-    while((delpoint = (AjPCoord)ajListIterNext(iter)))
-        ajXyzCoordDel(&delpoint);
+    iter = ajListIterRead(pointlist);
+    while((delpoint = (LibscanPCoord)ajListIterNext(iter)))
+        libscan_CoordDel(&delpoint);
     ajListDel(&pointlist);
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
    
     /* clean up variables */
@@ -1415,28 +1534,31 @@ AjBool ajXyzProfileSearch(AjPSeqset db, AjPStr profile, float gapopen, float gap
 
 
 
-/* @funcstatic ajXyzSignatureSearch ***************************************************
- **
- ** Runs prohet at the command line with a profile and writes the results to 
- ** a specified file.
- **
- 
- ** @param [r] filename  [AjPStr]  Name of file containing the gribskov profile.
- ** @paran [r] db        [AjPStr]  The database to be searched.
- ** @param [r] outfname  [AjPStr]  Name of output file for search results.
- **
- ** @return [AjBool] Returns true on completion.
- ** @@
- ** 
- ***************************************************************************************/
-AjBool ajXyzSignatureSearch(AjPSeqset db, AjPStr sigfile, AjPMatrixf sub, float gapo, float gape,
-                            ajint ntopt, AjPList targetlist, AjPStr family, AjPStr superfamily, 
-                            AjPStr fold, AjPStr class, ajint sun_id, ajint overlap, ajint maxhits, 
-			    AjPStr model, AjPFile outf, AjPList* mrglist)
+/* @funcstatic libscan_SignatureSearch ****************************************
+**
+** Runs prohet at the command line with a profile and writes the results to 
+** a specified file.
+**
+** @param [r] filename  [AjPStr]  Name of file containing the gribskov profile.
+** @paran [r] db        [AjPStr]  The database to be searched.
+** @param [r] outfname  [AjPStr]  Name of output file for search results.
+**
+** @return [AjBool] Returns true on completion.
+** @@
+** 
+******************************************************************************/
+static AjBool libscan_SignatureSearch(AjPSeqset db, AjPStr sigfile,
+				      AjPMatrixf sub, float gapo, float gape,
+				      ajint ntopt, AjPList targetlist,
+				      AjPStr family, AjPStr superfamily, 
+				      AjPStr fold, AjPStr class, ajint sun_id,
+				      ajint overlap, ajint maxhits, 
+				      AjPStr model, AjPFile outf,
+				      AjPList* mrglist)
 {
     AjPSignature sig      = NULL;       /* Signature data structure*/
     
-    AjPCoord delpoint     = NULL;
+    LibscanPCoord delpoint     = NULL;
 
     AjIList iter          = NULL;
 
@@ -1475,7 +1597,7 @@ AjBool ajXyzSignatureSearch(AjPSeqset db, AjPStr sigfile, AjPMatrixf sub, float 
     
 
     /* READ SIGNATURE FILE */
-    if(!ajXyzSignatureRead(sigin, &sig))
+    if(!(sig=embSignatureReadNew(sigin)))
     {   
         ajMatrixfDel(&sub);
         ajFileClose(&sigin);
@@ -1487,11 +1609,11 @@ AjBool ajXyzSignatureSearch(AjPSeqset db, AjPStr sigfile, AjPMatrixf sub, float 
     
 
     /* COMPILE SIGNATURE */
-    if(!ajXyzSignatureCompile(&sig, gapo, gape, sub))
+    if(!embSignatureCompile(&sig, gapo, gape, sub))
     {  
-	printf("okay we are in here\n");
+
 	
-        ajXyzSignatureDel(&sig);
+        embSignatureDel(&sig);
         ajMatrixfDel(&sub);
         ajFileClose(&sigin);
         return ajFalse;
@@ -1511,16 +1633,16 @@ AjBool ajXyzSignatureSearch(AjPSeqset db, AjPStr sigfile, AjPMatrixf sub, float 
         ajStrAssS(&seq->Seq,db->Seq[cnt]->Seq);
 	
         /* Allocate memory for hit */
-        hit = ajXyzHitNew();
+        hit = embHitNew();
       
-        if(!ajXyzSignatureAlignSeq(sig, seq, &hit, ntopt))
+        if(!embSignatureAlignSeq(sig, seq, &hit, ntopt))
         {       
-            ajXyzHitDel(&hit);
-/*jison             ajSeqDel(&seq);*/
+            embHitDel(&hit);
+	    ajSeqDel(&seq);
             continue;
         }
 
-	/* jison */ ajSeqDel(&seq);
+	/* CORRECTION */ ajSeqDel(&seq);
 
         ajStrAssS(&hit->Model,model);
         ajListPush(listhits,(AjPHit) hit);
@@ -1528,7 +1650,7 @@ AjBool ajXyzSignatureSearch(AjPSeqset db, AjPStr sigfile, AjPMatrixf sub, float 
     }
 
     /* CONSTRUCT THE HITLIST */
-    hitlist = ajXyzHitlistNew(0);
+    hitlist = embHitlistNew(0);
     
     /* write hit structure */
     ajStrAssS(&hitlist->Class,class);
@@ -1543,35 +1665,38 @@ AjBool ajXyzSignatureSearch(AjPSeqset db, AjPStr sigfile, AjPMatrixf sub, float 
     hitlist->N = nhits;
 
     /* CLASSIFY THE HITS ACCORDING TO THE SCOP FAMILIES FILE */
-    if(ajXyzHitlistClassify(&hitlist, targetlist, overlap))
+    if(embHitlistClassify(&hitlist, targetlist, overlap))
         ajFmtPrint("Hit classified ok\n");
     else
-        ajFmtPrint("Program crashed!, Check ajXyzHitlistClassify\n");
+        ajFmtPrint("Program crashed!, Check embHitlistClassify\n");
 
 
     /* convert the hitlist to scophits so the related hits can be targetted for removal
        in order to calculate an unbiased distribution */
     ajListPushApp(tmplist,hitlist);
-    ajXyzHitlistToScophits(tmplist,&scophits);
+    embDmxHitlistToScophits(tmplist,&scophits);
     
 
     /* target for removal hits that have a "TRUE" or "CROSS" classification */
-    iter = ajListIter(scophits);
+    iter = ajListIterRead(scophits);
     while((scop = (AjPScophit)ajListIterNext(iter)))
     {   
-        if(ajStrMatchC(scop->Typesbj,"TRUE") || ajStrMatchC(scop->Typesbj,"CROSS")) 
-            ajXyzScophitTarget(&scop);  
+        if(ajStrMatchC(scop->Typesbj,"TRUE") ||
+	   ajStrMatchC(scop->Typesbj,"CROSS")) 
+            ajDmxScophitTarget(&scop);  
     }
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
 
     /* need garbage collection here */
-    ajListGarbageCollect(scophits, ajXyzScophitDelWrap,
-                         (int(*)(const void*)) ajXyzScophitCheckTarget);
+/*CORRECTION*/    ajListGarbageCollect(scophits, ajDmxScophitDelWrap,
+                         (int(*)(const void*)) ajDmxScophitCheckTarget);
 
 
-    /* CALCULATE THE DISTRIBUTION WITH THE TRUE HITS AND CROSS HITS REMOVED FROM THE LIST */
-    pointlist = ajXyzCalcDistribution(scophits, class, fold, superfamily, family, sun_id);
+    /* CALCULATE THE DISTRIBUTION WITH THE TRUE HITS AND CROSS HITS
+       REMOVED FROM THE LIST */
+    pointlist = libscan_CalcDistribution(scophits, class, fold, superfamily,
+					 family, sun_id);
 
     /* convert the original list of hits to an array for convenience */ 
     nhits = ajListToArray(listhits,(void ***)&hits);
@@ -1580,13 +1705,13 @@ AjBool ajXyzSignatureSearch(AjPSeqset db, AjPStr sigfile, AjPMatrixf sub, float 
     /* DO A SECOND PARSE THROUGH THE HITS FILE AND CALCULATE THE P-VALUES */
     for(i=0;i<nhits;i++)
     {
-        pvalue = ajXyzScoreToPvalue(hits[i]->Score,pointlist);
+        pvalue = libscan_ScoreToPvalue(hits[i]->Score,pointlist);
         hits[i]->Pval = pvalue;
     }
 
 
     /* NOW RECONSTRUCT THE HIT LIST FOR PRINTING */
-    sechitlist = ajXyzHitlistNew(0); 
+    sechitlist = embHitlistNew(0); 
    
     /* write hit structure */
     ajStrAssS(&sechitlist->Class,class);
@@ -1601,26 +1726,27 @@ AjBool ajXyzSignatureSearch(AjPSeqset db, AjPStr sigfile, AjPMatrixf sub, float 
     sechitlist->N = nhits2;
 
     if(!(sechitlist->N))          
-	ajFatal("hitlist->N==0 in ajXyzHmmSearch\n");
+	ajFatal("hitlist->N==0 in libscan_HmmSearch\n");
     
     
-    /*WRITE HITS CLASSIFICATION OUTPUT FILE FOR SIGPLOT. The hits will be sorted
-      according to scorebut this doesn't matter since the rank is the important 
-      thing. Also the subsequent p-value calculations will reflect this i.e. high 
-      scores will have low p-values and low scores will have high (less significant) 
+    /*WRITE HITS CLASSIFICATION OUTPUT FILE FOR SIGPLOT. The hits will
+      be sorted according to scorebut this doesn't matter since the
+      rank is the important thing. Also the subsequent p-value
+      calculations will reflect this i.e. high scores will have low
+      p-values and low scores will have high (less significant)
       p-values*/
-    if(ajXyzHitsWrite(outf,sechitlist,maxhits))
+    if(embDmxHitsWrite(outf,sechitlist,maxhits))
         ajFmtPrint("Hits file written ok\n");
     else
-        ajFmtPrint("Program crashed!, Check ajXyzHitsWrite\n");
+        ajFmtPrint("Program crashed!, Check embDmxHitsWrite\n");
 
 
     /* push on to the merge list the SCOPHITS  with the p-values calculated */
-    iter = ajListIter(listhits);
+    iter = ajListIterRead(listhits);
     while((mhit = (AjPHit)ajListIterNext(iter)))
     {
 
-        newscop = ajXyzScophitNew();
+        newscop = ajDmxScophitNew();
 
 	ajStrAssS(&newscop->Class,class);
         ajStrAssS(&newscop->Fold,fold);
@@ -1637,42 +1763,42 @@ AjBool ajXyzSignatureSearch(AjPSeqset db, AjPStr sigfile, AjPMatrixf sub, float 
 
         ajListPushApp(*mrglist,(AjPScophit) newscop);
     }
-    ajListIterFree(iter); 
+    ajListIterFree(&iter); 
     
     /* clean up scophits */
-    iter = ajListIter(scophits);
+    iter = ajListIterRead(scophits);
     while((scop = (AjPScophit)ajListIterNext(iter)))
-        ajXyzScophitDel(&scop);
+        ajDmxScophitDel(&scop);
     ajListDel(&scophits);
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
 
     /* Set N to zero so that the nodes in the list are not freed, 
        the structure itself will be freed though */
     hitlist->N=0;
-    ajXyzHitlistDel(&hitlist);
-    /* jison */ sechitlist->N = 0;
-    /* jison */ ajXyzHitlistDel(&sechitlist);
+    embHitlistDel(&hitlist);
+    /* CORRECTION */ sechitlist->N = 0;
+    /* CORRECTION */ embHitlistDel(&sechitlist);
     ajListDel(&tmplist);	
 
     /* Clean up listhits nodes */
-    iter = ajListIter(listhits);
+    iter = ajListIterRead(listhits);
     while((hit = (AjPHit)ajListIterNext(iter)))
-        ajXyzHitDel(&hit);	
+        embHitDel(&hit);	
     ajListDel(&listhits);
-    ajListIterFree(iter); 
+    ajListIterFree(&iter); 
 
     /* Clean up hits array */
     AJFREE(hits);
 
     /* clean up pointlist */
-    iter = ajListIter(pointlist);
-    while((delpoint = (AjPCoord)ajListIterNext(iter)))
-        ajXyzCoordDel(&delpoint);
+    iter = ajListIterRead(pointlist);
+    while((delpoint = (LibscanPCoord)ajListIterNext(iter)))
+        libscan_CoordDel(&delpoint);
     ajListDel(&pointlist);
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
-    ajXyzSignatureDel(&sig);
+    embSignatureDel(&sig);
     ajFileClose(&sigin);
     
     return ajTrue;   
@@ -1680,7 +1806,7 @@ AjBool ajXyzSignatureSearch(AjPSeqset db, AjPStr sigfile, AjPMatrixf sub, float 
 
 
 
-/* @funcstatic ajXyzRunHmmsearch ********************************************
+/* @funcstatic libscan_RunHmmsearch ********************************************
  **
  ** Runs hmmsearch at the command line and writes the results to a specified
  ** file.
@@ -1694,13 +1820,13 @@ AjBool ajXyzSignatureSearch(AjPSeqset db, AjPStr sigfile, AjPMatrixf sub, float 
  ** @@
  ** 
  ******************************************************************************/
-AjBool ajXyzRunHmmsearch(AjPStr filename, AjPStr db, AjPStr outfname)
+AjBool libscan_RunHmmsearch(AjPStr filename, AjPStr db, AjPStr outfname)
 {
     AjPStr cmd  = NULL;                 /* the command line to be executed */
     
     if(!filename || !outfname)
     {
-        ajWarn("Bad args passed to ajXyzRunHmmsearch\n");
+        ajWarn("Bad args passed to libscan_RunHmmsearch\n");
         return ajFalse;
     }
 
@@ -1720,7 +1846,7 @@ AjBool ajXyzRunHmmsearch(AjPStr filename, AjPStr db, AjPStr outfname)
 }
 
 
-/* @funcstatic ajXyzRunProphet **********************************************
+/* @funcstatic libscan_RunProphet **********************************************
  **
  ** Runs prophet at the command line and writes the results to a specified
  ** file.
@@ -1735,14 +1861,14 @@ AjBool ajXyzRunHmmsearch(AjPStr filename, AjPStr db, AjPStr outfname)
  ** @@
  ** 
  ******************************************************************************/
-AjBool ajXyzRunProphet(AjPStr profile, AjPStr db, float gapopen, float gapextend, 
+AjBool libscan_RunProphet(AjPStr profile, AjPStr db, float gapopen, float gapextend, 
                        AjPStr outfname)
 {
     AjPStr cmd  = NULL;                 /* the command line to be executed */
 
     if(!profile || !outfname)
     {
-        ajWarn("Bad args passed to ajXyzRunHmmsearch\n");
+        ajWarn("Bad args passed to libscan_RunHmmsearch\n");
         return ajFalse;
     }
 
@@ -1763,21 +1889,20 @@ AjBool ajXyzRunProphet(AjPStr profile, AjPStr db, float gapopen, float gapextend
 }
 
 
-/* @func ajXyzGetLibrary *******************************************************
-   
- **
- ** Given the directory where the models exist and a file extension of the 
- ** models, the routine returns a list of file names matching the user defined 
- ** file extension.
- **
- ** @param [r]  path [AjPStr] Directory of models. 
- ** @param [r]  extn [AjPStr] File extension.
- **
- ** @return [AjPList] a list of file names.
- ** @@
- ** 
- *******************************************************************************/
-AjPList ajXyzGetLibrary(AjPStr path, AjPStr extn)
+/* @funcstatic libscan_GetLibrary *********************************************
+**
+** Given the directory where the models exist and a file extension of the 
+** models, the routine returns a list of file names matching the user defined 
+** file extension.
+**
+** @param [r]  path [AjPStr] Directory of models. 
+** @param [r]  extn [AjPStr] File extension.
+**
+** @return [AjPList] a list of file names.
+** @@
+** 
+******************************************************************************/
+static AjPList libscan_GetLibrary(AjPStr path, AjPStr extn)
 {
     AjPList list = NULL;                /* a list of filenames */
     
@@ -1789,19 +1914,23 @@ AjPList ajXyzGetLibrary(AjPStr path, AjPStr extn)
     /* Create list of files in the path */
     ajStrAssC(&tmp, "*");               /* assign a wildcard to tmp */
 
-    if((ajStrChar(extn, 0)=='.'))       /* checks if the file extension starts with "." */
-        ajStrApp(&tmp, extn);           /* assign the acd input file extension to tmp */
+    if((ajStrChar(extn, 0)=='.')) /* checks if the file extension
+				     starts with "." */
+        ajStrApp(&tmp, extn);           /* assign the acd input file
+  					   extension to tmp */
   
-    /* this picks up situations where the user has specified an extension without a "." */
+    /* this picks up situations where the user has specified an
+       extension without a "." */
     else
     {
         ajStrAppC(&tmp, ".");           /* assign "." to tmp */  
-        ajStrApp(&tmp, extn);           /* append tmp with a user specified extension */  
+        ajStrApp(&tmp, extn);           /* append tmp with a user
+					   specified extension */
     }   
   
 
     /* all files containing hidden markov models will be in a list */
-    ajFileScan(path, tmp, &list, ajFalse, ajFalse, NULL, NULL, ajFalse, NULL);    
+    ajFileScan(path, tmp, &list, ajFalse, ajFalse, NULL, NULL, ajFalse, NULL);
     
     ajStrDel(&tmp);
 
@@ -1809,22 +1938,22 @@ AjPList ajXyzGetLibrary(AjPStr path, AjPStr extn)
 }
 
 
-/* @func ajXyzCalcDistribution ***********************************************
- **
- ** Calculate the distribution from a list of hits.
- **
- ** @param [r] listhits   [AjPList] List is hits 
- ** @param [r] fold        [AjPStr ] SCOP fold
- 
- ** @param [r] superfamily [AjPStr ] SCOP superfamily
- ** @param [r] famly       [AjPStr ] SCOP family
- ** @param [r] sun_id      [ajint  ] SCOP family sunid
- **
- ** @return [AjPList] A list of coordinates in a distribution.
- 
- ** @@
- ******************************************************************************/
-AjPList ajXyzCalcDistribution(AjPList scophits, AjPStr class, AjPStr fold, AjPStr superfamily, AjPStr family, ajint sun_id)
+/* @funcstatic libscan_CalcDistribution ***************************************
+**
+** Calculate the distribution from a list of hits.
+**
+** @param [r] listhits   [AjPList] List is hits 
+** @param [r] fold        [AjPStr ] SCOP fold
+** @param [r] superfamily [AjPStr ] SCOP superfamily
+** @param [r] famly       [AjPStr ] SCOP family
+** @param [r] sun_id      [ajint  ] SCOP family sunid
+**
+** @return [AjPList] A list of coordinates in a distribution.
+** @@
+******************************************************************************/
+static AjPList libscan_CalcDistribution(AjPList scophits, AjPStr class,
+					AjPStr fold, AjPStr superfamily,
+					AjPStr family, ajint sun_id)
 {
     AjPList pointlist = NULL;
     
@@ -1835,28 +1964,29 @@ AjPList ajXyzCalcDistribution(AjPList scophits, AjPStr class, AjPStr fold, AjPSt
     ajint freq        = 0;
     ajint interval    = 0;              /* the score interva, x-axis */
 
-    AjPCoord  point   = NULL;           /* a Datapoint object to hold individual coordinates */
+    LibscanPCoord  point   = NULL; /* a Datapoint object to hold
+				      individual coordinates */
 
     AjPScophit* hits  = NULL;
     
     if(!scophits)
-        ajFatal("No list of hits passed to ajXyzCalcDistribution\n");
+        ajFatal("No list of hits passed to libscan_CalcDistribution\n");
     
 
     pointlist = ajListNew();
 
-    /* but only remove them inside the ajXyzCalcDistribution sub-routine */                     
-    ajListGarbageCollect(scophits, ajXyzScophitDelWrap,
-                         (int(*)(const void*)) ajXyzScophitCheckTarget);
+    /* but only remove them inside the libscan_CalcDistribution sub-routine */
+/*CORRECTION*/    ajListGarbageCollect(scophits, ajDmxScophitDelWrap,
+                         (int(*)(const void*)) ajDmxScophitCheckTarget);
 
     /* sort the list according to score */
-    ajListSort(scophits,ajXyzScophitCompScore);
+    ajListSort(scophits,ajDmxScophitCompScore);
 
     /* convert list to array for convenience */
     nhits = ajListToArray(scophits,(void ***)&hits);
 
     if(!nhits)
-	ajFatal("No hits in ajXyzCalcDistribution!");
+	ajFatal("No hits in libscan_CalcDistribution!");
     
     low  = (ajint)hits[0]->Score;
 
@@ -1882,7 +2012,7 @@ AjPList ajXyzCalcDistribution(AjPList scophits, AjPStr class, AjPStr fold, AjPSt
        
             if(interval == (high+1))
             {
-                point = ajXyzCoordNew();
+                point = libscan_CoordNew();
          
 		ajStrAssS(&point->Class,class);
                 ajStrAssS(&point->Fold,fold);
@@ -1901,7 +2031,7 @@ AjPList ajXyzCalcDistribution(AjPList scophits, AjPStr class, AjPStr fold, AjPSt
         { 
             while((float)interval <= hits[i]->Score)
             {           
-                point = ajXyzCoordNew();
+                point = libscan_CoordNew();
          
 		ajStrAssS(&point->Class,class);
                 ajStrAssS(&point->Fold,fold);
@@ -1931,103 +2061,27 @@ AjPList ajXyzCalcDistribution(AjPList scophits, AjPStr class, AjPStr fold, AjPSt
 
 
 
-/* @func ajXyzHitsWrite ******************************************************
- ** Writes a list of AjOHit objects to an output file. This is intended for 
- ** displaying the results from scans of a model against a protein sequence
- ** database. Output in a sigplot compatible format.
- **
- ** @param [w] outf [AjPFile]      Output file stream
- ** @param [r] hits [AjPHitlist]   Hitlist objects with hits from scan
- **
- ** @return [AjBool] True if file was written
- ** @@
- ******************************************************************************/
-AjBool ajXyzHitsWrite(AjPFile outf, AjPHitlist hits, ajint maxhits)
-{
-    ajint  x  = 0;
-    ajint cnt = 0;
-    
-    AjPList tmplist = NULL;
-    AjPList outlist = NULL; /* rank-ordered list of hits for output */
-    AjIList iter    = NULL;
-    AjPScophit hit  = NULL;
-    
-    
-
-    /*Check args*/
-    if(!outf || !hits)
-        return ajFalse;
-
-    tmplist=ajListNew();
-    outlist=ajListNew();
-    
-    
-    /* Push hits onto tmplist */
-    ajListPushApp(tmplist, hits);
-    ajXyzHitlistToScophits(tmplist, &outlist);
-    ajListSort(outlist, ajXyzScophitCompPval);
-    
-
-    /*Print header info*/
-    ajFmtPrintF(outf, "DE   Results of %S search\nXX\n",hits->Model);
-
-    /*Print SCOP classification records of signature */
-    ajFmtPrintF(outf,"CL   %S",hits->Class);
-    ajFmtPrintSplit(outf,hits->Fold,"\nXX\nFO   ",75," \t\n\r");
-    ajFmtPrintSplit(outf,hits->Superfamily,"XX\nSF   ",75," \t\n\r");
-    ajFmtPrintSplit(outf,hits->Family,"XX\nFA   ",75," \t\n\r");
-    ajFmtPrintF(outf,"XX\nSI   %d\n", hits->Sunid_Family);
-    ajFmtPrintF(outf,"XX\n");
-    
-
-    iter=ajListIter(outlist);
-    while((hit=(AjPScophit) ajListIterNext(iter)))
-    {
-	if(cnt==maxhits)
-	    break;
-	
-	ajFmtPrintF(outf,"HI  %-6d%-10S%-5d%-5d%-15S%-10S%-10S%-10.2f%-7.4f%-7.4f\n",
-                    x+1, hit->Acc, 
-                    hit->Start+1, hit->End+1,
-                    hit->Group, 
-                    hit->Typeobj, hit->Typesbj, 
-                    hit->Score, hit->Pval, hit->Eval);
-	ajXyzScophitDel(&hit);
-
-	cnt++;
-	x++;
-    }
-    
-    ajListIterFree(iter);
-    ajListDel(&outlist);
-    ajListDel(&tmplist);
-    
-    /*Print tail info*/
-    ajFmtPrintF(outf, "XX\n//\n");   
-    
-    /*Clean up and return*/ 
-    return ajTrue;
-}
 
 
 
-
-/* @func ajXyzHmmLibScan ****************************************************
- **
- ** Scan a protein sequence against a library of hidden markov models. The 
- ** models represents SCOP portein domain families. 
- **
- ** @param [r] db       [AjPSeqset]  Name of sequence file. 
- ** @param [r] path     [AjPStr]     Directory of hmm models.
- ** @param [r] extn     [AjPStr]     File extension of models.
- ** @param [r] scoplist [AjPList]    List of scop objects.
- **
- ** @return [AjPList] returns familyhits.
- ** @@
- ** 
- ******************************************************************************/
-AjBool ajXyzHmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn, AjPList scoplist, AjPStr model, 
-		       AjPStr hmmoutpath, AjPStr hmmoutextn, AjPList* mrglist)
+/* @funcstatic libscan_HmmLibScan *********************************************
+**
+** Scan a protein sequence against a library of hidden markov models. The 
+** models represents SCOP portein domain families. 
+**
+** @param [r] db       [AjPSeqset]  Name of sequence file. 
+** @param [r] path     [AjPStr]     Directory of hmm models.
+** @param [r] extn     [AjPStr]     File extension of models.
+** @param [r] scoplist [AjPList]    List of scop objects.
+**
+** @return [AjPList] returns familyhits.
+** @@
+** 
+******************************************************************************/
+static AjBool libscan_HmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn,
+				 AjPList scoplist, AjPStr model,
+				 AjPStr hmmoutpath, AjPStr hmmoutextn,
+				 AjPList* mrglist)
 {
     AjPStr line        = NULL;		/* line from a file */
     
@@ -2083,7 +2137,7 @@ AjBool ajXyzHmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn, AjPList scopl
     
     float pvalue       = 0.0;
     
-    AjPCoord delpoint  = NULL;
+    LibscanPCoord delpoint  = NULL;
     
     AjPScophit* hits   = NULL;
     AjPScophit hit     = NULL;		/* Scophit structure to hold the scored family */
@@ -2124,12 +2178,12 @@ AjBool ajXyzHmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn, AjPList scopl
     
     if(!hmmpath || !seq || !hmmextn || !scoplist)
     {
-        ajWarn("Bad arguments passed to ajXyzHmmLibScan\n");
+        ajWarn("Bad arguments passed to libscan_HmmLibScan\n");
         return ajFalse;
     }
 
     /* get the models */
-    modelnames = ajXyzGetLibrary(hmmpath,hmmextn);
+    modelnames = libscan_GetLibrary(hmmpath,hmmextn);
     
     tmplist  = ajListNew();
     
@@ -2148,7 +2202,7 @@ AjBool ajXyzHmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn, AjPList scopl
     ajStrAssS(&outfile,seq->Name);
     ajStrApp(&outfile,hmmoutextn);  
     
-    iter = ajListIter(modelnames);
+    iter = ajListIterRead(modelnames);
     /*Start of main application loop*/   
     while((hmmfile = (AjPStr)ajListIterNext(iter)))
     {     
@@ -2165,8 +2219,10 @@ AjBool ajXyzHmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn, AjPList scopl
         }
       
         /* do a binary search on scoplist to find the relavent entry */
-        if(!(ajXyzSunidToScopInfo(sunid,&family,&superfamily,&fold,&class, scoplist)))
-            ajFatal("ajXyzSunidToScopInfo failed in ajXyzHmmLibScan. email rranasin@hgmp.mrc.ac.uk\n");
+        if(!(libscan_SunidToScopInfo(sunid,&family,&superfamily,
+				     &fold,&class, scoplist)))
+            ajFatal("libscan_SunidToScopInfo failed in libscan_HmmLibScan. "
+		    "email rranasin@hgmp.mrc.ac.uk\n");
       
         ajRandomSeed();
         ajStrAssC(&tmpname, ajFileTempName(NULL));
@@ -2174,7 +2230,7 @@ AjBool ajXyzHmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn, AjPList scopl
         ajStrAssS(&hmmoutfname, tmpname);
         ajStrAppC(&hmmoutfname, ".hmmoutf");
 
-        ajXyzRunHmmsearch(hmmfile, hmminfname, hmmoutfname);                    
+        libscan_RunHmmsearch(hmmfile, hmminfname, hmmoutfname);                    
     
         /* open hmmsearch output file */
         if(!(inf = ajFileNewIn(hmmoutfname)))
@@ -2216,7 +2272,7 @@ AjBool ajXyzHmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn, AjPList scopl
                     else if((ajStrFindC(line,"Histogram of all scores:")>=0))
                     {
 			/* construct the scophit structure */
-                        hit = ajXyzScophitNew();
+                        hit = ajDmxScophitNew();
                         ajStrAssS(&hit->Class,class);
                         ajStrAssS(&hit->Fold,fold);
                         ajStrAssS(&hit->Superfamily,superfamily);
@@ -2246,13 +2302,14 @@ AjBool ajXyzHmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn, AjPList scopl
         }
 
         ajFileClose(&inf);
-        ajSysUnlink(&hmmoutfname);      
+        ajSysUnlink(hmmoutfname);      
     }
 
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
     
-    /* CALCULATE THE DISTRIBUTION WITH THE TRUE HITS AND CROSS HITS REMOVED FROM THE LIST */
-    pointlist = ajXyzCalcLibscanDistribution(tmplist);
+    /* CALCULATE THE DISTRIBUTION WITH THE TRUE HITS AND CROSS HITS
+       REMOVED FROM THE LIST */
+    pointlist = libscan_CalcLibscanDistribution(tmplist);
     
     if(ajListLength(pointlist)!=0)
     {
@@ -2263,61 +2320,64 @@ AjBool ajXyzHmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn, AjPList scopl
 	/* convert the original list of hits to an array for convenience */ 
 	nhits = ajListToArray(tmplist,(void ***)&hits);
 	   
-	/* DO A SECOND PARSE THROUGH THE HITS FILE AND CALCULATE THE P-VALUES */
+	/* DO A SECOND PARSE THROUGH THE HITS FILE AND CALCULATE THE
+           P-VALUES */
 	for(i=0;i<nhits;i++)
 	{
-	    scophit = ajXyzScophitNew();
-	    pvalue = ajXyzScoreToPvalue(hits[i]->Score,pointlist);
+	    scophit = ajDmxScophitNew();
+	    pvalue = libscan_ScoreToPvalue(hits[i]->Score,pointlist);
 	    hits[i]->Pval = pvalue;
-	    ajXyzScophitCopy(&scophit,hits[i]);
+	    ajDmxScophitCopy(&scophit,hits[i]);
 	    ajListPushApp(familyhits,scophit);
 	}
 	   
+	/*sort the list before printing */
+        ajListSort(familyhits,ajDmxScophitCompPval);
 
 	/* write out the familyhits list */
-	ajXyzScophitsWrite(hmmoutf,familyhits);
+	ajDmxScophitsWrite(hmmoutf,familyhits);
 	ajFileClose(&hmmoutf);
 	   
 	AJFREE(hits);
 
 	/* push on to the merge list the hits with the p-values calculated */
-	iter = ajListIter(familyhits);
+	iter = ajListIterRead(familyhits);
 	while((mhit = (AjPScophit)ajListIterNext(iter)))
 	    ajListPushApp(*mrglist,(AjPScophit) mhit);
-	ajListIterFree(iter); 
+	ajListIterFree(&iter); 
 	ajListDel(&familyhits);
 	   
 	/* delete and clean up pointlist */
-	iter=ajListIter(pointlist);
-	while((delpoint=(AjPCoord)ajListIterNext(iter)))
-	    ajXyzCoordDel(&delpoint);
-	ajListIterFree(iter);
+	iter=ajListIterRead(pointlist);
+	while((delpoint=(LibscanPCoord)ajListIterNext(iter)))
+	    libscan_CoordDel(&delpoint);
+	ajListIterFree(&iter);
 	ajListDel(&pointlist);   
     }
        
     /* remove temparary files from directory */
-    ajSysUnlink(&hmminfname);
-    ajSysUnlink(&hmmoutfname);
+    ajSysUnlink(hmminfname);
+    ajSysUnlink(hmmoutfname);
     
     /* delete and clean up tmplist */
-    iter=ajListIter(tmplist);
+    iter=ajListIterRead(tmplist);
     while((hit=(AjPScophit)ajListIterNext(iter)))
-        ajXyzScophitDel(&hit);
-    ajListIterFree(iter);
+        ajDmxScophitDel(&hit);
+    ajListIterFree(&iter);
     ajListDel(&tmplist);
     
     /* delete and clean up pointlist */
-    iter=ajListIter(pointlist);
-    while((delpoint=(AjPCoord)ajListIterNext(iter)))
-        ajXyzCoordDel(&delpoint);
-    ajListIterFree(iter);
+    iter=ajListIterRead(pointlist);
+    while((delpoint=(LibscanPCoord)ajListIterNext(iter)))
+        libscan_CoordDel(&delpoint);
+    ajListIterFree(&iter);
     ajListDel(&pointlist);      
     
     /* delete and clean up modelnames */
-    iter=ajListIter(modelnames);
+    iter=ajListIterRead(modelnames);
     ajStrDel(&tmpname);    while((tmpname=(AjPStr)ajListIterNext(iter)))
         ajStrDel(&tmpname);
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
     ajListDel(&modelnames); 
 
 
@@ -2332,7 +2392,7 @@ AjBool ajXyzHmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn, AjPList scopl
     ajStrDel(&hmminfname);
     ajStrDel(&line);
     ajStrDel(&id);
-/*jison */    ajStrDel(&class);
+/*CORRECTION */    ajStrDel(&class);
     ajStrDel(&startfrag);
     ajStrDel(&endfrag);
     ajStrDel(&scorefrag);
@@ -2349,23 +2409,25 @@ AjBool ajXyzHmmLibScan(AjPSeq seq, AjPStr hmmpath, AjPStr hmmextn, AjPList scopl
 }
 
 
-/* @func ajXyzProfileLibScan ***********************************************
- **
- ** Scan a protein sequence against a library of profile models. The 
- ** models represents SCOP portein domain families. 
- **
- ** @param [r] seqfname [AjPStr]  Name of sequence file. 
- ** @param [r] path     [AjPStr]  Directory of profile models.
- ** @param [r] extn     [AjPStr]  File extension of models.
- ** @param [r] scoplist [AjPList] List of scop objects.
- **
- ** @return [AjPList] retuns familyhits.
- ** @@
- ** 
- ******************************************************************************/
-AjBool ajXyzProfileLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen, float gapextn,
-			   AjPList scoplist, AjPStr model, AjPStr profoutpath, AjPStr profoutextn, 
-			   AjPList* mrglist)
+/* @funcstatic libscan_ProfileLibScan *****************************************
+**
+** Scan a protein sequence against a library of profile models. The 
+** models represents SCOP portein domain families. 
+**
+** @param [r] seqfname [AjPStr]  Name of sequence file. 
+** @param [r] path     [AjPStr]  Directory of profile models.
+** @param [r] extn     [AjPStr]  File extension of models.
+** @param [r] scoplist [AjPList] List of scop objects.
+**
+** @return [AjPList] retuns familyhits.
+** @@
+** 
+******************************************************************************/
+static AjBool libscan_ProfileLibScan(AjPSeq seq, AjPStr path, AjPStr extn,
+				     float gapopen, float gapextn,
+				     AjPList scoplist, AjPStr model,
+				     AjPStr profoutpath, AjPStr profoutextn, 
+				     AjPList* mrglist)
 {
 
     AjPStr  line       = NULL;
@@ -2413,7 +2475,7 @@ AjBool ajXyzProfileLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen, 
 
     float pvalue       = 0.0;
 
-    AjPCoord delpoint  = NULL;
+    LibscanPCoord delpoint  = NULL;
     
     AjIList iter       = NULL;		/* list iterator */
     
@@ -2443,12 +2505,12 @@ AjBool ajXyzProfileLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen, 
     
     if(!path || !seq || !extn || !scoplist)
     {
-        ajWarn("Bad arguments passed to ajXyzProfileLibScan\n");
+        ajWarn("Bad arguments passed to libscan_ProfileLibScan\n");
         return ajFalse;
     }
     
     /* get the models */
-    modelnames = ajXyzGetLibrary(path,extn);
+    modelnames = libscan_GetLibrary(path,extn);
 
     tmplist     = ajListNew();
     
@@ -2467,7 +2529,7 @@ AjBool ajXyzProfileLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen, 
     ajStrAssS(&outfile,seq->Name);
     ajStrApp(&outfile,profoutextn);
 
-    iter = ajListIter(modelnames);
+    iter = ajListIterRead(modelnames);
     /*Start of main application loop*/   
     while((profile = (AjPStr)ajListIterNext(iter)))
     {
@@ -2484,8 +2546,10 @@ AjBool ajXyzProfileLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen, 
         }
         
         /* do a binary search on scoplist to find the relavent entry */
-        if(!(ajXyzSunidToScopInfo(sunid,&family,&superfamily,&fold, &class, scoplist)))
-            ajFatal("ajXyzSunidToScopInfo failed in ajXyzProfileLibScan. email rranasin@hgmp.mrc.ac.uk\n");
+        if(!(libscan_SunidToScopInfo(sunid,&family,&superfamily,
+				     &fold, &class, scoplist)))
+            ajFatal("libscan_SunidToScopInfo failed in libscan_ProfileLibScan."
+		    " email rranasin@hgmp.mrc.ac.uk\n");
         
         ajRandomSeed();
         ajStrAssC(&tmpname, ajFileTempName(NULL));
@@ -2493,7 +2557,7 @@ AjBool ajXyzProfileLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen, 
         ajStrAssS(&profileoutfname, tmpname);
         ajStrAppC(&profileoutfname, ".profileoutf");
             
-        ajXyzRunProphet(profile, profileinfname, gapopen, gapextn, profileoutfname);                    
+        libscan_RunProphet(profile, profileinfname, gapopen, gapextn, profileoutfname);                    
     
         /* open hmmsearch output file */
         if(!(inf = ajFileNewIn(profileoutfname)))
@@ -2530,7 +2594,7 @@ AjBool ajXyzProfileLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen, 
         }
             
         /* construct the scophit structure */
-        hit = ajXyzScophitNew();
+        hit = ajDmxScophitNew();
 	ajStrAssS(&hit->Class,class);
         ajStrAssS(&hit->Fold,fold);
         ajStrAssS(&hit->Superfamily,superfamily);
@@ -2548,13 +2612,14 @@ AjBool ajXyzProfileLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen, 
         ajListPushApp(tmplist,(AjPScophit) hit);
             
         ajFileClose(&inf);
-        ajSysUnlink(&profileoutfname);  
+        ajSysUnlink(profileoutfname);  
     }   
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
 
-    /* CALCULATE THE DISTRIBUTION WITH THE TRUE HITS AND CROSS HITS REMOVED FROM THE LIST */
-    pointlist = ajXyzCalcLibscanDistribution(tmplist);
+    /* CALCULATE THE DISTRIBUTION WITH THE TRUE HITS AND CROSS HITS
+       REMOVED FROM THE LIST */
+    pointlist = libscan_CalcLibscanDistribution(tmplist);
 
     if(ajListLength(pointlist)!=0)
     {	
@@ -2565,55 +2630,58 @@ AjBool ajXyzProfileLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen, 
 	/* convert the original list of hits to an array for convenience */ 
 	nhits = ajListToArray(tmplist,(void ***)&hits);
 	
-	/* DO A SECOND PARSE THROUGH THE HITS FILE AND CALCULATE THE P-VALUES */
+	/* DO A SECOND PARSE THROUGH THE HITS FILE AND CALCqULATE THE
+           P-VALUES */
 	for(i=0;i<nhits;i++)
 	{
-	    scophit = ajXyzScophitNew();
-	    pvalue = ajXyzScoreToPvalue(hits[i]->Score,pointlist);
+	    scophit = ajDmxScophitNew();
+	    pvalue = libscan_ScoreToPvalue(hits[i]->Score,pointlist);
 	    hits[i]->Pval = pvalue;
-	    ajXyzScophitCopy(&scophit,hits[i]);
+	    ajDmxScophitCopy(&scophit,hits[i]);
 	    ajListPushApp(familyhits,scophit);
 	}
      
-	
+	/*sort the list before printing */
+        ajListSort(familyhits,ajDmxScophitCompPval);
+
 	/* write out the familyhits list */
-	ajXyzScophitsWrite(profoutf,familyhits);
+	ajDmxScophitsWrite(profoutf,familyhits);
 	ajFileClose(&profoutf);
 	
 	AJFREE(hits);
 
 	/* push on to the merge list the hits with the p-values calculated */
-	iter = ajListIter(familyhits);
+	iter = ajListIterRead(familyhits);
 	while((mhit = (AjPScophit)ajListIterNext(iter)))
 	    ajListPushApp(*mrglist,(AjPScophit) mhit);
-	ajListIterFree(iter); 
+	ajListIterFree(&iter); 
 	ajListDel(&familyhits);
-	ajSysUnlink(&profileinfname);
+	ajSysUnlink(profileinfname);
 	
 	
 	/* delete and clean up pointlist */
-	iter=ajListIter(pointlist);
-	while((delpoint=(AjPCoord)ajListIterNext(iter)))
-	    ajXyzCoordDel(&delpoint);
-	ajListIterFree(iter);
+	iter=ajListIterRead(pointlist);
+	while((delpoint=(LibscanPCoord)ajListIterNext(iter)))
+	    libscan_CoordDel(&delpoint);
+	ajListIterFree(&iter);
 	ajListDel(&pointlist);  
     }
     
     /* delete and clean up tmplist */
-    iter=ajListIter(tmplist);
+    iter=ajListIterRead(tmplist);
     while((hit=(AjPScophit)ajListIterNext(iter)))
-        ajXyzScophitDel(&hit);
-    ajListIterFree(iter);
+        ajDmxScophitDel(&hit);
+    ajListIterFree(&iter);
     ajListDel(&tmplist);
     
     
     /* delete and clean up modelnames */
-    iter=ajListIter(modelnames);
+    iter=ajListIterRead(modelnames);
     ajStrDel(&tmpname);    while((tmpname=(AjPStr)ajListIterNext(iter)))
         ajStrDel(&tmpname);
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
     ajListDel(&modelnames); 
-/*jison*/    ajStrDel(&class);
+/*CORRECTION*/    ajStrDel(&class);
     ajStrDel(&tmpname);
     ajStrDel(&id);
     ajStrDel(&line);
@@ -2635,23 +2703,26 @@ AjBool ajXyzProfileLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen, 
 }
 
 
-/* @func ajXyzSignatureLibScan ***********************************************
- **
- ** Scan a protein sequence against a library of Signature models. The 
- ** models represents SCOP portein domain families. 
- **
- ** @param [r] db       [AjPSeqset]  Name of sequence file. 
- ** @param [r] path     [AjPStr]     Directory of profile models.
- ** @param [r] extn     [AjPStr]     File extension of models.
- ** @param [r] scoplist [AjPList]    List of scop objects.
- **
- ** @return [AjPList] retuns familyhits.
- ** @@
- ** 
- ******************************************************************************/
-AjBool ajXyzSignatureLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen, float gapextn, 
-			     AjPMatrixf sub,  ajint ntopt, AjPList scoplist, AjPStr model, 
-			     AjPStr sigoutpath, AjPStr sigoutextn, AjPList* mrglist)
+/* @funcstatic libscan_SignatureLibScan ***************************************
+**
+** Scan a protein sequence against a library of Signature models. The 
+** models represents SCOP portein domain families. 
+**
+** @param [r] db       [AjPSeqset]  Name of sequence file. 
+** @param [r] path     [AjPStr]     Directory of profile models.
+** @param [r] extn     [AjPStr]     File extension of models.
+** @param [r] scoplist [AjPList]    List of scop objects.
+**
+** @return [AjPList] retuns familyhits.
+** @@
+** 
+******************************************************************************/
+static AjBool libscan_SignatureLibScan(AjPSeq seq, AjPStr path, AjPStr extn,
+				       float gapopen, float gapextn, 
+				       AjPMatrixf sub,  ajint ntopt,
+				       AjPList scoplist, AjPStr model, 
+				       AjPStr sigoutpath, AjPStr sigoutextn,
+				       AjPList* mrglist)
 {
     AjPSignature sig   = NULL;		/* Signature data structure*/
 
@@ -2680,7 +2751,7 @@ AjBool ajXyzSignatureLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen
     AjPList pointlist  = NULL;
     AjPList tmplist    = NULL;
 
-    AjPCoord delpoint  = NULL;
+    LibscanPCoord delpoint  = NULL;
    
     AjIList iter       = NULL;
 
@@ -2690,25 +2761,25 @@ AjBool ajXyzSignatureLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen
 
     if(!path || !seq || !extn || !scoplist)
     {
-        ajWarn("Bad arguments passed to ajXyzSignatureLibScan\n");
+        ajWarn("Bad arguments passed to libscan_SignatureLibScan\n");
         return ajFalse;
     }
 
     /* get the models */
-    modelnames = ajXyzGetLibrary(path,extn);
+    modelnames = libscan_GetLibrary(path,extn);
 
     tmplist     = ajListNew();
 
     ajStrAssS(&outfile,seq->Name);
     ajStrApp(&outfile,sigoutextn);
 
-    iter = ajListIter(modelnames);
+    iter = ajListIterRead(modelnames);
     while((sigfile=(AjPStr)ajListIterNext(iter)))
     {
 	 sigin  = ajFileNewIn(sigfile);
         
         /* READ SIGNATURE FILE */
-        if(!ajXyzSignatureRead(sigin, &sig))
+	 if(!(sig=embSignatureReadNew(sigin)))
         {       
             ajMatrixfDel(&sub);
             ajFileClose(&sigin);
@@ -2720,29 +2791,35 @@ AjBool ajXyzSignatureLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen
         
         
 	/* COMPILE SIGNATURE */
-        if(!ajXyzSignatureCompile(&sig, gapopen, gapextn, sub))
+        if(!embSignatureCompile(&sig, gapopen, gapextn, sub))
         {     
-            ajXyzSignatureDel(&sig);
+            embSignatureDel(&sig);
             ajMatrixfDel(&sub);
             ajFileClose(&sigin);
             return ajFalse;
             ajFatal("Error compiling signature");
         }       
         else
-            ajFmtPrint("Signature compiled ok\n");    
-
+	{
+	    if(!sig)
+		continue;
+	    ajFmtPrint("Signature compiled ok\n");    
+       }
+	 
         
         /* Allocate memory for hit */
-        rawhit = ajXyzHitNew();
+        rawhit = embHitNew();
      
-        if(!ajXyzSignatureAlignSeq(sig, seq, &rawhit, ntopt))
+        if(!embSignatureAlignSeq(sig, seq, &rawhit, ntopt))
         {       
-            ajXyzHitDel(&rawhit);
+            embHitDel(&rawhit);
+/*CORRECTION*/            ajFileClose(&sigin);
+/*CORRECTION*/            embSignatureDel(&sig);
             continue;
         }
 
 	/* create a hit */
-	hit = ajXyzScophitNew();
+	hit = ajDmxScophitNew();
 	
         ajStrAssS(&hit->Class,sig->Class);
         ajStrAssS(&hit->Fold,sig->Fold);
@@ -2757,15 +2834,16 @@ AjBool ajXyzSignatureLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen
 	hit->End   = rawhit->End;
 
         ajListPush(tmplist,(AjPScophit) hit);
-        ajXyzHitDel(&rawhit);
-        ajXyzSignatureDel(&sig);
-        ajFileClose(&sigin);
+        embHitDel(&rawhit);
+        embSignatureDel(&sig);
+        ajFileClose(&sigin); 
 
     }
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
 
-    /* CALCULATE THE DISTRIBUTION WITH THE TRUE HITS AND CROSS HITS REMOVED FROM THE LIST */
-    pointlist = ajXyzCalcLibscanDistribution(tmplist);
+    /* CALCULATE THE DISTRIBUTION WITH THE TRUE HITS AND CROSS HITS
+       REMOVED FROM THE LIST */
+    pointlist = libscan_CalcLibscanDistribution(tmplist);
 
     if(ajListLength(pointlist)!=0)
     {
@@ -2776,53 +2854,57 @@ AjBool ajXyzSignatureLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen
 
 	sigoutf = ajFileNewOutD(sigoutpath,outfile);
 	
-	/* DO A SECOND PARSE THROUGH THE HITS FILE AND CALCULATE THE P-VALUES */
+	/* DO A SECOND PARSE THROUGH THE HITS FILE AND CALCULATE THE
+           P-VALUES */
 	for(i=0;i<nhits;i++)
 	{
-	    scophit = ajXyzScophitNew();
+	    scophit = ajDmxScophitNew();
 
-	    pvalue = ajXyzScoreToPvalue(hits[i]->Score,pointlist);
+	    pvalue = libscan_ScoreToPvalue(hits[i]->Score,pointlist);
 	    hits[i]->Pval = pvalue;
-	    ajXyzScophitCopy(&scophit,hits[i]);
+	    ajDmxScophitCopy(&scophit,hits[i]);
 	    ajListPushApp(familyhits,scophit);
 	}
+	
+	/*sort the list before printing */
+        ajListSort(familyhits,ajDmxScophitCompPval);
 
 	/* write out the familyhits list */
-	ajXyzScophitsWrite(sigoutf,familyhits);
+	ajDmxScophitsWrite(sigoutf,familyhits);
 	ajFileClose(&sigoutf);
     
     	AJFREE(hits);
 	
 	/* push on to the merge list the hits with the p-values calculated */
-	iter = ajListIter(familyhits);
+	iter = ajListIterRead(familyhits);
 	while((mhit = (AjPScophit)ajListIterNext(iter)))
 	    ajListPushApp(*mrglist,(AjPScophit) mhit);
-	ajListIterFree(iter);
+	ajListIterFree(&iter);
 
-	/*jison*/	ajListDel(&familyhits);
+	/*CORRECTION*/	ajListDel(&familyhits);
 	
 
 	/* delete and clean up pointlist */
-	iter=ajListIter(pointlist);
-	while((delpoint=(AjPCoord)ajListIterNext(iter)))
-	    ajXyzCoordDel(&delpoint);
-	ajListIterFree(iter);
+	iter=ajListIterRead(pointlist);
+	while((delpoint=(LibscanPCoord)ajListIterNext(iter)))
+	    libscan_CoordDel(&delpoint);
+	ajListIterFree(&iter);
 	ajListDel(&pointlist); 
 
     }
     
     /* delete and clean up tmplist */
-    iter=ajListIter(tmplist);
+    iter=ajListIterRead(tmplist);
     while((hit=(AjPScophit)ajListIterNext(iter)))
-        ajXyzScophitDel(&hit);
-    ajListIterFree(iter);
+        ajDmxScophitDel(&hit);
+    ajListIterFree(&iter);
     ajListDel(&tmplist);
 
     /* delete and clean up modelnames */
-    iter=ajListIter(modelnames);
+    iter=ajListIterRead(modelnames);
     while((tmpname=(AjPStr)ajListIterNext(iter)))
         ajStrDel(&tmpname);
-    ajListIterFree(iter);
+    ajListIterFree(&iter);
     ajListDel(&modelnames); 
 
     ajStrDel(&outfile);
@@ -2832,18 +2914,23 @@ AjBool ajXyzSignatureLibScan(AjPSeq seq, AjPStr path, AjPStr extn, float gapopen
 }
 
 
-/* @func ajXyzRunHmmerInModeOne **********************************************
- **
- ** Scan database with hidden markov model. 
- **
- ** @param [r] hit1
- ** @param [r] hit2
- **
- ** @return [AjBool]
- ** @@
- ******************************************************************************/
-AjBool ajXyzRunHmmerInModeOne(AjPSeqset db, AjPStr hmmpath, AjPStr hmmextn, AjPStr *mode, ajint overlap, ajint maxhits, AjPStr model,
-                              AjPList targetlist, AjPList scoplist, AjPStr hmmoutpath, AjPStr hmmoutextn, AjPList* mrglist)
+/* @funcstatic libscan_RunHmmerInModeOne **************************************
+**
+** Scan database with hidden markov model. 
+**
+** @param [r] hit1
+** @param [r] hit2
+**
+** @return [AjBool]
+** @@
+******************************************************************************/
+static AjBool libscan_RunHmmerInModeOne(AjPSeqset db, AjPStr hmmpath,
+					AjPStr hmmextn, AjPStr *mode,
+					ajint overlap, ajint maxhits,
+					AjPStr model,
+					AjPList targetlist, AjPList scoplist,
+					AjPStr hmmoutpath, AjPStr hmmoutextn,
+					AjPList* mrglist)
 {
     AjPList hmmlist    = NULL;		/* a list of hmm file names */
     
@@ -2870,7 +2957,7 @@ AjBool ajXyzRunHmmerInModeOne(AjPSeqset db, AjPStr hmmpath, AjPStr hmmextn, AjPS
 
     if(ajStrChar(*mode,0)=='1')
     {   
-        hmmlist = ajXyzGetLibrary(hmmpath,hmmextn);
+        hmmlist = libscan_GetLibrary(hmmpath,hmmextn);
         
         /*Start of main application loop*/   
         while(ajListPop(hmmlist,(void **)&hmmfile))
@@ -2899,15 +2986,20 @@ AjBool ajXyzRunHmmerInModeOne(AjPSeqset db, AjPStr hmmpath, AjPStr hmmextn, AjPS
                 ajStrToInt(sunid,&sun_id);
             
                 /* do a binary search on scoplist to find the relavent entry */
-                if(!(ajXyzSunidToScopInfo(sun_id,&family,&superfamily,&fold, &class, scoplist)))
-                    ajFatal("ajXyzSunidToScopInfo failed in ajXyzRunHmmerInModeOne. email rranasin@hgmp.mrc.ac.uk\n");
+                if(!(libscan_SunidToScopInfo(sun_id,&family,&superfamily,
+					     &fold, &class, scoplist)))
+                    ajFatal("libscan_SunidToScopInfo failed in "
+			    "libscan_RunHmmerInModeOne. "
+			    "email rranasin@hgmp.mrc.ac.uk\n");
             
 
                 /* READ SCOP FAMILIES FILE & FILL THE LIST OF TARGETS*/
 		
                 /* search with HMM */
-                ajXyzHmmSearch(db,hmmfile,targetlist,family,superfamily,fold,class,sun_id,overlap,maxhits,model,
-			       hmmoutf,mrglist);
+                libscan_HmmSearch(db,hmmfile,targetlist,
+				  family,superfamily,fold,class,
+				  sun_id,overlap,maxhits,model,
+				  hmmoutf,mrglist);
                 ajFileClose(&hmmoutf);
 		ajStrDel(&hmmfile);
 	    }
@@ -2920,7 +3012,8 @@ AjBool ajXyzRunHmmerInModeOne(AjPSeqset db, AjPStr hmmpath, AjPStr hmmextn, AjPS
 	ajStrDel(&hmmsearch);
 	ajStrDel(&family);
 	ajStrDel(&superfamily);
-	ajStrDel(&fold);        /* jison */ 	ajStrDel(&class);        
+	ajStrDel(&fold);   
+     /* CORRECTION */ 	ajStrDel(&class);        
 	return ajTrue;
     } 
     
@@ -2939,24 +3032,26 @@ AjBool ajXyzRunHmmerInModeOne(AjPSeqset db, AjPStr hmmpath, AjPStr hmmextn, AjPS
 }       
 
 
-/* @func ajXyzRunHmmerInModeTwo **********************************************
- **
- ** Scan sequences with hidden markov model. 
- **
- ** @param [r] 
- ** @param [r] 
- **
- ** @return [AjBool] 
- 
- ** @@
- ******************************************************************************/
-AjBool ajXyzRunHmmerInModeTwo(AjPSeqset db, AjPStr hmmpath, AjPStr hmmextn, AjPStr *mode, 
-                              AjPList scoplist, AjPStr model, AjPStr hmmoutpath, AjPStr hmmoutextn, 
-			      AjPList* mrglist)
-{
-    AjPSeq seq   = NULL;
-    ajint i;
+/* @funcstatic libscan_RunHmmerInModeTwo **************************************
+**
+** Scan sequences with hidden markov model. 
+**
+** @param [r] 
+** @param [r] 
+**
+** @return [AjBool] 
+** @@
+******************************************************************************/
 
+static AjBool libscan_RunHmmerInModeTwo(AjPSeqset db, AjPStr hmmpath,
+					AjPStr hmmextn, AjPStr *mode, AjPList
+					scoplist, AjPStr model, AjPStr
+					hmmoutpath, AjPStr hmmoutextn, AjPList*
+					mrglist)
+{
+    AjPSeq seq = NULL;
+    ajint i;
+						   
     if(ajStrChar(*mode,0)=='2') 
     {
         for(i=0;i<db->Size;i++)
@@ -2966,7 +3061,8 @@ AjBool ajXyzRunHmmerInModeTwo(AjPSeqset db, AjPStr hmmpath, AjPStr hmmextn, AjPS
             ajStrAssS(&seq->Seq,db->Seq[i]->Seq);
             
             /* search a library of hidden markov models */
-            ajXyzHmmLibScan(seq,hmmpath,hmmextn,scoplist,model,hmmoutpath,hmmoutextn,mrglist);
+            libscan_HmmLibScan(seq,hmmpath,hmmextn,scoplist,model,
+			       hmmoutpath,hmmoutextn,mrglist);
             
             ajSeqDel(&seq);
             
@@ -2980,19 +3076,25 @@ AjBool ajXyzRunHmmerInModeTwo(AjPSeqset db, AjPStr hmmpath, AjPStr hmmextn, AjPS
 }
 
 
-/* @func ajXyzRunProphetInModeOne **********************************************
- **
- ** Scan database with profile model. 
- **
- ** @param [r] hit1
- ** @param [r] hit2
- **
- ** @return [AjBool]
- ** @@
- ******************************************************************************/
-AjBool ajXyzRunProphetInModeOne(AjPSeqset db, AjPStr profpath, AjPStr profextn, float gapo,float gape, 
-				AjPStr *mode, ajint overlap, ajint maxhits, AjPStr model, AjPList targetlist, AjPList scoplist,
-				AjPStr profoutpath, AjPStr profoutextn, AjPList* mrglist)
+/* @funcstatic libscan_RunProphetInModeOne ************************************
+**
+** Scan database with profile model. 
+**
+** @param [r] hit1
+** @param [r] hit2
+**
+** @return [AjBool]
+** @@
+******************************************************************************/
+static AjBool libscan_RunProphetInModeOne(AjPSeqset db, AjPStr profpath,
+					  AjPStr profextn, float gapo,
+					  float gape, 
+					  AjPStr *mode, ajint overlap,
+					  ajint maxhits, AjPStr model,
+					  AjPList targetlist, AjPList scoplist,
+					  AjPStr profoutpath,
+					  AjPStr profoutextn,
+					  AjPList* mrglist)
 {
     AjPList proflist    = NULL;		/* a list of hmm file names */
     
@@ -3022,7 +3124,7 @@ AjBool ajXyzRunProphetInModeOne(AjPSeqset db, AjPStr profpath, AjPStr profextn, 
 
     if(ajStrChar(*mode,0)=='1')
     {
-        proflist = ajXyzGetLibrary(profpath,profextn);
+        proflist = libscan_GetLibrary(profpath,profextn);
       
         /*Start of main application loop*/   
         while(ajListPop(proflist,(void **)&profile))
@@ -3053,12 +3155,17 @@ AjBool ajXyzRunProphetInModeOne(AjPSeqset db, AjPStr profpath, AjPStr profextn, 
                 ajStrToInt(sunid,&sun_id);
                  
                 /* do a binary search on scoplist to find the relavent entry */
-                if(!(ajXyzSunidToScopInfo(sun_id,&family,&superfamily,&fold, &class, scoplist)))
-                    ajFatal("ajXyzSunidToScopInfo failed in ajXyzRunProphetInModeOne. email rranasin@hgmp.mrc.ac.uk\n");
+                if(!(libscan_SunidToScopInfo(sun_id,&family,&superfamily,
+					     &fold, &class, scoplist)))
+                    ajFatal("libscan_SunidToScopInfo failed in "
+			    "libscan_RunProphetInModeOne. "
+			    "email rranasin@hgmp.mrc.ac.uk\n");
                                   
                 /* search with Gribskov Profile */
-                ajXyzProfileSearch(db,profile,gapo,gape,targetlist,family,superfamily,fold,class,sun_id,overlap,maxhits,model,
-				   profoutf,mrglist);
+                libscan_ProfileSearch(db,profile,gapo,gape,targetlist,
+				      family,superfamily,fold,class,
+				      sun_id,overlap,maxhits,model,
+				      profoutf,mrglist);
                 ajFileClose(&profoutf);
 	    }   
 	    ajStrDel(&profile);
@@ -3090,19 +3197,22 @@ AjBool ajXyzRunProphetInModeOne(AjPSeqset db, AjPStr profpath, AjPStr profextn, 
 
 
 
-/* @func ajXyzRunProphetInModeTwo ***********************************************
- **
- ** Scan sequences with hidden markov model. 
- **
- ** @param [r] 
- ** @param [r] 
- **
- ** @return [AjBool] 
- ** @@
- *********************************************************************************/
-AjBool ajXyzRunProphetInModeTwo(AjPSeqset db, AjPStr profpath, AjPStr profextn, float gapo,
-				float gape, AjPStr *mode, AjPList scoplist, AjPStr model, AjPStr profoutpath, 
-				AjPStr profoutextn,AjPList* mrglist)
+/* @funcstatic libscan_RunProphetInModeTwo ************************************
+**
+** Scan sequences with hidden markov model. 
+**
+** @param [r] 
+** @param [r] 
+**
+** @return [AjBool] 
+** @@
+******************************************************************************/
+static AjBool libscan_RunProphetInModeTwo(AjPSeqset db, AjPStr profpath,
+					  AjPStr profextn, float gapo,
+					  float gape, AjPStr *mode,
+					  AjPList scoplist, AjPStr model,
+					  AjPStr profoutpath, 
+					  AjPStr profoutextn, AjPList* mrglist)
 {
     AjPSeq seq   = NULL;
 
@@ -3118,7 +3228,9 @@ AjBool ajXyzRunProphetInModeTwo(AjPSeqset db, AjPStr profpath, AjPStr profextn, 
             
             
             /* search a library of gribskov profiles */
-            ajXyzProfileLibScan(seq,profpath,profextn,gapo,gape,scoplist,model,profoutpath,profoutextn,mrglist);
+            libscan_ProfileLibScan(seq,profpath,profextn,gapo,gape,
+				   scoplist,model,profoutpath,profoutextn,
+				   mrglist);
             
             ajSeqDel(&seq);
             
@@ -3132,20 +3244,26 @@ AjBool ajXyzRunProphetInModeTwo(AjPSeqset db, AjPStr profpath, AjPStr profextn, 
 }
 
 
-/* @func ajXyzRunSignatureInModeOne **********************************************
- **
- ** Scan database with signatures. 
- **
- ** @param [r] hit1
- ** @param [r] hit2
- **
- ** @return [AjBool]
- ** @@
- ******************************************************************************/
-AjBool ajXyzRunSignatureInModeOne(AjPSeqset db, AjPStr sigpath, AjPStr sigextn, float gapo, 
-				  float gape, AjPMatrixf sub, ajint ntopt, AjPStr *mode, 
-				  ajint overlap, ajint maxhits, AjPStr model, AjPList targetlist, AjPList scoplist, 
-				  AjPStr sigoutpath, AjPStr sigoutextn, AjPList* mrglist)
+/* @funcstatic libscan_RunSignatureInModeOne **********************************
+**
+** Scan database with signatures. 
+**
+** @param [r] hit1
+** @param [r] hit2
+**
+** @return [AjBool]
+** @@
+******************************************************************************/
+static AjBool libscan_RunSignatureInModeOne(AjPSeqset db, AjPStr sigpath,
+					    AjPStr sigextn, float gapo, 
+					    float gape, AjPMatrixf sub,
+					    ajint ntopt, AjPStr *mode, 
+					    ajint overlap, ajint maxhits,
+					    AjPStr model, AjPList targetlist,
+					    AjPList scoplist, 
+					    AjPStr sigoutpath,
+					    AjPStr sigoutextn,
+					    AjPList* mrglist)
 {
     AjPList siglist     = NULL;		/* a list of hmm file names */
     
@@ -3173,7 +3291,7 @@ AjBool ajXyzRunSignatureInModeOne(AjPSeqset db, AjPStr sigpath, AjPStr sigextn, 
     
     if(ajStrChar(*mode,0)=='1')
     {
-        siglist = ajXyzGetLibrary(sigpath,sigextn);
+        siglist = libscan_GetLibrary(sigpath,sigextn);
 
       
         /*Start of main application loop*/   
@@ -3207,12 +3325,16 @@ AjBool ajXyzRunSignatureInModeOne(AjPSeqset db, AjPStr sigpath, AjPStr sigextn, 
                 ajStrToInt(sunid,&sun_id);
                  
                 /* do a binary search on scoplist to find the relavent entry */
-                if(!(ajXyzSunidToScopInfo(sun_id,&family,&superfamily,&fold,&class,scoplist)))
-                    ajFatal("ajXyzSunidToScopInfo failed. email rranasin@hgmp.mrc.ac.uk\n");
+                if(!(libscan_SunidToScopInfo(sun_id,&family,&superfamily,
+					     &fold,&class,scoplist)))
+                    ajFatal("libscan_SunidToScopInfo failed. "
+			    "email rranasin@hgmp.mrc.ac.uk\n");
                  
 		/* search with Signature */
-                ajXyzSignatureSearch(db,sigfile,sub,gapo,gape,ntopt,targetlist,family,superfamily,fold,class,
-				     sun_id,overlap,maxhits,model,sigoutf,mrglist);
+                libscan_SignatureSearch(db,sigfile,sub,gapo,gape,ntopt,
+					targetlist,family,superfamily,
+					fold,class,sun_id,overlap,maxhits,
+					model,sigoutf,mrglist);
                 ajFileClose(&sigoutf);
             }   
             ajStrDel(&sigfile);
@@ -3242,20 +3364,24 @@ AjBool ajXyzRunSignatureInModeOne(AjPSeqset db, AjPStr sigpath, AjPStr sigextn, 
 }
 
 
-/* @func ajXyzRunSignatureInModeTwo ***********************************************
- **
- ** Scan sequences library of sigantures. 
- **
- ** @param [r] 
- ** @param [r] 
- **
- ** @return [AjBool] 
- ** @@
- *********************************************************************************/
-AjBool ajXyzRunSignatureInModeTwo(AjPSeqset db, AjPStr sigpath, AjPStr sigextn, 
-                                  float gapo,float gape, AjPMatrixf sub, ajint ntopt, 
-                                  AjPStr *mode, AjPList scoplist,  AjPStr model, AjPStr sigoutpath, 
-				  AjPStr sigoutextn, AjPList* mrglist)
+/* @funcstatic libscan_RunSignatureInModeTwo **********************************
+**
+** Scan sequences library of sigantures. 
+**
+** @param [r] 
+** @param [r] 
+**
+** @return [AjBool] 
+** @@
+******************************************************************************/
+static AjBool libscan_RunSignatureInModeTwo(AjPSeqset db, AjPStr sigpath,
+					    AjPStr sigextn, 
+					    float gapo,float gape,
+					    AjPMatrixf sub, ajint ntopt, 
+					    AjPStr *mode, AjPList scoplist,
+					    AjPStr model, AjPStr sigoutpath, 
+					    AjPStr sigoutextn,
+					    AjPList* mrglist)
 {
         
     AjPSeq seq   = NULL;
@@ -3279,7 +3405,9 @@ AjBool ajXyzRunSignatureInModeTwo(AjPSeqset db, AjPStr sigpath, AjPStr sigextn,
             ajStrAssS(&seq->Seq,db->Seq[i]->Seq);            
 
             /* search a library of signature */
-            ajXyzSignatureLibScan(seq,sigpath,sigextn,gapo,gape,sub,ntopt,scoplist,model,sigoutpath,sigoutextn,mrglist);
+            libscan_SignatureLibScan(seq,sigpath,sigextn,gapo,gape,
+				     sub,ntopt,scoplist,model,sigoutpath,
+				     sigoutextn,mrglist);
             
             ajSeqDel(&seq);
         }
@@ -3299,66 +3427,72 @@ AjBool ajXyzRunSignatureInModeTwo(AjPSeqset db, AjPStr sigpath, AjPStr sigextn,
 
 
 
-/* 
-   In either mode, the mrglist contains the total results of potentially multiple modelds
-   versus potentially multiple sequences.
-   
-   mrglist is sorted so that
-   in mode 1 hits are merged with identical accession numbers, e.g. the 1st three:
-   fam1 (HMM)  ACC1   10
-   fam1 (Grb)  ACC1   12
-   fam1 (Sig)  ACC1   13
-   fam1 (HMM)  ACC2   15
-   fam1 (Grb)  ACC2   16
-   fam1 (Sig)  ACC2   17
-   fam2 (HMM)  ACC1   10
-   fam2 (Grb)  ACC1   12
-   fam2 (Sig)  ACC1   13
-   fam2 (HMM)  ACC2   15
-   fam2 (Grb)  ACC2   16
-   fam2 (Sig)  ACC2   17
-   .
-   .
-   .
-   
-   
-   in mode 2 hits are merged with identical family Sunids's, e.g. the 1st three:
-   acc1 (HMM)  FAM1   10
-   acc1 (Grb)  FAM1   12
-   acc1 (Sig)  FAM1   13
-   acc1 (HMM)  FAM2   10
-   acc1 (Grb)  FAM2   12
-   acc1 (Sig)  FAM2   13
-   acc2 (HMM)  FAM1   10
-   acc2 (Grb)  FAM1   12
-   acc2 (Sig)  FAM1   13
-   .
-   .
-   .
-   */
+/* @funcstatic libscan_CombineScophitsPvalues *********************************
+**
+**   In either mode, the mrglist contains the total results of potentially multiple modelds
+**   versus potentially multiple sequences.
+**   
+**   mrglist is sorted so that
+**   in mode 1 hits are merged with identical accession numbers, e.g. the 1st three:
+**   fam1 (HMM)  ACC1   10
+**   fam1 (Grb)  ACC1   12
+**   fam1 (Sig)  ACC1   13
+**   fam1 (HMM)  ACC2   15
+**   fam1 (Grb)  ACC2   16
+**   fam1 (Sig)  ACC2   17
+**   fam2 (HMM)  ACC1   10
+**   fam2 (Grb)  ACC1   12
+**   fam2 (Sig)  ACC1   13
+**   fam2 (HMM)  ACC2   15
+**   fam2 (Grb)  ACC2   16
+**   fam2 (Sig)  ACC2   17
+**   .
+**   .
+**   .
+**   
+**  
+**   in mode 2 hits are merged with identical family Sunids's, e.g. the 1st three:
+**   acc1 (HMM)  FAM1   10
+**   acc1 (Grb)  FAM1   12
+**   acc1 (Sig)  FAM1   13
+**   acc1 (HMM)  FAM2   10
+**   acc1 (Grb)  FAM2   12
+**   acc1 (Sig)  FAM2   13
+**   acc2 (HMM)  FAM1   10
+**   acc2 (Grb)  FAM1   12
+**   acc2 (Sig)  FAM1   13
+**   .
+**   .
+**   .
+******************************************************************************/
 
 
-AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, AjPList targetlist, 
-				   AjPList mrglist, ajint overlap, ajint maxhits, ajint n)
+static AjBool libscan_CombineScophitsPvalues(ajint mode, AjPStr outpath,
+					     AjPStr outextn,
+					     AjPList targetlist, 
+					     AjPList mrglist, ajint overlap,
+					     ajint maxhits, ajint n)
 {
     AjPScophit hit     = NULL;
     AjPScophit tmphit  = NULL;
     AjPScophit nexthit = NULL;
     
     AjPScophit mrghit  = NULL;
+    AjPScophit tmphit1 = NULL;
+
     AjPScophit tmphit2 = NULL;
     
     AjPHitlist tmphitlist=NULL;
     AjIList    tmpiter   =NULL;
     
     
-/*jison*/    AjPScophit* arr        = NULL;
+    AjPScophit* arr        = NULL;
     
     AjIList iter       = NULL;
     AjIList iter2      = NULL;
     
     AjPList newlist    = NULL;
-    
+    AjPList tmplist    = NULL;
     
     float productP     = 0.0;   
     
@@ -3377,28 +3511,30 @@ AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, A
     
     
     newlist    = ajListNew();
-    
+    tmplist    = ajListNew();
     
     if(!mrglist)
         ajFatal("Merged list does not exit!");
     
     /* models vs sequences */
     if(mode==1)
-	ajListSort3(mrglist, ajXyzScophitCompSunid, ajXyzScophitCompAcc, ajXyzScophitCompStart);
+	ajListSort3(mrglist, ajDmxScophitCompSunid,
+		    ajDmxScophitCompAcc, ajDmxScophitCompStart);
     
     /* sequences vs models */
     else if(mode==2)	
-	ajListSort3(mrglist, ajXyzScophitCompAcc, ajXyzScophitCompSunid, ajXyzScophitCompStart);
+	ajListSort3(mrglist, ajDmxScophitCompAcc,
+		    ajDmxScophitCompSunid, ajDmxScophitCompStart);
     
     /* incorrect mode */
     else
-	ajFatal("Unknown mode in ajXyzCombineScophitsPvalues");
+	ajFatal("Unknown mode in libscan_CombineScophitsPvalues");
     
     
-    iter   = ajListIter(mrglist);
+    iter   = ajListIterRead(mrglist);
     hit    = (AjPScophit)ajListIterNext(iter);
-    mrghit = ajXyzScophitNew();
-    ajXyzScophitCopy(&mrghit, hit);
+    mrghit = ajDmxScophitNew();
+    ajDmxScophitCopy(&mrghit, hit);
     
     
     productP = hit->Pval;
@@ -3414,21 +3550,23 @@ AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, A
 	    if(((mode==1) && (ajStrMatch(hit->Acc, nexthit->Acc)))  ||
 	       ((mode==2) && (hit->Sunid_Family==nexthit->Sunid_Family)))
 	    {
-		if(ajXyzScophitsOverlap(mrghit,nexthit,overlap))
+		if(embDmxScophitsOverlap(mrghit,nexthit,overlap))
 		{
-		    /* Check again to prevent any merging of non-overlapping hits which 
-		       might cause crashes or unpredictable behaviour, e.g. where hit1 
-		       & hit2 do not overlap but hit2 & hit3 do, mrghit still pointing 
-		       to hit1 */
-		    if(ajXyzScophitsOverlap(mrghit,nexthit,overlap))
+		    /* Check again to prevent any merging of
+		       non-overlapping hits which might cause crashes
+		       or unpredictable behaviour, e.g. where hit1 &
+		       hit2 do not overlap but hit2 & hit3 do, mrghit
+		       still pointing to hit1 */
+		    if(embDmxScophitsOverlap(mrghit,nexthit,overlap))
 		    {
 			tmphit = mrghit;
 		       
-			mrghit = ajXyzScophitMerge(mrghit,nexthit); 
+			mrghit = embDmxScophitMerge(mrghit,nexthit); 
 			
-			nmod++;		           /* This must be reset to 0 */
-			productP *= nexthit->Pval; /* This must be reset to 0 */
-			ajXyzScophitDel(&tmphit);
+			nmod++;		/* This must be reset to 0 */
+			productP *= nexthit->Pval; /* This must be
+						      reset to 0 */
+			ajDmxScophitDel(&tmphit);
 		    }
 		}
 	    }
@@ -3448,13 +3586,13 @@ AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, A
 		   have hit the same region, delete mrghit */
 		else
 		{
-		    ajXyzScophitDel(&mrghit);		    
+		    ajDmxScophitDel(&mrghit);		    
 		}
 		
 		nmod=0;
 		productP=nexthit->Pval;
-		mrghit=ajXyzScophitNew();
-		ajXyzScophitCopy(&mrghit, nexthit);		
+		mrghit=ajDmxScophitNew();
+		ajDmxScophitCopy(&mrghit, nexthit);		
 	    }
 	}
 	
@@ -3473,14 +3611,14 @@ AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, A
 	       are not to the same region, delete mrghit */
 	    else
 	    {
-		ajXyzScophitDel(&mrghit);
+		ajDmxScophitDel(&mrghit);
 	    }
 
 	    
 	    nmod=0;
 	    productP=nexthit->Pval;
-	    mrghit=ajXyzScophitNew();
-	    ajXyzScophitCopy(&mrghit, nexthit);
+	    mrghit=ajDmxScophitNew();
+	    ajDmxScophitCopy(&mrghit, nexthit);
 	    
 
 	    /* calculate the new significance for each hit */
@@ -3489,7 +3627,7 @@ AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, A
 	    { 
 		for(j=0;j<narr;j++)
 		{
-		    if(arr[i]->Score > arr[j]->Score)
+		    if(arr[i]->Pval > arr[j]->Pval)
 			freq++;
 		    else
 			continue;
@@ -3497,18 +3635,27 @@ AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, A
 		
 		/* this is the new p-value */
 		fraction = ((float)freq/(float)narr);
-		arr[i]->Pval = fraction;
+
+		/*arr[i]->Pval = fraction;*/
+
+		
+		/*RAND's mods. */       
+                tmphit1 = ajDmxScophitNew();
+                ajDmxScophitCopy(&tmphit1, arr[i]);
+                tmphit1->Pval = fraction;
+                ajListPushApp(tmplist,tmphit1);
+                freq=0;
 	    }    		
 	    
-	    /* write the new p-values back into newlist */
-	    iter2   = ajListIter(newlist);
+	    /* write the new p-values back into newlist 
+	    iter2   = ajListIterRead(newlist);
 	    i=0;
 	    while((tmphit2=(AjPScophit)ajListIterNext(iter2)))
 	    {
 		tmphit2->Pval = arr[i]->Pval;
 		i++;
 	    } 
-	    ajListIterFree(iter2);
+	    ajListIterFree(&iter2); */
 	    AJFREE(arr);
 	    arr=NULL;
 	    
@@ -3532,22 +3679,27 @@ AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, A
 		tmphitlist=NULL;
 		tmpiter   =NULL;
 
-		/* tmpiter is freed in the function, tmphitlist must be freed here */
-		ajXyzScophitsToHitlist(newlist, &tmphitlist, &tmpiter);
-		/* jison tmpiter is *not* freed in the function */
-		/* jison */  ajListIterFree(tmpiter);
+		/* tmpiter is freed in the function, tmphitlist must
+                   be freed here */
+		embDmxScophitsToHitlist(tmplist, &tmphitlist, &tmpiter);
+		/* CORRECTION tmpiter is *not* freed in the function */
+		/* CORRECTION */  ajListIterFree(&tmpiter);
 		
 		tmpiter=NULL;
 	     
-		ajXyzHitlistClassify(&tmphitlist,targetlist,overlap);
+		embHitlistClassify(&tmphitlist,targetlist,overlap);
 
-		ajXyzHitsWrite(outf, tmphitlist,maxhits);
-		ajXyzHitlistDel(&tmphitlist);
+		embDmxHitsWrite(outf, tmphitlist,maxhits);
+		embHitlistDel(&tmphitlist);
 	    }
 
 	    else
 	    {
-		ajXyzScophitsWrite(outf, newlist);
+		/* RAND's mods*/
+                /*sort the list before printing */
+                ajListSort(tmplist,ajDmxScophitCompPval);
+        
+                ajDmxScophitsWrite(outf, tmplist);
 	    }
 
 
@@ -3555,22 +3707,31 @@ AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, A
 	    ajFileClose(&outf);
 
 	    /* clean up newlist */
-	    iter2 = ajListIter(newlist);
+	    iter2 = ajListIterRead(newlist);
 
 	    while((tmphit2 = (AjPScophit)ajListIterNext(iter2)))
 	    {
-		ajXyzScophitDel(&tmphit2);
+		ajDmxScophitDel(&tmphit2);
 	    }
 
 	    ajListDel(&newlist);
 	    newlist = ajListNew();
-	    ajListIterFree(iter2);
+	    ajListIterFree(&iter2);
+
+
+            /* clean up tmplist */
+            iter2 = ajListIterRead(tmplist);
+            while((tmphit2 = (AjPScophit)ajListIterNext(iter2)))
+                ajDmxScophitDel(&tmphit2);
+            ajListDel(&tmplist);
+            tmplist = ajListNew();
+            ajListIterFree(&iter2);
 	}
 
 	hit=nexthit;	
     }
 
-/*jison*/    	ajListIterFree(iter);		
+/*CORRECTION*/    	ajListIterFree(&iter);		
 
     /* Process the last part of the list */
     /* THIS CODE BLOCK IS IDENTICAL TO THE ONE ABOVE */
@@ -3587,7 +3748,7 @@ AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, A
        have hit the same region, delete mrghit */
     else
     {
-	ajXyzScophitDel(&mrghit);
+	ajDmxScophitDel(&mrghit);
 	
     }    
     
@@ -3598,7 +3759,7 @@ AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, A
     {
 	for(j=0;j<narr;j++)
 	{
-	    if(arr[i]->Score > arr[j]->Score)
+	    if(arr[i]->Pval > arr[j]->Pval)
 		freq++;
 	    else
 		continue;
@@ -3606,18 +3767,25 @@ AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, A
         
 	/* this is the new p-value */
 	fraction = ((float)freq/(float)narr);
-	arr[i]->Pval = fraction;
+/*	arr[i]->Pval = fraction; */
+/*printf("fraction = %f freq= %d narr = %d\n",fraction,freq,narr);*/
+        /* RAND's mods*/
+        tmphit1 = ajDmxScophitNew();
+        ajDmxScophitCopy(&tmphit1, arr[i]);
+        tmphit1->Pval = fraction;
+        ajListPushApp(tmplist,tmphit1);
+        freq=0;
     }    		
     
-    /* write the new p-values back into newlist */
-    iter2   = ajListIter(newlist);
+    /* write the new p-values back into newlist 
+    iter2   = ajListIterRead(tmplist);
     i=0;
     while((tmphit2=(AjPScophit)ajListIterNext(iter2)))
     {
-	tmphit2->Pval = arr[i]->Pval;
+	tmphit2->Pval = tmphit1->Pval;
 	i++;
     } 
-    ajListIterFree(iter2);
+    ajListIterFree(&iter2);*/
     AJFREE(arr);
     
     /* Write the output file. For mode 1 this will be a signature hits file and 
@@ -3639,55 +3807,65 @@ AjBool ajXyzCombineScophitsPvalues(ajint mode, AjPStr outpath, AjPStr outextn, A
 	tmphitlist=NULL;
 	tmpiter   =NULL;
 	/* tmpiter is freed in the function, tmphitlist must be freed here */
-	ajXyzScophitsToHitlist(newlist, &tmphitlist, &tmpiter);
-/* jison tmpiter is not freed in the function */
-/* jison */ 		ajListIterFree(tmpiter);	
+	embDmxScophitsToHitlist(tmplist, &tmphitlist, &tmpiter);
+/* CORRECTION tmpiter is not freed in the function */
+/* CORRECTION */ 		ajListIterFree(&tmpiter);	
 	tmpiter=NULL;
 	     
-	ajXyzHitlistClassify(&tmphitlist,targetlist,overlap);
+	embHitlistClassify(&tmphitlist,targetlist,overlap);
 
-	ajXyzHitsWrite(outf, tmphitlist, maxhits);
-	ajXyzHitlistDel(&tmphitlist);
+	embDmxHitsWrite(outf, tmphitlist, maxhits);
+	embHitlistDel(&tmphitlist);
     }
     else
     {
-	ajXyzScophitsWrite(outf, newlist);
-/*jison	ajListIterFree(iter);		*/
+	/* RAND's mods*/
+        /*sort the list before printing */
+        ajListSort(tmplist,ajDmxScophitCompPval);
+	ajDmxScophitsWrite(outf, tmplist);
+	/* CORRECTION ajListIterFree(&iter);   */
     }
     
     ajStrDel(&outfile);
     ajFileClose(&outf);
     
     /* clean up newlist */
-    iter2 = ajListIter(newlist);
+    iter2 = ajListIterRead(newlist);
     while((tmphit2 = (AjPScophit)ajListIterNext(iter2)))
-	ajXyzScophitDel(&tmphit2);
+	ajDmxScophitDel(&tmphit2);
     ajListDel(&newlist);
-    ajListIterFree(iter2);
+    ajListIterFree(&iter2);
     
-/*jison    ajListIterFree(iter); */
+
+
+    /* clean up tmplist */
+    iter2 = ajListIterRead(tmplist);
+    while((tmphit2 = (AjPScophit)ajListIterNext(iter2)))
+        ajDmxScophitDel(&tmphit2);
+    ajListDel(&tmplist);
+    ajListIterFree(&iter2);
     
+    ajListIterFree(&iter);
+
     return ajTrue;
 }
 
 
 
-/* @func ajXyzCalcLibscanDistribution ***********************************************
- **
- ** Calculate the distribution from a list of hits.
- **
- ** @param [r] listhits   [AjPList] List is hits 
- ** @param [r] fold        [AjPStr ] SCOP fold
- 
- ** @param [r] superfamily [AjPStr ] SCOP superfamily
- ** @param [r] famly       [AjPStr ] SCOP family
- ** @param [r] sun_id      [ajint  ] SCOP family sunid
- **
- ** @return [AjPList] A list of coordinates in a distribution.
- 
- ** @@
- ******************************************************************************/
-AjPList ajXyzCalcLibscanDistribution(AjPList scophits)
+/* @funcstatic libscan_CalcLibscanDistribution ********************************
+**
+** Calculate the distribution from a list of hits.
+**
+** @param [r] listhits   [AjPList] List is hits 
+** @param [r] fold        [AjPStr ] SCOP fold
+** @param [r] superfamily [AjPStr ] SCOP superfamily
+** @param [r] famly       [AjPStr ] SCOP family
+** @param [r] sun_id      [ajint  ] SCOP family sunid
+**
+** @return [AjPList] A list of coordinates in a distribution.
+** @@
+******************************************************************************/
+static AjPList libscan_CalcLibscanDistribution(AjPList scophits)
 {
     AjPList pointlist = NULL;
     
@@ -3698,30 +3876,31 @@ AjPList ajXyzCalcLibscanDistribution(AjPList scophits)
     ajint freq        = 0;
     ajint interval    = 0;              /* the score interva, x-axis */
 
-    AjPCoord  point   = NULL;           /* a Datapoint object to hold individual coordinates */
+    LibscanPCoord  point   = NULL;	/* a Datapoint object to hold
+					   individual coordinates */
 
     AjPScophit* hits  = NULL;
     
     if(!scophits)
-        ajFatal("No list of hits passed to ajXyzCalcDistribution\n");
+        ajFatal("No list of hits passed to libscan_CalcDistribution\n");
     
     if(ajListLength(scophits)==0)
 	return NULL;
     
     pointlist = ajListNew();
 
-    /* but only remove them inside the ajXyzCalcDistribution sub-routine */                     
-    ajListGarbageCollect(scophits, ajXyzScophitDelWrap,
-                         (int(*)(const void*)) ajXyzScophitCheckTarget);
+    /* but only remove them inside the libscan_CalcDistribution sub-routine */
+    ajListGarbageCollect(scophits, ajDmxScophitDelWrap,
+                         (int(*)(const void*)) ajDmxScophitCheckTarget);
 
     /* sort the list according to score */
-    ajListSort(scophits,ajXyzScophitCompScore);
+    ajListSort(scophits,ajDmxScophitCompScore);
 
     /* convert list to array for convenience */
     nhits = ajListToArray(scophits,(void ***)&hits);
 
     if(!nhits)
-	ajFatal("No hits in ajXyzCalcDistribution!");
+	ajFatal("No hits in libscan_CalcDistribution!");
     
     low  = (ajint)hits[0]->Score;
     
@@ -3740,7 +3919,7 @@ AjPList ajXyzCalcLibscanDistribution(AjPList scophits)
 	/* check if the array only contains only one hit */
 	if((nhits)==1)
 	{
-	    point = ajXyzCoordNew();
+	    point = libscan_CoordNew();
 	    ajStrAssS(&point->Acc,hits[i]->Acc);
 	    point->x = interval;
 	    point->y = 1;
@@ -3757,7 +3936,7 @@ AjPList ajXyzCalcLibscanDistribution(AjPList scophits)
 	    /* check to see if end of the array has been reached */
             if(interval == (ajint)hits[nhits-1]->Score)
             {
-                point = ajXyzCoordNew();
+                point = libscan_CoordNew();
          
                 ajStrAssS(&point->Acc,hits[i]->Acc);
                 point->x = interval;
@@ -3771,7 +3950,7 @@ AjPList ajXyzCalcLibscanDistribution(AjPList scophits)
         { 
             while((float)interval <= hits[i]->Score)
             {           
-                point = ajXyzCoordNew();
+                point = libscan_CoordNew();
          
                 ajStrAssS(&point->Acc,hits[i]->Acc);
                 point->x = interval;
@@ -3790,5 +3969,233 @@ AjPList ajXyzCalcLibscanDistribution(AjPList scophits)
 
     return pointlist;
 }
+
+
+
+
+/* @funcstatic libscan_CoordNew ***********************************************
+**
+** Coord object constructor. This is normally called by the
+** ajDmxDiscordToCoords function.
+**
+** 
+** @return [LibscanPCoord] Pointer to a Coord object
+** @@
+******************************************************************************/
+
+static LibscanPCoord libscan_CoordNew(void)
+{
+    LibscanPCoord ret = NULL;
+
+    AJNEW0(ret);
+    ret->Class       = ajStrNew();
+    ret->Fold        = ajStrNew();
+    ret->Superfamily = ajStrNew();
+    ret->Family      = ajStrNew();
+    ret->Model_Type  = ajStrNew();
+    ret->Acc         = ajStrNew();
+    ret->Spr         = ajStrNew();
+    ret->x           = 0.0;
+    ret->y           = 0.0;
+
+    return ret;
+}
+
+
+
+
+/* @funcstatic libscan_CoordDel ***********************************************
+**
+** Destructor for Coord object.
+**
+** @param [w] pthis [LibscanPCoord*] Coord object pointer
+**
+** @return [void]
+** @@
+******************************************************************************/
+
+static void libscan_CoordDel(LibscanPCoord *pthis)
+{
+    ajStrDel(&(*pthis)->Class);
+    ajStrDel(&(*pthis)->Fold);
+    ajStrDel(&(*pthis)->Superfamily);
+    ajStrDel(&(*pthis)->Family);
+    ajStrDel(&(*pthis)->Acc);
+    ajStrDel(&(*pthis)->Spr);
+ 
+    AJFREE(*pthis);
+    *pthis = NULL;
+    
+    return;
+}
+
+
+
+
+
+
+/* @funcstatic libscan_ScoreToPvalue ******************************************
+**
+** Read a score  and calculates the p-value. Relies on a list 
+** of Coord objects sorted by score.
+** 
+** @param [r] score  [float]    The sunid_family 
+** @param [r] list   [AjPList]  Sorted list of Coord objects
+**
+** @return [float] a p-value calculated from a list of scores.
+** @@
+*****************************************************************************/
+
+static float libscan_ScoreToPvalue(float score, AjPList list)
+{
+    LibscanPCoord *arr = NULL;       /* array derived from list */
+    ajint dim = 0;              /* size of the array */
+    ajint idx = 0;              /* index into the array for the score */
+    float p_value = 0.0;
+    
+    if(!score || !list)
+        ajWarn("Bad args passed to libscan_ScoreToPvalue");
+    
+    dim = ajListToArray(list,(void***)&(arr));
+    
+    if(!dim)
+        ajWarn("Empty list passed to libscan_ScoreToPvalue");
+    
+    if((idx = libscan_CoordBinSearchScore(score, arr, dim))==-1)
+    {
+      AJFREE(arr);
+      ajFatal("libscan_ScoreToPvalue fatal error.");
+
+      return p_value;
+    }
+    
+    p_value = ((1-(float)arr[idx]->y/(float)arr[dim-1]->y));  
+    AJFREE(arr);
+    
+    return p_value;
+}
+
+
+
+
+
+/* @funcstatic libscan_SunidToScopInfo ****************************************
+**
+** Read a sunid  and writes the relavent scop infomation for it. Relies on 
+** a list of scop objects sorted by Sunid_Family code.
+** 
+** @param [r] sunid  [ajint]   The sunid_family 
+** @param [w] family [AjPStr*]  Family 
+** @param [w] superfamily [AjPStr*]  Superfamily
+** @param [w] fold [AjPStr*]  Fold
+** @param [w] klass [AjPStr*]  Class
+** @param [r] list   [AjPList]  Sorted list of scop objects
+**
+** @return [AjBool]  True if a swissprot identifier code was found for the
+**                    Scop code.
+** @@
+******************************************************************************/
+static AjBool libscan_SunidToScopInfo (ajint sunid, AjPStr *family,
+				       AjPStr *superfamily, AjPStr *fold,
+				       AjPStr *klass, AjPList list)
+{
+    AjPScop *arr = NULL;             /* array derived from list */
+    ajint dim    = 0;                /* size of the array */
+    ajint idx    = 0; /* index into the array for the Sunid_family */
+
+    AjPStr *class = NULL;
+
+    class = klass;
+    
+    if(!sunid || !list)
+    {
+        ajWarn("Bad args passed to libscan_SunidToScopInfo");
+        return ajFalse;
+    }
+    
+    dim = ajListToArray(list,(void***)&(arr));
+    
+    if(!dim)
+    {
+        ajWarn("Empty list passed to libscan_SunidToScopInfo");
+        return ajFalse;
+    }
+
+    if( (idx = ajScopArrFindSunid(arr, dim, sunid))==-1)
+    {
+        AJFREE(arr);
+        return ajFalse;
+    }   
+    
+    ajStrAssS(family, arr[idx]->Family);
+    ajStrAssS(superfamily, arr[idx]->Superfamily);
+    ajStrAssS(fold, arr[idx]->Fold);
+    ajStrAssS(class, arr[idx]->Class);
+    
+    AJFREE(arr);
+
+    return ajTrue;
+}
+
+
+
+
+
+/* @funcstatic libscan_CoordBinSearchScore ************************************
+**
+** Performs a binary search for a given score over an array of score generated
+** from a model on a set of randomly generated protein sequences. 
+**
+** @param [r] score [float]           Search score
+** @param [r] arr [LibscanPCoord*]    Array of LibscanPCoord objects
+** @param [r] siz [ajint]            Size of array
+**
+** @return [ajint] Index of first AjPScop object found with an PDB code
+** matching id, or -1 if id is not found.
+** @@
+******************************************************************************/
+
+static ajint libscan_CoordBinSearchScore(float score, LibscanPCoord *arr,
+					 ajint siz)
+{
+    int l;
+    int m;
+    int h;
+  
+    l = 0;
+    h = siz-1;
+  
+    while(l<=h)
+    {
+        m = (l+h)>>1;
+    
+        if( (m==0) && (score < arr[m]->x))
+          return m;
+
+        else if( (m<siz-1) &&  (score >= arr[m]->x) && (score < arr[m+1]->x))
+          return m;
+
+        else if( (m==siz-1) &&  (score >= arr[m]->x))
+          return m;
+
+        else if(score < arr[m]->x)
+          h=m-1;
+
+        else if(score > arr[m]->x)
+          l=m+1;
+    }
+
+    return -1;
+}
+
+
+
+
+
+
+
+
+
+
 
 

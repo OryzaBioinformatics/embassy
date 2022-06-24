@@ -527,7 +527,7 @@ int main(int argc, char **argv)
 
 
     /* Start of main application loop*/
-    while((ajXyzScopReadC(scopf, "*", &scop)))
+    while((scop=(ajScopReadCNew(scopf, "*"))))
     {
 	/* A new family */
 /*	if(ajStrMatch(last_fam, scop->Family)==ajFalse)  */
@@ -645,11 +645,13 @@ int main(int argc, char **argv)
 		for(x=1;x<ncluster+1;x++)
 		{
 		    ajFmtPrintS(&temp, "rm %S.%d", name, x);
-		    ajSystem(&temp);
+		    ajSystem(temp);
 		}
-		ajFmtPrintS(&temp, "rm %S.%d.post", name, ncluster);
-		ajSystem(&temp);
 		
+		ajFmtPrintS(&temp, "rm %S.%d.post", name, ncluster);
+		ajSystem(temp);
+		
+
 		/* Open domain set file */
 		if(!(setf=ajFileNewOut(set)))
 		    ajFatal("Could not open domain set file\n");
@@ -677,9 +679,9 @@ int main(int argc, char **argv)
 	    
 	    
 	    /* Copy current scop pointer to prevscop */
-	    ajXyzScopDel(&prevscop);
+	    ajScopDel(&prevscop);
 	    prevscop=NULL;
-	    ajXyzScopCopy(&prevscop, scop);
+	    ajScopCopy(&prevscop, scop);
 	    /* prevscop = scop; */
 	}
 						
@@ -689,7 +691,7 @@ int main(int argc, char **argv)
 	ajStrToLower(&temp);
 	ajFmtPrintF(setf, "%S %S { ALL }\n", temp, temp);
 
-	ajXyzScopDel(&scop);
+	ajScopDel(&scop);
     }
     /* End of main application loop*/
 
@@ -794,33 +796,36 @@ int main(int argc, char **argv)
 
     /* Remove all temporary files */
     ajFmtPrintS(&temp, "rm %S", log);
-    ajSystem(&temp);
+    ajSystem(temp);
     ajFmtPrintS(&temp, "rm %S", dom);
-    ajSystem(&temp);
+    ajSystem(temp);
     ajFmtPrintS(&temp, "rm %S", set);
-    ajSystem(&temp);
+    ajSystem(temp);
     ajFmtPrintS(&temp, "rm %S", scan);
-    ajSystem(&temp);
+    ajSystem(temp);
     ajFmtPrintS(&temp, "rm %S", sort);
-    ajSystem(&temp);
+    ajSystem(temp);
     ajFmtPrintS(&temp, "rm %S", out);
-    ajSystem(&temp);
+    ajSystem(temp);
     ajStrAssS(&temp, name);	
     ajStrAppC(&temp, ".mat");
     ajFmtPrintS(&temp1, "rm %S", temp);
-    ajSystem(&temp1);
+    ajSystem(temp1);
+
 
     /* Remove all temporary files */
     for(x=1;x<ncluster+1;x++)
     {
 	ajFmtPrintS(&temp, "rm %S.%d", name, x);
-	ajSystem(&temp);
+	ajSystem(temp);
     }
     ajFmtPrintS(&temp, "rm %S.%d.post", name, ncluster);
-    ajSystem(&temp);
+    ajSystem(temp);
     
+    
+
     /* Tidy up*/
-    ajXyzScopDel(&scop);
+    ajScopDel(&scop);
     ajFileClose(&scopf);	
     ajRegFree(&rexp);
     ajStrDel(&last_fam);

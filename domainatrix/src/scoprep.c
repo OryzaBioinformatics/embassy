@@ -307,7 +307,7 @@ int main(int argc, char **argv)
     
 
     /* Start of main application loop*/
-    while((ajXyzScopReadC(scopin, "*", &scop)))
+    while((scop=(ajScopReadCNew(scopin, "*"))))
     {
 	/* A new family */
 	if( last_famid !=  scop->Sunid_Family)
@@ -432,13 +432,13 @@ int main(int argc, char **argv)
 			    ignore = x;
 			}
 		    }
-		    ajXyzScopWrite(scopout, arr[ignore]);
+		    ajScopWrite(scopout, arr[ignore]);
 		    for(x=0;x<famsize;x++)
 		    {
 			if(x==ignore)
 			    continue;
 			else
-			    ajXyzScopWrite(scopout, arr[x]);
+			    ajScopWrite(scopout, arr[x]);
 		    }
 
 
@@ -447,7 +447,7 @@ int main(int argc, char **argv)
 		    arr=NULL;
 		    
 		    while(ajListPop(famlist,(void**)&tmp))
-			ajXyzScopDel(&tmp);
+			ajScopDel(&tmp);
 		    ajListDel(&famlist);
 		    famlist    = ajListNew();
 		
@@ -462,8 +462,8 @@ int main(int argc, char **argv)
 		{
 		    while(ajListPop(famlist,(void**)&tmp))
 		    {
-			ajXyzScopWrite(scopout, tmp);
-			ajXyzScopDel(&tmp);
+			ajScopWrite(scopout, tmp);
+			ajScopDel(&tmp);
 		    }
 		    ajListDel(&famlist);
 		    famlist    = ajListNew();
@@ -603,13 +603,13 @@ int main(int argc, char **argv)
 		ignore = x;
 	    }
 	}
-	ajXyzScopWrite(scopout, arr[ignore]);
+	ajScopWrite(scopout, arr[ignore]);
 	for(x=0;x<famsize;x++)
 	{
 	    if(x==ignore)
 		continue;
 	    else
-		ajXyzScopWrite(scopout, arr[x]);
+		ajScopWrite(scopout, arr[x]);
 	}
 	
 	
@@ -618,7 +618,7 @@ int main(int argc, char **argv)
 	arr=NULL;
 	
 	while(ajListPop(famlist,(void**)&tmp))
-	    ajXyzScopDel(&tmp);
+	    ajScopDel(&tmp);
 	ajListDel(&famlist);
 	famlist    = ajListNew();
 	
@@ -633,8 +633,8 @@ int main(int argc, char **argv)
     {
 	while(ajListPop(famlist,(void**)&tmp))
 	{
-	    ajXyzScopWrite(scopout, tmp);
-	    ajXyzScopDel(&tmp);
+	    ajScopWrite(scopout, tmp);
+	    ajScopDel(&tmp);
 	}
 	ajListDel(&famlist);
 	famlist    = ajListNew();
@@ -646,17 +646,17 @@ int main(int argc, char **argv)
     if(domf)
     {
 	ajFmtPrintS(&temp, "rm %S", dom);
-	ajSystem(&temp);
+	ajSystem(temp);
     }
     if(setf)
     {
 	ajFmtPrintS(&temp, "rm %S", set);
-	ajSystem(&temp);
+	ajSystem(temp);
     }
     if(outf)
     {    
 	ajFmtPrintS(&temp, "rm %S", out);
-	ajSystem(&temp);
+	ajSystem(temp);
     }
     
     

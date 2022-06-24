@@ -3,15 +3,23 @@
 SUBDIRS =
 
 bin_PROGRAMS = contacts domainer fraggle hetparse hmmgen interface libscan \
-               pdbparse pdbtosp profgen scopalign scopnr scopparse \
-               scoprep scopreso scopseqs seqalign seqnr seqsearch seqsort \
-               seqwords siggen sigplot sigscan
+	pdbparse pdbplus pdbtosp profgen rocplot scopalign scopnr \
+	scopparse scoprep scopreso scopseqs seqalign seqnr seqsearch \
+	seqsort seqwords siggen sigplot sigscan
 
+if LOCALLINK
 INCLUDES = -I../../../plplot -I../../../ajax -I../../../nucleus
+else
+INCLUDES = -I${embprefix}/include
+endif
 
 if ISSHARED
 if ISAIXIA64
+if LOCALLINK
 AM_CFLAGS = -Wl,-bdynamic -Wl,-brtl -L../../../plplot/.libs -L../../../ajax/.libs -L../../../nucleus/.libs -lajax -lnucleus
+else
+AM_CFLAGS = -Wl,-bdynamic -Wl,-brtl -L${embprefix}/lib -lajax -lnucleus
+endif
 else
 AM_CFLAGS =
 endif
@@ -25,7 +33,9 @@ hmmgen_SOURCES = hmmgen.c
 interface_SOURCES = interface.c
 libscan_SOURCES = libscan.c
 pdbparse_SOURCES = pdbparse.c
+pdbplus_SOURCES = pdbplus.c
 pdbtosp_SOURCES = pdbtosp.c
+rocplot_SOURCES = rocplot.c
 profgen_SOURCES = profgen.c
 scopalign_SOURCES = scopalign.c
 scopnr_SOURCES = scopnr.c
@@ -42,4 +52,19 @@ siggen_SOURCES = siggen.c
 sigplot_SOURCES = sigplot.c
 sigscan_SOURCES = sigscan.c
 
-LDADD = ../../../plplot/libplplot.la ../../../ajax/libajaxg.la ../../../ajax/libajax.la ../../../nucleus/libnucleus.la $(XLIB)
+if LOCALLINK
+
+if ISCYGWIN
+LDADD = ../../../nucleus/libnucleus.la  ../../../ajax/libajax.la ../../../plplot/libplplot.la $(XLIB)
+else
+LDADD = ../../../nucleus/libnucleus.la ../../../ajax/libajaxg.la ../../../ajax/libajax.la ../../../plplot/libplplot.la $(XLIB)
+endif
+
+else
+if ISCYGWIN
+LDADD = -L${embprefix}/lib -lnucleus -lajax -lplplot $(XLIB)
+else
+LDADD = -L${embprefix}/lib -lnucleus -lajaxg -lajax -lplplot $(XLIB)
+endif
+
+endif

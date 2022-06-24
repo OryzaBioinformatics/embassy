@@ -88,20 +88,21 @@
 **  An example of interactive use of fraggle is shown below.
 **  Unix % fraggle
 **  Removes fragment sequences from files of hits for scop families.
-**  Location of scop hits files (input) [./]: /test_data
-**  Extension of scop hits files [.hits]: 
-**  Percentage of median length for definition of fragments [50]: 
-**  Location of scop hits files (output) [./]: /test_data
-**  Extension of scop hits files (output) [.hits]: .fhits
-**  Processing /test_data/55074.hits
+**  Location of scop hits files (input) [./]: testdata
+**  Percentage of median length for definition of fragments [50]:
+**  Location of scop hits files (output) [./]: testdata
+**  Processing testdata/54894.hits
+**  Processing testdata/55074.hits
+**  Unix %
+** 
 **  
-**  All the scop hits files with the file extension .hits in the directory 
-**  /test_data were read.  In this case a single file called 55074.hits was
-**  read.  A scop hits file with fragment sequences removed called 
-**  55074.fhits was written to /test_data.
+**  All the scop hits files with the file extension .hits (specified in the 
+**  ACD file) in the directory /testdata were read.  In this case two 
+**  files called 55074.hits and 54894.hits were read.  Two scop hits file with
+**  fragment sequences removed were written to /testdata.
 **  
 **  The following command line would achieve the same result.
-**  fraggle /test_data .hits /test_data .fhits -thresh 50
+**  fraggle testdata testdata -thresh 50
 **  
 **  
 **  
@@ -153,22 +154,18 @@
 ******************************************************************************/
 int main(int argc, char **argv)
 {
-
-    AjPStr      hitsin          = NULL;  /* Location of hits files for input       */
-    AjPStr      hitsextn        = NULL;  /* Extension of hits files for input      */
-    AjPStr      hitsout         = NULL;  /* Location of new hits files for output  */
-    AjPStr      hitsoutextn     = NULL;  /* Extension of new hits files for output */
+    AjPList      hitsin          = NULL;  /* Hits files for input                   */
+    AjPDir       hitsout         = NULL;  /* Hits files for output                  */
 
     AjPStr      temp            = NULL;  /* Temp string                            */
     AjPStr      name            = NULL;  /* Temp string                            */
-    AjPStr      hold            = NULL;  /* Temp string                            */
     AjPStr      line            = NULL;  /* String to hold file lines              */
     AjPStr      exec            = NULL;  /* The UNIX command line to be executed   */    
 
     ajint       thresh          = 0;     /* Threshold for definition of fragments  */
     ajint       start           = 0;     /* int to hold start of sequence range    */
     ajint       end             = 0;     /* int to hold end of sequence range      */
-    ajint       num             = 0;     /* number of nodes on list                */
+/*    ajint       num             = 0; */    /* number of nodes on list                */
     ajint       len             = 0;     /* length of sequence hit                 */
     ajint       x               = 0;     /* Loop counters                          */
     ajint       y               = 0;     /* Loop counters                          */
@@ -183,7 +180,6 @@ int main(int argc, char **argv)
     AjPInt      seq_len         = NULL;  /* Array to hold sorted lengths           */
     AjPInt      seq_ok          = NULL;  /* Array indicating if length is > thresh */
 
-    AjPList     list            = NULL;  /* List to hold hits file in directory    */
     AjPFile     hitsPtr         = NULL;  /* Pointer to hits file                   */
     AjPFile     hitsoutPtr      = NULL;  /* Pointer to hits output file            */
      
@@ -192,66 +188,34 @@ int main(int argc, char **argv)
     AjBool      ok              = ajFalse; /* Bool                                 */
 
     /* Assign strings and list */
-    hitsin       = ajStrNew();
-    hitsextn     = ajStrNew();
-    hitsout      = ajStrNew();
-    hitsoutextn  = ajStrNew();
     name         = ajStrNew();
     line         = ajStrNew();
-    hold         = ajStrNew();
     exec         = ajStrNew();
-    list         = ajListNew();
-
 
 
     /* Read data from acd */
     ajNamInit("emboss");
     ajAcdInitP("fraggle",argc,argv,"DOMAINATRIX"); 
-    hitsin      = ajAcdGetString("hitsin");
-    hitsextn    = ajAcdGetString("hitsextn");
-    hitsout     = ajAcdGetString("hitsout");
-    hitsoutextn = ajAcdGetString("hitsoutextn");
+    hitsin      = ajAcdGetDirlist("hitsin");
+    hitsout     = ajAcdGetDirectory("hitsout");
+
     thresh      = ajAcdGetInt("thresh");
     
 
-    /* Check directories */
-    if(!ajFileDir(&hitsin))
-        ajFatal("Could not open hits directory");
 
-    if(!ajFileDir(&hitsout))
-        ajFatal("Could not open hits directory");
-
-
-    /* Create list of files in align directory */
-    ajStrAssC(&temp, "*");      
-    if((ajStrChar(hitsextn, 0)=='.'))
-        ajStrApp(&temp, hitsextn);    
-    else
-    {
-        ajStrAppC(&temp, ".");    
-        ajStrApp(&temp, hitsextn);    
-    }
-
-    /* scan directory for hits files and add to list */
-    ajFileScan(hitsin,temp,&list,ajFalse,ajFalse,NULL,NULL,ajFalse,NULL); 
-    ajStrDel(&temp);
-
+/*    ajFmtPrint("length: %d\n", ajListLength(hitsin)); */
     
-    /* Determine number of nodes on list    */
-    num = ajListLength(list);
 
-    
-    
     /* Start of main application loop                         */
     /* determine median length of sequences in each hits file */
-    while(ajListPop(list,(void **)&temp))
+    while(ajListPop(hitsin,(void **)&temp))
     {
         /* Open hits file */
         if((hitsPtr=ajFileNewIn(temp))==NULL)
         {
             ajFileClose(&hitsPtr);
-            ajWarn("Could not open hits file");
-            ajStrDel(&temp);
+            ajWarn("Could not open hits file XXX %S XXX", temp);
+            ajStrDel(&temp); 
             continue;       
         }
 
@@ -269,7 +233,8 @@ int main(int argc, char **argv)
 
                 if((num_hits == 0) || (num_hits == 1))
                 {
-                    /* printf("Number of hits = 0 or 1....exiting this hits file\n"); */
+                    /* printf("Number of hits = 0 or 1...."
+		       "exiting this hits file\n"); */
 
                     /* Set bool to false so we do NOT carry on any */
                     /* further with this hits file                 */
@@ -322,7 +287,6 @@ int main(int argc, char **argv)
         }
 
 
-
         if(ok == ajTrue)
         {
             /* Calculate median length */
@@ -367,32 +331,18 @@ int main(int argc, char **argv)
             ajFileSeek(hitsPtr, 0, 0);
         
             /* Read hitlist into structure */
-            ajXyzHitlistRead(hitsPtr, "//", &hitlist);
+            hitlist = embHitlistRead(hitsPtr);
+	    
         
             /* create output file name and path */
-            ajStrAss(&name, hitsout);
-            ajStrFromInt(&hold, hitlist->Sunid_Family);
-
-            ajStrApp(&name, hold);
-
-            if((ajStrChar(hitsoutextn, 0) == '.') || (ajStrChar(hitsoutextn, 0) == '_'))
-            {
-                ajStrApp(&name, hitsoutextn);
-            }
+            ajStrFromInt(&name, hitlist->Sunid_Family);
         
-            else
-            {
-                ajStrAppC(&name, ".");
-                ajStrApp(&name, hitsoutextn);
-            }
-        
-            /*ajFmtPrint("filename = %S\n", name);*/
         
             /* Create output file */
-            hitsoutPtr = ajFileNewOut(name);
+            hitsoutPtr = ajFileNewOutDir(hitsout, name);
 
             /* Write family header information to output file */
-	    /* Now done by call to ajXyzHitlistWriteSubset
+	    /* Now done by call to embHitlistWriteSubset
             if(MAJSTRLEN(hitlist->Class))
                 ajFmtPrintF(hitsoutPtr,"CL   %S\n",hitlist->Class);
             if(MAJSTRLEN(hitlist->Fold))
@@ -430,22 +380,20 @@ int main(int argc, char **argv)
                 }
             
             }
-        
+
+	    
             /* Write NS field to file */
-	    /* Now done by call to ajXyzHitlistWriteSubset
+	    /* Now done by call to embHitlistWriteSubset
             ajFmtPrintF(hitsoutPtr,"XX\nNS   %d\nXX\n",y); */
 
             /* Go through seq_ok array if element == 1 then   */
             /* write that element of structure to output file */
 
 
-	    /* Now done by call to ajXyzHitlistWriteSubset
-
+	    /* Now done by call to embHitlistWriteSubset
             y = 0;
-
             for(x=0;x<num_hits;x++)
             {
-
                 if(ajIntGet(seq_ok, x) == 1)
                 {
                     y++;
@@ -470,15 +418,15 @@ int main(int argc, char **argv)
                     continue;
             }
 
+
             ajFmtPrintF(hitsoutPtr, "//\n");
 	    */
 
-	    ajXyzHitlistWriteSubset(hitsoutPtr, hitlist, seq_ok);
-	    
+	    embHitlistWriteSubset(hitsoutPtr, hitlist, seq_ok);
 
 
             /* Close input and output files and tidy up */
-            ajXyzHitlistDel(&hitlist);
+            embHitlistDel(&hitlist);
             hitlist=NULL;
             ajFileClose(&hitsoutPtr);
             ajFileClose(&hitsPtr);
@@ -498,26 +446,13 @@ int main(int argc, char **argv)
             ajFileSeek(hitsPtr, 0, 0);
             
             /* Read hitlist into structure */
-            ajXyzHitlistRead(hitsPtr, "//", &hitlist);
-        
+            hitlist = embHitlistRead(hitsPtr);
+	            
             /* create output file name and path */
-            ajStrAss(&name, hitsout);
-            ajStrFromInt(&hold, hitlist->Sunid_Family);
-            ajStrApp(&name, hold);
+            ajStrFromInt(&name, hitlist->Sunid_Family);
 
-            if((ajStrChar(hitsoutextn, 0) == '.') || (ajStrChar(hitsoutextn, 0) == '_'))
-            {
-                ajStrApp(&name, hitsoutextn);
-            }
-        
-            else
-            {
-                ajStrAppC(&name, ".");
-                ajStrApp(&name, hitsoutextn);
-            }
-            
             /* Create output file */
-            hitsoutPtr = ajFileNewOut(name);
+            hitsoutPtr = ajFileNewDirF(hitsout, name);
 
 
             /* Write family header information to output file */
@@ -567,11 +502,11 @@ int main(int argc, char **argv)
             /* tidy and go on to next file */
             ajFileClose(&hitsPtr);
             ajFileClose(&hitsoutPtr);
-            ajXyzHitlistDel(&hitlist);
+            embHitlistDel(&hitlist);
             hitlist=NULL;
         }
 
-	ajStrDel(&temp);
+	ajStrDel(&temp); 
     }
     
     
@@ -579,15 +514,11 @@ int main(int argc, char **argv)
 
     /* Tidy up */
     /* Delete strings and list */
-    ajStrDel(&hitsin);
-    ajStrDel(&hitsextn);
-    ajStrDel(&hitsout);
-    ajStrDel(&hitsoutextn);
+    ajListDel(&hitsin);
+    ajDirDel(&hitsout);
     ajStrDel(&line);
     ajStrDel(&name);
-    ajStrDel(&hold);
     ajStrDel(&exec);
-    ajListDel(&list);
 
 
     /* Return */
