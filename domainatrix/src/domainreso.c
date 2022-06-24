@@ -3,8 +3,8 @@
 ** Removes low resolution domains from a DCF file (domain
 ** classification file).
 **
-** @author: Copyright (C) Matt Blades (Matthew.Blades@astrazeneca.com)
-** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
+** @author: Copyright (C) Matt Blades 
+** @author: Copyright (C) Jon Ison (jison@ebi.ac.uk)
 ** @@
 **
 **
@@ -33,7 +33,7 @@
 **  Software Suite.  Trends in Genetics, 15:276-278.  
 **  See also http://www.uk.embnet.org/Software/EMBOSS
 **  
-**  Email jison@rfcgr.mrc.ac.uk.
+**  Email jison@ebi.ac.uk.
 **  
 **  NOTES
 **  
@@ -102,8 +102,7 @@ int main(ajint argc, char **argv)
     
                                            
     /* Read data from acd */
-    ajNamInit("emboss");
-    ajAcdInitP("domainreso",argc,argv,"DOMAINATRIX"); 
+    embInitP("domainreso",argc,argv,"DOMAINATRIX"); 
     cpdb_path     = ajAcdGetDirlist("cpdbpath");    
     threshold     = ajAcdGetFloat("threshold");
     dcfin         = ajAcdGetInfile("dcfinfile");
@@ -168,7 +167,7 @@ int main(ajint argc, char **argv)
 	{
 	    /* assign ID to list. */
 	    temp2=ajStrNew();
-	    ajStrAssS(&temp2, pdb->Pdb);
+	    ajStrAssignS(&temp2, pdb->Pdb);
 	    ajListPush(entry, (AjPStr) temp2);
 	}        
 	
@@ -247,7 +246,7 @@ static ajint domainreso_StrBinSearchDomain(AjPStr id,
     {
         m = (l+h)>>1;
 
-        if((c=ajStrCmpCase(id, arr[m])) < 0)
+        if((c=ajStrCmpCaseS(id, arr[m])) < 0)
 	    h = m-1;
         else if(c>0) 
 	    l = m+1;
@@ -282,7 +281,7 @@ static ajint domainreso_StrComp(const void *str1,
     p = (*(AjPStr*)str1);
     q = (*(AjPStr*)str2);
     
-    return ajStrCmpO(p, q);
+    return ajStrCmpS(p, q);
 }
 
 

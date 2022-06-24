@@ -2,8 +2,8 @@
 **
 ** Adds secondary structure records to a DCF file (domain classification file).
 **
-** @author: Copyright (C) Amanda O'Reilly (aoreilly@hgmp.mrc.ac.uk)
-** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
+** @author: Copyright (C) Amanda O'Reilly 
+** @author: Copyright (C) Jon Ison (jison@ebi.ac.uk)
 ** @@
 **
 ** This program is free software; you can redistribute it and/or
@@ -31,7 +31,7 @@
 **  Software Suite.  Trends in Genetics, 15:276-278.  
 **  See also http://www.uk.embnet.org/Software/EMBOSS
 **  
-**  Email jison@rfcgr.mrc.ac.uk.
+**  Email jison@ebi.ac.uk.
 **  
 **  NOTES
 **  SS:
@@ -70,22 +70,25 @@
 int main(int argc, char **argv)
 {
     ajint    num       = 0;
-    AjPStr   msg       = NULL; /* Pointer to String used for messages.        */
-    AjPDir   dccf      = NULL; /* Pointer to Path of dccf (clean domain) files*/
-    AjPStr   dccf_name = NULL; /* Pointer to Name of dccf (clean domain) file */
+    AjPStr   msg       = NULL; /* Pointer to String used for messages.  */
+    AjPDir   dccf      = NULL; /* Pointer to Path of dccf (clean
+				  domain) files*/
+    AjPStr   dccf_name = NULL; /* Pointer to Name of dccf (clean
+   				  domain) file */
    
-    AjPStr   sse       = NULL; /* Pointer to Secondary structure element map. */
-    AjPStr   sss       = NULL; /* Pointer to Secondary structure string.      */
+    AjPStr   sse       = NULL; /* Pointer to Secondary structure
+				  element map. */
+    AjPStr   sss       = NULL; /* Pointer to Secondary structure
+				  string.  */
     char     ss; 
 
-    AjPFile  dccf_inf  = NULL; /* File pointer for input domain files.        */
-    AjPFile  dcf_inf   = NULL; /* File pointer to input scop file.            */
-    AjPFile  dcf_outf  = NULL; /* File pointer for scop output file.          */
-    AjPFile  errf      = NULL; /* File pointer for output log file.           */
-    
-    AjPScop  scop      = NULL; /* Pointer to scopstride object.               */
-    AjPPdb   pdb       = NULL; /* Pointer to pdb object.                      */
-    AjPResidue temp_res= NULL; /* Pointer to Residue object.                  */
+    AjPFile  dccf_inf  = NULL; /* File pointer for input domain files.  */
+    AjPFile  dcf_inf   = NULL; /* File pointer to input scop file.  */
+    AjPFile  dcf_outf  = NULL; /* File pointer for scop output file.  */
+    AjPFile  errf      = NULL; /* File pointer for output log */
+    AjPScop  scop      = NULL; /* Pointer to scopstride object.  */
+    AjPPdb   pdb       = NULL; /* Pointer to pdb object.  */
+    AjPResidue temp_res= NULL; /* Pointer to Residue object.  */
     AjIList  iter      = NULL;
 
 
@@ -97,8 +100,7 @@ int main(int argc, char **argv)
 
 
     /* Read data from acd */
-    ajNamInit("emboss");
-    ajAcdInitP("domainsse",argc,argv,"DOMAINATRIX");
+    embInitP("domainsse",argc,argv,"DOMAINATRIX");
     dcf_inf    = ajAcdGetInfile("dcfinfile");
     dcf_outf   = ajAcdGetOutfile("dcfoutfile");
     dccf        = ajAcdGetDirectory("dccfdir");
@@ -106,13 +108,13 @@ int main(int argc, char **argv)
 
 
 
-    /* Start of main application loop.
-       ajScopReadC creates a Scop object from a scop file in embl-like format. */
+    /* Start of main application loop.  ajScopReadC creates a Scop
+       object from a scop file in embl-like format. */
     while((scop=(ajScopReadCNew(dcf_inf, "*"))))
     {
         /* construct name of domain coordinate file*/
-	ajStrAssS(&dccf_name,scop->Entry);
-	ajStrToLower(&dccf_name);
+	ajStrAssignS(&dccf_name,scop->Entry);
+	ajStrFmtLower(&dccf_name);
 
        	ajFmtPrint("Processing %S\n", scop->Entry);
         fflush(stdout);
@@ -124,7 +126,7 @@ int main(int argc, char **argv)
 	    ajFmtPrintF(errf, "%-15s\n", "FILE_OPEN");
             ajFmtPrintF(errf, "Could not open dccf file %S\n", dccf_name);  
 	    ajFmtPrintS(&msg, "Could not open dccf file %S\n", dccf_name);
-      	    ajWarn(ajStrStr(msg));
+      	    ajWarn(ajStrGetPtr(msg));
 	    ajScopDel(&scop);
 	    continue; /* move on to next item in scopfile*/
 	}
@@ -135,7 +137,7 @@ int main(int argc, char **argv)
 	    ajFmtPrintF(errf, "%-15s\n", "FILE_READ"); 
             ajFmtPrintF(errf, "Could not read dccf file %S", dccf_name); 
 	    ajFmtPrintS(&msg, "Could not read dccf file %S", dccf_name);
-	    ajWarn(ajStrStr(msg));
+	    ajWarn(ajStrGetPtr(msg));
 	    ajFileClose(&dccf_inf);
 	    ajScopDel(&scop);
 	    ajPdbDel(&pdb);
@@ -162,12 +164,12 @@ int main(int argc, char **argv)
             {
                 /* Append one instance of eType for each new element to make 
 		   sse map. */
-	        ajStrAppK(&sse, temp_res->eType);
+	        ajStrAppendK(&sse, temp_res->eType);
                 num++;
             }
 	}
 	/* Add the completed sse to the scop structure. */
-        ajStrAssS(&scop->Sse, sse);
+        ajStrAssignS(&scop->Sse, sse);
 	
         ajListIterFree(&iter);
 
@@ -189,10 +191,10 @@ int main(int argc, char **argv)
 	    ss = temp_res->eType;
 	    if (ss == '.')
 		ss = 'L';
-	    ajStrAppK(&sss, ss);
+	    ajStrAppendK(&sss, ss);
 	}	
 	/* Add the completed sss to the scop structure. */
-        ajStrAssS(&scop->Sss, sss);
+        ajStrAssignS(&scop->Sss, sss);
         ajListIterFree(&iter);
 
 	/* Write out the scop structure to the scop output file. */
@@ -203,7 +205,7 @@ int main(int argc, char **argv)
 			"output file\n ", dccf_name); 
 	    ajFmtPrintS(&msg, "Could not write scop structure for %S to scop "
 			"output file ", dccf_name);
-	    ajWarn(ajStrStr(msg));
+	    ajWarn(ajStrGetPtr(msg));
             ajFileClose(&dccf_inf);
 	    ajScopDel(&scop);
 	    ajPdbDel(&pdb);
@@ -238,4 +240,3 @@ int main(int argc, char **argv)
     ajExit();
     return 0;
 }
-

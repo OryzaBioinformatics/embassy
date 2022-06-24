@@ -4,8 +4,8 @@
 ** classification file).
 ** 
 **
-** @author: Copyright (C) Mike Hurley (mhurley@hgmp.mrc.ac.uk)
-** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
+** @author: Copyright (C) Mike Hurley
+** @author: Copyright (C) Jon Ison (jison@ebi.ac.uk)
 ** @@
 **
 ** This program is free software; you can redistribute it and/or
@@ -34,7 +34,7 @@
 **  Software Suite.  Trends in Genetics, 15:276-278.  
 **  See also http://www.uk.embnet.org/Software/EMBOSS
 **  
-**  Email jison@rfcgr.mrc.ac.uk.
+**  Email jison@ebi.ac.uk.
 **  
 **  NOTES
 **  na.
@@ -69,8 +69,7 @@ int main(int argc, char **argv)
     AjPCath tmp      = NULL; /* Temp. pointer.                          */
     
     
-    ajNamInit("emboss");
-    ajAcdInitP("cathparse", argc, argv, "DOMAINATRIX");
+    embInitP("cathparse", argc, argv, "DOMAINATRIX");
 
     listf  =  ajAcdGetInfile("listfile");   
     domf   =  ajAcdGetInfile("domfile");    

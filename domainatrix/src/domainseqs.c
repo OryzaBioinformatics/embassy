@@ -2,8 +2,8 @@
 **
 ** Adds sequence records to a DCF file (domain classification file).
 **
-** @author: Copyright (C) Ranjeeva Ranasinghe (rranasin@hgmp.mrc.ac.uk)
-** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
+** @author: Copyright (C) Ranjeeva Ranasinghe 
+** @author: Copyright (C) Jon Ison (jison@ebi.ac.uk)
 ** @@
 **
 ** This program is free software; you can redistribute it and/or
@@ -31,7 +31,7 @@
 **  Software Suite.  Trends in Genetics, 15:276-278.  
 **  See also http://www.uk.embnet.org/Software/EMBOSS
 **  
-**  Email jison@rfcgr.mrc.ac.uk.
+**  Email jison@ebi.ac.uk.
 **  
 **  NOTES
 **  
@@ -140,8 +140,7 @@ int main(int argc, char **argv)
 
 
     /* Read data from acd */
-    ajNamInit("emboss");
-    ajAcdInitP("domainseqs",argc,argv,"DOMAINATRIX");
+    embInitP("domainseqs",argc,argv,"DOMAINATRIX");
 
     domain_inf    = ajAcdGetInfile("dcfinfile");
     getswiss    = ajAcdGetToggle("getswiss");
@@ -167,8 +166,8 @@ int main(int argc, char **argv)
     /* Start of main application loop. */
     while((domain=(ajDomainReadCNew(domain_inf, "*", type))))
     {
-	ajStrAssS(&dpdb_name,ajDomainGetId(domain));
-	ajStrToLower(&dpdb_name);
+	ajStrAssignS(&dpdb_name,ajDomainGetId(domain));
+	ajStrFmtLower(&dpdb_name);
 
 	ajFmtPrintF(errf, "//\n%-15S\n", ajDomainGetId(domain));  
 	ajFmtPrint("//\n%-15S\n", ajDomainGetId(domain));  
@@ -176,9 +175,9 @@ int main(int argc, char **argv)
 
 	if(!(dpdb_inf=ajFileNewDirF(dpdb_path, dpdb_name)))
 	{
-	    ajStrAssS(&msg, dpdb_name);
-	    ajStrAppC(&msg, ".");
-	    ajStrApp(&msg,ajDirExt(dpdb_path));
+	    ajStrAssignS(&msg, dpdb_name);
+	    ajStrAppendC(&msg, ".");
+	    ajStrAppendS(&msg,ajDirExt(dpdb_path));
 	    ajFmtPrintF(errf, "%-15s\n", "FILE_OPEN");  
 	    ajWarn("Could not open ccf file %S", msg);
 	    ajDomainDel(&domain);
@@ -190,7 +189,7 @@ int main(int argc, char **argv)
 	{
 	    ajFmtPrintF(errf, "%-15s\n", "FILE_READ");  
 	    ajFmtPrintS(&msg, "Error reading ccf file %S", dpdb_name);
-	    ajWarn(ajStrStr(msg));
+	    ajWarn(ajStrGetPtr(msg));
 	    ajFileClose(&dpdb_inf);
 	    ajDomainDel(&domain);
 	    ajPdbDel(&pdb);
@@ -198,18 +197,18 @@ int main(int argc, char **argv)
 	}
 		
 	/* Get and assign the pdb sequence. */
-	ajStrAssS(&dpdb_seq, pdb->Chains[0]->Seq);
+	ajStrAssignS(&dpdb_seq, pdb->Chains[0]->Seq);
 	
 	/* Create a pdb sequence object. */
 	pdb_seq = ajSeqNew();
-	ajStrAssS(&pdb_seq->Name,dpdb_name);
-	ajStrAssS(&pdb_seq->Seq,dpdb_seq);
+	ajStrAssignS(&pdb_seq->Name,dpdb_name);
+	ajStrAssignS(&pdb_seq->Seq,dpdb_seq);
 	
 	/* Add pdb sequence to the domain structure. */
 	if((domain->Type == ajSCOP))
-	    ajStrAssS(&domain->Scop->SeqPdb, dpdb_seq);
+	    ajStrAssignS(&domain->Scop->SeqPdb, dpdb_seq);
 	else
-	    ajStrAssS(&domain->Cath->SeqPdb, dpdb_seq);
+	    ajStrAssignS(&domain->Cath->SeqPdb, dpdb_seq);
 
 
 	
@@ -255,15 +254,15 @@ int main(int argc, char **argv)
 
 	/* Add the accession number to the domain structure. */
 	if((domain->Type == ajSCOP))
-	    ajStrAssS(&domain->Scop->Acc,acc);
+	    ajStrAssignS(&domain->Scop->Acc,acc);
 	else
-	    ajStrAssS(&domain->Cath->Acc,acc);
+	    ajStrAssignS(&domain->Cath->Acc,acc);
 
 	/* Get the swissprot sequence. */
 	sp_seq = ajSeqNew();
 
-	ajStrAssC(&db, "swissprot-acc:");
-	ajStrApp(&db, acc);
+	ajStrAssignC(&db, "swissprot-acc:");
+	ajStrAppendS(&db, acc);
 
 	if(!(ajSeqGetFromUsa(db,ajTrue,&sp_seq)))
         {
@@ -279,22 +278,22 @@ int main(int argc, char **argv)
         else
 	{
 	    if((domain->Type == ajSCOP))
-		ajStrAssS(&domain->Scop->Spr,sp_seq->Name);
+		ajStrAssignS(&domain->Scop->Spr,sp_seq->Name);
 	    else
-		ajStrAssS(&domain->Cath->Spr,sp_seq->Name);
+		ajStrAssignS(&domain->Cath->Spr,sp_seq->Name);
 	}
 	
 	if((domain->Type == ajSCOP))
-	    ajStrAssS(&domain->Scop->Spr,sp_seq->Name);
+	    ajStrAssignS(&domain->Scop->Spr,sp_seq->Name);
 	else
-	    ajStrAssS(&domain->Cath->Spr,sp_seq->Name);
+	    ajStrAssignS(&domain->Cath->Spr,sp_seq->Name);
 
 	/* Find swissprot sequence segment corresponding to pdb sequence. */
 	
 	/* First look for identical match. */
-	if((ajStrFind(sp_seq->Seq,dpdb_seq))>=0)
+	if((ajStrFindS(sp_seq->Seq,dpdb_seq))>=0)
 	{
-	    start = ajStrFind(sp_seq->Seq,dpdb_seq);
+	    start = ajStrFindS(sp_seq->Seq,dpdb_seq);
 	    end = start + dpdb_seq->Len - 1;
 
 	    if((domain->Type == ajSCOP))
@@ -333,12 +332,12 @@ int main(int argc, char **argv)
 
 	/* Get the domain sequence from the swissprot sequence trim it and 
 	   write to domain structure. */
-	ajStrAssSub(&sp_dom_seq, sp_seq->Seq, start, end);
+	ajStrAssignSubS(&sp_dom_seq, sp_seq->Seq, start, end);
 
 	if((domain->Type == ajSCOP))
-	    ajStrAssS(&domain->Scop->SeqSpr,sp_dom_seq);
+	    ajStrAssignS(&domain->Scop->SeqSpr,sp_dom_seq);
 	else
-	    ajStrAssS(&domain->Cath->SeqSpr,sp_dom_seq);
+	    ajStrAssignS(&domain->Cath->SeqSpr,sp_dom_seq);
 
 	/* write out the domain structure. */
 	ajDomainWrite(domain_outf,domain);
@@ -451,12 +450,12 @@ static AjBool domainseqs_AlignDomain(AjPSeq sp_seq,
     cvt = ajMatrixfCvt(matrix);
 
 
-    begina  = ajSeqBegin(sp_seq)+ajSeqOffset(sp_seq);
+    begina  = ajSeqGetBegin(sp_seq)+ajSeqGetOffset(sp_seq);
 
-    lena = ajSeqLen(sp_seq);
+    lena = ajSeqGetLen(sp_seq);
     ajSeqTrim(pdb_seq);
-    lenb = ajSeqLen(pdb_seq);
-    len  = ajSeqLen(sp_seq)*ajSeqLen(pdb_seq);
+    lenb = ajSeqGetLen(pdb_seq);
+    len  = ajSeqGetLen(sp_seq)*ajSeqGetLen(pdb_seq);
     
     if(len>maxarr)
     {
@@ -465,13 +464,13 @@ static AjBool domainseqs_AlignDomain(AjPSeq sp_seq,
 	maxarr=len;
     }
     
-    beginb  = ajSeqBegin(pdb_seq)+ajSeqOffset(pdb_seq);
+    beginb  = ajSeqGetBegin(pdb_seq)+ajSeqGetOffset(pdb_seq);
 
-    p = ajSeqChar(sp_seq); 
-    q = ajSeqChar(pdb_seq); 
+    p = ajSeqGetSeqC(sp_seq); 
+    q = ajSeqGetSeqC(pdb_seq); 
     
-    ajStrAssC(&m,"");
-    ajStrAssC(&n,"");
+    ajStrAssignC(&m,"");
+    ajStrAssignC(&n,"");
     
     
     /* Call alignment functions. */
@@ -573,39 +572,39 @@ static AjBool domainseqs_FindDomainLimits(AjPSeq sp_seq,
     ajint no_gaps_pdb = 0;   /* The number of gaps in the pdb sequence. */
     
     ajDebug("embAlignReportGlobal %d %d\n", start1, start2);
-    ajDebug("  sp_seq: '%S' \n", ajSeqStr(sp_seq));
-    ajDebug("  pdb_seq: '%S' \n", ajSeqStr(pdb_seq));
+    ajDebug("  sp_seq: '%S' \n", ajSeqGetSeqS(sp_seq));
+    ajDebug("  pdb_seq: '%S' \n", ajSeqGetSeqS(pdb_seq));
     ajDebug("  alim: '%S' \n", m);
     ajDebug("  alin: '%S' \n", n);
 
-    maxlen = AJMAX(ajSeqLen(sp_seq), ajSeqLen(pdb_seq));
+    maxlen = AJMAX(ajSeqGetLen(sp_seq), ajSeqGetLen(pdb_seq));
 
     seqset = ajSeqsetNew();
     res1 = ajSeqNew();
     res2 = ajSeqNew();
 
-    ajSeqAssName (res1, ajSeqGetName(sp_seq));
-    ajSeqAssName (res2, ajSeqGetName(pdb_seq));
-    ajSeqAssUsa (res1, ajSeqGetUsa(sp_seq));
-    ajSeqAssUsa (res2, ajSeqGetUsa(pdb_seq));
+    ajSeqAssignNameS(res1, ajSeqGetNameS(sp_seq));
+    ajSeqAssignNameS(res2, ajSeqGetNameS(pdb_seq));
+    ajSeqAssignUsaS(res1, ajSeqGetUsaS(sp_seq));
+    ajSeqAssignUsaS(res2, ajSeqGetUsaS(pdb_seq));
 
-    a = ajSeqChar(sp_seq);
-    b = ajSeqChar(pdb_seq);
+    a = ajSeqGetSeqC(sp_seq);
+    b = ajSeqGetSeqC(pdb_seq);
     
     /* Generate the full aligned sequences. */
-    ajStrModL (&fa, maxlen);
-    ajStrModL (&fb, maxlen);
+    ajStrSetRes(&fa, maxlen);
+    ajStrSetRes(&fb, maxlen);
 
     /* Pad the start of either sequence. */
     if(start1>start2)
     {
 	for(i=0;i<start1;++i)
 	{
-	    (void) ajStrAppK(&fa,a[i]);
+	    (void) ajStrAppendK(&fa,a[i]);
 	}
 	nc=start1-start2;
-	for(i=0;i<nc;++i) (void) ajStrAppK(&fb,' ');
-	for(++nc;i<start1;++i) (void) ajStrAppK(&fb,b[i-nc]);
+	for(i=0;i<nc;++i) (void) ajStrAppendK(&fb,' ');
+	for(++nc;i<start1;++i) (void) ajStrAppendK(&fb,b[i-nc]);
 	*start = start1;
 	
     }
@@ -613,67 +612,67 @@ static AjBool domainseqs_FindDomainLimits(AjPSeq sp_seq,
     {
 	for(i=0;i<start2;++i)
 	{
-	    (void) ajStrAppK(&fb,b[i]);
+	    (void) ajStrAppendK(&fb,b[i]);
 	}
 	nc=start2-start1;
-	for(i=0;i<nc;++i) (void) ajStrAppK(&fa,' ');
-	for(++nc;i<start2;++i) (void) ajStrAppK(&fa,a[i-nc]);
+	for(i=0;i<nc;++i) (void) ajStrAppendK(&fa,' ');
+	for(++nc;i<start2;++i) (void) ajStrAppendK(&fa,a[i-nc]);
 	*start = 0;
     }
 
-    apos = start1 + ajStrLen(m) - ajSeqGapCountS(m);
-    bpos = start2 + ajStrLen(n) - ajSeqGapCountS(n);
+    apos = start1 + ajStrGetLen(m) - ajSeqGapCountS(m);
+    bpos = start2 + ajStrGetLen(n) - ajSeqGapCountS(n);
 
-    ajStrApp(&fa, m);
-    ajStrApp(&fb, n);
+    ajStrAppendS(&fa, m);
+    ajStrAppendS(&fb, n);
 
-    alen=ajSeqLen(sp_seq) - apos;
-    blen=ajSeqLen(pdb_seq) - bpos;
+    alen=ajSeqGetLen(sp_seq) - apos;
+    blen=ajSeqGetLen(pdb_seq) - bpos;
 
     ajDebug("alen: %d blen: %d apos: %d bpos: %d\n", 
 	    alen, blen, apos, bpos);
 
     if(alen>blen)
     {
-	(void) ajStrAppC(&fa,&a[apos]);
+	(void) ajStrAppendC(&fa,&a[apos]);
 	for(i=0;i<blen;++i)
-	    (void) ajStrAppK(&fb,b[bpos+i]);
+	    (void) ajStrAppendK(&fb,b[bpos+i]);
 	nc=alen-blen;
 	for(i=0;i<nc;++i)
-	    (void) ajStrAppC(&fb," ");
+	    (void) ajStrAppendC(&fb," ");
     }	
     
     else if(blen>alen)
     {
-	(void) ajStrAppC(&fb,&b[bpos]);
+	(void) ajStrAppendC(&fb,&b[bpos]);
 	for(i=0;i<alen;++i)
-	    (void) ajStrAppK(&fa,a[apos+i]);
+	    (void) ajStrAppendK(&fa,a[apos+i]);
 	nc=blen-alen;
 	for(i=0;i<nc;++i)
-	    (void) ajStrAppC(&fa," ");
+	    (void) ajStrAppendC(&fa," ");
     }
 
     /* Same length, just copy. */
     else			
     {
-	(void) ajStrAppC(&fa,&a[apos]);
-	(void) ajStrAppC(&fb,&b[bpos]);
+	(void) ajStrAppendC(&fa,&a[apos]);
+	(void) ajStrAppendC(&fb,&b[bpos]);
     }	
 
-    ajDebug("  res1: %5d '%S' \n", ajStrLen(fa), fa);
-    ajDebug("  res2: %5d '%S' \n", ajStrLen(fb), fb);
-    ajSeqAssSeq (res1, fa);
-    ajSeqAssSeq (res2, fb);
+    ajDebug("  res1: %5d '%S' \n", ajStrGetLen(fa), fa);
+    ajDebug("  res2: %5d '%S' \n", ajStrGetLen(fb), fb);
+    ajSeqAssignSeqS(res1, fa);
+    ajSeqAssignSeqS(res2, fb);
 
     ajSeqsetFromPair (seqset, res1, res2);
 
-    end1 = start1 - ajStrCountK(m, '-') + ajStrLen(m);
-    end2 = start2 - ajStrCountK(n, '-') + ajStrLen(n);
+    end1 = start1 - ajStrCalcCountK(m, '-') + ajStrGetLen(m);
+    end2 = start2 - ajStrCalcCountK(n, '-') + ajStrGetLen(n);
 
     /* Find the domain boundries form the sequence alignment. */
 
-    no_gaps_sp  = (alen + (end1 - ajStrLen(sp_seq->Seq)));
-    no_gaps_pdb = (blen + (end2 - ajStrLen(pdb_seq->Seq)));
+    no_gaps_sp  = (alen + (end1 - ajStrGetLen(sp_seq->Seq)));
+    no_gaps_pdb = (blen + (end2 - ajStrGetLen(pdb_seq->Seq)));
     
     *end = (((*start + (end2-start2)) - no_gaps_sp));
    

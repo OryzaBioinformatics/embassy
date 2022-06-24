@@ -3,8 +3,8 @@
 ** Searches a DCF file (domain classification file) for secondary structure 
 ** matches.
 ** 
-** @author: Copyright (C) Amanda O'Reilly (aoreilly@hgmp.mrc.ac.uk)
-** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
+** @author: Copyright (C) Amanda O'Reilly
+** @author: Copyright (C) Jon Ison (jison@ebi.ac.uk)
 ** @@
 **
 ** This program is free software; you can redistribute it and/or
@@ -31,7 +31,7 @@
 **  Software Suite.  Trends in Genetics, 15:276-278.  
 **  See also http://www.uk.embnet.org/Software/EMBOSS
 **  
-**  Email jison@rfcgr.mrc.ac.uk.
+**  Email jison@ebi.ac.uk.
 **  
 **  NOTES
 **  
@@ -117,8 +117,7 @@ int main(int argc, char **argv)
 
 
     /* Read data from acd */
-    ajNamInit("emboss");
-    ajAcdInitP("ssematch",argc,argv,"DOMAINATRIX");
+    embInitP("ssematch",argc,argv,"DOMAINATRIX");
     dcfin       = ajAcdGetInfile("dcfinfile");
     ssin       = ajAcdGetInfile("ssinfile");
     max_hits      = ajAcdGetInt("maxhits");
@@ -199,8 +198,8 @@ int main(int argc, char **argv)
 	else if(ajStrPrefixC(line,"SS"))
 	{
             while((ajFileReadLine(ssin,&line)) && !ajStrPrefixC(line,"XX"))
-                ajStrApp(&qss,line);
-            ajStrCleanWhite(&qss);
+                ajStrAppendS(&qss,line);
+            ajStrRemoveWhiteExcess(&qss);
 
             /* Convert this string to 3-letter code & then to AjPSeq object. */
             q3ss = ssematch_convertbases(qss);
@@ -246,7 +245,7 @@ int main(int argc, char **argv)
 			    temp_scop->Entry); 
 	        ajFmtPrintS(&msg, "Could not align sequence in scop domain %S\n ", 
 			    temp_scop->Entry);
-	        ajWarn(ajStrStr(msg));
+	        ajWarn(ajStrGetPtr(msg));
                 continue;
 	    }
 	}
@@ -424,8 +423,8 @@ static AjBool  ssematch_NWScore(AjPScop temp_scop,
         qseq = ssematch_convertbases(temp_scop->Sss);
 
 
-    lenp = ajSeqLen(pseq); /* Length of query sequence.   */
-    lenq = ajSeqLen(qseq); /* Length of subject sequence. */
+    lenp = ajSeqGetLen(pseq); /* Length of query sequence.   */
+    lenq = ajSeqGetLen(qseq); /* Length of subject sequence. */
    
 
    
@@ -442,11 +441,11 @@ static AjBool  ssematch_NWScore(AjPScop temp_scop,
 	maxarr=len;
     }
 
-    p = ajSeqChar(pseq); 
-    q = ajSeqChar(qseq); 
+    p = ajSeqGetSeqC(pseq); 
+    q = ajSeqGetSeqC(qseq); 
 
-    ajStrAssC(&pstr,"");
-    ajStrAssC(&qstr,"");
+    ajStrAssignC(&pstr,"");
+    ajStrAssignC(&qstr,"");
 
 
     /* Check that no sequence length is 0. */
@@ -527,7 +526,7 @@ static AjPSeq ssematch_convertbases(AjPStr qs)
 
 
 
-    iter    = ajStrIter(qs);
+    iter    = ajStrIterNew(qs);
     tmp_str = ajStrNew();
 
     do
@@ -540,7 +539,7 @@ static AjPSeq ssematch_convertbases(AjPStr qs)
 		|| (base == 'C'))
 	    base = 'L';
 
-	ajStrAppK(&tmp_str, base);
+	ajStrAppendK(&tmp_str, base);
     }
     while(ajStrIterNext(iter));
     
@@ -549,7 +548,7 @@ static AjPSeq ssematch_convertbases(AjPStr qs)
 
 
     /* Tidy up */
-    ajStrIterFree(&iter);
+    ajStrIterDel(&iter);
     ajStrDel(&tmp_str);
     
     return tmp_seq;
