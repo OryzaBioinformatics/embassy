@@ -248,7 +248,7 @@ int main(int argc, char *argv[])
 	ConcAandB=(double *)space(20*sizeof(double));
     }
 
-    ajFmtPrintS(&seqstring1,"%s&%s",ajSeqChar(seq1),ajSeqChar(seq2));
+    ajFmtPrintS(&seqstring1,"%s&%s",ajSeqGetSeqC(seq1),ajSeqGetSeqC(seq2));
     string = tokenize(MAJSTRGETPTR(seqstring1));
     length = (int) strlen(string);
 
@@ -569,7 +569,7 @@ int main(int argc, char *argv[])
 
     ajFileClose(&outf);
 
-    ajExit();
+    embExit();
 
     return 0;
 }
