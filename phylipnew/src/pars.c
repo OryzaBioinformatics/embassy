@@ -2,7 +2,7 @@
 #include "phylip.h"
 #include "discrete.h"
 
-/* version 3.6 (c) Copyright 1993-2002 by the University of Washington.
+/* version 3.6 (c) Copyright 1993-2004 by the University of Washington.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
    Permission is granted to copy and use this program provided no fee is
    charged for it and provided that this copyright notice is not removed. */
@@ -43,6 +43,7 @@ void   grandrearr(void);
 void   maketree(void);
 void   freerest(void);
 void   load_tree(long treei);
+void   reallocchars(void);
 /* function prototypes */
 #endif
 
@@ -140,7 +141,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 
     if(!usertree) {
       thorough = ajAcdGetToggle("thorough");
-      if(thorough) rearrfirst = ajAcdGetBool("rearrange");
+      if(thorough) rearrfirst = ajAcdGetBoolean("rearrange");
       maxtrees = ajAcdGetInt("maxtrees");
       njumble = ajAcdGetInt("njumble");
       if(njumble >0) {
@@ -157,14 +158,14 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 
     thresh = ajAcdGetToggle("thresh");
     if(thresh)  threshold = ajAcdGetFloat("threshold");
-    stepbox = ajAcdGetBool("stepbox");
-    ancseq = ajAcdGetBool("ancseq");
+    stepbox = ajAcdGetBoolean("stepbox");
+    ancseq = ajAcdGetBoolean("ancseq");
 
-    printdata = ajAcdGetBool("printdata");
-    progress = ajAcdGetBool("progress");
-    treeprint = ajAcdGetBool("treeprint");
+    printdata = ajAcdGetBoolean("printdata");
+    progress = ajAcdGetBoolean("progress");
+    treeprint = ajAcdGetBoolean("treeprint");
     trout = ajAcdGetToggle("trout");
-    if (ancseq || printdata) ajAcdGetBool("dotdiff");
+    if (ancseq || printdata) ajAcdGetBoolean("dotdiff");
 
      embossoutfile = ajAcdGetOutfile("outfile");   
      emboss_openfile(embossoutfile, &outfile, &outfilename);
@@ -179,6 +180,32 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 
 }  /* emboss_getoptions */
 
+
+void reallocchars() 
+{
+  long i;
+
+  for (i = 0; i < spp; i++) {
+    free(y[i]);
+    y[i] = (Char *)Malloc(chars*sizeof(Char));
+  }
+  for (i = 0; i < spp; i++){
+    free(convtab[i]);
+    convtab[i] = (Char *)Malloc(chars*sizeof(Char));
+  }
+  
+  free(weight);
+  free(oldweight);
+  free(alias);
+  free(ally);
+  free(location);
+
+  weight = (long *)Malloc(chars*sizeof(long));
+  oldweight = (long *)Malloc(chars*sizeof(long));
+  alias = (long *)Malloc(chars*sizeof(long));
+  ally = (long *)Malloc(chars*sizeof(long));
+  location = (long *)Malloc(chars*sizeof(long));
+}
 
 void allocrest()
 {
@@ -216,7 +243,7 @@ void doinit()
 }  /* doinit */
 
 
-void makeweights()
+void makeweights(void)
 {
   /* make up weights vector to avoid duplicate computations */
   long i;
@@ -252,7 +279,7 @@ void makeweights()
 }  /* makeweights */
 
 
-void doinput()
+void doinput(void)
 {
   /* reads the input data */
   long i;
@@ -271,8 +298,10 @@ void doinput()
     if (printdata)
       printweights(outfile, 0, chars, weight, "Sites");
   } else {
-    if (!firstset)
+    if (!firstset) {
       samenumspstate(phylostates[ith-1], &chars, ith);
+      reallocchars();
+    }
     discrete_inputdata(phylostates[0], chars);
     for (i = 0; i < chars; i++)
       weight[i] = 1;
@@ -929,7 +958,7 @@ void tryrearr(node *p, boolean *success)
       newfork = forknode;
     add(there, p, newfork, &root, recompute, treenode, &grbg, zeros, zeros2);
   } 
-  if (like > oldlike) {
+  if (like - oldlike > LIKE_EPSILON) {
     *success = true;
     bestyet = like;
   }
@@ -1331,9 +1360,8 @@ void maketree()
       nextnode = 0;
       haslengths = true;
       treestr = ajStrGetuniquePtr(&phylotrees[0]->Tree);
-      treeread(&treestr, &root, treenode, &goteof, &firsttree,
-                 nodep, &nextnode, &haslengths,
-                 &grbg, initparsnode);
+      treeread(&treestr, &root, treenode, &goteof, &firsttree, nodep, &nextnode,
+               &haslengths, &grbg, initparsnode,false,nonodes);
       if (treeprint)
         fprintf(outfile, "\n\n");
       if (outgropt)
@@ -1360,7 +1388,7 @@ void maketree()
       printf("\nOutput written to file \"%s\"\n\n", outfilename);
       if (trout) {
         printf("Tree");
-        if (numtrees > 1)
+        if ((usertree && numtrees > 1) || (!usertree && nextree != 2))
           printf("s");
         printf(" also written onto file \"%s\"\n\n", outtreename);
       }

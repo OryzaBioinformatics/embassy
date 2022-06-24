@@ -177,7 +177,7 @@ Done.
                                   file
 
    Additional (Optional) qualifiers (* if not always prompted):
-   -ancfile            properties Phylip ancestral states file
+   -ancfile            properties Phylip ancestral states file (optional)
    -factorfile         properties Phylip multistate factors file (optional)
    -weights            properties Phylip weights file (optional)
    -cliqmin            integer    [0] Minimum clique size (Integer 0 or more)
@@ -202,8 +202,9 @@ Done.
 
    General qualifiers:
    -auto               boolean    Turn off prompts
-   -stdout             boolean    Write standard output
-   -filter             boolean    Read standard input, write standard output
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
@@ -247,7 +248,7 @@ Done.
 
 <tr>
 <td>-ancfile</td>
-<td>Phylip ancestral states file</td>
+<td>Phylip ancestral states file (optional)</td>
 <td>Property value(s)</td>
 <td>&nbsp;</td>
 </tr>
@@ -408,7 +409,7 @@ writes the cliques to the text output file and a tree to a separate output file
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
 
-Largest clique program, version 3.6b
+Largest clique program, version 3.67
 
 
 
@@ -564,7 +565,8 @@ None.
 -->
 <h2><a name="See also">See also</a></h2>
 <table border cellpadding=4 bgcolor="#FFFFF0">
-<tr><th>Program name</th><th>Description</th></tr>
+<tr><th>Program name</th>
+<th>Description</th></tr>
 <tr>
 <td><a href="/embassy/phylip/eclique.html">eclique</a></td>
 <td>Largest clique program</td>

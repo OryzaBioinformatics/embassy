@@ -1,7 +1,7 @@
 
 #include "phylip.h"
 
-/* version 3.6. (c) Copyright 1988-2002 by the University of Washington.
+/* version 3.6. (c) Copyright 1988-2004 by the University of Washington.
    A program to factor multistate character trees.
    Originally version 29 May 1983 by C. A. Meacham, Botany Department,
      University of Georgia
@@ -87,9 +87,9 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 
   inputfile = ajAcdGetInfile("infile");
 
-  factorrequest = ajAcdGetBool("factors");
-  ancstrrequest = ajAcdGetBool("anc");
-  progress = ajAcdGetBool("progress");
+  factorrequest = ajAcdGetBoolean("factors");
+  ancstrrequest = ajAcdGetBoolean("anc");
+  progress = ajAcdGetBoolean("progress");
 
   embossoutfile = ajAcdGetOutfile("outfile");   
   emboss_openfile(embossoutfile, &outfile, &outfilename);
@@ -350,8 +350,11 @@ void dotrees()
   lastchar = 0;
   offset = 0;
   charnumber = 0;
-  ajFileGetsTrim(inputfile, &rdline);
-  ajFmtScanS(rdline, "%d", &ival);
+  ajReadlineTrim(inputfile, &rdline);
+  if(ajFmtScanS(rdline, "%d", &ival) != 1) {
+    printf("Invalid input file!\n");
+    embExitBad();
+  }      
   charnumber = ival;
   while (charnumber < 999) {
     if (charnumber < lastchar) {
@@ -374,7 +377,7 @@ void dotrees()
     chstart[charindex - 1] = offset;
     numstates[charindex - 1] = nstates;
     offset += nstates * nstates;
-    ajFileGetsTrim(inputfile, &rdline);
+    ajReadlineTrim(inputfile, &rdline);
     ajFmtScanS(rdline, "%d", &ival);
     charnumber = ival;
   }
@@ -449,7 +452,7 @@ void doeu(long *chposition, long eu)
   Char *multichar;
   const char* cp;
 
-  ajFileGetsTrim(inputfile, &rdline);
+  ajReadlineTrim(inputfile, &rdline);
   cp = ajStrGetPtr(rdline);
 
   for (i = 1; i <= nmlngth; i++) {
@@ -473,7 +476,7 @@ void doeu(long *chposition, long eu)
 	  ch = *cp++;
 	  if (!*cp)
 	  {
-	      ajFileGetsTrim(inputfile, &rdline);
+	      ajReadlineTrim(inputfile, &rdline);
 	      cp = ajStrGetPtr(rdline);
 	      ch = *cp++;
 	  }
@@ -553,8 +556,8 @@ int main(int argc, Char *argv[])
   init(argc,argv);
   emboss_getoptions("ffactor", argc, argv);
 
-  ajFileGetsTrim(inputfile, &rdline);
-  sscanf(ajStrGetPtr(rdline), "%ld%ld*[^\n]", &neus, &nchars);
+  ajReadlineTrim(inputfile, &rdline);
+  sscanf(ajStrGetPtr(rdline), "%ld%ld", &neus, &nchars);
 
   charnum = (long *)Malloc(nchars*sizeof(long));
   chstart = (long *)Malloc(nchars*sizeof(long));

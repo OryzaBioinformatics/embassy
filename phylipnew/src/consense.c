@@ -1,7 +1,7 @@
 #include "phylip.h"
 #include "cons.h"
 
-/* version 3.6. (c) Copyright 1993-2002 by the University of Washington.
+/* version 3.6. (c) Copyright 1993-2004 by the University of Washington.
    Written by Joseph Felsenstein, Hisashi Horino,
    Akiko Fuseki, Dan Fineman, Sean Lamont, and Andrew Keeffe.
    Permission is granted
@@ -95,9 +95,9 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
       mlfrac = ajAcdGetFloat("mlfrac");
     }
 
-    prntsets = ajAcdGetBool("prntsets");
-    progress = ajAcdGetBool("progress");
-    treeprint = ajAcdGetBool("treeprint");
+    prntsets = ajAcdGetBoolean("prntsets");
+    progress = ajAcdGetBoolean("progress");
+    treeprint = ajAcdGetBoolean("treeprint");
     trout = ajAcdGetToggle("trout");
     outgrno = ajAcdGetInt("outgrno");
     if(outgrno != 0) outgropt = true;

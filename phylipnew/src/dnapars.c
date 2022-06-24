@@ -155,14 +155,14 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
 
   
 
-    progress = ajAcdGetBool("progress");
-    printdata = ajAcdGetBool("printdata");
-    treeprint = ajAcdGetBool("treeprint");
+    progress = ajAcdGetBoolean("progress");
+    printdata = ajAcdGetBoolean("printdata");
+    treeprint = ajAcdGetBoolean("treeprint");
     trout = ajAcdGetToggle("trout");
 
     if(!usertree) {
       thorough = ajAcdGetToggle("thorough");
-      if(thorough) rearrfirst = ajAcdGetBool("rearrange");
+      if(thorough) rearrfirst = ajAcdGetBoolean("rearrange");
       maxtrees = ajAcdGetInt("maxtrees");
       njumble = ajAcdGetInt("njumble");
       if(njumble >0) {
@@ -185,11 +185,11 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
 
     thresh = ajAcdGetToggle("thresh");
     if(thresh)  threshold = ajAcdGetFloat("threshold");
-    stepbox = ajAcdGetBool("stepbox");
-    ancseq = ajAcdGetBool("ancseq");
-    transvp = ajAcdGetBool("transversion");
+    stepbox = ajAcdGetBoolean("stepbox");
+    ancseq = ajAcdGetBoolean("ancseq");
+    transvp = ajAcdGetBoolean("transversion");
    
-    if (ancseq || printdata) ajAcdGetBool("dotdiff");
+    if (ancseq || printdata) ajAcdGetBoolean("dotdiff");
 
  
      embossoutfile = ajAcdGetOutfile("outfile");   
@@ -945,7 +945,7 @@ void tryrearr(node *p, boolean *success)
       newfork = forknode;
     add(there, p, newfork, &root, recompute, treenode, &grbg, zeros);
   } 
-  if (like > oldlike) {
+  if (like > oldlike + LIKE_EPSILON) {
     *success = true;
     bestyet = like;
   }
@@ -1347,7 +1347,7 @@ void maketree()
      treestr = ajStrGetuniquePtr(&phylotrees[which-1]->Tree);
       treeread(&treestr, &root, treenode, &goteof, &firsttree,
                  nodep, &nextnode, &haslengths,
-                 &grbg, initdnaparsnode);
+                 &grbg, initdnaparsnode,false,nonodes);
       if (treeprint)
         fprintf(outfile, "\n\n");
       if (outgropt)
@@ -1374,7 +1374,7 @@ void maketree()
       printf("\nOutput written to file \"%s\"\n\n", outfilename);
       if (trout) {
         printf("Tree");
-        if (numtrees > 1)
+        if ((usertree && numtrees > 1) || (!usertree && nextree != 2))
           printf("s");
         printf(" also written onto file \"%s\"\n\n", outtreename);
       }

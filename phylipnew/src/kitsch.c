@@ -1,11 +1,12 @@
-
-#include "phylip.h"
-#include "dist.h"
-
-/* version 3.6. (c) Copyright 1993-2002 by the University of Washington.
+/* version 3.6. (c) Copyright 1993-2004 by the University of Washington.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
    Permission is granted to copy and use this program provided no fee is
    charged for it and provided that this copyright notice is not removed. */
+
+#include <float.h>
+
+#include "phylip.h"
+#include "dist.h"
 
 #define epsilonk         0.000001   /* a very small but not too small number */
 
@@ -112,7 +113,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 	nummatrices++;
 
 
-    minev = ajAcdGetBool("minev");
+    minev = ajAcdGetBoolean("minev");
 
     phylotrees = ajAcdGetTree("intreefile");
     if (phylotrees)
@@ -125,11 +126,11 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 
     power = ajAcdGetFloat("power");
     if(minev) negallowed = true;
-    else negallowed = ajAcdGetBool("negallowed");
+    else negallowed = ajAcdGetBoolean("negallowed");
   
 
 
-    replicates = ajAcdGetBool("replicates");
+    replicates = ajAcdGetBoolean("replicates");
 
     if(!usertree) {
       njumble = ajAcdGetInt("njumble");
@@ -143,9 +144,9 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 
     //if mulsets and not jumble do jumble
 
-    printdata = ajAcdGetBool("printdata");
-    progress = ajAcdGetBool("progress");
-    treeprint = ajAcdGetBool("treeprint");
+    printdata = ajAcdGetBoolean("printdata");
+    progress = ajAcdGetBoolean("progress");
+    treeprint = ajAcdGetBoolean("treeprint");
     trout = ajAcdGetToggle("trout");
 
     embossoutfile = ajAcdGetOutfile("outfile");   
@@ -578,7 +579,7 @@ void tryrearr(node *p, node **r, boolean *success)
   if ((*r)->back != NULL)
     *r = curtree.nodep[(*r)->back->index - 1];
   evaluate(*r);
-  if (like > oldlike) {
+  if (like - oldlike > LIKE_EPSILON) {
     bestyet = like;
     *success = true;
     return;
@@ -776,7 +777,7 @@ void maketree()
 #endif
     }
     for (i = 3; i <= (spp); i++) {
-      bestyet = -10000000.0;
+      bestyet = -DBL_MAX;
       item = curtree.nodep[enterorder[i - 1] - 1];
       nufork = curtree.nodep[spp + i - 2];
       addpreorder(curtree.root, item, nufork);
@@ -811,7 +812,7 @@ void maketree()
             printf("   ");
           for (j = 0; j < (nonodes); j++) {
             there = curtree.root;
-            bestyet = -32000.0;
+            bestyet = -DBL_MAX;
             item = curtree.nodep[j];
             if (item != curtree.root) {
               re_move(&item, &nufork);
@@ -857,7 +858,7 @@ void maketree()
     while (which <= numtrees ) {
       treestr = ajStrGetuniquePtr(&phylotrees[which-1]->Tree);
       treeread2 (&treestr, &curtree.root, curtree.nodep,
-        lengths, &trweight, &goteof, &haslengths, &spp);
+        lengths, &trweight, &goteof, &haslengths, &spp,false,nonodes);
       evaluate(curtree.root);
       printree(curtree.root, treeprint, false, true);
       describe();

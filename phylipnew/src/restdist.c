@@ -3,7 +3,7 @@
 #include "phylip.h"
 #include "seq.h"
 
-/* version 3.6. (c) Copyright 1994-2002 by the University of Washington.
+/* version 3.6. (c) Copyright 1994-2004 by the University of Washington.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
    Permission is granted to copy and use this program provided no fee is
    charged for it and provided that this copyright notice is not removed. */
@@ -92,18 +92,18 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
         datasets = numseqs;
     }
 
-    restsites = ajAcdGetBool("restsites");
-    neili = ajAcdGetBool("neili");
-    if(!neili) gama = ajAcdGetBool("gamma");
+    restsites = ajAcdGetBoolean("restsites");
+    neili = ajAcdGetBoolean("neili");
+    if(!neili) gama = ajAcdGetBoolean("gamma");
     if(gama) {
       cvi = ajAcdGetFloat("gammacoefficient");
       cvi = 1.0 / (cvi * cvi);
     }
     ttratio = ajAcdGetFloat("ttratio");
     sitelength = ajAcdGetInt("sitelength");
-    lower = ajAcdGetBool("lower");
-    printdata = ajAcdGetBool("printdata");
-    progress = ajAcdGetBool("progress");
+    lower = ajAcdGetBoolean("lower");
+    printdata = ajAcdGetBoolean("printdata");
+    progress = ajAcdGetBoolean("progress");
 
     xi = (ttratio - 0.5)/(ttratio + 0.5);
     xv = 1.0 - xi;
@@ -377,13 +377,13 @@ void makev(long m, long n, double *v)
   numerator = 0;
   denominator = 0;
   for (i = 0; i < endsite; i++) {
-    ii = alias[i+1];
+    ii = alias[i + 1];
     if ((y[m-1][ii-1] == '+') ||
 	(y[n-1][ii-1] == '+')) {
       denominator += weight[i+1];
       if ((y[m-1][ii-1] == '+') &&
 	  (y[n-1][ii-1] == '+')) {
-        numerator += weight[i+1];
+        numerator += weight[i + 1];
       }
     }
   }

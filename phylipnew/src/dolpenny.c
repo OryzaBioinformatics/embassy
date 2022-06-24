@@ -2,12 +2,12 @@
 #include "disc.h"
 #include "dollo.h"
 
-/* version 3.6. (c) Copyright 1993-2002 by the University of Washington.
+/* version 3.6. (c) Copyright 1993-2004 by the University of Washington.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
    Permission is granted to copy and use this program provided no fee is
    charged for it and provided that this copyright notice is not removed. */
 
-#define maxtrees        100   /* maximum number of trees to be printed out   */
+#define maxtrees        1000  /* maximum number of trees to be printed out   */
 #define often           100   /* how often to notify how many trees examined */
 #define many            1000  /* how many multiples of howoften before stop  */
 
@@ -128,16 +128,16 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
 
     howmany = ajAcdGetInt("howmany");
     howoften = ajAcdGetInt("howoften"); 
-    simple = ajAcdGetBool("simple");
+    simple = ajAcdGetBoolean("simple");
     thresh = ajAcdGetToggle("thresh");
     if(thresh) ajAcdGetFloat("threshold");
 
-    printdata = ajAcdGetBool("printdata");
-    progress = ajAcdGetBool("progress");
-    treeprint = ajAcdGetBool("treeprint");
+    printdata = ajAcdGetBoolean("printdata");
+    progress = ajAcdGetBoolean("progress");
+    treeprint = ajAcdGetBoolean("treeprint");
     trout = ajAcdGetToggle("trout");
-    stepbox = ajAcdGetBool("stepbox");
-    ancseq = ajAcdGetBool("ancseq");
+    stepbox = ajAcdGetBoolean("stepbox");
+    ancseq = ajAcdGetBoolean("ancseq");
 
 
      embossoutfile = ajAcdGetOutfile("outfile");   

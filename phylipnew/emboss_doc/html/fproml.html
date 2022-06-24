@@ -292,8 +292,9 @@ Done.
 
    General qualifiers:
    -auto               boolean    Turn off prompts
-   -stdout             boolean    Write standard output
-   -filter             boolean    Read standard input, write standard output
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
@@ -826,14 +827,17 @@ is accounted for by that particular combination of rates.
 <p><h3>File: proml.fproml</h3>
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
+
+Amino acid sequence Maximum Likelihood method, version 3.67
+
 Jones-Taylor-Thornton model of amino acid change
 
 
   +Beta      
   |  
-  |                                    +Epsilon   
-  |      +-----------------------------3  
-  1------2                             +------------Delta     
+  |                                     +Epsilon   
+  |      +------------------------------3  
+  1------2                              +------------Delta     
   |      |  
   |      +--------------------Gamma     
   |  
@@ -842,18 +846,18 @@ Jones-Taylor-Thornton model of amino acid change
 
 remember: this is an unrooted tree!
 
-Ln Likelihood =  -131.58633
+Ln Likelihood =  -131.55052
 
  Between        And            Length      Approx. Confidence Limits
  -------        ---            ------      ------- ---------- ------
 
-     1          Alpha             0.30915     (     zero,     0.66607) **
+     1          Alpha             0.31006     (     zero,     0.66806) **
      1          Beta              0.00010     (     zero,    infinity)
-     1             2              0.22118     (     zero,     0.62671) *
-     2             3              1.00021     (  0.13925,     1.86116) **
+     1             2              0.22206     (     zero,     0.62979) *
+     2             3              1.00907     (  0.13965,     1.87849) **
      3          Epsilon           0.00010     (     zero,    infinity)
-     3          Delta             0.41008     (     zero,     0.86345) **
-     2          Gamma             0.68318     (  0.01678,     1.34958) **
+     3          Delta             0.41176     (     zero,     0.86685) **
+     2          Gamma             0.68569     (  0.01628,     1.35510) **
 
      *  = significantly positive, P &lt; 0.05
      ** = significantly positive, P &lt; 0.01
@@ -864,8 +868,8 @@ Ln Likelihood =  -131.58633
 <p><h3>File: proml.treefile</h3>
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
-(Beta:0.00010,((Epsilon:0.00010,Delta:0.41008):1.00021,
-Gamma:0.68318):0.22118,Alpha:0.30915);
+(Beta:0.00010,((Epsilon:0.00010,Delta:0.41176):1.00907,
+Gamma:0.68569):0.22206,Alpha:0.31006);
 </pre>
 </td></tr></table><p>
 
@@ -990,10 +994,11 @@ None.
 -->
 <h2><a name="See also">See also</a></h2>
 <table border cellpadding=4 bgcolor="#FFFFF0">
-<tr><th>Program name</th><th>Description</th></tr>
+<tr><th>Program name</th>
+<th>Description</th></tr>
 <tr>
 <td><a href="/emboss/apps/distmat.html">distmat</a></td>
-<td>Creates a distance matrix from multiple alignments</td>
+<td>Create a distance matrix from a multiple sequence alignment</td>
 </tr>
 
 <tr>

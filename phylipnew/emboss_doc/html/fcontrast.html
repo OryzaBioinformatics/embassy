@@ -175,7 +175,7 @@ individuals per species it is not a subcase of his model).
 % <b>fcontrast </b>
 Continuous character Contrasts
 Input file: <b>contrast.dat</b>
-Phylip tree file: <b>contrast.tree</b>
+Phylip tree file (optional): <b>contrast.tree</b>
 Phylip contrast program output file [contrast.fcontrast]: <b></b>
 
 
@@ -198,7 +198,7 @@ Done.
 <pre>
    Standard (Mandatory) qualifiers:
   [-infile]            frequencies File containing one or more sets of data
-  [-intreefile]        tree       Phylip tree file
+  [-intreefile]        tree       Phylip tree file (optional)
   [-outfile]           outfile    [*.fcontrast] Phylip contrast program output
                                   file
 
@@ -219,8 +219,9 @@ Done.
 
    General qualifiers:
    -auto               boolean    Turn off prompts
-   -stdout             boolean    Write standard output
-   -filter             boolean    Read standard input, write standard output
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
@@ -252,7 +253,7 @@ acdDelPhyloFreq '0'
 
 <tr>
 <td>[-intreefile]<br>(Parameter 2)</td>
-<td>Phylip tree file</td>
+<td>Phylip tree file (optional)</td>
 <td>Phylogenetic tree</td>
 <td>&nbsp;</td>
 </tr>
@@ -740,7 +741,8 @@ None.
 -->
 <h2><a name="See also">See also</a></h2>
 <table border cellpadding=4 bgcolor="#FFFFF0">
-<tr><th>Program name</th><th>Description</th></tr>
+<tr><th>Program name</th>
+<th>Description</th></tr>
 <tr>
 <td><a href="/embassy/phylip/econtml.html">econtml</a></td>
 <td>Continuous character Maximum Likelihood method</td>

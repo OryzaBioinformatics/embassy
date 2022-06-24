@@ -25,7 +25,7 @@ void discrete_inputdata(AjPPhyloState state, long chars)
   
   for(i=0;i<spp;i++){
     initnamestate(state,i);
-    /*    ajUser("%s/n",ajSeqsetName(seqset, i));*/
+    /*    ajUser("%s/n",ajSeqsetGetseqNameS(seqset, i));*/
     strncpy(&y[i][0],ajStrGetPtr(state->Str[i]),chars);
     y[i][chars] = '\0';
   }
@@ -612,9 +612,9 @@ void gdispose(node *p, node **grbg, pointarray treenode)
     q->back = NULL;
     r = q;
     q = q->next;
-    chucktreenode(grbg, r);
+    chuck(grbg, r);
   }
-  chucktreenode(grbg, q);
+  chuck(grbg, q);
 }  /* gdispose */
 
 
@@ -792,7 +792,7 @@ void re_move(node *item, node **fork, node **root, boolean recompute,
      If item belongs to a node with more than 2 descendants,
      fork will not be deleted */
   /* used in pars */
-  node *p, *q, *other, *otherback = NULL;
+  node *p, *q, *other=NULL, *otherback = NULL;
 
   if (item->back == NULL) {
     *fork = NULL;
@@ -842,7 +842,7 @@ void re_move(node *item, node **fork, node **root, boolean recompute,
     }
   }
   if ((*fork)->numdesc >= 2)
-    chucktreenode(grbg, item->back);
+    chuck(grbg, item->back);
   item->back = NULL;
   if (!recompute)
     return;
@@ -962,7 +962,7 @@ void reroot3(node *outgroup,node *root,node *root2,node *lastdesc,node **grbg)
   p = root->next;
   while (p->next != root)
     p = p->next;
-  chucktreenode(grbg, root);
+  chuck(grbg, root);
   p->next = outgroup->back;
   root2->next = lastdesc->next;
   lastdesc->next = root2;
@@ -1115,7 +1115,7 @@ void backtobinary(node **root, node *binroot, node **grbg)
   (*root)->next = p->next;
   binroot->next->next->back = *root;
   (*root)->back = binroot->next->next;
-  chucktreenode(grbg, p);
+  chuck(grbg, p);
   (*root)->numdesc--;
   *root = binroot;
   (*root)->numdesc = 2;
@@ -1701,7 +1701,7 @@ void putback(node *oldback, node *item, node *forknode, node **grbg)
   oldback->back = item;
   item->back = oldback;
   oldback->index = forknode->index;
-  chucktreenode(grbg, q);
+  chuck(grbg, q);
 } /* putback */
 
 
@@ -1745,7 +1745,7 @@ void savelocrearr(node *item, node *forknode, node *below, node *tmp, node *tmp1
       putback(oldback, item, forknode, grbg);
   } else {
     if (oldback)
-      chucktreenode(grbg, oldback);
+      chuck(grbg, oldback);
     re_move(item, &oldfork, root, true, treenode, grbg, zeros, zeros2);
     collapse = collapsible(item, below, tmp, tmp1, tmp2, tmp3, tmprm,
                      tmpadd, multf, *root, zeros, zeros2, treenode);
@@ -2907,8 +2907,8 @@ void collapsetree(node *p, node *root, node **grbg, pointarray treenode,
       index = q->index;
       index2 = q->back->index;
       numd = treenode[index-1]->numdesc + q->back->numdesc -1;
-      chucktreenode(grbg, q->back);
-      chucktreenode(grbg, q);
+      chuck(grbg, q->back);
+      chuck(grbg, q);
       q = x2;
 
       /* update the indicies around the node circle */

@@ -2,7 +2,7 @@
 #include "phylip.h"
 #include "dist.h"
 
-/* version 3.6. (c) Copyright 1993-2002 by the University of Washington.
+/* version 3.6. (c) Copyright 1993-2004 by the University of Washington.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
    Permission is granted to copy and use this program provided no fee is
    charged for it and provided that this copyright notice is not removed. */
@@ -118,7 +118,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
     nummatrices++;
 
 
-    minev = ajAcdGetBool("minev");
+    minev = ajAcdGetBoolean("minev");
 
     phylotrees = ajAcdGetTree("intreefile");
     if (phylotrees)
@@ -131,16 +131,16 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 
     power = ajAcdGetFloat("power");
     if(minev) negallowed = true;
-    else negallowed = ajAcdGetBool("negallowed");
+    else negallowed = ajAcdGetBoolean("negallowed");
   
     matrixtype = ajAcdGetListSingle("matrixtype");
     if(ajStrMatchC(matrixtype, "l")) lower = true;
     else if(ajStrMatchC(matrixtype, "u")) upper = true;
 
-    replicates = ajAcdGetBool("replicates");
+    replicates = ajAcdGetBoolean("replicates");
 
     if(!usertree) {
-      global = ajAcdGetBool("global");
+      global = ajAcdGetBoolean("global");
       njumble = ajAcdGetInt("njumble");
       if(njumble >0) {
         inseed = ajAcdGetInt("seed");
@@ -154,9 +154,9 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
     if(outgrno != 0) outgropt = true;
     else outgrno = 1;
 
-    printdata = ajAcdGetBool("printdata");
-    progress = ajAcdGetBool("progress");
-    treeprint = ajAcdGetBool("treeprint");
+    printdata = ajAcdGetBoolean("printdata");
+    progress = ajAcdGetBoolean("progress");
+    treeprint = ajAcdGetBoolean("treeprint");
     trout = ajAcdGetToggle("trout");
 
     embossoutfile = ajAcdGetOutfile("outfile");   
@@ -209,7 +209,9 @@ void doinit()
 {
   /* initializes variables */
 
-  inputnumbers2seq(phylodists[0], &spp, &nonodes2, 2);
+  inputnumbers2seq(phylodists[0], &spp, &nonodes2, 1);
+  if ( !usertree )
+    nonodes2--;
   alloctree(&curtree.nodep, nonodes2);
   allocd(nonodes2, curtree.nodep);
   allocw(nonodes2, curtree.nodep);
@@ -874,6 +876,8 @@ void treevaluate()
 
   for (i = 1; i <= spp; i++)
     setuptipf(i, &curtree);
+  unroot(&curtree,nonodes2);
+
   initrav(curtree.start);
   if (curtree.start->back != NULL) {
     initrav(curtree.start->back);
@@ -919,12 +923,13 @@ void maketree()
     while (which <= numtrees) {
       treestr = ajStrGetuniquePtr(&phylotrees[which-1]->Tree);
       treeread2 (&treestr, &curtree.start, curtree.nodep,
-		 lengths, &trweight, &goteof, &haslengths, &spp);
+		 lengths, &trweight, &goteof, &haslengths, &spp,false,nonodes2);
       nums = spp;
       curtree.start = curtree.nodep[outgrno - 1]->back;
       treevaluate();
       printree(curtree.start, treeprint, false, false);
       summarize(numtrees);
+      clear_connections(&curtree,nonodes2);
       which++;
     }
     FClose(intree);

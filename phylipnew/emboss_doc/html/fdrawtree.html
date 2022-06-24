@@ -104,12 +104,13 @@ number may have to be removed.
 <p>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
-% <b>fdrawtree </b>
+% <b>fdrawtree -previewer n </b>
 Plots an unrooted tree diagram
 Phylip tree file: <b>drawgram.tree</b>
 Phylip drawtree output file [drawgram.fdrawtree]: <b></b>
+Reading tree '(Delta,(Epsilon,(Gamma,(Beta,Alpha))));'
 
-DRAWTREE from PHYLIP version 3.6b
+DRAWTREE from PHYLIP version 3.67
 Reading tree ... 
 Tree has been read.
 Loading the font ... 
@@ -210,7 +211,8 @@ Done.
                                   0.001 or more)
 
    Advanced (Unprompted) qualifiers:
-   -fontfile           string     Fontfile name (Any string is accepted)
+   -fontfile           string     [font2] Fontfile name (Any string is
+                                  accepted)
 
    Associated qualifiers:
 
@@ -219,8 +221,9 @@ Done.
 
    General qualifiers:
    -auto               boolean    Turn off prompts
-   -stdout             boolean    Write standard output
-   -filter             boolean    Read standard input, write standard output
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
@@ -433,7 +436,7 @@ Done.
 <td>-fontfile</td>
 <td>Fontfile name</td>
 <td>Any string is accepted</td>
-<td><i>An empty string is accepted</i></td>
+<td>font2</td>
 </tr>
 
 </table>
@@ -506,25 +509,6 @@ outputs ...
 <p><h3>File: drawgram.fdrawtree</h3>
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
-%!PS-Adobe-2.0
-%%Title: Phylip Tree Output
-%%DocumentFonts: (atend)
-%%Pages: 1 1
-%%BoundingBox: 0 0 612 792
-%%DocumentPaperSizes: Letter
-%%Orientation: Portrait
-%%EndComments
-/l {newpath moveto lineto stroke} def
-%%EndProlog
-%%
-%%Page: 1 1
-%%PageBoundingBox: 0 0 585 765
-%%PageFonts: (atend)
-%%BeginPageSetup
-%%PaperSize: Letter
- 1 setlinecap 
- 1 setlinejoin  
-    4.25 setlinewidth newpath 
 %!PS-Adobe-2.0
 %%Title: Phylip Tree Output
 %%DocumentFonts: (atend)
@@ -734,7 +718,8 @@ None.
 -->
 <h2><a name="See also">See also</a></h2>
 <table border cellpadding=4 bgcolor="#FFFFF0">
-<tr><th>Program name</th><th>Description</th></tr>
+<tr><th>Program name</th>
+<th>Description</th></tr>
 <tr>
 <td><a href="fdrawgram.html">fdrawgram</a></td>
 <td>Plots a cladogram- or phenogram-like rooted tree diagram</td>

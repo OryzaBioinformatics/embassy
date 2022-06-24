@@ -184,8 +184,9 @@ Done.
 
    General qualifiers:
    -auto               boolean    Turn off prompts
-   -stdout             boolean    Write standard output
-   -filter             boolean    Read standard input, write standard output
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
@@ -395,7 +396,7 @@ taken as interesting information, despite its dramatic appearance.
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
 
-Consensus tree program, version 3.6b
+Consensus tree program, version 3.67
 
 Species in order: 
 
@@ -637,7 +638,8 @@ None.
 -->
 <h2><a name="See also">See also</a></h2>
 <table border cellpadding=4 bgcolor="#FFFFF0">
-<tr><th>Program name</th><th>Description</th></tr>
+<tr><th>Program name</th>
+<th>Description</th></tr>
 <tr>
 <td><a href="/embassy/phylip/econsense.html">econsense</a></td>
 <td>Majority-rule and strict consensus tree</td>

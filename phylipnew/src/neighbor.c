@@ -1,13 +1,14 @@
 
-#include "phylip.h"
-#include "dist.h"
-
-/* version 3.6. (c) Copyright 1993-2002 by the University of Washington.
+/* version 3.6. (c) Copyright 1993-2005 by the University of Washington.
    Written by Mary Kuhner, Jon Yamato, Joseph Felsenstein, Akiko Fuseki,
    Sean Lamont, and Andrew Keeffe.
    Permission is granted to copy and use this program provided no fee is
    charged for it and provided that this copyright notice is not removed. */
 
+#include <float.h>
+
+#include "phylip.h"
+#include "dist.h"
 
 AjPPhyloDist* phylodists = NULL;
 AjPPhyloTree* phylotrees;
@@ -88,7 +89,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
       else outgrno = 1;
     }
 
-    replicates = ajAcdGetBool("replicates");
+    replicates = ajAcdGetBoolean("replicates");
 
     jumble = ajAcdGetToggle("jumble");
     if(jumble) {
@@ -102,9 +103,9 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
       emboss_initseed(inseed, &inseed0, seed);
     }    
  
-    printdata = ajAcdGetBool("printdata");
-    progress = ajAcdGetBool("progress");
-    treeprint = ajAcdGetBool("treeprint");
+    printdata = ajAcdGetBoolean("printdata");
+    progress = ajAcdGetBoolean("progress");
+    treeprint = ajAcdGetBoolean("treeprint");
     trout = ajAcdGetToggle("trout");
 
     embossoutfile = ajAcdGetOutfile("outfile");   
@@ -270,7 +271,7 @@ void jointree()
       for (i = 0; i <= j - 2; i++)
         x[j - 1][i] = x[i][j - 1];
     }
-    tmin = 99999.0;
+    tmin = DBL_MAX;
     /* Compute sij and minimize */
     if (njoin) {     /* many revisions by Y. Ina from here ... */
       for (i = 0; i < spp; i++)

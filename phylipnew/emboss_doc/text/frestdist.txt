@@ -166,7 +166,7 @@ Input file: restdist.dat
 Phylip restdist program output file [restdist.frestdist]: 
 
 
-Restriction site or fragment distances, version 3.6b
+Restriction site or fragment distances, version 3.67
 
 Distances calculated for species
     Alpha        ....
@@ -214,8 +214,9 @@ Command line arguments
 
    General qualifiers:
    -auto               boolean    Turn off prompts
-   -stdout             boolean    Write standard output
-   -filter             boolean    Read standard input, write standard output
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
@@ -340,7 +341,7 @@ Known bugs
 See also
 
    Program name                         Description
-   distmat      Creates a distance matrix from multiple alignments
+   distmat      Create a distance matrix from a multiple sequence alignment
    ednacomp     DNA compatibility algorithm
    ednadist     Nucleic acid sequence Distance Matrix program
    ednainvar    Nucleic acid sequence Invariants method

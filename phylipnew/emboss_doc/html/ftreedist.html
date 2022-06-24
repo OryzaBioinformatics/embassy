@@ -278,8 +278,9 @@ Done.
 
    General qualifiers:
    -auto               boolean    Turn off prompts
-   -stdout             boolean    Write standard output
-   -filter             boolean    Read standard input, write standard output
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
@@ -595,16 +596,16 @@ output for the example trees.
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
 
-Tree distance program, version 3.6b
+Tree distance program, version 3.67
 
 Branch score distances between adjacent pairs of trees:
 
-Trees 1 and 2:    4.000000e-02
-Trees 3 and 4:    1.000000e-01
-Trees 5 and 6:    4.000000e-02
-Trees 7 and 8:    4.000000e-02
-Trees 9 and 10:    4.000000e-02
-Trees 11 and 12:    1.000000e-01
+Trees 1 and 2:    2.000000e-01
+Trees 3 and 4:    3.162278e-01
+Trees 5 and 6:    2.000000e-01
+Trees 7 and 8:    2.000000e-01
+Trees 9 and 10:    2.000000e-01
+Trees 11 and 12:    3.162278e-01
 </pre>
 </td></tr></table><p>
 
@@ -614,7 +615,7 @@ Trees 11 and 12:    1.000000e-01
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
 
-Tree distance program, version 3.6b
+Tree distance program, version 3.67
 
 Symmetric differences between adjacent pairs of trees:
 
@@ -747,7 +748,8 @@ None.
 -->
 <h2><a name="See also">See also</a></h2>
 <table border cellpadding=4 bgcolor="#FFFFF0">
-<tr><th>Program name</th><th>Description</th></tr>
+<tr><th>Program name</th>
+<th>Description</th></tr>
 <tr>
 <td><a href="/embassy/phylip/econsense.html">econsense</a></td>
 <td>Majority-rule and strict consensus tree</td>
