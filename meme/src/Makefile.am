@@ -6,11 +6,19 @@ lib_LTLIBRARIES = libmeme.la
 
 bin_PROGRAMS = meme
 
+if LOCALLINK
 INCLUDES = -IINCLUDE -I../../../ajax
+else
+INCLUDES = -IINCLUDE -I${embprefix}/include
+endif
 
 if ISSHARED
 if ISAIXIA64
+if LOCALLINK
 AM_CFLAGS = -Wl,-bdynamic -Wl,-brtl -L../../../ajax/.libs -lajax
+else
+AM_CFLAGS = -Wl,-bdynamic -Wl,-brtl -L../../../ajax/.libs -lajax
+endif
 else
 AM_CFLAGS =
 endif
@@ -29,4 +37,8 @@ libmeme_la_LDFLAGS = -version-info 2:3:1
 
 meme_SOURCES = meme.c
 
-LDADD = libmeme.la ../../../ajax/libajax.la
+if LOCALLINK
+LDADD = libmeme.la ../../../nucleus/libnucleus.la ../../../ajax/libajax.la ../../../plplot/libplplot.la $(XLIB)
+else
+LDADD = libmeme.la -L${embprefix}/lib -lnucleus -lajax -lplplot $(XLIB)
+endif
