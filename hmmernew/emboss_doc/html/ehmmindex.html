@@ -32,6 +32,18 @@ ehmmindex
 
 
 <H2>
+Wiki
+</H2>
+
+The master copies of EMBOSS documentation are available
+at <a href="http://emboss.open-bio.org/wiki/Appdocs">
+http://emboss.open-bio.org/wiki/Appdocs</a>
+on the EMBOSS Wiki.
+
+<p>
+Please help by correcting and extending the Wiki pages.
+
+<H2>
     Function
 </H2>
 Create a binary SSI index for an HMM database
@@ -119,18 +131,18 @@ HMMER 2.3.2 (Oct 2003)
 Copyright (C) 1992-2003 HHMI/Washington University School of Medicine
 Freely distributed under the GNU General Public License (GPL)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-HMM file:                 myhmmso
+HMM file:                 ./myhmmso
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-Determining offsets for myhmmso, please be patient...
+Determining offsets for ./myhmmso, please be patient...
 Complete.
-HMM file:       myhmmso
-SSI index:      myhmmso.ssi
+HMM file:       ./myhmmso
+SSI index:      ./myhmmso.ssi
 # of HMMS:      3
 HMM names:      3
 HMM accessions: 2
 
-hmmindex myhmmso
+hmmindex ./myhmmso
 
 
 </pre></td></tr></table><p>
@@ -288,7 +300,7 @@ MAP   yes
 COM   hmmbuild -n rrm --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../data/hmmnew/rrm.sto
 COM   hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex4-keep/myhmms
 NSEQ  90
-DATE  Sun Jul 15 12:00:00 2007
+DATE  Tue Jul 15 12:00:00 2008
 CKSUM 8325
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
