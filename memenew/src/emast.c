@@ -29,7 +29,7 @@
 
 /* @prog emast ****************************************************************
 **
-** EMBOSS wrapper to meme from Timothy Bailey's MEME package version 3.0.14 
+** EMBOSS wrapper to meme from Timothy Bailey's MEME package version 4.0.0 
 ** Searches sequences for motifs. 
 **
 ******************************************************************************/
@@ -74,32 +74,33 @@ int main(int argc, char **argv)
     AjPStr  stdoutname  = NULL;   /* Name of temp. file for holding data written to stdout */
     AjPStr  stdouttemp  = NULL;   /* Temp. string */
     AjPFile stdoutf     = NULL;
-
+    ajint ret;
+    
     /* ACD file processing */
     embInitP("emast",argc,argv,"MEMENEW");
     mfile    = ajAcdGetInfile("mfile");
-    d        = ajAcdGetInfile("d");
-    a        = ajAcdGetInfile("a");
+    d        = ajAcdGetInfile("dfile");
+    a        = ajAcdGetInfile("afile");
     bfile    = ajAcdGetInfile("bfile");
     smax     = ajAcdGetInt("smax");
     ev       = ajAcdGetFloat("ev");
     mt       = ajAcdGetFloat("mt");
-    isstdin    = ajAcdGetBool("stdin");
-    text     = ajAcdGetBool("text");
-    dna      = ajAcdGetBool("dna");
-    comp     = ajAcdGetBool("comp");
+    isstdin    = ajAcdGetBoolean("stdin");
+    text     = ajAcdGetBoolean("text");
+    dna      = ajAcdGetBoolean("dna");
+    comp     = ajAcdGetBoolean("comp");
     rank     = ajAcdGetInt("rank");
-    best     = ajAcdGetBool("best");
-    remcorr  = ajAcdGetBool("remcorr");
-    brief    = ajAcdGetBool("brief");
-    b        = ajAcdGetBool("b");
-    nostatus = ajAcdGetBool("nostatus");
-    hitlist  = ajAcdGetBool("hitlist");
+    best     = ajAcdGetBoolean("best");
+    remcorr  = ajAcdGetBoolean("remcorr");
+    brief    = ajAcdGetBoolean("brief");
+    b        = ajAcdGetBoolean("b");
+    nostatus = ajAcdGetBoolean("nostatus");
+    hitlist  = ajAcdGetBoolean("hitlist");
     c        = ajAcdGetInt("c");
-    sep      = ajAcdGetBool("sep");
-    norc     = ajAcdGetBool("norc");
-    w        = ajAcdGetBool("w");
-    seqp     = ajAcdGetBool("seqp");
+    sep      = ajAcdGetBoolean("sep");
+    norc     = ajAcdGetBoolean("norc");
+    w        = ajAcdGetBoolean("w");
+    seqp     = ajAcdGetBoolean("seqp");
     mf       = ajAcdGetString("mf");
     df       = ajAcdGetString("df");
     minseqs  = ajAcdGetInt("minseqs");
@@ -118,7 +119,7 @@ int main(int argc, char **argv)
     outfilename = ajStrNew();
     stdoutname  = ajStrNew();
     stdouttemp  = ajStrNew();
-    ajStrAssignC(&stdoutname, ajFileTempName(NULL));
+    ajFilenameSetTempname(&stdoutname);
 
 
     /* 2. Build emast command line */
@@ -130,22 +131,22 @@ int main(int argc, char **argv)
        */
     if(!ajNamGetValueC("mast", &cmd))
 	ajStrAssignC(&cmd, "mast");
-    ajFmtPrintAppS(&cmd, " %s ", ajFileName(mfile));
+    ajFmtPrintAppS(&cmd, " %s ", ajFileGetNameC(mfile));
 
     /* Warn user if both d and isstdin are specified and use only d */
     if(d && isstdin)
 	ajWarn("Database options < -d > and < -stdin > were both set, only < -d > will be used!");
     if(d)
-	ajFmtPrintAppS(&cmd, " -d %s ", ajFileName(d));
+	ajFmtPrintAppS(&cmd, " -d %s ", ajFileGetNameC(d));
     else if(isstdin)
 	ajFmtPrintAppS(&cmd, " -stdin ");
     /* Presume 'a' is a file .. it doesn't say in the MAST docs ! */
     if((d || isstdin) && a)
-	ajFmtPrintAppS(&cmd, " -a %s ", ajFileName(a));
+	ajFmtPrintAppS(&cmd, " -a %s ", ajFileGetNameC(a));
     if(b)
 	ajFmtPrintAppS(&cmd, " -b ");
     if(bfile)
-	ajFmtPrintAppS(&cmd, " -bfile %s ", ajFileName(bfile));
+	ajFmtPrintAppS(&cmd, " -bfile %s ", ajFileGetNameC(bfile));
     if(smax != -1)
 	ajFmtPrintAppS(&cmd, " -smax %d ", smax);
     ajFmtPrintAppS(&cmd, " -ev %f ", ev);
@@ -206,8 +207,11 @@ int main(int argc, char **argv)
 
     /* 4. Call mast */
     ajDebug("%S\n", cmd);
-    system(ajStrGetPtr(cmd));    
+    ret = system(ajStrGetPtr(cmd));    
+    if(ret)
+        ajFatal("Error from mast program. Aborting.");
 
+    
 
     /* 5. The mast output file name is hard-coded to a name derived from the 
        mast command-line (white-space removed, ".html" appended and other
@@ -219,12 +223,12 @@ int main(int argc, char **argv)
 
        Rename the mast output file to that specified in the ACD file.
        Remove stdoutf */
-    stdoutf = ajFileNewIn(stdoutname);
-    if(!ajFileReadLine(stdoutf, &stdouttemp))
+    stdoutf = ajFileNewInNameS(stdoutname);
+    if(!ajReadlineTrim(stdoutf, &stdouttemp))
 	ajFatal("File read error on mast output file (stdout)");
     if(!ajFmtScanS(stdouttemp, "%*s %*s %*s %S", &outfilename))
     	ajFatal("File read error on mast output file (stdout)");
-    ajFmtPrintS(&cmd, "mv %S %S", outfilename , ajFileGetName(outfile));
+    ajFmtPrintS(&cmd, "mv %S %S", outfilename , ajFileGetNameS(outfile));
     system(ajStrGetPtr(cmd));    
     ajFmtPrintS(&cmd, "rm %S", stdoutname);
     system(ajStrGetPtr(cmd));
@@ -238,6 +242,15 @@ int main(int argc, char **argv)
     ajStrDel(&stdoutname);
     ajStrDel(&stdouttemp);
     ajStrDel(&outfilename);
+
+    ajStrDel(&mf);
+    ajStrDel(&df);
+    ajStrDel(&diag);
+
+    ajFileClose(&mfile);
+    ajFileClose(&d);
+    ajFileClose(&a);
+    ajFileClose(&bfile);
     ajFileClose(&stdoutf);
     
     embExit();

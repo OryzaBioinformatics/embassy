@@ -25,6 +25,8 @@
 #include "emboss.h"
 
 
+
+
 /* @prog ememe ****************************************************************
 **
 ** EMBOSS wrapper to meme from Timothy Bailey's MEME package version 3.0.14 
@@ -71,26 +73,20 @@ int main(int argc, char **argv)
     AjBool     xbranch   = ajFalse;
     AjBool     wbranch   = ajFalse;
     ajint      bfactor   = 0;
-
-    AjPDirout  outdir    = NULL;
-
-    const AjPStr dirext = NULL;
-
+    AjPFile    outtext   = NULL;
     
     /* Housekeeping variables */
     AjPStr     cmd       = NULL;
-    AjPStr     userdir   = NULL;
+    AjPStr     ssname    = NULL;      
     AjPSeqout  outseq    = NULL;   
     AjPStr     tmp       = NULL;
     char       option;
 
-    AjPFile outs = NULL;
-    AjPStr  outsname = NULL;
-    
+
 
     
     /* ACD file processing */
-    embInitP("ememe",argc,argv,"MEMENEW");
+    embInitP("ememetext",argc,argv,"MEMENEW");
     dataset   = ajAcdGetSeqset("dataset");
     bfile     = ajAcdGetInfile("bfile");
     plib      = ajAcdGetInfile("plibfile");
@@ -128,43 +124,29 @@ int main(int argc, char **argv)
     wbranch   = ajAcdGetBoolean("wbranch");
     bfactor   = ajAcdGetInt("bfactor");    
 
-    outdir    = ajAcdGetOutdir("outdir");    
-
+    outtext   = ajAcdGetOutfile("outtext");
+    outseq    = ajAcdGetSeqoutset("outseq");
+    
+    
 
     /* MAIN APPLICATION CODE */
     /* 1. Housekeeping */
-    cmd     = ajStrNew();
-    tmp     = ajStrNew();
-    userdir = ajStrNew();
-
-    outsname = ajStrNew();
-
-
-    ajStrAssignS(&userdir,ajDiroutGetPath(outdir));
-    dirext = ajDiroutGetExt(outdir);
+    cmd      = ajStrNew();
+    tmp      = ajStrNew();
     
-    if(ajStrGetLen(dirext))
-        ajFmtPrintAppS(&userdir,".%S",dirext);
-
     /* 2. Re-write dataset to a temporary file in a format (fasta) MEME
     ** can understand.
     ** Can't just pass the name of dataset to MEME as the name provided
     ** might be a USA which MEME would not understand.
     */
 
-    ajFmtPrintS(&outsname,"%Smeme.fasta",userdir);
-    outs = ajFileNewOutNameS(outsname);
-    if(!outs)
-        ajFatal("Cannot open output fasta file %S",outsname);
+    ssname = ajStrNewS(ajFileGetNameS(outseq->File));
     
-    outseq = ajSeqoutNewFile(outs);
-
     ajSeqoutSetFormatC(outseq, "fasta");
     ajSeqoutWriteSet(outseq, dataset);
     ajSeqoutClose(outseq);
     ajSeqoutDel(&outseq);
-    ajFileClose(&outs);
-    
+
 
     /* 3. Build ememe command line */
     /* Command line is built in this order: 
@@ -176,7 +158,7 @@ int main(int argc, char **argv)
     if(!ajNamGetValueC("meme", &cmd))
 	ajStrAssignC(&cmd, "meme");
 
-    ajFmtPrintAppS(&cmd, " %S", outsname);
+    ajFmtPrintAppS(&cmd, " %S", ssname);
 
     if(bfile)
 	ajFmtPrintAppS(&cmd, " -bfile %s ", ajFileGetNameC(bfile));
@@ -295,8 +277,9 @@ int main(int argc, char **argv)
     else
 	ajFmtPrintAppS(&cmd, "-dna ");
 
-    
-    ajFmtPrintAppS(&cmd, " -oc %S",userdir);
+    ajFmtPrintAppS(&cmd, " -text");
+
+    ajFmtPrintAppS(&cmd, " > %S ", ajFileGetNameS(outtext));
 
 
     /* 4. Close files from ACD before calling meme */	
@@ -306,29 +289,27 @@ int main(int argc, char **argv)
 
     /* 5. Call meme */
     /* ajFmtPrint("\n%S\n", cmd); */
-    if(system(ajStrGetPtr(cmd)))
-        ajFatal("meme application error using command line: %S",cmd);
-    
+    system(ajStrGetPtr(cmd));    
+
 
     /* 6. Exit cleanly */
 
     ajSeqsetDel(&dataset);
-
     ajStrDel(&cons);
     ajStrDel(&sf);
     ajStrDel(&mod);
     ajStrDel(&prior);
     ajStrDel(&spmap);
+
     ajStrDel(&cmd);
-    ajStrDel(&outsname);
+    ajStrDel(&ssname);
     ajStrDel(&tmp);
-    ajStrDel(&userdir);
-    
-    ajDiroutDel(&outdir);
     
     ajFileClose(&bfile);
     ajFileClose(&plib);
-
+    ajFileClose(&outtext);
+    ajSeqoutDel(&outseq);
+    
     embExit();
 
     return 0;

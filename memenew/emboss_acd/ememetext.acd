@@ -1,5 +1,5 @@
-application: ememe [
-  documentation: "Multiple EM for Motif Elicitation"
+application: ememetext [
+  documentation: "Multiple EM for Motif Elicitation. Text file only."
   groups: "Protein:Motifs"
   embassy: "memenew"
 ]
@@ -477,12 +477,16 @@ section: output [
   type: "page"
 ]
 
-  outdir: outdir [
+  outfile: outtext [
     parameter: "Y"
-    information: "MEME program output file output directory"
-    knowntype: "meme output"
-    default: "."
-    create: "Y"
+    information: "MEME program text output file"
+    knowntype: "meme text output"
+    extension: "text"
+  ]
+
+  seqoutset: outseq [
+    parameter: "Y"
+    extension: "fasta"
   ]
 
 endsection: output
