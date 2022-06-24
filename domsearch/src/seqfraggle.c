@@ -3,8 +3,8 @@
 ** Removes fragments from DHF files (domain hits files) or other files of 
 ** sequences.
 **
-** @author: Copyright (C) Matt Blades (mblades@hgmp.mrc.ac.uk)
-** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
+** @author: Copyright (C) Matt Blades
+** @author: Copyright (C) Jon Ison (jison@ebi.ac.uk)
 ** @@
 **
 **
@@ -34,7 +34,7 @@
 **  Software Suite.  Trends in Genetics, 15:276-278.  
 **  See also http://www.uk.embnet.org/Software/EMBOSS
 **  
-**  Email jison@rfcgr.mrc.ac.uk.
+**  Email jison@ebi.ac.uk.
 **  
 **  NOTES
 **  
@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 
     AjPStr      temp        = NULL;  /* Temp string.                         */
     AjPStr      temp2       = NULL;  /* Temp string.                         */
-    AjPStr      exec        = NULL;  /* The UNIX command line to be executed.*/    
+    AjPStr      exec        = NULL;  /* The UNIX command line to be executed.*/
 
     ajint       thresh      = 0;     /* Threshold for definition of fragments*/
     ajint       x           = 0;     /* Loop counters.                       */
@@ -120,8 +120,8 @@ int main(int argc, char **argv)
 
 
     /* Read data from acd. */
-    ajNamInit("emboss");
-    ajAcdInitP("seqfraggle",argc,argv,"DOMSEARCH"); 
+    embInitP("seqfraggle",argc,argv,"DOMSEARCH");
+
     dhfin      = ajAcdGetDirlist("dhfinpath");
     dhfout     = ajAcdGetOutdir("dhfoutdir");
     thresh      = ajAcdGetInt("thresh");
@@ -146,12 +146,12 @@ int main(int argc, char **argv)
 	    seqfraggle_getlengths(hitlist, &num_hits, &seq_len_sort, &seq_len, 
 				  &seq_ok);
 	else
-	    seqfraggle_getlengths_other(temp, &seqset, &num_hits, &seq_len_sort, 
-					&seq_len, &seq_ok);
+	    seqfraggle_getlengths_other(temp, &seqset, &num_hits,
+					&seq_len_sort, &seq_len, &seq_ok);
 
 	
-	/* if num_hits > 1 then seq_len_sort, seq_len & seq_ok all have to be freed.
-	   seqset ALWAYS has to be freed. */
+	/* if num_hits > 1 then seq_len_sort, seq_len & seq_ok all
+	   have to be freed.  seqset ALWAYS has to be freed. */
 	
 	if(!num_hits)
 	{
@@ -211,16 +211,16 @@ int main(int argc, char **argv)
 	/* Create output file. */
 	if(hitlist)
 	{
-	    ajStrAssS(&temp2, temp);
+	    ajStrAssignS(&temp2, temp);
 	    ajFileDirExtnTrim(&temp2);
 	    dhfoutPtr = ajFileNewOutDir(dhfout, temp2);
 	}
 	else
 	{
-	    ajStrAssS(&temp2, temp);
+	    ajStrAssignS(&temp2, temp);
 	    ajFileDirExtnTrim(&temp2);
-	    ajStrInsert(&temp2, 0, ajDirName(dhfout));
-	    ajStrAssS(&temp2, ajDirExt(dhfout));
+	    ajStrInsertS(&temp2, 0, ajDirName(dhfout));
+	    ajStrAssignS(&temp2, ajDirExt(dhfout));
 	    ajSeqoutUsa(&seqout, temp2);
 	}
 
@@ -399,7 +399,7 @@ static void seqfraggle_getlengths_other(AjPStr temp,
 	{
 	    tmpseq = ajSeqsetGetSeq(*seqset, x);
 	    
-    	    len = ajSeqLen(tmpseq);
+    	    len = ajSeqGetLen(tmpseq);
 	    ajIntPut(seq_len, x, len);
 	    ajIntPut(seq_len_sort, x, len);
 	}

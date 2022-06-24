@@ -3,8 +3,8 @@
 ** Removes redundancy from DHF files (domain hits files) or other files of 
 ** sequences.
 **
-** @author: Copyright (C) Ranjeeva Ranasinghe (rranasin@hgmp.mrc.ac.uk)
-** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
+** @author: Copyright (C) Ranjeeva Ranasinghe 
+** @author: Copyright (C) Jon Ison (jison@ebi.ac.uk)
 ** @@
 **
 ** This program is free software; you can redistribute it and/or
@@ -32,7 +32,7 @@
 **  Software Suite.  Trends in Genetics, 15:276-278.  
 **  See also http://www.uk.embnet.org/Software/EMBOSS
 **  
-**  Email jison@rfcgr.mrc.ac.uk.
+**  Email jison@ebi.ac.uk.
 **  
 **  NOTES
 **  
@@ -57,57 +57,57 @@
 int main(int argc, char **argv)
 {
     /* Variable declarations */
-    AjPList    in        = NULL;    /* Names of domain hits files (input).    */    
-    AjPStr     inname    = NULL;    /* Full name of the current DHF file.     */
-    AjPFile    inf       = NULL;    /* Current DHF file.                      */
-    AjPHitlist infhits   = NULL;    /* Hitlist from DHF file                  */
-    AjBool     dosing    = ajFalse; /* Filter using singlet sequences.        */
-    AjPDir     singlets  = NULL;    /* Singlets (input).                    */    
-    AjBool     dosets    = ajFalse; /* Filter using sets of sequences.        */
-    AjPDir     insets    = NULL;    /* Sets (input).                          */
-    AjPStr    *mode      = NULL;    /* Mode of operation                      */
+    AjPList    in        = NULL;    /* Names of domain hits files (input).   */
+    AjPStr     inname    = NULL;    /* Full name of the current DHF file.    */
+    AjPFile    inf       = NULL;    /* Current DHF file.                     */
+    AjPHitlist infhits   = NULL;    /* Hitlist from DHF file                 */
+    AjBool     dosing    = ajFalse; /* Filter using singlet sequences.       */
+    AjPDir     singlets  = NULL;    /* Singlets (input).                     */
+    AjBool     dosets    = ajFalse; /* Filter using sets of sequences.       */
+    AjPDir     insets    = NULL;    /* Sets (input).                         */
+    AjPStr    *mode      = NULL;    /* Mode of operation                     */
     ajint      moden     = 0;       /* Mode 1: single threshold for redundancy
 				       removal, 2: lower and upper thresholds
-				       for redundancy removal.                */
-    float      thresh    = 0.0;     /* Threshold for non-redundancy.          */
-    float      threshlow = 0.0;	    /* Threshold (lower limit).               */
-    float      threshup  = 0.0;	    /* Threshold (upper limit).               */
-    AjPMatrixf matrix    = NULL;    /* Substitution matrix.                   */
-    float      gapopen   = 0.0;     /* Gap insertion penalty.                 */
-    float      gapextend = 0.0;     /* Gap extension penalty.                 */
-    AjPDir     out       = NULL;    /* Domain hits files (output).            */    
-    AjPFile    outf      = NULL;    /* Current DHF file (output).             */
-    AjBool     dored     = ajFalse; /* True if redundant hits are output.     */
-    AjPDir     outred    = NULL;    /* DHF files for redundant hits (output). */
-    AjPFile    redf      = NULL;    /* Current DHF file redundancy (output).  */    
-    AjPStr     outname   = NULL;    /* Name of output file (re-used).         */    
-    AjPFile    logf      = NULL;    /* Log file pointer.                      */
+				       for redundancy removal.               */
+    float      thresh    = 0.0;     /* Threshold for non-redundancy.         */
+    float      threshlow = 0.0;	    /* Threshold (lower limit).              */
+    float      threshup  = 0.0;	    /* Threshold (upper limit).              */
+    AjPMatrixf matrix    = NULL;    /* Substitution matrix.                  */
+    float      gapopen   = 0.0;     /* Gap insertion penalty.                */
+    float      gapextend = 0.0;     /* Gap extension penalty.                */
+    AjPDir     out       = NULL;    /* Domain hits files (output).           */
+    AjPFile    outf      = NULL;    /* Current DHF file (output).            */
+    AjBool     dored     = ajFalse; /* True if redundant hits are output.    */
+    AjPDir     outred    = NULL;    /* DHF files for redundant hits (output).*/
+    AjPFile    redf      = NULL;    /* Current DHF file redundancy (output). */
+    AjPStr     outname   = NULL;    /* Name of output file (re-used).        */
+    AjPFile    logf      = NULL;    /* Log file pointer.                     */
  
-    AjBool     ok        = ajFalse; /* Housekeeping.                          */
-    AjPSeqset  seqset    = NULL;    /* Seqset (re-used).                      */
-    AjPSeqin   seqin     = NULL;    /* Seqin (re-used).                       */    
-    AjPList    seq_list  = NULL;    /* Main list for redundancy removal.      */
-    AjPSeq     seq_tmp   = NULL;    /* Temp. pointer for making seq_list.     */
-    ajint      seq_siz   = 0;       /* Size of seq_list.                      */
+    AjBool     ok        = ajFalse; /* Housekeeping.                         */
+    AjPSeqset  seqset    = NULL;    /* Seqset (re-used).                     */
+    AjPSeqin   seqin     = NULL;    /* Seqin (re-used).                      */
+    AjPList    seq_list  = NULL;    /* Main list for redundancy removal.     */
+    AjPSeq     seq_tmp   = NULL;    /* Temp. pointer for making seq_list.    */
+    ajint      seq_siz   = 0;       /* Size of seq_list.                     */
     AjPInt     keep      = NULL;    /* 1: Sequence in seq_list was classed as
-				       non-redundant, 0: redundant.           */
-    AjPInt     nokeep    = NULL;    /* Inversion of keep array.               */
-    ajint      nseqnr    = 0;       /* No. non-redundant seqs. in seq_list.   */
+				       non-redundant, 0: redundant.          */
+    AjPInt     nokeep    = NULL;    /* Inversion of keep array.              */
+    ajint      nseqnr    = 0;       /* No. non-redundant seqs. in seq_list.  */
     
 
-    AjPStr     filtername= NULL;    /* Name of filter file (re-used).         */
-    AjPFile    filterf   = NULL;    /* Current filter file.                   */
-    AjPHitlist hitlist   = NULL;    /* Hitlist from input file (re-used).     */
-    AjPScopalg scopalg   = NULL;    /* Scopalg from input file.               */
-    ajint      x         = 0;       /* Housekeeping.                          */
+    AjPStr     filtername= NULL;    /* Name of filter file (re-used).        */
+    AjPFile    filterf   = NULL;    /* Current filter file.                  */
+    AjPHitlist hitlist   = NULL;    /* Hitlist from input file (re-used).    */
+    AjPScopalg scopalg   = NULL;    /* Scopalg from input file.              */
+    ajint      x         = 0;       /* Housekeeping.                         */
     
 
     
 
 
     /* Read data from acd. */
-    ajNamInit("emboss");
-    ajAcdInitP("seqnr",argc,argv,"DOMSEARCH");
+    embInitP("seqnr",argc,argv,"DOMSEARCH");
+
     in        = ajAcdGetDirlist("dhfinpath");
     dosing    = ajAcdGetToggle("dosing");
     singlets    = ajAcdGetDirectory("singletsdir");
@@ -200,8 +200,8 @@ int main(int argc, char **argv)
 	    for(x=0; x<infhits->N; x++)
 	    {
 		seq_tmp = ajSeqNew();
-		ajStrAssS(&seq_tmp->Acc,infhits->hits[x]->Acc);
-		ajStrAssS(&seq_tmp->Seq,infhits->hits[x]->Seq);
+		ajStrAssignS(&seq_tmp->Acc,infhits->hits[x]->Acc);
+		ajStrAssignS(&seq_tmp->Seq,infhits->hits[x]->Seq);
 		ajListPushApp(seq_list,seq_tmp);		
 	    }
 	} 
@@ -210,8 +210,8 @@ int main(int argc, char **argv)
 	    for(x=0;x<ajSeqsetSize(seqset);x++)
 	    {
 		seq_tmp = ajSeqNew();
-		ajStrAssS(&seq_tmp->Acc, ajSeqsetAcc(seqset, x));
-		ajStrAssC(&seq_tmp->Seq, ajSeqsetSeq(seqset, x));
+		ajStrAssignS(&seq_tmp->Acc, ajSeqsetAcc(seqset, x));
+		ajStrAssignC(&seq_tmp->Seq, ajSeqsetSeq(seqset, x));
 		ajListPushApp(seq_list,seq_tmp);		
 	    }
 	    ajSeqsetDel(&seqset);
@@ -226,17 +226,19 @@ int main(int argc, char **argv)
 	if(dosing)
 	{
 	    /* Open singlets file. */
-	    ajStrAssS(&filtername, inname);
+	    ajStrAssignS(&filtername, inname);
 	    ajFileDirExtnTrim(&filtername);
-	    ajStrInsert(&filtername, 0, ajDirName(singlets));
-	    ajStrAppC(&filtername, ".");
-	    ajStrApp(&filtername, ajDirExt(singlets));
+	    ajStrInsertS(&filtername, 0, ajDirName(singlets));
+	    ajStrAppendC(&filtername, ".");
+	    ajStrAppendS(&filtername, ajDirExt(singlets));
 
 	
 	    if((filterf = ajFileNewIn(filtername)) == NULL)
 	    {
-		ajWarn("Could not open DHF file %S", filtername);
-		ajFmtPrint("Could not open singlets filter file %S", filtername);
+		ajWarn("Could not open DHF file %S",
+		       filtername);
+		ajFmtPrint("Could not open singlets filter file %S",
+			   filtername);
 	    }
 	    else
 	    {
@@ -286,8 +288,8 @@ int main(int argc, char **argv)
 		    for(x=0; x<hitlist->N; x++)
 		    {
 			seq_tmp = ajSeqNew();
-			ajStrAssS(&seq_tmp->Acc,hitlist->hits[x]->Acc);
-			ajStrAssS(&seq_tmp->Seq,hitlist->hits[x]->Seq);
+			ajStrAssignS(&seq_tmp->Acc,hitlist->hits[x]->Acc);
+			ajStrAssignS(&seq_tmp->Seq,hitlist->hits[x]->Seq);
 			ajSeqGarbageOn(&seq_tmp);
 			ajListPushApp(seq_list,seq_tmp);		
 		    }
@@ -298,8 +300,8 @@ int main(int argc, char **argv)
 		    for(x=0;x<ajSeqsetSize(seqset);x++)
 		    {
 			seq_tmp = ajSeqNew();
-			ajStrAssS(&seq_tmp->Acc, ajSeqsetAcc(seqset, x));
-			ajStrAssC(&seq_tmp->Seq, ajSeqsetSeq(seqset, x));
+			ajStrAssignS(&seq_tmp->Acc, ajSeqsetAcc(seqset, x));
+			ajStrAssignC(&seq_tmp->Seq, ajSeqsetSeq(seqset, x));
 			ajSeqGarbageOn(&seq_tmp);
 			ajListPushApp(seq_list,seq_tmp);		
 		    }
@@ -317,11 +319,11 @@ int main(int argc, char **argv)
 	if(dosets)
 	{
 	    /* Open sets file. */
-	    ajStrAssS(&filtername, inname);
+	    ajStrAssignS(&filtername, inname);
 	    ajFileDirExtnTrim(&filtername);
-	    ajStrInsert(&filtername, 0, ajDirName(insets));
-	    ajStrAppC(&filtername, ".");
-	    ajStrApp(&filtername, ajDirExt(insets));
+	    ajStrInsertS(&filtername, 0, ajDirName(insets));
+	    ajStrAppendC(&filtername, ".");
+	    ajStrAppendS(&filtername, ajDirExt(insets));
 
 	
 	    if((filterf = ajFileNewIn(filtername)) == NULL)
@@ -337,7 +339,8 @@ int main(int argc, char **argv)
 		if(!(ajDmxScopalgRead(filterf, &scopalg)))
 		{
 		    ajWarn("ajDmxScopalgRead call failed in seqnr");
-		    ajFmtPrintF(logf, "ajDmxScopalgRead call failed in seqnr\n");
+		    ajFmtPrintF(logf,
+				"ajDmxScopalgRead call failed in seqnr\n");
 	
 		    /* Read sequence set instead. */ 
 		    seqset = ajSeqsetNew();
@@ -362,8 +365,10 @@ int main(int argc, char **argv)
 		/* Process empty DHF files (should never occur). */
 		if(!ok)
 		{		
-		    ajWarn("Empty sets filter file %S\n", filtername);
-		    ajFmtPrintF(logf, "Empty sets filter file %S\n", filtername);
+		    ajWarn("Empty sets filter file %S\n",
+			   filtername);
+		    ajFmtPrintF(logf, "Empty sets filter file %S\n",
+				filtername);
 		    /* No continue this time. */
 		}	
 
@@ -376,10 +381,10 @@ int main(int argc, char **argv)
 		    for(x=0; x<scopalg->N; x++)
 		    {
 			seq_tmp = ajSeqNew();
-			ajStrAssS(&seq_tmp->Acc,scopalg->Codes[x]);
-			ajStrAssS(&seq_tmp->Seq,scopalg->Seqs[x]);
+			ajStrAssignS(&seq_tmp->Acc,scopalg->Codes[x]);
+			ajStrAssignS(&seq_tmp->Seq,scopalg->Seqs[x]);
 			/* Remove gap char's & whitespace. */
-			ajStrDegap(&seq_tmp->Seq);  
+			ajStrRemoveGap(&seq_tmp->Seq);  
 			ajSeqGarbageOn(&seq_tmp);
 			ajListPushApp(seq_list,seq_tmp);		
 		    }
@@ -390,8 +395,8 @@ int main(int argc, char **argv)
 		    for(x=0;x<ajSeqsetSize(seqset);x++)
 		    {
 			seq_tmp = ajSeqNew();
-			ajStrAssS(&seq_tmp->Acc, ajSeqsetAcc(seqset, x));
-			ajStrAssC(&seq_tmp->Seq, ajSeqsetSeq(seqset, x));
+			ajStrAssignS(&seq_tmp->Acc, ajSeqsetAcc(seqset, x));
+			ajStrAssignC(&seq_tmp->Seq, ajSeqsetSeq(seqset, x));
 			ajSeqGarbageOn(&seq_tmp);
 			ajListPushApp(seq_list,seq_tmp);		
 		    }
@@ -424,7 +429,7 @@ int main(int argc, char **argv)
 	
 
 	/* Create output files. */
-	ajStrAssS(&outname, inname);
+	ajStrAssignS(&outname, inname);
 	ajFileDirExtnTrim(&outname);
 	outf = ajFileNewOutDir(out, outname);
 	if(dored)

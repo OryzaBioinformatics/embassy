@@ -2,8 +2,8 @@
 **
 ** Generate database hits (sequences) to sequences by using PSI-BLAST.
 **
-** @author: Copyright (C) Ranjeeva Ranasinghe (rranasin@hgmp.mrc.ac.uk)
-** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
+** @author: Copyright (C) Ranjeeva Ranasinghe
+** @author: Copyright (C) Jon Ison (jison@ebi.ac.uk)
 ** @@
 **
 ** This program is free software; you can redistribute it and/or
@@ -32,7 +32,7 @@
 **  Software Suite.  Trends in Genetics, 15:276-278.  
 **  See also http://www.uk.embnet.org/Software/EMBOSS
 **  
-**  Email jison@rfcgr.mrc.ac.uk.
+**  Email jison@ebi.ac.uk.
 **  
 **  NOTES
 **  
@@ -101,20 +101,21 @@ int main(int argc, char **argv)
     
     AjPDir     dhfout    = NULL;   /* Directory of hits files for output.    */
     AjPStr     dhfname   = NULL;   /* Name of hits file.                     */
-    AjPStr     singlet   = NULL;   /* sequence of a particular sunid.        */ 
+    AjPStr     singlet   = NULL;   /* sequence of a particular sunid.        */
 
     AjPStr     msg       = NULL;   /* Error message.                         */
     AjPStr     temp      = NULL;   /* Temp string.                           */
     AjPStr     psiname   = NULL;   /* Name of psiblast output file.          */
-    AjPStr     database  = NULL;   /* Name of blast-indexed database to search. */
+    AjPStr     database  = NULL;   /* Name of blast-indexed db to search.    */
     
     AjPFile    families  = NULL;   /* Pointer to families file for output.   */
     AjPFile    logf      = NULL;   /* Log file pointer.                      */
     AjPFile    psif      = NULL;   /* Pointer to psiblast output file.       */
     
-    ajint      maxhits   = 0;      /* Maximum number of hits reported by PSIBLAST. */          
-    ajint      niter     = 0;      /* Number of PSIBLAST iterations.               */          
-    float      evalue    = 0.0;    /* Threshold E-value for inclusion in family.   */
+    ajint      maxhits   = 0;      /* Maximum number of hits from PSIBLAST.  */
+    ajint      niter     = 0;      /* Number of PSIBLAST iterations.         */
+
+    float      evalue    = 0.0;    /* Threshold E-value for family inclusion */
     
     AjPList    listin     = NULL;  /* A list of hitlist for eleminating the 
 				      identical hits.                        */
@@ -127,7 +128,7 @@ int main(int argc, char **argv)
     
     AjPHitlist tmphitlist = NULL;
     AjPHitlist hitlist   = NULL;   /* Hitlist object for holding results of 
-                                      PSIBLAST hits.                         */  
+                                      PSIBLAST hits.                         */
     
     AjIList    iter       = NULL;
     AjPScophit hit        = NULL;  /* For eleminating identical hits. */
@@ -148,8 +149,8 @@ int main(int argc, char **argv)
 
 
     /* Read data from acd. */
-    ajNamInit("emboss");
-    ajAcdInitP("seqsearch",argc,argv,"DOMSEARCH"); 
+    embInitP("seqsearch",argc,argv,"DOMSEARCH");
+
     mode       = ajAcdGetList("mode");
     inseqs     = ajAcdGetDirlist("inseqspath");
     dhfout     = ajAcdGetOutdir("dhfoutdir");
@@ -161,7 +162,7 @@ int main(int argc, char **argv)
 
 
     /* Housekeeping. */
-    modei      = (ajint) ajStrChar(*mode,0)-48;
+    modei      = (ajint) ajStrGetCharFirst(*mode)-48;
 
     
     
@@ -179,7 +180,7 @@ int main(int argc, char **argv)
         {
             ajFmtPrintS(&msg, "Could not open for reading %S", 
                         inname);
-            ajWarn(ajStrStr(msg));
+            ajWarn(ajStrGetPtr(msg));
             ajFmtPrintF(logf, "WARN  Could not open for reading %S\n", 
                         inname);
 	    ajListDel(&listin);
@@ -213,25 +214,27 @@ int main(int argc, char **argv)
 
         /* Delete psiblast output file*/
 	ajFmtPrintS(&temp, "rm %S", psiname);
-	system(ajStrStr(temp));  
+	system(ajStrGetPtr(temp));  
 	
 
 
 	/* Create hits output file name - the same name as the input file. */
-	ajStrAssS(&dhfname, inname);
+	ajStrAssignS(&dhfname, inname);
 	ajFileDirExtnTrim(&dhfname);
 
 	
 	    
 	/* No hits. */   
 	if(tmphitlist->N == 0)
-            ajFmtPrintF(logf, "WARN  No PSIBLAST hits therefore no output file\n", 
+            ajFmtPrintF(logf,
+			"WARN  No PSIBLAST hits therefore no output file\n", 
                         inname);
 	else
         {
-	    /* This list will only ever contain a single hitlist. 
-	       Create a list of scophits to eleminate identical hits. 
-	       Sort this list by accession number, then by start, then by end. */
+	    /* This list will only ever contain a single hitlist.
+	       Create a list of scophits to eleminate identical hits.
+	       Sort this list by accession number, then by start, then
+	       by end. */
 
 	    ajListPushApp(listin,tmphitlist);
 	    embDmxHitlistToScophits(listin, &listout);
@@ -249,7 +252,7 @@ int main(int argc, char **argv)
 	    {
 		/* Check if the accession numbers are the same and if the
 		   the start and end are identical. */
-		if(ajStrMatch(hit->Acc,nexthit->Acc)
+		if(ajStrMatchS(hit->Acc,nexthit->Acc)
 		   && (hit->Start == nexthit->Start)
 		   && (hit->End == nexthit->End))
 		{
@@ -279,7 +282,7 @@ int main(int argc, char **argv)
 	    {
 		ajFmtPrintS(&msg, "Could not open for writing %S", 
 			    dhfname);
-		ajWarn(ajStrStr(msg));
+		ajWarn(ajStrGetPtr(msg));
 		ajFmtPrintF(logf, "WARN  Could not open for writing %S\n", 
 			    dhfname);
 		embHitlistDel(&hitlist);
@@ -379,7 +382,8 @@ int main(int argc, char **argv)
 ** @param [r] evalue     [float]       Threshold E-value for psiblast
 ** @param [r] database   [AjPStr]      Database name
 **
-** @return [AjPFile] Pointer to  psiblast output file for reading or NULL for error.
+** @return [AjPFile] Pointer to  psiblast output file for reading or NULL
+**                   for error.
 ** @@
 ** 
 ** Note
@@ -456,13 +460,13 @@ static AjPFile seqsearch_psialigned(AjPStr seqname,
     /* Initialise random number generator for naming of temp. files
        and create  psiblast input files. */
     ajRandomSeed();
-    ajStrAssC(&name, ajFileTempName(NULL));
-    ajStrAss(&seqs_in, name);
-    ajStrAppC(&seqs_in, ".seqsin");
-    ajStrAss(&seq_in, name);
-    ajStrAppC(&seq_in, ".seqin");
-    ajStrAss(psiname, name);
-    ajStrAppC(psiname, ".psiout");
+    ajStrAssignC(&name, ajFileTempName(NULL));
+    ajStrAssignRef(&seqs_in, name);
+    ajStrAppendC(&seqs_in, ".seqsin");
+    ajStrAssignRef(&seq_in, name);
+    ajStrAppendC(&seq_in, ".seqin");
+    ajStrAssignRef(psiname, name);
+    ajStrAppendC(psiname, ".psiout");
 
 
     seqsinf = ajFileNewOut(seqs_in);
@@ -490,15 +494,15 @@ static AjPFile seqsearch_psialigned(AjPStr seqname,
     /* Write psiblast single sequence input file. */    
     if((*scopalg))
     {
-	ajStrAssS(&degap, (*scopalg)->Seqs[0]);
-	ajStrDegap(&degap);
+	ajStrAssignS(&degap, (*scopalg)->Seqs[0]);
+	ajStrRemoveGap(&degap);
 	ajFmtPrintF(seqinf,"> %S\n%S\n", (*scopalg)->Codes[0], degap);
     }
     
     else
     {
-	ajStrAssC(&degap, ajSeqsetSeq(seqset, 0));
-	ajStrDegap(&degap);
+	ajStrAssignC(&degap, ajSeqsetSeq(seqset, 0));
+	ajStrRemoveGap(&degap);
 	ajFmtPrintF(seqinf,"> %S\n%s\n", ajSeqsetName(seqset, 0), degap);
     }
     
@@ -510,17 +514,19 @@ static AjPFile seqsearch_psialigned(AjPStr seqname,
 
     
     /* Run PSI-BLAST. */
-    ajFmtPrintS(&temp,"blastpgp -i %S -B %S -j %d -e %f -b %d -v %d -d %S > %S\n",
-                seq_in, seqs_in, niter,evalue, maxhits, maxhits, database, *psiname);
+    ajFmtPrintS(&temp,
+		"blastpgp -i %S -B %S -j %d -e %f -b %d -v %d -d %S > %S\n",
+                seq_in, seqs_in, niter,evalue, maxhits, maxhits, database,
+		*psiname);
     ajFmtPrint("%S\n", temp);
-    system(ajStrStr(temp));
+    system(ajStrGetPtr(temp));
     
 
     /* Remove temp. files. */
     ajFmtPrintS(&temp, "rm %S", seq_in);
-    system(ajStrStr(temp));
+    system(ajStrGetPtr(temp));
     ajFmtPrintS(&temp, "rm %S", seqs_in);
-    system(ajStrStr(temp)); 
+    system(ajStrGetPtr(temp)); 
 
 
     /* Tidy up. */
@@ -618,11 +624,11 @@ static AjPFile seqsearch_psisingle(AjPStr seqname,
 
     /* Initialise random number generator for naming of temp. files
        and create  psiblast input files. */
-    ajStrAssC(&name, ajFileTempName(NULL));
-    ajStrAss(&seq_in, name);
-    ajStrAppC(&seq_in, ".seqin");
-    ajStrAss(psiname, name);
-    ajStrAppC(psiname, ".psiout");
+    ajStrAssignC(&name, ajFileTempName(NULL));
+    ajStrAssignRef(&seq_in, name);
+    ajStrAppendC(&seq_in, ".seqin");
+    ajStrAssignRef(psiname, name);
+    ajStrAppendC(psiname, ".psiout");
 
     /* Create output file for psi-blast input file. */
     seqinf = ajFileNewOut(seq_in);
@@ -640,11 +646,11 @@ static AjPFile seqsearch_psisingle(AjPStr seqname,
     ajFmtPrintS(&temp,"blastpgp -i %S -j %d -e %f -b %d -v %d -d %S > %S\n",
                 seq_in, niter,evalue, maxhits, maxhits, database, *psiname);
     ajFmtPrint("%S\n", temp);
-    system(ajStrStr(temp));
+    system(ajStrGetPtr(temp));
 
     /* Remove temp. files. */
     ajFmtPrintS(&temp, "rm %S", seq_in);
-    system(ajStrStr(temp)); 
+    system(ajStrGetPtr(temp)); 
 
     /* Tidy up. */
     ajFileClose(&dhfin);
@@ -672,7 +678,8 @@ static AjPFile seqsearch_psisingle(AjPStr seqname,
 ** @param [r] scophit   [AjPHitlist]  Hit 
 ** @param [r] psif      [AjPFile]     psiblast output file 
 **
-** @return [AjPHitlist] Pointer to Hitlist object (or NULL if 0 hits were found)
+** @return [AjPHitlist] Pointer to Hitlist object
+**                      (or NULL if 0 hits were found)
 ** @@
 ** 
 ******************************************************************************/
@@ -733,19 +740,19 @@ static AjPHitlist seqsearch_ReadPsiblastOutput(AjPScopalg scopalg,
     if(scopalg)
     {    
 	hitlist->Type = scopalg->Type;
-	ajStrAssS(&hitlist->Class, scopalg->Class);
-	ajStrAssS(&hitlist->Fold, scopalg->Fold);
-	ajStrAssS(&hitlist->Superfamily, scopalg->Superfamily);
-	ajStrAssS(&hitlist->Family, scopalg->Family);
+	ajStrAssignS(&hitlist->Class, scopalg->Class);
+	ajStrAssignS(&hitlist->Fold, scopalg->Fold);
+	ajStrAssignS(&hitlist->Superfamily, scopalg->Superfamily);
+	ajStrAssignS(&hitlist->Family, scopalg->Family);
 	hitlist->Sunid_Family = scopalg->Sunid_Family;
     }
     else if(scophit)
     {    	
 	hitlist->Type = scophit->Type;
-	ajStrAssS(&hitlist->Class, scophit->Class);
-	ajStrAssS(&hitlist->Fold, scophit->Fold);
-	ajStrAssS(&hitlist->Superfamily, scophit->Superfamily);
-	ajStrAssS(&hitlist->Family, scophit->Family);
+	ajStrAssignS(&hitlist->Class, scophit->Class);
+	ajStrAssignS(&hitlist->Fold, scophit->Fold);
+	ajStrAssignS(&hitlist->Superfamily, scophit->Superfamily);
+	ajStrAssignS(&hitlist->Family, scophit->Family);
 	hitlist->Sunid_Family = scophit->Sunid_Family;
     }
     /* 
@@ -777,10 +784,10 @@ static AjPHitlist seqsearch_ReadPsiblastOutput(AjPScopalg scopalg,
             {
                 hitlist->hits[hitn-1]->Start   = start;
                 hitlist->hits[hitn-1]->End     = fragend;
-                ajStrAss(&hitlist->hits[hitn-1]->Acc, acc);
-                ajStrAss(&hitlist->hits[hitn-1]->Seq, fullseq);
-                ajStrDegap(&hitlist->hits[hitn-1]->Seq);
-                ajStrAssC(&hitlist->hits[hitn-1]->Model, "PSIBLAST");
+                ajStrAssignRef(&hitlist->hits[hitn-1]->Acc, acc);
+                ajStrAssignRef(&hitlist->hits[hitn-1]->Seq, fullseq);
+                ajStrRemoveGap(&hitlist->hits[hitn-1]->Seq);
+                ajStrAssignC(&hitlist->hits[hitn-1]->Model, "PSIBLAST");
                 hitlist->hits[hitn-1]->Score = score;
 		hitlist->hits[hitn-1]->Eval  = eval;
 	
@@ -794,13 +801,13 @@ static AjPHitlist seqsearch_ReadPsiblastOutput(AjPScopalg scopalg,
 	    
 	   
             /* Reset the sequence of the full hit. */
-            ajStrAssC(&fullseq, "");
+            ajStrAssignC(&fullseq, "");
 
             /* Incremenet hit counter. */
             hitn++;
 
             /* Copy accession number. */
-            ajStrAss(&acc, prevacc);
+            ajStrAssignRef(&acc, prevacc);
 
         }
         /* Line containing sequence segment of the hit. */
@@ -814,7 +821,7 @@ static AjPHitlist seqsearch_ReadPsiblastOutput(AjPScopalg scopalg,
                 start=fragstart;
    
             /* Add fragment to end of sequence of full hit. */
-            ajStrApp(&fullseq, fragseq);
+            ajStrAppendS(&fullseq, fragseq);
         }
     }
 
@@ -823,10 +830,10 @@ static AjPHitlist seqsearch_ReadPsiblastOutput(AjPScopalg scopalg,
     {
         hitlist->hits[hitn-1]->Start = start;
         hitlist->hits[hitn-1]->End = fragend;
-        ajStrAss(&hitlist->hits[hitn-1]->Acc, acc);
-        ajStrAss(&hitlist->hits[hitn-1]->Seq, fullseq);
-        ajStrDegap(&hitlist->hits[hitn-1]->Seq);
-	ajStrAssC(&hitlist->hits[hitn-1]->Model, "PSIBLAST");
+        ajStrAssignRef(&hitlist->hits[hitn-1]->Acc, acc);
+        ajStrAssignRef(&hitlist->hits[hitn-1]->Seq, fullseq);
+        ajStrRemoveGap(&hitlist->hits[hitn-1]->Seq);
+	ajStrAssignC(&hitlist->hits[hitn-1]->Model, "PSIBLAST");
 	hitlist->hits[hitn-1]->Score = score;
 	hitlist->hits[hitn-1]->Eval  = eval;
 
@@ -842,7 +849,3 @@ static AjPHitlist seqsearch_ReadPsiblastOutput(AjPScopalg scopalg,
 
     return hitlist;
 }
-
-
-
-
