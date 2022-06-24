@@ -1,5 +1,5 @@
 application: efactor [
-  documentation: "multistate to binary recoding program"
+  documentation: "Multistate to binary recoding program"
   groups: "Phylogeny:Discrete characters"
   embassy: "phylip"
 ]
@@ -16,19 +16,6 @@ infile: datafile  [
 ]
 
 endsection: input
-
-section: output [
-  information: "Output section"
-  type: "page"
-]
-
-outfile: outfile  [
-  parameter: "Y"
-  default: "efactor.outfile"
-  knowntype: "factor output"
-]
-
-endsection: output
 
 section: additional [
   information: "Additional section"
@@ -54,3 +41,16 @@ boolean: progress  [
 ]
 
 endsection: additional
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+outfile: outfile  [
+  parameter: "Y"
+  default: "efactor.outfile"
+  knowntype: "factor output"
+]
+
+endsection: output

@@ -30,6 +30,90 @@ integer: datasets  [
 
 endsection: input
 
+section: required [
+  information: "Required section"
+  type: "page"
+]
+
+toggle: besttree  [
+  additional: "Y"
+  default: "Y"
+  information: "Search for best tree"
+]
+
+toggle: random  [
+  standard: "$(besttree)"
+  default: "N"
+  information: "Randomize input order of species"
+]
+
+integer: randseed  [
+  standard: "$(random)"
+  default: "3"
+  information: "Random number seed (must be odd)"
+]
+
+integer: randtimes  [
+  standard: "$(random)"
+  default: "3"
+  information: "How many times to randomise"
+]
+
+toggle: og  [
+  additional: "Y"
+  information: "Outgroup root"
+  default: "N"
+]
+
+integer: outgnum  [
+  standard: "$(og)"
+  minimum: "1"
+  default: "1"
+  information: "Number of the outgroup"
+]
+
+endsection: required
+
+section: additional [
+  information: "Additional section"
+  type: "page"
+]
+
+boolean: allsites  [
+  additional: "Y"
+  default: "Y"
+  information: "Are all sites detected"
+]
+
+boolean: lengths  [
+  additional: "@(!$(besttree))"
+  default: "N"
+  information: "Use lengths from user trees"
+]
+
+integer: sitelen  [
+  additional: "Y"
+  default: "6"
+  minimum: "1"
+  maximum: "8"
+  information: "Site length"
+]
+
+float: extrap  [
+  additional: "Y"
+  default: "100.0"
+  minimum: "0.001"
+  information: "Extrapolation factor"
+]
+
+boolean: global  [
+  additional: "$(besttree)"
+  default: "N"
+  information: "Global rearrangements"
+]
+
+endsection: additional
+
 section: output [
   information: "Output section"
   type: "page"
@@ -73,87 +157,3 @@ outfile: treefile  [
 ]
 
 endsection: output
-
-section: additional [
-  information: "Additional section"
-  type: "page"
-]
-
-toggle: besttree  [
-  additional: "Y"
-  default: "Y"
-  information: "Search for best tree"
-]
-
-boolean: allsites  [
-  additional: "Y"
-  default: "Y"
-  information: "Are all sites detected"
-]
-
-boolean: lengths  [
-  additional: "@(!$(besttree))"
-  default: "N"
-  information: "Use lengths from user trees"
-]
-
-integer: sitelen  [
-  additional: "Y"
-  default: "6"
-  minimum: "1"
-  maximum: "8"
-  information: "Site length"
-]
-
-float: extrap  [
-  additional: "Y"
-  default: "100.0"
-  minimum: "0.001"
-  information: "Extrapolation factor"
-]
-
-boolean: global  [
-  additional: "$(besttree)"
-  default: "N"
-  information: "Global rearrangements"
-]
-
-endsection: additional
-
-section: required [
-  information: "Required section"
-  type: "page"
-]
-
-toggle: random  [
-  standard: "$(besttree)"
-  default: "N"
-  information: "Randomize input order of species"
-]
-
-integer: randseed  [
-  standard: "$(random)"
-  default: "3"
-  information: "Random number seed (must be odd)"
-]
-
-integer: randtimes  [
-  standard: "$(random)"
-  default: "3"
-  information: "How many times to randomise"
-]
-
-toggle: og  [
-  additional: "Y"
-  information: "Outgroup root"
-  default: "N"
-]
-
-integer: outgnum  [
-  standard: "$(og)"
-  minimum: "1"
-  default: "1"
-  information: "Number of the outgroup"
-]
-
-endsection: required
