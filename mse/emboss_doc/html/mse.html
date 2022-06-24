@@ -113,7 +113,7 @@ Multiple sequence editor
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
 Multiple sequence editor
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqset     File containing a sequence alignment
@@ -138,6 +138,7 @@ Version: EMBOSS:6.5.0.0
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
    -scircular1         boolean    Sequence is circular
+   -squick1            boolean    Read id and sequence only
    -sformat1           string     Input sequence format
    -iquery1            string     Input query fields or ID list
    -ioffset1           integer    Input start position offset
@@ -313,6 +314,14 @@ Version: EMBOSS:6.5.0.0
 <td> -scircular1<br>-scircular_sequence</td>
 <td>boolean</td>
 <td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -squick1<br>-squick_sequence</td>
+<td>boolean</td>
+<td>Read id and sequence only</td>
 <td>Boolean value Yes/No</td>
 <td>N</td>
 </tr>
@@ -810,57 +819,62 @@ None.
 <tr><th>Program name</th>
 <th>Description</th></tr>
 <tr>
-<td><a href="/emboss/apps/edialign.html">edialign</a></td>
+<td><a href="../../emboss/apps/edialign.html">edialign</a></td>
 <td>Local multiple alignment of sequences</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/emma.html">emma</a></td>
+<td><a href="../../emboss/apps/emma.html">emma</a></td>
 <td>Multiple sequence alignment (ClustalW wrapper)</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/clustalomega/eomega.html">eomega</a></td>
+<td><a href="../clustalomega/eomega.html">eomega</a></td>
 <td>Multiple sequence alignment (ClustalO wrapper)</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/clustalomega/eomegapp.html">eomegapp</a></td>
+<td><a href="../clustalomega/eomegapp.html">eomegapp</a></td>
 <td>Profile with profile (ClustalO wrapper)</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/clustalomega/eomegash.html">eomegash</a></td>
+<td><a href="../clustalomega/eomegaps.html">eomegaps</a></td>
+<td>Single sequence with profile (ClustalO wrapper)</td>
+</tr>
+
+<tr>
+<td><a href="../clustalomega/eomegash.html">eomegash</a></td>
 <td>Sequence with HMM (ClustalO wrapper)</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/clustalomega/eomegasp.html">eomegasp</a></td>
+<td><a href="../clustalomega/eomegasp.html">eomegasp</a></td>
 <td>Sequence with profile (ClustalO wrapper)</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/infoalign.html">infoalign</a></td>
+<td><a href="../../emboss/apps/infoalign.html">infoalign</a></td>
 <td>Display basic information about a multiple sequence alignment</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/plotcon.html">plotcon</a></td>
+<td><a href="../../emboss/apps/plotcon.html">plotcon</a></td>
 <td>Plot conservation of a sequence alignment</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/prettyplot.html">prettyplot</a></td>
+<td><a href="../../emboss/apps/prettyplot.html">prettyplot</a></td>
 <td>Draw a sequence alignment with pretty formatting</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/showalign.html">showalign</a></td>
+<td><a href="../../emboss/apps/showalign.html">showalign</a></td>
 <td>Display a multiple sequence alignment in pretty format</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/tranalign.html">tranalign</a></td>
+<td><a href="../../emboss/apps/tranalign.html">tranalign</a></td>
 <td>Generate an alignment of nucleic coding regions from aligned proteins</td>
 </tr>
 
