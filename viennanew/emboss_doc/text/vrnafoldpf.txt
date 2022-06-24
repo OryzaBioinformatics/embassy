@@ -1,5 +1,4 @@
-
-                                vrnafoldpf 
+                                 vrnafoldpf
 
 
 
@@ -21,8 +20,8 @@ Description
    The original program has additional inputs and produces different
    outputs, depending on the options selected. In the EMBASSY
    implementation it is split into vrnafold for a single sequence and
-   vrnafoldpair for a pair of sequences See the original documentation
-   for the Vienna RNA package http://www.tbi.univie.ac.at/~ivo/RNA/
+   vrnafoldpair for a pair of sequences See the original documentation for
+   the Vienna RNA package http://www.tbi.univie.ac.at/~ivo/RNA/
 
 Algorithm
 
@@ -31,15 +30,19 @@ Usage
    Here is a sample session with vrnafoldpf
 
 
-% vrnafoldpf -temperature 42 
+% vrnafoldpf -temperature 42
 Secondary structures of RNAs with partition
 Input nucleotide sequence: rna2.seq
-Vienna RNAfold output file [rna2.vrnafoldpf]: 
+Vienna RNAfold output file [rna2.vrnafoldpf]:
+
 
    Go to the input files for this example
    Go to the output files for this example
 
 Command line arguments
+
+Secondary structures of RNAs with partition
+Version: EMBOSS:6.2.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          sequence   Nucleotide sequence filename and optional
@@ -57,7 +60,7 @@ Command line arguments
    -[no]closegu        boolean    [Y] Allow GU pairs at end of helices
    -[no]lp             boolean    [Y] Allow lonely pairs
    -[no]convert        boolean    [Y] Convert T to U
-   -nsbases            string     Non-standard bases (Any string is accepted)
+   -nsbases            string     Non-standard bases (Any string)
    -[no]tetraloop      boolean    [Y] Stabilizing energies for tetra-loops
    -energy             menu       [0] Rarely used option to fold sequences
                                   from the ABCD... alphabet (Values: 0 (BP); 1
@@ -113,13 +116,15 @@ Command line arguments
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
-   -help               boolean    Report command line options. More
+   -help               boolean    Report command line options and exit. More
                                   information on associated and general
                                   qualifiers can be found with -help -verbose
    -warning            boolean    Report warnings
    -error              boolean    Report errors
    -fatal              boolean    Report fatal errors
    -die                boolean    Report dying program messages
+   -version            boolean    Report version number and exit
+
 
 Input file format
 

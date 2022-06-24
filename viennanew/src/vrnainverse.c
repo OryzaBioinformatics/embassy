@@ -26,7 +26,7 @@
 #define  PRIVATE   static
 
 #define  REPEAT_DEFAULT  100
-#define  INFINITY        100000
+#define  MYINFINITY      100000
 
 extern void  read_parameter_file(AjPFile fname);
 
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     
     
     
-    embInitP("vrnainverse",argc,argv,"VIENNA");
+    embInitPV("vrnainverse",argc,argv,"VIENNA",VERSION);
     
     
     inf        = ajAcdGetInfile("structuresfile");
