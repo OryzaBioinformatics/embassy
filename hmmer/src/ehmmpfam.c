@@ -15,7 +15,7 @@
  * Conditionally includes PVM parallelization when HMMER_PVM is defined
  *    at compile time; hmmpfam --pvm runs the PVM version.
  *    
- * RCS $Id: ehmmpfam.c,v 1.2 2003/10/06 09:00:54 rice Exp $
+ * RCS $Id: ehmmpfam.c,v 1.4 2004/06/14 14:43:30 rice Exp $
  * Modified for EMBOSS by Alan Bleasby (ISMB 2001)
  */
 
@@ -96,14 +96,14 @@ static void *worker_thread(void *ptr);
 
 
 #ifdef HMMER_PVM
-static void main_loop_pvm(AjPFile outf,char *hmmfile, HMMFILE *hmmfp,
+static void main_loop_pvm(AjPFile outf,const char *hmmfile, HMMFILE *hmmfp,
 			  char *seq, SQINFO *sqinfo, 
 			  float globT, double globE, int Z, int do_xnu,
 			  int do_forward, int do_null2,
 			  struct tophit_s *ghit, struct tophit_s *dhit,
 			  int *ret_nhmm);
 #endif
-static void main_loop_serial(AjPFile outf, char *hmmfile, HMMFILE *hmmfp,
+static void main_loop_serial(AjPFile outf, const char *hmmfile, HMMFILE *hmmfp,
 			     char *seq, SQINFO *sqinfo, 
 			     float globT, double globE,
 			     int Z, int do_xnu, int do_forward,
@@ -125,7 +125,7 @@ static void record_domains(struct tophit_s *h,
 
 int main(int argc, char **argv) 
 {
-    char            *hmmfile;	/* file to read HMMs from                  */
+    const char      *hmmfile;	/* file to read HMMs from                  */
     HMMFILE         *hmmfp;	/* opened hmmfile for reading              */
     char              *seq;	/* target sequence                         */
     SQINFO             sqinfo;	/* optional info for seq                   */
@@ -164,12 +164,13 @@ int main(int argc, char **argv)
     int   num_threads;		/* number of worker threads */   
 
 
-    AjPStr ajhmmfile=NULL;
+    AjPFile ajhmmfile=NULL;
     AjPSeqall seqall=NULL;
     AjBool ajb;
     AjPFile outf=NULL;
     AjPSeq ajseq=NULL;
     AjPStr ajstr=NULL;
+    AjPStr infname=NULL;
   
 
 #ifdef MEMDEBUG
@@ -206,11 +207,15 @@ int main(int argc, char **argv)
     ajNamInit("emboss");
     ajAcdInitP("ehmmpfam",argc,argv,"HMMER");
 
-    ajhmmfile = ajAcdGetString("hmmfile");
-    if(!ajStrLen(ajhmmfile))
-	hmmfile = NULL;
+    ajhmmfile = ajAcdGetInfile("hmmfile");
+    if (ajhmmfile)
+    {
+	infname = ajStrNewC((char *)ajFileName(ajhmmfile));
+	ajFileClose(&ajhmmfile);
+	hmmfile = ajStrStr(infname);
+    }
     else
-	hmmfile = ajStrStr(ajhmmfile);
+	hmmfile = NULL;
   
     seqall = ajAcdGetSeqall("seqall");
     ajb = ajAcdGetBool("nucleic");
@@ -555,7 +560,7 @@ int main(int argc, char **argv)
  *
  * Returns:  (void)
  */
-static void main_loop_serial(AjPFile outf,char *hmmfile, HMMFILE *hmmfp,
+static void main_loop_serial(AjPFile outf,const char *hmmfile, HMMFILE *hmmfp,
 			     char *seq, SQINFO *sqinfo, float globT,
 			     double globE, int Z, int do_xnu, int do_forward,
 			     int do_null2, int num_threads,
@@ -722,7 +727,7 @@ static void record_domains(struct tophit_s *h, struct plan7_s *hmm, char *dsq,
  *
  * Returns:  (void)
  */
-static void main_loop_pvm(AjPFile outf,char *hmmfile, HMMFILE *hmmfp,
+static void main_loop_pvm(AjPFile outf,const char *hmmfile, HMMFILE *hmmfp,
 			  char *seq, SQINFO *sqinfo, float globT,
 			  double globE, int Z, int do_xnu, int do_forward,
 			  int do_null2, struct tophit_s *ghit,

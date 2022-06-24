@@ -6,10 +6,22 @@ application: ehmmcalibrate [
   cpu: "medium"
 ]
 
+section: input [
+  information: "Input section"
+  type: "page"
+]
+
 infile: infile  [
   parameter: "Y"
   information: "HMM file"
   knowntype: "hmm file"
+]
+
+endsection: input
+
+section: advanced [
+  information: "Advanced section"
+  type: "page"
 ]
 
 integer: cpu  [
@@ -21,11 +33,6 @@ integer: fixed  [
   default: "0"
   minimum: "0"
   information: "Length fix for random sequences"
-]
-
-string: histogram  [
-  default: ""
-  information: "Name for histogram file"
 ]
 
 float: mean  [
@@ -54,7 +61,23 @@ integer: seed  [
   information: "Random seed"
 ]
 
+endsection: advanced
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
 outfile: outfile  [
   parameter: "Y"
   knowntype: "hmmcalibrate output"
 ]
+
+outfile: histogramfile  [
+  default: ""
+  information: "Name for histogram file"
+  knowntype: "hmmer histogram"
+  nullok: "Y"
+]
+
+endsection: output

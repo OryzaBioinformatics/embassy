@@ -12,7 +12,7 @@
  * SRE, Mon Nov 18 12:41:29 1996
  *
  * main() for HMM construction from an alignment.
- * RCS $Id: ehmmbuild.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
+ * RCS $Id: ehmmbuild.c,v 1.4 2004/06/14 14:43:30 rice Exp $
  * Modified for EMBOSS by Alan Bleasby (ISMB 2001)
  */
 
@@ -118,7 +118,7 @@ struct opt_s OPTIONS[] = {
 
 #define NOPTIONS (sizeof(OPTIONS) / sizeof(struct opt_s))
 
-static void save_model(struct plan7_s *hmm, char *hmmfile, int do_append,
+static void save_model(struct plan7_s *hmm, const char *hmmfile, int do_append,
 		       int do_binary);
 static void print_all_scores(FILE *fp, struct plan7_s *hmm, 
 			     AINFO *ainfo, char **dsq, int nseq, 
@@ -149,7 +149,7 @@ int main(int argc, char **argv)
     struct plan7_s  *hmm;	/* constructed HMM; written to hmmfile     */
     struct p7prior_s *pri;	/* Dirichlet priors to use                 */
     struct p7trace_s **tr;	/* fake tracebacks for aseq's              */ 
-    char            *hmmfile;	/* file to write HMM to                    */
+    const char      *hmmfile;	/* file to write HMM to                    */
     FILE            *fp;	/* OUTPUT file handle (misc.)              */
     char            *name;	/* name of the HMM                         */
     int              idx;	/* counter for sequences                   */
@@ -166,7 +166,6 @@ int main(int argc, char **argv)
 	P7_BASE_CONFIG, P7_LS_CONFIG, P7_FS_CONFIG, P7_SW_CONFIG
     } cfg_strategy;
     float gapmax;		/* max frac gaps in mat col for -k       */
-    int   overwrite_protect;	/* TRUE to prevent overwriting HMM file  */
     int   verbose;		/* TRUE to show a lot of output          */
     char *align_ofile;		/* name of output alignment file         */
     char *rndfile;		/* random sequence model file to read    */
@@ -186,20 +185,18 @@ int main(int argc, char **argv)
 
     char ajstrat='\0';
     AjPStr *ajstrategy=NULL;
-    AjPStr ajname=NULL;
-    AjPStr  rsname=NULL;
-    AjPStr  cfname=NULL;
+    AjPFile  rsname=NULL;
+    AjPFile  cfname=NULL;
     AjBool  ajappend=ajFalse;
-    AjBool  ajforce=ajFalse;
     AjBool  ajamino=ajFalse;
     AjBool  ajnucleic=ajFalse;
     AjBool  ajbinary=ajFalse;
     AjPStr  *ajcstrategy=NULL;
     char    ajcstrat='\0';
     AjBool  ajeff=ajFalse;
-    AjPStr  nuname=NULL;
-    AjPStr  paname=NULL;
-    AjPStr  prname=NULL;
+    AjPFile  nuname=NULL;
+    AjPFile  paname=NULL;
+    AjPFile  prname=NULL;
     AjBool  ajmore=ajFalse;
     AjPStr  *ajwtt=NULL;
     char    ajwt='\0';
@@ -224,7 +221,6 @@ int main(int argc, char **argv)
     blosumlevel       = 0.62;
     cfg_strategy      = P7_LS_CONFIG;
     gapmax            = 0.5;
-    overwrite_protect = TRUE;
     verbose           = FALSE;
     align_ofile       = NULL;
     rndfile           = NULL;
@@ -255,24 +251,17 @@ int main(int argc, char **argv)
     else
 	cfg_strategy = P7_SW_CONFIG;
 
-    ajname = ajAcdGetString("name");
-    rsname = ajAcdGetString("resave");
-    if(!ajStrLen(rsname))
-	align_ofile = NULL;
-    else
-	align_ofile = ajStrStr(rsname);
+    rsname = ajAcdGetOutfile("resavefile");
+    if(rsname)
+	align_ofile = ajCharNew(ajFileGetName(rsname));
+    ajFileClose(&rsname);
 
     ajappend = ajAcdGetBool("append");
-    ajforce  = ajAcdGetBool("force");
   
     if(ajappend)
 	do_append=TRUE;
     else
 	do_append=FALSE;
-    if(ajforce)
-	overwrite_protect=FALSE;
-    else
-	overwrite_protect=TRUE;
 
     ajamino = ajAcdGetBool("amino");
     if(ajamino)
@@ -288,11 +277,10 @@ int main(int argc, char **argv)
     else
 	do_binary=FALSE;
 
-    cfname = ajAcdGetString("cfile");
-    if(!ajStrLen(cfname))
-	cfile = NULL;
-    else
-	cfile = ajStrStr(cfname);
+    cfname = ajAcdGetOutfile("cfile");
+    if(cfname)
+	cfile = ajCharNew(ajFileGetName(cfname));
+    ajFileClose(&cfname);
 
     ajcstrategy = ajAcdGetList("cstrategy");
     ajcstrat = *ajStrStr(*ajcstrategy);
@@ -309,23 +297,20 @@ int main(int argc, char **argv)
     else
 	do_eff=FALSE;
 
-    nuname = ajAcdGetString("null");
-    if(!ajStrLen(nuname))
-	rndfile = NULL;
-    else
-	rndfile = ajStrStr(nuname);
+    nuname = ajAcdGetInfile("nullfile");
+    if(nuname)
+	rndfile = ajCharNew(ajFileGetName(nuname));
+    ajFileClose(&nuname);
 
-    paname = ajAcdGetString("pam");
-    if(!ajStrLen(paname))
-	pamfile = NULL;
-    else
-	pamfile = ajStrStr(paname);
+    paname = ajAcdGetInfile("pamfile");
+    if(paname)
+	pamfile = ajCharNew(ajFileGetName(paname));
+    ajFileClose(&paname);
 
-    prname = ajAcdGetString("prior");
-    if(!ajStrLen(prname))
-	prifile = NULL;
-    else
-	prifile = ajStrStr(prname);
+    prname = ajAcdGetInfile("priorfile");
+    if(prname)
+	prifile = ajCharNew(ajFileGetName(prname));
+    ajFileClose(&prname);
 
     pamwgt  = ajAcdGetFloat("pamweight");
     swentry = ajAcdGetFloat("swentry");
@@ -362,11 +347,6 @@ int main(int argc, char **argv)
 	ajFatal("--gapmax must be a value from 0 to 1\n");
     if (archpri < 0. || archpri > 1.)
 	ajFatal("--archpri must be a value from 0 to 1\n");
-    if (overwrite_protect && !do_append && FileExists(hmmfile))
-	ajFatal("HMM file %s already exists. Rename or delete it.", hmmfile); 
-    if (overwrite_protect && align_ofile != NULL && FileExists(align_ofile))
-	ajFatal("Alignment resave file %s exists. Rename or delete it.",
-		align_ofile); 
 
     /*********************************************** 
      * Get sequence data
@@ -748,7 +728,7 @@ int main(int argc, char **argv)
  *           
  * Return:   (void)
  */          
-static void save_model(struct plan7_s *hmm, char *hmmfile, int do_append,
+static void save_model(struct plan7_s *hmm, const char *hmmfile, int do_append,
 		       int do_binary)
 {
     FILE    *fp;

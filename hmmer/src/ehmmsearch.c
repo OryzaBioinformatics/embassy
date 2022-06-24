@@ -15,7 +15,7 @@
  * Conditionally includes PVM parallelization when HMMER_PVM is defined
  *    at compile time; hmmsearch --pvm runs the PVM version.
  *
- * RCS $Id: ehmmsearch.c,v 1.2 2003/10/06 09:00:54 rice Exp $
+ * RCS $Id: ehmmsearch.c,v 1.4 2004/06/14 14:43:30 rice Exp $
  * Modified for EMBOSS by Alan Bleasby (ISMB 2001)
  */
 
@@ -145,7 +145,7 @@ int main(int argc, char **argv)
     int   do_pvm;		/* TRUE to run on Parallel Virtual Machine  */
     int   num_threads;		/* number of worker threads                 */
 
-    AjPStr ajhmmfile=NULL;
+    AjPFile ajhmmfile=NULL;
     AjPSeqall seqall=NULL;
     AjBool ajb;
     AjPFile outf=NULL;
@@ -181,12 +181,13 @@ int main(int argc, char **argv)
     ajNamInit("emboss");
     ajAcdInitP("ehmmsearch",argc,argv,"HMMER");
   
-    ajhmmfile = ajAcdGetString("hmmfile");
-    if(!ajStrLen(ajhmmfile))
-	hmmfile = NULL;
+    ajhmmfile = ajAcdGetInfile("hmmfile");
+    if(ajhmmfile)
+	hmmfile = ajCharNew(ajFileGetName(ajhmmfile));
     else
-	hmmfile = ajStrStr(ajhmmfile);
-  
+	hmmfile = NULL;
+    ajFileClose(&ajhmmfile);
+
     seqall = ajAcdGetSeqall("seqall");
 
     Alimit = ajAcdGetInt("nalign");

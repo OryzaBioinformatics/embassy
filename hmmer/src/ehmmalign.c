@@ -12,7 +12,7 @@
  * SRE, Thu Dec 18 16:05:29 1997 [St. Louis]
  * 
  * main() for aligning a set of sequences to an HMM.
- * RCS $Id: ehmmalign.c,v 1.1 2001/07/29 14:13:49 ajb Exp $
+ * RCS $Id: ehmmalign.c,v 1.3 2004/06/14 14:43:30 rice Exp $
  * Modified for EMBOSS by Alan Bleasby (ISMB 2001)
  */ 
 
@@ -42,9 +42,9 @@ static void include_alignment(char *seqfile, struct plan7_s *hmm, int do_mapped,
 
 int main(int argc, char **argv) 
 {
-  char            *hmmfile;	/* file to read HMMs from                  */
+  const char      *hmmfile;	/* file to read HMMs from                  */
   HMMFILE         *hmmfp;       /* opened hmmfile for reading              */
-  char            *seqfile;     /* file to read target sequence from       */ 
+  const char      *seqfile;     /* file to read target sequence from       */ 
   char           **rseq;        /* raw, unaligned sequences                */ 
   SQINFO          *sqinfo;      /* info associated with sequences          */
   char           **dsq;         /* digitized raw sequences                 */
@@ -58,19 +58,19 @@ int main(int argc, char **argv)
 
   int   be_quiet;		/* TRUE to suppress verbose banner          */
   int   matchonly;		/* TRUE to show only match state syms       */
-  char *outfile;                /* optional alignment output file           */
+  const char *outfile;          /* optional alignment output file           */
   FILE *ofp;                    /* handle on alignment output file          */
-  char *withali;                /* name of additional alignment file to align */
-  char *mapali;                 /* name of additional alignment file to map   */
+  AjPFile ajwithali;          /* name of additional alignment file to align */
+  AjPFile ajmapali;           /* name of additional alignment file to map   */
   AjBool ajmatch=ajFalse;
-  AjPStr ajmapali=NULL;
-  AjPStr ajwithali=NULL;
   AjPFile outf=NULL;
   AjPStr  outfname=NULL;
   AjPFile inf=NULL;
   AjPStr  infname=NULL;
   AjPSeqset seqset=NULL;
   AjPStr  ajseqfile=NULL;
+  char*  mapali=NULL;
+  char*  withali=NULL;
   
 #ifdef MEMDEBUG
   unsigned long histid1, histid2, orig_size, current_size;
@@ -99,20 +99,15 @@ int main(int argc, char **argv)
 
 
 
-  ajmapali = ajAcdGetString("mapali");
-  if(ajStrLen(ajmapali))
-      mapali = ajStrStr(ajmapali);
-  else
-      mapali = NULL;
+  ajmapali = ajAcdGetInfile("mapalifile");
+  if (ajmapali)
+      mapali = ajCharNew(ajFileGetName(ajmapali));
+  ajFileClose(&ajmapali);
+  ajwithali = ajAcdGetInfile("withalifile");
+  if (ajwithali)
+      withali = ajCharNew(ajFileGetName(ajwithali));
+  ajFileClose(&ajwithali);
 
-
-
-
-  ajwithali = ajAcdGetString("withali");
-  if(ajStrLen(ajwithali))
-      withali = ajStrStr(ajwithali);
-  else
-      withali = NULL;
   be_quiet=TRUE;
 
 

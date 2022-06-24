@@ -6,19 +6,33 @@ application: ehmmfetch [
   cpu: "medium"
 ]
 
+section: input [
+  information: "Input section"
+  type: "page"
+]
+
 string: database  [
   parameter: "Y"
   information: "Database name"
   knowntype: "hmm database name"
 ]
 
-string: consensus  [
+string: name  [
   parameter: "Y"
   information: "Entry name"
   knowntype: "hmm entry name"
+]
+
+endsection: input
+
+section: output [
+  information: "Output section"
+  type: "page"
 ]
 
 outfile: outfile  [
   parameter: "Y"
   knowntype: "hmm file"
 ]
+
+endsection: output
