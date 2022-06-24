@@ -1,0 +1,108 @@
+application: crystalball [
+  documentation: "Answer every drug discovery question about
+                  a sequence."
+  groups: "Test"
+  embassy: "appendixd"
+  relations: "EDAM_topic:0202 Pharmacoinformatics"
+  relations: "EDAM_operation:0004 Operation"
+]
+
+section: input [
+  information: "Input section"
+  type: "page"
+]
+
+  sequence: sequence [
+    parameter: "Y"
+    type: "any"
+    relations: "EDAM_data:0849 Sequence record"
+  ]
+
+endsection: input
+
+section: additional [
+  information: "Additional section"
+  type: "page"
+]
+
+  boolean: competition [
+    additional: "Y"
+    information: "Who else is working with this target?"
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  boolean: rdtime [
+    additional: "Y"
+    information: "Total research and development time to bring
+                  a drug for this target to market."
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  boolean: rdcost [
+    additional: "Y"
+    information: "Total cost of our research and development
+                  effort."
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  boolean: animalstudies [
+    additional: "Y"
+    information: "What will we learn from the animal studies?"
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  boolean: clinicaltrials [
+    additional: "Y"
+    information: "Detail all of the surprises we'll get from
+                  the clinical trials."
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  boolean: fdaproblems [
+    additional: "Y"
+    information: "List all of the issues the FDA will raise
+                  with our paperwork."
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  boolean: fdatime [
+    additional: "Y"
+    information: "How long will the FDA take to render a
+                  decision?"
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  boolean: profit [
+    additional: "Y"
+    information: "How much will we make after the drug gets to
+                  market?"
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+endsection: additional
+
+section: advanced [
+  information: "Advanced section"
+  type: "page"
+]
+
+  boolean: everythingelse [
+    information: "Tell us everything else we'd really like to
+                  know now rather than later"
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+endsection: advanced
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+  outfile: outfile [
+    parameter: "Y"
+    knowntype: "crystalball output"
+    relations:  "EDAM_data:2048 Report"
+  ]
+
+endsection: output

@@ -1,0 +1,24 @@
+#######################################
+# APPENDIXD
+#######################################
+
+ID crystalball-ex
+AB appendixd
+AA crystalball
+CL -competition -rdtime -rdcost -animalstudies -clinicaltrials
+CL -fdaproblems -fdatime -profit -everythingelse
+IN tembl:x65923
+IN
+FI x65923.crystalball
+FC = 9
+FP 9 /:/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
