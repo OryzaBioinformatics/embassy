@@ -137,7 +137,7 @@ int main(int argc, char **argv)
     float      evalue    = 0.0;   /* Threshold E-value                     */
     AjPStr     database  = NULL;  /* Blast-indexed database to search      */
 
-    embInitP("libgen",argc,argv,"SIGNATURE");
+    embInitPV("libgen",argc,argv,"SIGNATURE",VERSION);
     
     
     /* ACD processing. */
@@ -153,8 +153,8 @@ int main(int argc, char **argv)
 
     /* Housekeeping. */
     modei      = (ajint) ajStrGetCharFirst(mode)-48;
-    gapopen    = ajRoundF(gapopen,8);
-    gapextend  = ajRoundF(gapextend,8);
+    gapopen    = ajRoundFloat(gapopen,8);
+    gapextend  = ajRoundFloat(gapextend,8);
     seqsfname  = ajStrNew();
     cmd        = ajStrNew();
     ajStrAssignC(&database, "swissprot"); /* Dummy value. */
@@ -249,12 +249,15 @@ int main(int argc, char **argv)
 
 
 	    if(modei==LIBGEN_HMMER)
-		ajFmtPrintS(&cmd,"hmmbuild -g %S %S",outname,seqsfname);
+		ajFmtPrintS(&cmd,"%S -g %S %S",
+                            ajAcdGetpathC("hmmbuild"),
+                            outname,seqsfname);
 	    else if(modei==LIBGEN_PSSM)
 		/* niter, evalue and database arg's have dummy values. */
 		ajFmtPrintS(&cmd,
-			    "blastpgp -i %S -B %S -j %d -e %f -d %S -C %S\n",
-			    seqfname, seqsfname, niter,evalue, database, 
+			    "%S -i %S -B %S -j %d -e %f -d %S -C %S\n",
+			    ajAcdGetpathC("blastpgp"),
+                            seqfname, seqsfname, niter,evalue, database, 
 			    outname);
 	    else if(modei==LIBGEN_SAM)
 	    {
@@ -263,17 +266,18 @@ int main(int argc, char **argv)
 
 
 		/* Run modelfromalign. */
-		ajFmtPrintS(&cmd,"modelfromalign %S -alignfile %S",tmpfname,
-			    seqsfname);
+		ajFmtPrintS(&cmd,"%S %S -alignfile %S",
+			    ajAcdGetpathC("modelfromalign"),
+                            tmpfname, seqsfname);
 		ajFmtPrint("%S\n", cmd);
 		system(ajStrGetPtr(cmd));
 
 		/* Could run buildmodel to refine the model 
-		   ajFmtPrintS(&cmd,"buildmodel %S -train %S -alignfile %S",
-		   outname,tmpfname,seqsfname);
-		   ajFmtPrint("%S\n", cmd);
-		   system(ajStrGetPtr(cmd));
-		   */
+		//   ajFmtPrintS(&cmd,"buildmodel %S -train %S -alignfile %S",
+		//   outname,tmpfname,seqsfname);
+		//   ajFmtPrint("%S\n", cmd);
+		//   system(ajStrGetPtr(cmd));
+                */
 
 		ajFmtPrintS(&cmd,"rm %S",tmpfname);
 		system(ajStrGetPtr(cmd));
@@ -507,14 +511,14 @@ static void libgen_gribskov_profile(AjPSeqset seqset,
     
     
     mname=ajStrNewC("Epprofile");
-    ajMatrixfRead(&matrix,mname);
+    matrix = ajMatrixfNewFile(mname);
     ajStrDel(&mname);
                  
     nseqs = ajSeqsetGetSize(seqset);
     mlen  = ajSeqsetGetLen(seqset);
 
-    sub = ajMatrixfArray(matrix);
-    cvt = ajMatrixfCvt(matrix);
+    sub = ajMatrixfGetMatrix(matrix);
+    cvt = ajMatrixfGetCvt(matrix);
 
 
 
@@ -738,8 +742,8 @@ static void libgen_henikoff_profile(AjPSeqset seqset,
     nseqs = ajSeqsetGetSize(seqset);
     mlen  = ajSeqsetGetLen(seqset);
 
-    sub = ajMatrixfArray(matrix);
-    cvt = ajMatrixfCvt(matrix);
+    sub = ajMatrixfGetMatrix(matrix);
+    cvt = ajMatrixfGetCvt(matrix);
 
 
     /* Set gaps to be maximum length of gap that can occur
@@ -882,7 +886,7 @@ static void libgen_henikoff_profile(AjPSeqset seqset,
     ajFmtPrintF(outf,"# Rows are alignment positions 1->n\n");
     ajFmtPrintF(outf,"Henikoff\n");
     ajFmtPrintF(outf,"Name\t\t%s\n",ajStrGetPtr(name));
-    ajFmtPrintF(outf,"Matrix\t\t%s\n",ajStrGetPtr(ajMatrixfName(matrix)));
+    ajFmtPrintF(outf,"Matrix\t\t%s\n",ajStrGetPtr(ajMatrixfGetName(matrix)));
     ajFmtPrintF(outf,"Length\t\t%d\n",mlen);
     ajFmtPrintF(outf,"Max_score\t%.2f\n",psum);
     ajFmtPrintF(outf,"Threshold\t%d\n",threshold);
