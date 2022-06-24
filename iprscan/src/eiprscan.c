@@ -76,11 +76,12 @@ int main(int argc, char **argv)
     goterms = ajAcdGetBoolean("goterms");
     outf    = ajAcdGetOutfile("outfile");
     
+    cl   = ajStrNewS(ajAcdGetpathC("iprscan"));
     stmp = ajStrNew();
-    cl   = ajStrNewC("iprscan -cli");
     fn   = ajStrNew();
     
 
+    ajStrAppendC(&cl, " -cli");
 
     ajFilenameSetTempname(&fn);
     seqout = ajSeqoutNew();
@@ -165,11 +166,11 @@ int main(int argc, char **argv)
 #endif
 
 #if 1
-    system(ajStrGetPtr(cl));
+   ajSysExecS(cl);
 #endif
 
 
-    ajSysFileUnlink(fn);
+    ajSysFileUnlinkS(fn);
     
     
     ajStrDel(&cl);

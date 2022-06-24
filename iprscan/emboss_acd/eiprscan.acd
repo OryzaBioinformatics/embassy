@@ -2,6 +2,8 @@ application: eiprscan [
   documentation: "Motif detection"
   groups: "Protein:Motifs"
   embassy: "iprscan"
+  external: "iprscan InterProSCAN
+             http://www.ebi.ac.uk/Tools/InterProScan/index.html"
 ]
 
 section: input [
