@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Calculate RNA suboptimals
+   Calculate suboptimal secondary structure of RNA
 
 Description
 
@@ -36,7 +36,7 @@ Usage
 
 
 % ovrnasubopt
-Calculate RNA suboptimals
+Calculate suboptimal secondary structure of RNA
 Input nucleotide sequence: rna1.seq
 Vienna RNAfold output file [rna1.ovrnasubopt]:
 
@@ -46,8 +46,8 @@ Vienna RNAfold output file [rna1.ovrnasubopt]:
 
 Command line arguments
 
-Calculate RNA suboptimals
-Version: EMBOSS:6.4.0.0
+Calculate suboptimal secondary structure of RNA
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          sequence   Nucleotide sequence filename and optional
@@ -93,7 +93,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -183,64 +186,80 @@ Known bugs
 
 See also
 
-                     Program name                         Description
-                    banana          Plot bending and curvature data for B-DNA
-                    btwisted        Calculate the twisting in a B-DNA sequence
-                    einverted       Finds inverted repeats in nucleotide sequences
-                    ovrnaalifold    RNA alignment folding
-                    ovrnaalifoldpf  RNA alignment folding with partition
-                    ovrnacofold     RNA cofolding
-   ovrnacofoldconc  RNA cofolding with concentrations
-                    ovrnacofoldpf   RNA cofolding with partitioning
-                    ovrnadistance   RNA distances
-                    ovrnaduplex     RNA duplex calculation
-                    ovrnaeval       RNA eval
-                    ovrnaevalpair   RNA eval with cofold
-                    ovrnafold       Calculate secondary structures of RNAs
-                    ovrnafoldpf     Secondary structures of RNAs with partition
-                    ovrnaheat       RNA melting
-                    ovrnainverse    RNA sequences matching a structure
-                    ovrnalfold      Calculate locally stable secondary structures of RNAs
-                    ovrnaplot       Plot vrnafold output
-                    sirna           Finds siRNA duplexes in mRNA
-                    vrna2dfold      Structures and samples of k,l neighbourhoods
-                    vrnaaliduplex   RNA duplex calculation for two sequence alignments
-                    vrnaalifold     RNA alignment folding
-                    vrnaalifoldpf   RNA alignment folding with partition
-                    vrnacofold      RNA cofolding
-                    vrnacofoldconc  RNA cofolding with concentrations
-                    vrnacofoldpf    RNA cofolding with partitioning
-                    vrnadistance    RNA distances
-                    vrnaduplex      RNA duplex calculation
-                    vrnaeval        RNA eval
-                    vrnaevalpair    RNA eval with cofold
-                    vrnafold        Calculate secondary structures of RNAs
-                    vrnafoldpf      Secondary structures of RNAs with partition
-                    vrnaheat        RNA melting
-                    vrnainverse     RNA sequences matching a structure
-                    vrnalalifoldpf  Locally stable 2ry structures for a set of aligned RNAs
-                    vrnalfold       Calculate locally stable secondary structures of RNAs
-                    vrnalfoldz      Locally stable secondary structures of RNAs plus zscore
-                    vrnapkplex      RNA structures plus pseudoknots
-                    vrnaplfold      Locally stable RNA 2ry structures - pair probabilities
-                    vrnaplot        Plot vrnafold output
-                    vrnasubopt      Calculate RNA suboptimals
+   Program name     Description
+   banana           Plot bending and curvature data for B-DNA
+   btwisted         Calculate the twisting in a B-DNA sequence
+   einverted        Find inverted repeats in nucleotide sequences
+   ovrnaalifold     Calculate secondary structures for a set of aligned RNAs
+   ovrnaalifoldpf   Calculate secondary structures for a set of aligned RNAs
+                    (partition)
+   ovrnacofold      Calculate secondary structures of RNA dimers
+   ovrnacofoldconc  Calculate secondary structures of RNA dimers
+                    (concentrations)
+   ovrnacofoldpf    Calculate secondary structures of RNA dimers
+                    (partitioning)
+   ovrnadistance    Calculate distances between RNA secondary structures
+   ovrnaduplex      Predict RNA duplex (hybridization) sites and structure
+   ovrnaeval        Calculate energy of RNA sequences with a given secondary
+                    structure
+   ovrnaevalpair    Calculate energy of RNA sequences on given secondary
+                    structure
+   ovrnafold        Calculate min. energy RNA structure / pair probabilities
+                    (partition)
+   ovrnafoldpf      Calculate min. energy RNA structure / pair probabilities
+   ovrnaheat        Calculate specific heat of RNA melting
+   ovrnainverse     Find RNA sequences with a given secondary structure
+   ovrnalfold       Calculate locally stable secondary structures of RNAs
+   ovrnaplot        Draw RNA secondary structures
+   sirna            Find siRNA duplexes in mRNA
+   vrna2dfold       Calculate RNA structures and samples of k,l neighbourhoods
+   vrnaaliduplex    RNA duplex calculation for two sequence alignments
+   vrnaalifold      Calculate secondary structures for a set of aligned RNAs
+   vrnaalifoldpf    Calculate secondary structures for a set of aligned RNAs
+                    (partition)
+   vrnacofold       Calculate secondary structures of RNA dimers
+   vrnacofoldconc   Calculate secondary structures of RNA dimers
+                    (concentrations)
+   vrnacofoldpf     Calculate secondary structures of RNA dimers
+                    (partitioning)
+   vrnadistance     Calculate distances between RNA secondary structures
+   vrnaduplex       Predict RNA duplex (hybridization) sites and structure
+   vrnaeval         Calculate energy of RNA sequences with a given secondary
+                    structure
+   vrnaevalpair     Calculate energy of RNA sequences on given secondary
+                    structure
+   vrnafold         Calculate min. energy RNA secondary structures and pair
+                    probabilities
+   vrnafoldpf       Calculate min. energy RNA structures / pair probabilities
+                    (partition)
+   vrnaheat         Calculate specific heat of RNA melting
+   vrnainverse      Find RNA sequences with a given secondary structure
+   vrnalalifoldpf   Calculate secondary structures for a set of aligned RNAs
+                    (partition)
+   vrnalfold        Calculate locally stable secondary structures of RNAs
+   vrnalfoldz       Calculate locally stable secondary structures of RNAs plus
+                    zscore
+   vrnapkplex       Calculate RNA structures plus pseudoknots
+   vrnaplfold       Compute avg. pair probabilities for local base pairs in RNA
+                    sequences
+   vrnaplot         Draw RNA secondary structures
+   vrnasubopt       Calculate suboptimal secondary structures of RNAs
 
 Author(s)
 
-                    This program is an EMBOSS conversion of a program written by Ivo
-                    Hofacker as part of his VIENNA package.
+   This program is an EMBOSS conversion of a program written by Ivo
+   Hofacker as part of his VIENNA package.
 
-                    Please report all bugs to the EMBOSS bug team
-                    (emboss-bug (c) emboss.open-bio.org) not to the original author.
+   Please report all bugs to the EMBOSS bug team
+   (emboss-bug (c) emboss.open-bio.org) not to the original author.
 
 History
 
-                    Converted (October 2005) by Alan Bleasby
+   Converted (October 2005) by Alan Bleasby
 
 Target users
 
-                    This program is intended to be used by everyone and everything, from
-                    naive users to embedded scripts.
+   This program is intended to be used by everyone and everything, from
+   naive users to embedded scripts.
 
 Comments

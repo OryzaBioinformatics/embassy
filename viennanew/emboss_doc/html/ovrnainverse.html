@@ -36,7 +36,7 @@ Please help by correcting and extending the Wiki pages.
 <H2>
     Function
 </H2>
-RNA sequences matching a structure
+Find RNA sequences with a given secondary structure
 <!--
 DON'T WRITE ANYTHING HERE.
 IT IS DONE FOR YOU.
@@ -81,7 +81,7 @@ Here is a sample session with <b>ovrnainverse</b>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
 % <b>ovrnainverse -repeats 3 </b>
-RNA sequences matching a structure
+Find RNA sequences with a given secondary structure
 Vienna RNA structures file: <b>rna3.fold</b>
 Vienna RNAfold output file [rna3.ovrnainverse]: <b></b>
 
@@ -96,13 +96,13 @@ Vienna RNAfold output file [rna3.ovrnainverse]: <b></b>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
 % <b>ovrnainverse -repeats 3 -succeed </b>
-RNA sequences matching a structure
+Find RNA sequences with a given secondary structure
 Vienna RNA structures file: <b>rna3.fold</b>
 Vienna RNAfold output file [rna3.ovrnainverse]: <b></b>
 
 </pre></td></tr></table><p>
 <p>
-<p>
+<a href="#output.2">Go to the output files for this example</a><p><p>
 
 
 
@@ -112,8 +112,8 @@ Vienna RNAfold output file [rna3.ovrnainverse]: <b></b>
 
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
-RNA sequences matching a structure
-Version: EMBOSS:6.4.0.0
+Find RNA sequences with a given secondary structure
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-structuresfile]    infile     Vienna RNA structures file
@@ -161,7 +161,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein           boolean    Sequence is protein
    -slower             boolean    Make lower case
    -supper             boolean    Make upper case
+   -scircular          boolean    Sequence is circular
    -sformat            string     Input sequence format
+   -iquery             string     Input query fields or ID list
+   -ioffset            integer    Input start position offset
    -sdbname            string     Database name
    -sid                string     Entryname
    -ufo                string     UFO features
@@ -373,7 +376,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-sequence" associated sequence qualifiers
+<td align="left" colspan=5>"-sequence" associated sequence qualifiers
 </td>
 </tr>
 
@@ -442,11 +445,35 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
+<td> -scircular</td>
+<td>boolean</td>
+<td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td> -sformat</td>
 <td>string</td>
 <td>Input sequence format</td>
 <td>Any string</td>
 <td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -iquery</td>
+<td>string</td>
+<td>Input query fields or ID list</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -ioffset</td>
+<td>integer</td>
+<td>Input start position offset</td>
+<td>Any integer value</td>
+<td>0</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -490,7 +517,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outfile" associated outfile qualifiers
+<td align="left" colspan=5>"-outfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -673,9 +700,20 @@ outputs a report format file. The default format is ...
 <p><h3>File: rna3.ovrnainverse</h3>
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
-CGGGUUAAAGUUGGCCGAUAACGACGUCAUUAAAAGAGGAUGGGACACCGCUUAGAUCUAAAGCGUAGCCCGUUAG   30
-GGGGAGUUCAGCUGCAAUACAAGCUUGUUCUACACCUAAGAGCGGACCGUGGGCUCGCAACCCAUACUCUCUAUGU   23
-GAGCCGGCUUCCCCUUGCCCCGGGAUGUCGGGAUAGCGCCGACUCAUAACUUGCCGCCACCAAGUCUGGUUCAGGU   21
+GUCCAACCUCCGUACCACCCAACGGUGCCAGGUCCUAACUGGCUACGAUAGUUAUACCCCAACUAGUUGGGCGUGG   14
+GCAUGCCUAGUACUUCUGUGUGUACGCGUGGUAGAUUUCCAUGAGUAGGUCGGCUAGACACCGACGGCGUGCUCUU   33
+CUGUGUUACAUUGUGAAAAGGCAAUUGUUAUUUUCUGCGUGACGGUUACCCUGAUGGCGGCAGGGAACGCGGCAUC   36   d = 8.000000
+</pre>
+</td></tr></table><p>
+
+<a name="output.2"></a>
+<h3>Output files for usage example 2</h3>
+<p><h3>File: rna3.ovrnainverse</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+GUCCAACCUCCGUACCACCCAACGGUGCCAGGUCCUAACUGGCUACGAUAGUUAUACCCCAACUAGUUGGGCGUGG   14
+GCAUGCCUAGUACUUCUGUGUGUACGCGUGGUAGAUUUCCAUGAGUAGGUCGGCUAGACACCGACGGCGUGCUCUU   33
+GUCAUGGCCUGGCCCCGAAAUGCUAUAGAGUUAACCUUACUUUUUUUCAGAUGACACCAACAUCUUCAUGGCUUCG   22
 </pre>
 </td></tr></table><p>
 
@@ -818,67 +856,67 @@ None.
 
 <tr>
 <td><a href="/emboss/apps/einverted.html">einverted</a></td>
-<td>Finds inverted repeats in nucleotide sequences</td>
+<td>Find inverted repeats in nucleotide sequences</td>
 </tr>
 
 <tr>
 <td><a href="ovrnaalifold.html">ovrnaalifold</a></td>
-<td>RNA alignment folding</td>
+<td>Calculate secondary structures for a set of aligned RNAs</td>
 </tr>
 
 <tr>
 <td><a href="ovrnaalifoldpf.html">ovrnaalifoldpf</a></td>
-<td>RNA alignment folding with partition</td>
+<td>Calculate secondary structures for a set of aligned RNAs (partition)</td>
 </tr>
 
 <tr>
 <td><a href="ovrnacofold.html">ovrnacofold</a></td>
-<td>RNA cofolding</td>
+<td>Calculate secondary structures of RNA dimers</td>
 </tr>
 
 <tr>
 <td><a href="ovrnacofoldconc.html">ovrnacofoldconc</a></td>
-<td>RNA cofolding with concentrations</td>
+<td>Calculate secondary structures of RNA dimers (concentrations)</td>
 </tr>
 
 <tr>
 <td><a href="ovrnacofoldpf.html">ovrnacofoldpf</a></td>
-<td>RNA cofolding with partitioning</td>
+<td>Calculate secondary structures of RNA dimers (partitioning)</td>
 </tr>
 
 <tr>
 <td><a href="ovrnadistance.html">ovrnadistance</a></td>
-<td>RNA distances</td>
+<td>Calculate distances between RNA secondary structures</td>
 </tr>
 
 <tr>
 <td><a href="ovrnaduplex.html">ovrnaduplex</a></td>
-<td>RNA duplex calculation</td>
+<td>Predict RNA duplex (hybridization) sites and structure</td>
 </tr>
 
 <tr>
 <td><a href="ovrnaeval.html">ovrnaeval</a></td>
-<td>RNA eval</td>
+<td>Calculate energy of RNA sequences with a given secondary structure</td>
 </tr>
 
 <tr>
 <td><a href="ovrnaevalpair.html">ovrnaevalpair</a></td>
-<td>RNA eval with cofold</td>
+<td>Calculate energy of RNA sequences on given secondary structure</td>
 </tr>
 
 <tr>
 <td><a href="ovrnafold.html">ovrnafold</a></td>
-<td>Calculate secondary structures of RNAs</td>
+<td>Calculate min. energy RNA structure / pair probabilities (partition)</td>
 </tr>
 
 <tr>
 <td><a href="ovrnafoldpf.html">ovrnafoldpf</a></td>
-<td>Secondary structures of RNAs with partition</td>
+<td>Calculate min. energy RNA structure / pair probabilities</td>
 </tr>
 
 <tr>
 <td><a href="ovrnaheat.html">ovrnaheat</a></td>
-<td>RNA melting</td>
+<td>Calculate specific heat of RNA melting</td>
 </tr>
 
 <tr>
@@ -888,22 +926,22 @@ None.
 
 <tr>
 <td><a href="ovrnaplot.html">ovrnaplot</a></td>
-<td>Plot vrnafold output</td>
+<td>Draw RNA secondary structures</td>
 </tr>
 
 <tr>
 <td><a href="ovrnasubopt.html">ovrnasubopt</a></td>
-<td>Calculate RNA suboptimals</td>
+<td>Calculate suboptimal secondary structure of RNA</td>
 </tr>
 
 <tr>
 <td><a href="/emboss/apps/sirna.html">sirna</a></td>
-<td>Finds siRNA duplexes in mRNA</td>
+<td>Find siRNA duplexes in mRNA</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrna2dfold.html">vrna2dfold</a></td>
-<td>Structures and samples of k,l neighbourhoods</td>
+<td>Calculate RNA structures and samples of k,l neighbourhoods</td>
 </tr>
 
 <tr>
@@ -913,72 +951,72 @@ None.
 
 <tr>
 <td><a href="/embassy/vienna2/vrnaalifold.html">vrnaalifold</a></td>
-<td>RNA alignment folding</td>
+<td>Calculate secondary structures for a set of aligned RNAs</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnaalifoldpf.html">vrnaalifoldpf</a></td>
-<td>RNA alignment folding with partition</td>
+<td>Calculate secondary structures for a set of aligned RNAs (partition)</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnacofold.html">vrnacofold</a></td>
-<td>RNA cofolding</td>
+<td>Calculate secondary structures of RNA dimers</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnacofoldconc.html">vrnacofoldconc</a></td>
-<td>RNA cofolding with concentrations</td>
+<td>Calculate secondary structures of RNA dimers (concentrations)</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnacofoldpf.html">vrnacofoldpf</a></td>
-<td>RNA cofolding with partitioning</td>
+<td>Calculate secondary structures of RNA dimers (partitioning)</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnadistance.html">vrnadistance</a></td>
-<td>RNA distances</td>
+<td>Calculate distances between RNA secondary structures</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnaduplex.html">vrnaduplex</a></td>
-<td>RNA duplex calculation</td>
+<td>Predict RNA duplex (hybridization) sites and structure</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnaeval.html">vrnaeval</a></td>
-<td>RNA eval</td>
+<td>Calculate energy of RNA sequences with a given secondary structure</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnaevalpair.html">vrnaevalpair</a></td>
-<td>RNA eval with cofold</td>
+<td>Calculate energy of RNA sequences on given secondary structure</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnafold.html">vrnafold</a></td>
-<td>Calculate secondary structures of RNAs</td>
+<td>Calculate min. energy RNA secondary structures and pair probabilities</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnafoldpf.html">vrnafoldpf</a></td>
-<td>Secondary structures of RNAs with partition</td>
+<td>Calculate min. energy RNA structures / pair probabilities (partition)</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnaheat.html">vrnaheat</a></td>
-<td>RNA melting</td>
+<td>Calculate specific heat of RNA melting</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnainverse.html">vrnainverse</a></td>
-<td>RNA sequences matching a structure</td>
+<td>Find RNA sequences with a given secondary structure</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnalalifoldpf.html">vrnalalifoldpf</a></td>
-<td>Locally stable 2ry structures for a set of aligned RNAs</td>
+<td>Calculate secondary structures for a set of aligned RNAs (partition)</td>
 </tr>
 
 <tr>
@@ -988,27 +1026,27 @@ None.
 
 <tr>
 <td><a href="/embassy/vienna2/vrnalfoldz.html">vrnalfoldz</a></td>
-<td>Locally stable secondary structures of RNAs plus zscore</td>
+<td>Calculate locally stable secondary structures of RNAs plus zscore</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnapkplex.html">vrnapkplex</a></td>
-<td>RNA structures plus pseudoknots</td>
+<td>Calculate RNA structures plus pseudoknots</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnaplfold.html">vrnaplfold</a></td>
-<td>Locally stable RNA 2ry structures - pair probabilities</td>
+<td>Compute avg. pair probabilities for local base pairs in RNA sequences</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnaplot.html">vrnaplot</a></td>
-<td>Plot vrnafold output</td>
+<td>Draw RNA secondary structures</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/vienna2/vrnasubopt.html">vrnasubopt</a></td>
-<td>Calculate RNA suboptimals</td>
+<td>Calculate suboptimal secondary structures of RNAs</td>
 </tr>
 
 </table>

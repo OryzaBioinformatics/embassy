@@ -1,12 +1,13 @@
 application: ovrnainverse [
-  documentation: "RNA sequences matching a structure"
+  documentation: "Find RNA sequences with a given secondary structure"
   groups: "Nucleic:RNA folding, Nucleic:2D structure"
   gui: "yes"
   batch: "yes"
   cpu: "medium"
   embassy: "vienna"
-  relations: "EDAM:0000697 topic RNA structure and alignment"
-  relations: "EDAM:0000502 operation RNA secondary structure alignment"
+  relations: "EDAM_topic:0697 RNA structure and alignment"
+  relations: "EDAM_operation:0502 RNA secondary structure alignment
+  	     construction"
 ]
 
 section: input [
@@ -18,13 +19,13 @@ section: input [
     parameter: "Y"
     information: "Vienna RNA structures file"
     knowntype: "rna structures"
-    relations:  "EDAM:0000880 data RNA secondary structure"
+    relations:  "EDAM_data:0880 RNA secondary structure record"
   ]
 
   sequence: sequence [
     nullok: "Y"
     type: "dna"
-    relations: "EDAM:0002887 data Sequence record (nucleic acid)"
+    relations: "EDAM_data:2887 Sequence record (nucleic acid)"
   ]
 
   infile: paramfile [
@@ -32,7 +33,7 @@ section: input [
     default: ""
     information: "Vienna RNA parameters file (optional)"
     knowntype: "rna parameter"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: input
@@ -45,44 +46,44 @@ section: advanced [
   float: temperature [
     default: "37.0"
     information: "Temperature"
-    relations: "EDAM:0002139 data Melting temperature"
+    relations: "EDAM_data:2139 Nucleic acid melting temperature"
   ]
 
   boolean: gu [
     default: "Y"
     information: "Allow GU pairs"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: closegu [
     default: "Y"
     information: "Allow GU pairs at end of helices"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: lp [
     default: "Y"
     information: "Allow lonely pairs"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: convert [
     default: "Y"
     information: "Convert T to U"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   string: nsbases [
     default: ""
     information: "Non-standard bases"
     knowntype: "nucleotide codes"
-    relations:  "EDAM:0001007 identifier Nucleotide code"
+    relations:  "EDAM_identifier:1007 Nucleotide code"
   ]
 
   boolean: tetraloop [
     default: "Y"
     information: "Stabilizing energies for tetra-loops"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: energy [
@@ -96,7 +97,7 @@ section: advanced [
     information: "Method"
     help: "Rarely used option to fold sequences from the ABCD...
            alphabet"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: dangles [
@@ -110,7 +111,7 @@ section: advanced [
     delimiter: ","
     codedelimiter: ":"
     information: "Method"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: folding [
@@ -122,20 +123,20 @@ section: advanced [
     delimiter: ","
     codedelimiter: ":"
     information: "Method"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   string: alphabet [
     information: "Find sequences using only these bases"
     default: "AUGC"
     knowntype: "nucleotide codes"
-    relations: "EDAM:0001007 identifier Nucleotide code"
+    relations: "EDAM_identifier:1007 Nucleotide code"
   ]
 
   float: final [
     information: "Stopping value"
     default: "0.0"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: repeats [
@@ -143,20 +144,20 @@ section: advanced [
                   structure"
     default: "0"
     minimum: "0"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: succeed [
     information: "Continue until a match is found"
     help: "The original RNAinverse uses a negative repeat for this"
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: showfails [
     information: "Show information for unsuccessful searches"
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: advanced
@@ -170,7 +171,7 @@ section: output [
     parameter: "Y"
     knowntype: "rnafold output"
     information: "Vienna RNAfold output file"
-    relations:  "EDAM:0000880 data RNA secondary structure"
+    relations:  "EDAM_data:0880 RNA secondary structure record"
   ]
 
 endsection: output

@@ -1,0 +1,477 @@
+#######################################
+# VIENNA
+#######################################
+
+ID ovrnaalifold-ex
+AB vienna
+AA ovrnaalifold
+IN ../../data/ecoli6s.fasta
+IN
+FI ecoli6s.ovrnaalifold
+FC = 2
+FP /\(-56\.91 \= -48\.71 \+  -8\.20\) \n/
+FP /^\.\.\.\.\(\(\(\(\(\(\(\(\(\(\(\.\(\(\(\.\..*\)\)\.\)\)\)\)\)\)\.\.\.\.\. /
+FI ecoli6s.ssps
+FC = 523
+FP /^%%Pages: 1\n/
+FI ecoli6s.alirnaps
+FC = 1005
+FP /^showpage\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnaalifoldpf-ex
+AB vienna
+AA ovrnaalifoldpf
+IN ../../data/ecoli6s.fasta
+IN
+FI ecoli6s.ssps
+FC = 523
+FP /^%%Pages: 1\n/
+FI ecoli6s.ps
+FC = 330
+FP /^%%Pages: 1\n/
+FI ecoli6s.alirnaps
+FC = 1005
+FP /^showpage\n/
+FI ecoli6s.ovrnaalifoldpf
+FC = 177
+FP /\(-56\.91 \= -48\.71 \+  -8\.20\) \n/
+FP /^\.\.\.\.\(\(\(\(\(\(\(\(\(\(\(\.\(\(\(\.\..*\)\)\.\)\)\)\)\)\)\.\.\.\.\. /
+FP /^\.\.\.\.\(\(.*\.\.\{\.\(\(\..*\)\)\.\.\.\.\. \[-59\.30\]\n/
+FP /^ frequency of mfe structure in ensemble 0\.0206905\n/
+FP /^7 sequences; length of alignment 203\n/
+FP /^   64   142  0 100\.0\%   0\.000 CG:1    GC:4    UG:1    UA:1   \n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnacofold-ex
+AB vienna
+AA ovrnacofold
+## Example from Algorithms Mol Biol. 2006; 1: 3.
+## Partition function and base pairing probabilities of RNA heterodimers
+## Stephan H Bernhart, Hakim Tafer, Ulrike Mückstein, Christoph Flamm,
+## Peter F Stadler and Ivo L Hofacker
+IN ../../data/cofold-red.fasta
+IN ../../data/cofold-blue.fasta
+IN
+FI red.ovrnacofold
+FC = 2
+FP /^AUGAAGAUGA\&CUGUCUGUCUUGAGACA\n/
+FP /^\.\.\.\.\(\(\(\(\.\.\&\.\.\)\)\)\)\(\(\(\.\.\.\.\)\)\)\. \( -4\.40\)\n/
+FI red.ssps
+FC = 139
+FP /^%%Pages: 1\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnacofoldconc-ex
+AB vienna
+AA ovrnacofoldconc
+IN ../../data/cofold-red.fasta
+IN ../../data/cofold-blue.fasta
+IN ../../data/cofold-conc.dat
+IN
+FI red.ovrnacofoldconc
+FC = 11
+FP /^AUGAAGAUGA\&CUGUCUGUCUUGAGACA\n/
+FP /^\.\.\.\.\(\(\(\(\.\.\&\.\.\)\)\)\)\(\(\(\.\.\.\.\)\)\)\. \( -4\.40\)\n/
+FP /^-5.838299\t+1.006546\t+-16.231717\t+-0.003662\t+-4.266495\n/
+FI red.ssps
+FC = 139
+FP /^%%Pages: 1\n/
+FI red.aps
+FC = 119
+FP /^%%Pages: 1\n/
+FI red.aaps
+FC = 158
+FP /^%%Pages: 1\n/
+FI red.abps
+FC = 205
+FP /^%%Pages: 1\n/
+FI red.bps
+FC = 135
+FP /^%%Pages: 1\n/
+FI red.bbps
+FC = 148
+FP /^%%Pages: 1\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnacofoldpf-ex
+AB vienna
+AA ovrnacofoldpf
+IN ../../data/cofold-red.fasta
+IN ../../data/cofold-blue.fasta
+IN
+FI red.ovrnacofoldpf
+FC = 4
+FP /^AUGAAGAUGA\&CUGUCUGUCUUGAGACA\n/
+FP /^\.\.\.\.\(\(\(\(\.\.\&\.\.\)\)\)\)\(\(\(\.\.\.\.\)\)\)\. \( -4\.40\)\n/
+FP /^\.\.\.\.\(\(\(\(\,\.\&\.\.\)\)\)\}\(\(\(\.\.\.\.\)\)\)\. \[ -5\.88\]\n/
+FP /^ frequency of mfe structure in ensemble 0\.279848 , delta G binding\= -1\.57\n/
+FI red.ps
+FC = 203
+FP /^%%Pages: 1\n/
+FI red.ssps
+FC = 139
+FP /^%%Pages: 1\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnadistance-ex
+AB vienna
+AA ovrnadistance
+CL -distance 'f,h' -doalignment
+IN ../../data/rna4.fold
+IN
+FI rna4.ovrnadistance
+FC = 7
+FP /^f: 26  \n/
+FP /^h: 32  \n/
+FP /^\(_____\(\.\(\(\(__\(\(\(\(\.\.\.\.\._____\)\)\)\)_\)\)\)\.\)\)\.\.\.\.\(\(\.\.\(\(\(\(\.\.\.\.\.\)\)\)\)\.\)\)\.\n/
+FP /^_\.\.\.\.\.\(_\(\(\(\.\.\(\(\(\(\.\.\.\.\.\.\.\.\.\.\)\)\)\)\.\)\)\)_\)_\.\.\.\.__\.__\(\(\(\.\.\.\._\)\)\)_\.___\n/
+FP /^\(____\(\(U1\)\(\(U5_\)P7\)\(U1\)P2\)\(U4\)\(\(U2\)\(\(U5\)P4\)\(U1\)P2\)\(U1\)R1\)\n/
+FP /^\(\(U5\)\(\(U2\)\(\(U10\)P4\)\(U1\)P4\)\(U5\)_____\(\(U4\)P3\)\(U1\)_______R1\)\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnaduplex-ex
+AB vienna
+AA ovrnaduplex
+IN ../../data/cofold-red.fasta
+IN ../../data/cofold-blue.fasta
+IN
+FI red.ovrnaduplex
+FC = 1
+FP /^\.\(\.\(\(\(\(\(\.\&\.\)\)\)\)\)\.\)\.   1\,9   :   6\,14  \(-4\.10\)\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnaeval-ex
+AB vienna
+AA ovrnaeval
+IN ../../data/evalrna.fasta
+IN ../../data/eval1.con
+IN
+FI eval.ovrnaeval
+FC = 2
+FP /^GGGGCCCCC\n/
+FP /^\(\.\.\.\)\.\.\.\. \(  4\.90\)\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnaeval-test2
+AB vienna
+AA ovrnaeval
+IN ../../data/evalrna.fasta
+IN ../../data/eval2.con
+IN
+FI eval.ovrnaeval
+FC = 2
+FP /^GGGGCCCCC\n/
+FP /^\(\.\.\.\.\)\.\.\. \(  1\.90\)\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnaeval-test3
+AB vienna
+AA ovrnaeval
+IN ../../data/evalrna.fasta
+IN ../../data/eval3.con
+IN
+FI eval.ovrnaeval
+FC = 2
+FP /^GGGGCCCCC\n/
+FP /^\.\.\.\(\.\.\.\.\) \(  4\.90\)\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnaevalpair-ex
+AB vienna
+AA ovrnaevalpair
+IN ../../data/cofold-red.fasta
+IN ../../data/cofold-red.con
+IN ../../data/cofold-blue.fasta
+IN ../../data/cofold-blue.con
+IN
+FI red.ovrnaevalpair
+FC = 2
+FP /^AUGAAGAUGA\&CUGUCUGUCUUGAGACA\n/
+FP /^\.\.\.\.\(\(\(\(\.\.\&\.\.\)\)\)\)\(\(\(\.\.\.\.\)\)\)\. \( -4\.40\)\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnafold-keep
+AB vienna
+AA ovrnafold
+DL keep
+IN ../../data/rna1.seq
+IN
+FI rna1.ssps
+FC = 154
+FP /^%%Pages: 1\n/
+FI rna1.ovrnafold
+FC = 2
+FP /^CACUACUCCAAGGACCGUAUCUUUCUCAGUGCGACAGUAA\n/
+FP /^\.\(\(\(\.\.\(\(\.\.\.\.\)\)\.\(\(\(\(\(\.\.\.\.\.\.\.\.\)\)\)\)\)\.\.\)\)\)\.\. \( -3\.50\)\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnafold-ex2
+AB vienna
+AA ovrnafold
+CL  -constraintfile ../../data/rna1.fold
+IN  ../../data/rna1.seq
+IN
+FI rna1.ssps
+FC = 153
+FP /^%%Pages: 1\n/
+FI rna1.ovrnafold
+FC = 2
+FP /^CACUACUCCAAGGACCGUAUCUUUCUCAGUGCGACAGUAA\n/
+FP /^\.\.\.\(\(\(\(\.\.\(\(\(\(\(\.\.\.\.\.\)\)\)\)\)\.\.\.\)\)\)\)\.\.\.\.\.\.\.\.\. \( -2\.20\)\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnafoldpf-ex
+AB vienna
+AA ovrnafoldpf
+CL -temperature 42
+IN  ../../data/rna2.seq
+IN
+FI rna2.ssps
+FC = 137
+FP /%%Pages: 1\n/
+FI rna2.ps
+FC = 178
+FP /%%Pages: 1\n/
+FI rna2.ps2
+FC = 204
+FP /%%Pages: 1\n/
+FI rna2.ovrnafoldpf
+FC = 5
+FP /\.\.\.\.\.\(\(\(\(\(\.\.\.\.\.\)\)\)\)\)\.\.\.\.\.\.\.\. \( -3\.47\)\n/
+FP /\.\.\{\(\,\(\(\(\(\(\.\.\.\.\.\)\)\)\}\}\.\}\}\,\,\.\.\. \[ -4\.45\]\n/
+FP / frequency of mfe structure in ensemble 0\.209182; ensemble diversity 6\.08  \n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnaheat-ex
+AB vienna
+AA ovrnaheat
+CL -mintemp 30 -maxtemp 120 -step 0.1 -smoothing 4
+IN ../../data/cofold-red.fasta
+IN
+FI red.ovrnaheat
+FC = 900
+FP /^74\.2\s+0\.00032\d+\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnainverse-ex
+AB vienna
+AA ovrnainverse
+CL -repeats 3
+TI 500
+IN ../../data/rna3.fold
+IN
+## We can only trust the first result to be the same
+## after that random number functions differ on Linux and Tru64 at least
+FI rna3.ovrnainverse
+FC = 3
+FP 3 /^[ACGU]{76}   [0-9][0-9][ \n]/
+FP  /^GCAUGCCUAGUACUUCUGU.*ACACCGACGGCGUGCUCUU   33\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnainverse-ex2
+AB vienna
+AA ovrnainverse
+TI 500
+CL -repeats 3 -succeed
+IN ../../data/rna3.fold
+IN
+FI rna3.ovrnainverse
+FC = 3
+FP 3 /^[ACGU]{76}   [0-9][0-9][ \n]/
+FP  /^GCAUGCCUAGUACUUCUGU.*ACACCGACGGCGUGCUCUU   33\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnalfold-ex
+AB vienna
+AA ovrnalfold
+IN tembl:d00596
+IN
+FI d00596.ovrnalfold
+FC = 2218
+FP /^\.\(\(\(\.\.\.\.\.\(\(\(\(\(\.\.\.\.\.\.\)\)\)\)\)\.\.\.\(\(\.\.\.\.\)\)\.\.\.\.\.\.\.\)\)\)\. \(-10\.40\) 13193\n/
+##FP /^\.\(\(\(\.\.\.\.\.\(\(\(\(\(\.\.\.\.\.\.\)\)\)\)\)\.\.\.\(\(\.\.\.\.\)\)\.\.\.\.\.\.\.\)\)\)\. \(-10\.40\) 13193\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnaplot-ex
+AB vienna
+AA ovrnaplot
+IN ../ovrnafold-keep/rna1.ovrnafold
+IN
+FI rna1.ovrnaplot
+FC = 154
+FP /%%Pages: 1\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+
+
+ID ovrnasubopt-ex
+AB vienna
+AA ovrnasubopt
+IN ../../data/rna1.seq
+IN
+FI rna1.ovrnasubopt
+FC = 9
+FP /^> rna1 \[100\]\n/
+FP /^CACUACUCCAAGGACCGUAUCUUUCUCAGUGCGACAGUAA   -380    100\n/
+FP /^\.\.\.\(\(\(\(\(\.\.\.\.\)\)\.\(\(\(\(\.\(\(\.\.\.\.\.\)\)\)\)\)\)\.\.\.\)\)\)\.  -2\.80\n/
+FP /^\.\.\.\(\(\(\(\(\.\.\.\.\)\)\.\(\(\(\(\(\.\.\.\.\.\.\.\.\)\)\)\)\)\.\.\.\)\)\)\.  -3\.80\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+//
+

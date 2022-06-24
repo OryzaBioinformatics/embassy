@@ -9,3 +9,4 @@ dist-hook:
 	tar cBf - emboss_acd | ( cd $(distdir); tar xBf - ; cd emboss_acd; rm -rf CVS)
 	tar cBf - emboss_doc | ( cd $(distdir); tar xBf - ; cd emboss_doc; rm -rf CVS; rm -rf master) 
 	tar cBf - H | ( cd $(distdir); tar xBf - ; cd H; rm -rf CVS)
+	tar cBf - test       | ( cd $(distdir); tar xBf - ; cd test;       rm -rf CVS) 

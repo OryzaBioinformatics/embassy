@@ -1,12 +1,12 @@
 application: ovrnaeval [
-  documentation: "RNA eval"
+  documentation: "Calculate energy of RNA sequences with a given secondary structure"
   groups: "Nucleic:RNA folding, Nucleic:2D structure"
   gui: "yes"
   batch: "yes"
   cpu: "medium"
   embassy: "vienna"
-  relations: "EDAM:0000697 topic RNA structure and alignment"
-  relations: "EDAM:0000279 operation Nucleic acid folding"
+  relations: "EDAM_topic:0697 RNA structure and alignment"
+  relations: "EDAM_operation:0279 Nucleic acid folding analysis"
 ]
 
 section: input [
@@ -17,14 +17,14 @@ section: input [
   sequence: sequence [
     parameter: "Y"
     type: "dna"
-    relations: "EDAM:0002887 data Sequence record (nucleic acid)"
+    relations: "EDAM_data:2887 Sequence record (nucleic acid)"
   ]
 
   infile: constraintfile [
     parameter: "Y"
     information: "Vienna RNA structure constraints file"
     knowntype: "rna constraint"
-    relations: "EDAM:0000866 data Sequence alignment metadata"
+    relations: "EDAM_data:0866 Sequence alignment metadata"
   ]
 
   infile: paramfile [
@@ -32,7 +32,7 @@ section: input [
     default: ""
     information: "Vienna RNA parameters file (optional)"
     knowntype: "rna parameter"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: input
@@ -45,25 +45,25 @@ section: advanced [
   float: temperature [
     default: "37.0"
     information: "Temperature"
-    relations: "EDAM:0002139 data Melting temperature"
+    relations: "EDAM_data:2139 Nucleic acid melting temperature"
   ]
 
   boolean: convert [
     default: "Y"
     information: "Convert T to U"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: tetraloop [
     default: "Y"
     information: "Stabilising energies for tetra-loops"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: circular [
     default: "N"
     information: "Circular RNA"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: energy [
@@ -77,7 +77,7 @@ section: advanced [
     information: "Method"
     help: "Rarely used option to fold sequences from the ABCD...
            alphabet"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: dangles [
@@ -92,13 +92,13 @@ section: advanced [
     delimiter: ","
     codedelimiter: ":"
     information: "Method"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: logml [
     default: "N"
     information: "Use log scale for multiloop energies"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: advanced
@@ -112,7 +112,7 @@ section: output [
     parameter: "Y"
     knowntype: "rnaeval output"
     information: "Vienna RNAeval output file"
-    relations: "EDAM:0002985 data Nucleic acid thermodynamic property"
+    relations: "EDAM_data:2985 Nucleic acid thermodynamic data"
   ]
 
 endsection: output

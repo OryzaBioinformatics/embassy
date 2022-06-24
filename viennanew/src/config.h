@@ -4,6 +4,15 @@
 /* Define if building universal (internal helper macro) */
 /* #undef AC_APPLE_UNIVERSAL_BUILD */
 
+/* Define to 1 to compile all deprecated functions */
+/* #undef AJ_COMPILE_DEPRECATED */
+
+/* Define to 1 to compile deprecated functions used in book texts for 6.2.0 */
+/* #undef AJ_COMPILE_DEPRECATED_BOOK */
+
+/* Define to 1 to collect AJAX library usage statistics. */
+/* #undef AJ_SAVESTATS */
+
 /* Define to 1 if the `getpgrp' function requires zero arguments. */
 #define GETPGRP_VOID 1
 
@@ -26,8 +35,14 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
+/* Define to 1 if the Java Native Interface (JNI) is available. */
+/* #undef HAVE_JAVA */
+
 /* Define to 1 if you have the `m' library (-lm). */
 #define HAVE_LIBM 1
+
+/* Define to 1 if you have the `mcheck' function. */
+/* #undef HAVE_MCHECK */
 
 /* Define to 1 if you have the `memmove' function. */
 #define HAVE_MEMMOVE 1
@@ -82,6 +97,9 @@
 /* Define to 1 if you have the <sys/types.h> header file. */
 #define HAVE_SYS_TYPES_H 1
 
+/* Define to 1 if you have the <TargetConfig.h> header file. */
+/* #undef HAVE_TARGETCONFIG_H */
+
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
@@ -117,16 +135,16 @@
 #define PACKAGE_NAME "VIENNA"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "VIENNA 1.7.2"
+#define PACKAGE_STRING "VIENNA 1.7.2.650"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "VIENNA"
 
 /* Define to the home page for this package. */
-#define PACKAGE_URL "http://emboss.sourceforge.net/"
+#define PACKAGE_URL "http://emboss.open-bio.org/"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.7.2"
+#define PACKAGE_VERSION "1.7.2.650"
 
 /* Define to 1 if PDF support is available */
 #define PLD_pdf 1
@@ -147,7 +165,7 @@
 #define UNUSED __attribute__ ((unused))
 
 /* Version number of package */
-#define VERSION "1.7.2"
+#define VERSION "1.7.2.650"
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */
@@ -163,6 +181,9 @@
 
 /* Define to 1 if the X Window System is missing or not being used. */
 /* #undef X_DISPLAY_MISSING */
+
+/* Set to 2 for open args */
+/* #undef _FORTIFY_SOURCE */
 
 /* Define to empty if `const' does not conform to ANSI C. */
 /* #undef const */

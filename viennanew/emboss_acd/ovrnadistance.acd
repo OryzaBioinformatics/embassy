@@ -1,12 +1,12 @@
 application: ovrnadistance [
-  documentation: "RNA distances"
+  documentation: "Calculate distances between RNA secondary structures"
   groups: "Nucleic:RNA folding, Nucleic:2D structure"
   gui: "yes"
   batch: "yes"
   cpu: "medium"
   embassy: "vienna"
-  relations: "EDAM:0000697 topic RNA structure and alignment"
-  relations: "EDAM:0000500 operation Secondary structure alignment"
+  relations: "EDAM_topic:0697 RNA structure and alignment"
+  relations: "EDAM_operation:0500 Secondary structure alignment construction"
 ]
 
 section: input [
@@ -18,7 +18,7 @@ section: input [
     parameter: "Y"
     information: "Vienna RNA structures file"
     knowntype: "rna structures"
-    relations:  "EDAM:0000880 data RNA secondary structure"
+    relations:  "EDAM_data:0880 RNA secondary structure record"
   ]
 
 endsection: input
@@ -41,7 +41,7 @@ section: advanced [
     codedelimiter: ":"
     information: "Distance"
     help: "Distance types to calculate"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: compare [
@@ -56,20 +56,20 @@ section: advanced [
     codedelimiter: ":"
     information: "Comparison method"
     help: "Distance types to calculate"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: schapiro [
     default: "N"
     information: "Use cost matrix for comparing coarse
                   structures"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: doalignment [
     default: "N"
     information: "Alignment showing matching substructures"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: advanced
@@ -83,7 +83,7 @@ section: output [
     parameter: "Y"
     knowntype: "rnafold output"
     information: "Vienna RNAfold output file"
-    relations:  "EDAM:0000880 data RNA secondary structure"
+    relations:  "EDAM_data:0880 RNA secondary structure record"
   ]
 
 endsection: output
