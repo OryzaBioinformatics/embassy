@@ -247,6 +247,7 @@ static AjBool interface_WriteFile(AjPFile logf, AjPFile outf, float thresh,
     ajint entry=0;    
     AjPStr     domid=NULL;
     AjPStr     pdbid=NULL;
+    AjPSeqout  outseq = NULL;
 
 
 
@@ -329,10 +330,12 @@ static AjBool interface_WriteFile(AjPFile logf, AjPFile outf, float thresh,
 		/* S1 & S2 */
 		if((pdb->Chains[y]->Nres != 0) && pdb->Chains[w]->Nres != 0)
 		{
-		    ajSeqWriteXyz(outf, pdb->Chains[y]->Seq, "S1");
+		    outseq = ajSeqoutNewFile(outf);
+		    ajSeqoutDumpSwisslike(outseq, pdb->Chains[y]->Seq, "S1");
 		    ajFmtPrintF(outf, "XX\n");	
 
-		    ajSeqWriteXyz(outf, pdb->Chains[w]->Seq, "S2");
+		    ajSeqoutDumpSwisslike(outseq, pdb->Chains[w]->Seq, "S2");
+		    ajSeqoutDel(&outseq);
 		    ajFmtPrintF(outf, "XX\n");	
 
 		}
@@ -590,7 +593,7 @@ static AjBool interface_ContactMapCalc(AjPInt2d *mat, ajint *ncon,
 
     
     /*Convert the AjPList of atoms to an array of AjPAtom*/
-    if(!(siz1=ajListToArray((AjPList)pdb->Chains[chn1-1]->Atoms,
+    if(!(siz1=ajListToarray((AjPList)pdb->Chains[chn1-1]->Atoms,
 			   (void ***)&arr1)))
     {
 	ajWarn("Zero sized list of sequences passed into "
@@ -599,7 +602,7 @@ static AjBool interface_ContactMapCalc(AjPInt2d *mat, ajint *ncon,
     }
 
 
-    if(!(siz2=ajListToArray((AjPList)pdb->Chains[chn2-1]->Atoms,
+    if(!(siz2=ajListToarray((AjPList)pdb->Chains[chn2-1]->Atoms,
 			   (void ***)&arr2)))
     {
 	ajWarn("Zero sized list of sequences passed into "

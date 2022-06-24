@@ -252,7 +252,7 @@ int main(ajint argc, char **argv)
 	    ajFmtPrintF(logf, "ERROR  file write error %S\n", con_name);
 
 	    ajFmtPrintS(&temp, "rm %S", con_name);
-	    ajSystem(temp);
+	    ajSysSystem(temp);
 
 	    ajFileClose(&cpdb_inf);
 	    ajFileClose(&con_outf);
@@ -273,7 +273,7 @@ int main(ajint argc, char **argv)
 
 
     /* Tidy up. */
-    ajListDel(&cpdb_path);
+    ajListFree(&cpdb_path);
     ajStrDel(&cpdb_name);
     ajDirDel(&con_path);
     ajStrDel(&con_name);
@@ -326,7 +326,7 @@ static AjBool contacts_WriteFile(AjPFile logf,
     ajint      entry  = 0;    
     AjPStr     pdbid  = NULL;
     AjPStr     domid  = NULL;
-
+    AjPSeqout  outseq = NULL;
 
 
     /* Error checking on args. */
@@ -400,7 +400,9 @@ static AjBool contacts_WriteFile(AjPFile logf,
 	    /* S1 */
 	    if(pdb->Chains[y]->Nres != 0)
 	    {
-		ajSeqWriteXyz(outf, pdb->Chains[y]->Seq, "S1");
+		outseq = ajSeqoutNewFile(outf);
+		ajSeqoutDumpSwisslike(outseq, pdb->Chains[y]->Seq, "S1");
+		ajSeqoutDel(&outseq);
 		ajFmtPrintF(outf, "XX\n");	
 	    }
 	    
@@ -642,7 +644,7 @@ static AjBool contacts_ContactMapCalc(AjPInt2d *mat,
     
     
     /*Convert the AjPList of atoms to an array of AjPAtom*/
-    if(!(siz=ajListToArray((AjPList)pdb->Chains[chn-1]->Atoms,
+    if(!(siz=ajListToarray((AjPList)pdb->Chains[chn-1]->Atoms,
 			   (void ***)&arr)))
     {
 	ajWarn("Zero sized list of sequences passed into "
