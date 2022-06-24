@@ -62,9 +62,9 @@ int main(int argc, char **argv)
 
     ajUser ("Processing '%S'", instr);
     handle = ajStrTokenNewC(instr, " ");
-    ajStrTokenNextParseC(&handle, " ", &token);
+    ajStrTokenNextParseC(handle, " ", &token);
     ajUser ("first token '%S'", token);
-    ajStrTokenRestParse(&handle, &token);
+    ajStrTokenRestParse(handle, &token);
     ajUser ("second token '%S'", token);
     ajStrTokenDel(&handle);
 
@@ -88,9 +88,9 @@ int main(int argc, char **argv)
 
     ajUser ("Processing '%S'", nustr);
     handle = ajStrTokenNewC(nustr, " ");
-    ajStrTokenNextParseC(&handle, " ", &token);
+    ajStrTokenNextParseC(handle, " ", &token);
     ajUser ("first token '%S'", token);
-    ajStrTokenRestParse(&handle, &token);
+    ajStrTokenRestParse(handle, &token);
     ajUser ("second token '%S'", token);
     ajStrTokenDel(&handle);
 
