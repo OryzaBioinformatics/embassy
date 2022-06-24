@@ -62,7 +62,7 @@ Static short spp, nonodes, chars, endsite, outgrno, howmany, howoften, col,
    outgrno indicates outgroup */
 Static boolean weights, thresh, simple, trout, outgropt,  printdata,
 	       progress, treeprint, stepbox, ancseq, mulsets, firstset,
-	       interleaved, ibmpc, vt52, ansi;
+	       ibmpc, vt52, ansi;
 Static short *weight, *oldweight;
 Static steptr alias, ally, location;
 Static pointptr treenode;   /* pointers to all nodes in tree */
@@ -167,11 +167,11 @@ AjPFile treef;
   fprintf(outfile, " branch-and-bound to find all");
   fprintf(outfile, " most parsimonious trees\n\n");
 
-  thresh = ajAcdGetBool("thresh");
+  thresh = ajAcdGetToggle("thresh");
   if(thresh)
     threshold = ajAcdGetFloat("valthresh");
   
-  outgropt = ajAcdGetBool("og");
+  outgropt = ajAcdGetToggle("og");
   if(outgropt)
     outgrno = ajAcdGetInt("outgnum"); 
   else
@@ -186,7 +186,7 @@ AjPFile treef;
   ancseq = ajAcdGetBool("seqatnodes");
 
   treeprint = ajAcdGetBool("drawtree");
-  trout = ajAcdGetBool("trout");
+  trout = ajAcdGetToggle("trout");
   if(trout){
     treef = ajAcdGetOutfile("treefile");
     treefile = treef->fp;
@@ -213,6 +213,7 @@ void emboss_getnums(){
 
 void emboss_inputdata(){
 int j;
+int ilen;
 
   if (progress)
     putchar('\n');
@@ -232,7 +233,10 @@ int j;
     fprintf(outfile, "---------\n\n");
   }
   for(i=0;i<spp;i++){
-    strncpy(&name[i][0],ajStrStr(ajSeqsetName(seqset, i)),nmlngth);
+    ilen = ajStrLen(ajSeqsetName(seqset, i));
+    strncpy(&name[i][0],ajStrStr(ajSeqsetName(seqset, i)),ilen);
+    for (j=ilen;j<nmlngth;j++)
+	name[i][j] = ' ';
     /*    ajUser("%s/n",ajSeqsetName(seqset, i));*/
     strncpy(&y[i][0],ajSeqsetSeq(seqset, i),chars);
     for(j=0;j<chars;j++){
@@ -247,7 +251,7 @@ int j;
 
 /************ END EMBOSS GET OPTIONS ROUTINES **************************/
  
-openfile(fp,filename,mode,application,perm)
+void openfile(fp,filename,mode,application,perm)
 FILE **fp;
 char *filename;
 char *mode;
@@ -314,14 +318,15 @@ gbases *p;
 }  /* chuck */
 
 
+#ifdef OLDOPTIONS
 Static Void uppercase(ch)
 Char *ch;
 {
-    *ch = (islower (*ch) ? toupper(*ch) : (*ch));
+    *ch = (islower ((int)*ch) ? toupper((int)*ch) : ((int)*ch));
 }  /* uppercase */
+#endif
 
-
-
+#ifdef OLDOPTIONS
 Local Void inputnumbers()
 {
   /* input the numbers of species and of characters */
@@ -334,7 +339,9 @@ Local Void inputnumbers()
     putchar('\n');
   nonodes = spp * 2 - 1;
 }  /* inputnumbers */
+#endif
 
+#ifdef OLDOPTIONS
 Local Void getoptions()
 {
   /* interactively set options */
@@ -527,7 +534,7 @@ Local Void getoptions()
       printf("Not a possible option!\n");
   }
 }  /* getoptions */
-
+#endif
 
 Static void doinit(int argc, char *argv[])
      /*Static Void doinit()*/
@@ -560,6 +567,7 @@ Static void doinit(int argc, char *argv[])
 
 
 
+#ifdef OLDOPTIONS
 Local Void inputweights()
 {
   /* input the character weights, 0-9 and A-Z for weights
@@ -583,9 +591,9 @@ Local Void inputweights()
 	ch = ' ';
     } while (ch == ' ');
     weight[i] = 1;
-    if (isdigit(ch))
+    if (isdigit((int)ch))
       weight[i] = ch - '0';
-    else if (isalpha(ch)) {
+    else if (isalpha((int)ch)) {
       uppercase(&ch);
       if (ch >= 'A' && ch <= 'I')
 	weight[i] = ch - 55;
@@ -602,7 +610,9 @@ Local Void inputweights()
   getc(infile);
   weights = true;
 }  /* inputweights */
+#endif
 
+#ifdef OLDOPTIONS
 Local Void printweights()
 {
   /* print out the weights of sites */
@@ -626,7 +636,9 @@ Local Void printweights()
   }
   putc('\n', outfile);
 }  /* printweights */
+#endif
 
+#ifdef OLDOPTIONS
 Local Void inputoptions()
 {
   /* input the information on the options */
@@ -678,11 +690,13 @@ Local Void inputoptions()
   if (weights)
     printweights();
 }  /* inputoptions */
+#endif
 
+#ifdef OLDOPTIONS
 Local Void inputdata()
 {
   /* input the names and sequences for each species */
-  short i, j, k, l, basesread, basesnew;
+  short i, j, k, l, basesread, basesnew=0;
   Char charstate;
   boolean allread, done;
 
@@ -789,6 +803,7 @@ Local Void inputdata()
    }
   putc('\n', outfile);
 }  /* inputdata */
+#endif
 
 Local Void sitesort()
 {
@@ -924,7 +939,7 @@ Local Void makevalues()
 {
   /* set up fractional likelihoods at tips */
   short i, j;
-  char ns;
+  char ns=0;
   node *p;
   for (i = 1; i <= nonodes; i++) {
     treenode[i - 1]->back = NULL;
@@ -1067,7 +1082,7 @@ node *p, *left, *rt;
      at that point and counts the changes.  The program
      spends much of its time in this PROCEDURE */
   short i;
-  short ns, rs, ls;
+  short ns, rs=0, ls=0;
 
   for (i = 0; i < endsite; i++) {
     if (left != NULL)
@@ -1179,7 +1194,7 @@ node *r;
 {
   /* determine minimum number of steps more which will
      be added when rest of species are put in tree */
-  short i, j, k, sum, sumall, sumadded;
+  short i, j, k, sum, sumall=0, sumadded=0;
   boolean doneadded, allhave, addedhave, has;
   char supps;
 
@@ -1325,7 +1340,7 @@ short m;
   short n;
   valptr valyew;
   placeptr place;
-  short i, j, n1, besttoadd;
+  short i, j, n1, besttoadd=0;
   valptr bestval;
   placeptr bestplace;
   double oldfrac, oldfdone, sum, bestsum;
@@ -1476,7 +1491,7 @@ short i;
 double scale;
 {
   /* draws one row of the tree diagram by moving up tree */
-  node *p, *q, *r, *first, *last;
+  node *p, *q, *r, *first=NULL, *last=NULL;
   short n, j;
   boolean extra, done;
 
@@ -1919,11 +1934,11 @@ Static Void maketree()
 }  /* maketree */
 
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 Char *argv[];
 {  /* Penny's branch-and-bound method for DNA sequences */
-char infilename[100],outfilename[100],trfilename[100];
+/*char infilename[100],outfilename[100],trfilename[100];*/
 #ifdef MAC
   macsetup("Dnapenny","");
   argv[0] = "Dnapenny";
@@ -2038,6 +2053,6 @@ MALLOCRETURN *mem;
 mem = (MALLOCRETURN *)malloc((size_t)x);
 if (!mem)
   memerror();
-else
+
   return (MALLOCRETURN *)mem;
 }

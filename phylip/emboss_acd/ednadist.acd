@@ -2,6 +2,12 @@ application: ednadist [
   documentation: "Nucleic acid sequence Distance Matrix
                   program"
   groups: "Phylogeny:Molecular sequence"
+  embassy: "phylip"
+]
+
+section: input [
+  information: "Input section"
+  type: "page"
 ]
 
 seqset: sequence  [
@@ -10,10 +16,38 @@ seqset: sequence  [
   help: "File containing a sequence alignment"
 ]
 
+list: matrix  [
+  standard: "y"
+  header: "Form of distance matrix"
+  values: "S:Square;L:Lower-triangular"
+  information: "Form"
+  default: "S"
+]
+
+endsection: input
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
 outfile: outfile  [
   parameter: "Y"
   default: "ednadist.outfile"
   knowntype: "dnadist output"
+]
+
+boolean: printinitial  [
+  additional: "Y"
+  default: "N"
+  information: "Print out the data at start of run"
+]
+
+endsection: output
+
+section: required [
+  information: "Required section"
+  type: "page"
 ]
 
 list: method  [
@@ -35,26 +69,27 @@ float: ttratio  [
   maximum: "100.0"
 ]
 
+endsection: required
+
+section: additional [
+  information: "Additional section"
+  type: "page"
+]
+
 integer: categories  [
   additional: "Y"
   default: "1"
   information: "Number of categories of substitution rates"
 ]
 
-boolean: basefrequency  [
+toggle: basefrequency  [
   additional: "@($(method) == ML)"
   default: "Y"
   information: "Use empirical base frequencies"
 ]
 
-boolean: printinitial  [
-  additional: "Y"
-  default: "N"
-  information: "Print out the data at start of run"
-]
-
 float: freqa  [
-  additional: "@($(method) == ML)"
+  additional: "@(!$(basefrequency))"
   minimum: "0.0"
   maximum: "1.0"
   default: "0.25"
@@ -62,7 +97,7 @@ float: freqa  [
 ]
 
 float: freqc  [
-  additional: "@($(method) == ML)"
+  additional: "@(!$(basefrequency))"
   minimum: "0.0"
   maximum: "1.0"
   default: "0.25"
@@ -70,7 +105,7 @@ float: freqc  [
 ]
 
 float: freqg  [
-  additional: "@($(method) == ML)"
+  additional: "@(!$(basefrequency))"
   minimum: "0.0"
   maximum: "1.0"
   default: "0.25"
@@ -78,17 +113,11 @@ float: freqg  [
 ]
 
 float: freqt  [
-  additional: "@($(method) == ML)"
+  additional: "@(!$(basefrequency))"
   minimum: "0.0"
   maximum: "1.0"
   default: "0.25"
   information: "Frequency for T/U"
 ]
 
-list: matrix  [
-  standard: "y"
-  header: "Form of distance matrix"
-  values: "S:Square;L:Lower-triangular"
-  information: "Form"
-  default: "S"
-]
+endsection: additional

@@ -44,7 +44,7 @@ AjPFile outf;
   ajNamInit("emboss");
   retval =  ajAcdInitP (pgm, argc, argv,"PHYLIP");
 
-  seqset = ajAcdGetSeqset("msf");
+  seqset = ajAcdGetSeqset("sequence");
 
   outf = ajAcdGetOutfile("outfile");
   outfile = outf->fp;
@@ -67,7 +67,8 @@ int i;
     weight[i] = 1;
 }
 void emboss_inputdata(){
-  int i,j,k;
+  int i,j;
+  int ilen;
 
   if (progress)
     putchar('\n');
@@ -87,7 +88,10 @@ void emboss_inputdata(){
     fprintf(outfile, "---------\n\n");
   }
   for(i=0;i<numsp;i++){
-    strncpy(&nayme[i][0],ajStrStr(ajSeqsetName(seqset, i)),nmlngth);
+    ilen = ajStrLen(ajSeqsetName(seqset, i));
+    strncpy(&nayme[i][0],ajStrStr(ajSeqsetName(seqset, i)),ilen);
+    for (j=ilen;j<nmlngth;j++)
+	nayme[i][j] = ' ';
     /*    ajUser("%s/n",ajSeqsetName(seqset, i));*/
     strncpy(&y[i][0],ajSeqsetSeq(seqset, i),sites);
     y[i][sites] = '\0';
@@ -114,7 +118,7 @@ void emboss_getnums(){
 
 /************ END EMBOSS GET OPTIONS ROUTINES **************************/
 
-openfile(fp,filename,mode,application,perm)
+void openfile(fp,filename,mode,application,perm)
 FILE **fp;
 char *filename;
 char *mode;
@@ -157,7 +161,7 @@ char *perm;
 void uppercase(ch)
 Char *ch;
 {
-   *ch = (islower(*ch) ?  toupper(*ch) : (*ch));
+   *ch = (islower((int)*ch) ?  toupper((int)*ch) : ((int)*ch));
 }  /* uppercase */
 
 
@@ -426,7 +430,7 @@ void inputoptions()
 void inputdata()
 {
   /* Input the names and sequences for each species */
-  long i, j, k, l, basesread, basesnew;
+  long i, j, k, l, basesread, basesnew=0;
   Char charstate;
   boolean allread, done;
 
@@ -1126,11 +1130,11 @@ void makeinv()
 }  /* makeinv */
 
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 Char *argv[];
 {  /* DNA Invariants */
-char infilename[100],outfilename[100];
+/*char infilename[100],outfilename[100];*/
 #ifdef MAC
   macsetup("Dnainvar","");
   argv[0] = "Dnainvar";
@@ -1219,7 +1223,7 @@ MALLOCRETURN *mem;
 mem = (MALLOCRETURN *)malloc(x);
 if (!mem)
   memerror();
-else
+
   return (MALLOCRETURN *)mem;
 }
 

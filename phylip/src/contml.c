@@ -43,7 +43,7 @@ typedef struct tree {
 
 Static FILE *infile, *outfile, *treefile;
 Static short numsp, numsp1, numsp2, loci, inseed, totalleles, df, outgrno,
-             col, datasets, ith, i, j, l, jumb, njumble=0;
+             col, datasets, ith, i, jumb, njumble=0;
 Static short *alleles, *locus;
 Static phenotype *x;
 Static naym *nayms;
@@ -78,12 +78,12 @@ long inseed0;
   inf = ajAcdGetInfile("infile");
   infile = inf->fp;
 
-  usertree = !ajAcdGetBool("besttree");
+  usertree = !ajAcdGetToggle("besttree");
   if(usertree)
     lengths = ajAcdGetBool("lengths");
   else {
     global = ajAcdGetBool("global");
-    jumble = ajAcdGetBool("random");
+    jumble = ajAcdGetToggle("random");
     if(jumble){
       inseed = ajAcdGetInt("randseed");
       /* make sure it's odd*/
@@ -106,17 +106,17 @@ long inseed0;
       njumble = 1;
   }
 
-  contchars = ajAcdGetBool("continuous");
+  contchars = ajAcdGetToggle("continuous");
   if(!contchars)
     all = ajAcdGetBool("all");
   
-  outgropt = ajAcdGetBool("og");
+  outgropt = ajAcdGetToggle("og");
   if(outgropt)
     outgrno = ajAcdGetInt("outgnum"); 
   else
     outgrno = 1;
 
-  mulsets = ajAcdGetBool("multsets");
+  mulsets = ajAcdGetToggle("multsets");
   if(mulsets)
     datasets = ajAcdGetInt("datasets");
 
@@ -126,7 +126,7 @@ long inseed0;
 
   treeprint = ajAcdGetBool("drawtree");
 
-  trout = ajAcdGetBool("trout");
+  trout = ajAcdGetToggle("trout");
   if(trout){
     treef = ajAcdGetOutfile("treefile");
     treefile = treef->fp;
@@ -136,7 +136,7 @@ long inseed0;
 /************ END EMBOSS GET OPTIONS ROUTINES **************************/
 
 
-openfile(fp,filename,mode,application,perm)
+void openfile(fp,filename,mode,application,perm)
 FILE **fp;
 char *filename;
 char *mode;
@@ -215,7 +215,7 @@ void uppercase(ch)
 Char *ch;
 {
   /* convert a character to upper case -- either ASCII or EBCDIC */
-   *ch = (islower(*ch) ?  toupper(*ch) : (*ch));
+   *ch = (islower((int)*ch) ?  toupper((int)*ch) : ((int)*ch));
 }  /* uppercase */
 
 
@@ -231,7 +231,7 @@ void getnums()
 void getoptions()
 {
   /* interactively set options */
-  short i, inseed0;
+  short i, inseed0=0;
   Char ch;
   boolean done, done1;
 
@@ -484,7 +484,7 @@ void getalleles()
 {
   /* set up number of alleles at loci */
   short i, j, k, n, cursp, curloc;
-  node *p;
+  node *p=NULL;
 
   if (!firstset) {
     if (eoln(infile)) {
@@ -1206,7 +1206,7 @@ double scale;
   node *p, *q;
   short n, j;
   boolean extra;
-  node *r, *first, *last;
+  node *r, *first=NULL, *last=NULL;
   boolean done;
 
   p = curtree.start->back;
@@ -1713,7 +1713,7 @@ void maketree()
   short i, j, k, n, num;
   double sum, sum2, sd;
   double TEMP;
-  node *p;
+  node *p=NULL;
 
   if (usertree) {
     fscanf(infile, "%hd%*[^\n]", &numtrees);
@@ -1891,7 +1891,7 @@ int main(argc, argv)
 int argc;
 Char *argv[];
 {  /* main program */
-  char infilename[100],outfilename[100],trfilename[100];
+  /*char infilename[100],outfilename[100],trfilename[100];*/
 #ifdef MAC
   macsetup("Contml","");
   argv[0] = "Contml";
@@ -1976,6 +1976,6 @@ MALLOCRETURN *mem;
 mem = (MALLOCRETURN *)calloc(1,x);
 if (!mem)
   memerror();
-else
+
   return (MALLOCRETURN *)mem;
 }

@@ -97,6 +97,7 @@ void setuptree(tree *a);
 void makeweights();
 void makevalues();
 Local Void empiricalfreqs();
+void maketree(void);
 
 AjPSeqset seqset;
 
@@ -142,12 +143,12 @@ int scanned;
   outf = ajAcdGetOutfile("outfile");
   outfile = outf->fp;
 
-  usertree = !ajAcdGetBool("besttree");
+  usertree = !ajAcdGetToggle("besttree");
   if(usertree)
     lengths = ajAcdGetBool("lengths");
   else {
     globle = ajAcdGetBool("global");
-    jumble = ajAcdGetBool("random");
+    jumble = ajAcdGetToggle("random");
     if(jumble){
       inseed = ajAcdGetInt("randseed");
       /* make sure it's odd*/
@@ -171,7 +172,7 @@ int scanned;
   }
   ttratio = ajAcdGetFloat("ttratio");
    
-  freqsfrom = ajAcdGetBool("basefrequency");
+  freqsfrom = ajAcdGetToggle("basefrequency");
   if(!freqsfrom){
     freqa = ajAcdGetFloat("freqa");
     freqc = ajAcdGetFloat("freqc");
@@ -179,7 +180,7 @@ int scanned;
     freqg = ajAcdGetFloat("freqg");
   }
 
-  ctgry = ajAcdGetBool("categories");
+  ctgry = ajAcdGetToggle("categories");
   if(ctgry){
     categs = ajAcdGetInt("catnum");
     if (probcat){
@@ -226,7 +227,7 @@ int scanned;
       ajUser("Error probabilities must add up to 1.0, plus or minus 0.001.");
       ajExit();
     }
-    auto_ = !ajAcdGetBool("autog");
+    auto_ = !ajAcdGetToggle("autog");
     if(auto_){
       lambda = ajAcdGetFloat("lambda");
       lambda = 1.0 / lambda;
@@ -251,7 +252,7 @@ int scanned;
 
   treeprint = ajAcdGetBool("drawtree");
  
-  trout = ajAcdGetBool("trout");
+  trout = ajAcdGetToggle("trout");
   if(trout){
     treef = ajAcdGetOutfile("treefile");
     treefile = treef->fp;
@@ -263,7 +264,8 @@ int scanned;
   putchar('\n');
 }
 void emboss_inputdata(){
-  int i,j,k;
+ int i,j;
+ int ilen;
 
  for (i = 0; i < sites; i++)
    weight[i] = 1;
@@ -287,7 +289,10 @@ void emboss_inputdata(){
     fprintf(outfile, "---------\n\n");
   }
   for(i=0;i<spp;i++){
-    strncpy(naym[i],ajStrStr(ajSeqsetName(seqset, i)),nmlngth);
+    ilen = ajStrLen(ajSeqsetName(seqset, i));
+    strncpy(naym[i],ajStrStr(ajSeqsetName(seqset, i)),ilen);
+    for (j=ilen;j<nmlngth;j++)
+	naym[i][j] = ' ';
     strncpy(&y[i][0],ajSeqsetSeq(seqset, i),sites);
     y[i][sites] = '\0';
     if(printdata)
@@ -336,7 +341,7 @@ void emboss_getnums(){
 
 /************ END EMBOSS GET OPTIONS ROUTINES **************************/
 
-openfile(fp,filename,mode,application,perm)
+void openfile(fp,filename,mode,application,perm)
 FILE **fp;
 char *filename;
 char *mode;
@@ -419,18 +424,18 @@ Char ch;
 void uppercase(ch)
 Char *ch;
 {
-  (*ch) = isupper(*ch) ? (*ch) : toupper(*ch);
+  (*ch) = isupper((int)*ch) ? ((int)*ch) : toupper((int)*ch);
 }  /* uppercase */
 
 
 void getoptions()
 {
   /* interactively set options */
-  short i, j, inseed0,scanned;
+  short i, inseed0=0,scanned;
   Char ch;
   char line[128];
    char rest[128];
-  boolean done, done1, done2;
+  boolean done, done1;
   double probsum;
 
   fprintf(outfile, "\nNucleic acid sequence\n");
@@ -979,7 +984,7 @@ void getbasefreqs()
 
 void getdata()
 {
-  short i, j, k, l, basesread, basesnew;
+  short i, j, k, l, basesread, basesnew=0;
   Char ch;
   boolean allread, done;
 
@@ -1212,7 +1217,7 @@ void makeweights()
 {
   /* make up weights vector to avoid duplicate computations */
   short i,j,k;
-  node *p1,*p2,*p3;
+  node *p1,*p2=NULL,*p3=NULL;
 
    for (i = 1; i <= sites; i++) {
     alias[i - 1] = i;
@@ -1458,11 +1463,11 @@ void getinput()
 }  /* getinput */
 
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 Char *argv[];
 {  /* DNA Maximum Likelihood with molecular clock */
-char infilename[100],outfilename[100],trfilename[100];
+/*char infilename[100],outfilename[100],trfilename[100];*/
 int i;
 #ifdef MAC
   macsetup("Dnamlk","");
@@ -1561,7 +1566,7 @@ MALLOCRETURN *mem;
 mem = (MALLOCRETURN *)calloc((size_t)1,x);
 if (!mem)
   memerror();
-else
+
   return (MALLOCRETURN *)mem;
 }
 
