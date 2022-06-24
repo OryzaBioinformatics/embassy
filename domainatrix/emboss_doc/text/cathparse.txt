@@ -186,7 +186,7 @@ CH   0 CHAIN; 159 START; 202 END;
   6.1 COMMAND LINE ARGUMENTS
 
 Generate DCF file from raw CATH files.
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-listfile]          infile     [caths.list.v2.4] This option specifies the

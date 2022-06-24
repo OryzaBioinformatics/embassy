@@ -1,5 +1,5 @@
 application: libscanout [
-  documentation: "Read a DHF file and writes a file of top-scoring Classes, Folds and Superfamilies."
+  documentation: "Read top classes, folds and superfamilies from a DHF file"
   groups: "Protein:3D Structure"
   gui: "yes"
   batch: "yes"
