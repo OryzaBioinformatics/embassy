@@ -45,7 +45,7 @@ Vienna RNAfold output file [rna1.ovrnaplot]:
 Command line arguments
 
 Draw RNA secondary structures
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-structuresfile]    infile     Vienna RNAfold output file

@@ -59,7 +59,7 @@ Vienna RNAfold output file [rna4.ovrnadistance]:
 Command line arguments
 
 Calculate distances between RNA secondary structures
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-structuresfile]    infile     Vienna RNA structures file
