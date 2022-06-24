@@ -366,7 +366,7 @@ SEQNR requires a residue substitution matrix.
  
 <pre>
 Removes redundancy from DHF files.
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-dhfinpath]         dirlist    [./] This option specifies the location of
@@ -515,6 +515,21 @@ Version: EMBOSS:6.2.0
 
    Advanced (Unprompted) qualifiers: (none)
    Associated qualifiers:
+
+   "-dhfinpath" associated qualifiers
+   -extension1         string     Default file extension
+
+   "-singletsdir" associated qualifiers
+   -extension          string     Default file extension
+
+   "-insetsdir" associated qualifiers
+   -extension          string     Default file extension
+
+   "-dhfoutdir" associated qualifiers
+   -extension2         string     Default file extension
+
+   "-redoutdir" associated qualifiers
+   -extension          string     Default file extension
 
    "-logfile" associated qualifiers
    -odirectory         string     Output directory
@@ -694,6 +709,71 @@ Version: EMBOSS:6.2.0
 
 <tr bgcolor="#FFFFCC">
 <th align="left" colspan=5>Associated qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-dhfinpath" associated dirlist qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension1<br>-extension_dhfinpath</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>dhf</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-singletsdir" associated directory qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>dhf</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-insetsdir" associated directory qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>daf</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-dhfoutdir" associated outdir qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension2<br>-extension_dhfoutdir</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>dhf</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-redoutdir" associated outdir qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>dhf</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -1002,7 +1082,7 @@ Redundancy is calculated for each DHF file in the input directory in turn.  The 
 
 <tr>
 <td><a href="/embassy/structure/pdbplus.html">pdbplus</a></td>
-<td>Add accessibility & secondary structure to a CCF file</td>
+<td>Add accessibility and secondary structure to a CCF file</td>
 </tr>
 
 <tr>

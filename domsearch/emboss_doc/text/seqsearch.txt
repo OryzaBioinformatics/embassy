@@ -757,7 +757,7 @@ VE
   6.1 COMMAND LINE ARGUMENTS
 
 Generate PSI-BLAST hits (DHF file) from a DAF file.
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers:
    -mode               menu       [1] This option specifies the mode of
@@ -820,6 +820,12 @@ Version: EMBOSS:6.2.0
    Additional (Optional) qualifiers: (none)
    Advanced (Unprompted) qualifiers: (none)
    Associated qualifiers:
+
+   "-inseqspath" associated qualifiers
+   -extension1         string     Default file extension
+
+   "-dhfoutdir" associated qualifiers
+   -extension3         string     Default file extension
 
    "-logfile" associated qualifiers
    -odirectory         string     Output directory
