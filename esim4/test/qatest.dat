@@ -1,0 +1,27 @@
+#######################################
+# ESIM4
+#######################################
+
+ID esim4-ex
+AB esim4
+AA esim4
+## Test example copied from est2genome
+## Similar results - possible longer alignment at 3' end of EST.
+IN tembl:h45989
+IN tembl:z69719
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI h45989.esim4
+FC = 7
+FP /^seq1 = H45989, 495 bp\n/
+FP /^seq2 = Z69719 \(Z69719\), 33760 bp\n/
+FP /^1-193  \(25686-25874\)   92% <-\n/
+FP /^194-407  \(26279-26492\)   98% <-\n/
+FP /^408-487  \(27391-27469\)   88%\n/
+//
+
+
