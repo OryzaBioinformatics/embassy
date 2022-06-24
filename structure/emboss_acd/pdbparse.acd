@@ -6,6 +6,8 @@ application: pdbparse [
   batch: "yes"
   cpu: "low"
   embassy: "structure"
+  relations: "EDAM:0000220 topic Data file processing"
+  relations: "EDAM:0001848 operation Structure reformatting"
 ]
 
 section: input [
@@ -23,7 +25,8 @@ section: input [
     default: "./"
     extension: "ent"
     knowntype: "pdb"
-    relations:  "EDAM: PDB record"                                     
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM:0001460 data Protein structure"
   ]
 
 endsection: input
@@ -42,7 +45,7 @@ section: required [
            masked, the group will not appear in either the CO or SQ records
            of the clean coordinate file."
     default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: camaska [
@@ -54,7 +57,7 @@ section: required [
            amino acid will not appear in the CO record but will still be
            present in the SQ record of the clean coordinate file."
     default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: atommask [
@@ -66,7 +69,7 @@ section: required [
            acid will appear not appear in the CO record but will still be
            present in the SQ record of the clean coordinate file."
     default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: required
@@ -84,7 +87,7 @@ section: additional [
            is used to name the file. Otherwise, the output files have the
            same names as the input files."
     default: "Y"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: chnsiz [
@@ -92,7 +95,7 @@ section: additional [
     information: "Minimum number of amino acid residues in a
                   chain for it to be parsed."
     default: "5"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001249 data Sequence length"
   ]
 
   integer: maxmis [
@@ -100,7 +103,7 @@ section: additional [
     information: "Maximum number of permissible mismatches
                   between the ATOM and SEQRES sequences."
     default: "3"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: maxtrim [
@@ -108,7 +111,7 @@ section: additional [
     information: "Max. no. residues to trim when checking for
                   missing C-terminal SEQRES sequences."
     default: "10"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001249 data Sequence length"
   ]
 
 endsection: additional
@@ -139,7 +142,7 @@ section: output [
     default: "./"
     extension: "ccf"
     knowntype: "protein clean coordinates"
-    relations:  "EDAM: Protein tertiary structure"                     
+    relations:  "EDAM:0001460 data Protein structure"
   ]
 
   outfile: logfile [
@@ -150,7 +153,7 @@ section: output [
            in the PDB files that were parsed."
     knowntype: "domainatrix log"
     default: "pdbparse.log"
-    relations:  "EDAM: Domainatrix log file"                           
+    relations:  "EDAM:0001678 data Tool log"
   ]
 
 endsection: output

@@ -6,6 +6,8 @@ application: hetparse [
   batch: "yes"
   cpu: "low"
   embassy: "structure"
+  relations: "EDAM:0000220 topic Data file processing"
+  relations: "EDAM:0000335 operation File reformatting"
 ]
 
 section: input [
@@ -20,7 +22,7 @@ section: input [
            dictionary of heterogen groups) to parse, which should be of the
            format specified at http://pdb.rutgers.edu/het_dictionary.txt"
     knowntype: "Raw dictionary of heterogen groups"
-    relations: "EDAM: Free text file"                                      
+    relations:  "EDAM:0002240 data Heterogen annotation"
   ]
 
   toggle: dogrep [
@@ -32,7 +34,7 @@ section: input [
            search the directory and will count the number of files that each
            heterogen appears in."
     default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   dirlist: dirlistpath [
@@ -43,7 +45,8 @@ section: input [
     default: "./"
     extension: "ent"
     knowntype: "pdb"
-    relations:  "EDAM: PDB record"                                     
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM:0001460 data Protein structure"
   ]
 
 endsection: input
@@ -67,7 +70,7 @@ section: output [
     help: "This option specifies the name of EMBL-like format
            dictionary of heterogen groups."
     knowntype: "Dictionary of heterogen groups"
-    relations: "EDAM: Free text file"                                      
+    relations:  "EDAM:0002240 data Heterogen annotation"
   ]
 
 endsection: output

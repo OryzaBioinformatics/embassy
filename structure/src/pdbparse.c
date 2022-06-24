@@ -50,6 +50,7 @@
 
 
 
+#include <config.h>
 #include "emboss.h"
 
   

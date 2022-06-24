@@ -43,6 +43,7 @@
 
 
 
+#include <config.h>
 #include "emboss.h"
 
 #define ajWAPROTEIN  1
@@ -835,7 +836,7 @@ static AjBool      sites_HeterogenContacts(ajint entype,
 			   through (*dbase)->entries */
   ajint   j=0;          /* Counter for looping through heterogen atom array */
     
-  ajint res_ctr=0;      /* Counter for looping through aa_code */
+  /*ajint res_ctr=0;*/  /* Counter for looping through aa_code */
   AjPStr temp=NULL;    	/* Temporary string for holding Hetrogen 
 			   atom information - diagnostic */
 
@@ -1020,8 +1021,6 @@ static AjBool      sites_HeterogenContacts(ajint entype,
       ajListIterDel(&iter_het);
       
     } /* while dom_atm */
-  
-  res_ctr=0;
   
   while(ajListPop(cont_dataList,(void **)&dom_cont))
       for(i=0; i<(*dbase)->n; i++) 

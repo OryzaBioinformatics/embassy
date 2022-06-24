@@ -6,6 +6,8 @@ application: contacts [
   batch: "yes"
   cpu: "high"
   embassy: "structure"
+  relations: "EDAM:0000144 topic Protein residue interactions"
+  relations: "EDAM:0000392 operation Protein contact map calculation"
 ]
 
 section: input [
@@ -29,7 +31,8 @@ section: input [
     default: "./"
     extension: "ccf"
     knowntype: "protein clean coordinates"
-    relations:  "EDAM: Protein tertiary structure"                     
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM:0001460 data Protein structure"
   ]
 
   datafile: vdwfile [
@@ -39,7 +42,7 @@ section: input [
            der Waals radii of atoms for different amino acid residues."
     default: "Evdw.dat"
     knowntype: "van der waals radii"
-    relations:  "EDAM: Amino acid van der Waals data"                  
+    relations:  "EDAM:0001508 data Amino acid index (van der Waals radii)"
   ]
 
 endsection: input
@@ -58,7 +61,7 @@ section: required [
            atom of the second residue. The threshold contact distance is a
            user-defined distance with a default value of 1 Angstrom."
     default: "1.0"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002146 data Threshold"
   ]
 
 endsection: required
@@ -76,7 +79,7 @@ section: additional [
            is used to name the file. Otherwise, the output files have the
            same names as the input files."
     default: "Y"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: skip [
@@ -84,7 +87,7 @@ section: additional [
     information: "Whether to calculate contacts between residue
                   adjacent in sequence."
     default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: ignore [
@@ -95,7 +98,7 @@ section: additional [
            checked for for that residue pair . This speeds the calculation up
            considerably."
     default: "20.0"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002146 data Threshold"
   ]
 
 endsection: additional
@@ -117,7 +120,7 @@ section: output [
     default: "./"
     extension: "con"
     knowntype: "contact"
-    relations:  "EDAM: Amino acid contact map"                         
+    relations:  "EDAM:0001547 data Protein contact map"
   ]
 
   outfile: conlogfile [
@@ -127,7 +130,7 @@ section: output [
     help: "The log file contains messages about any errors arising
            while contacts ran."
     knowntype: "domainatrix log"
-    relations:  "EDAM: Domainatrix log file"                           
+    relations:  "EDAM:0001678 data Tool log"
   ]
 
 endsection: output
