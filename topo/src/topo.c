@@ -254,7 +254,7 @@ void topoMoveTo(const float x, float y)
 
 void topoDraw(const float x, float y)
 {  
-    ajGraphLine(tempxpos,tempypos,x,y);
+    ajGraphicsDrawposLine(tempxpos,tempypos,x,y);
     tempxpos=x;
     tempypos=y;
 }
@@ -267,12 +267,12 @@ void topoCentre(const float x, float y)
 
 void topoCurve(float rad, float junk, float junk2)
 {
-    ajGraphCircle(circle1,circle2,rad);
+    ajGraphicsDrawposCircle(circle1,circle2,rad);
 }
 
 void topoPlotText(char *text)
 {
-    ajGraphTextStart(tempxpos-0.4,tempypos,text);
+    ajGraphicsDrawposTextAtstart(tempxpos-0.4,tempypos,text);
 }
 
 void topoNewColour(int col)
@@ -293,7 +293,7 @@ void topoNewColour(int col)
     else if (col == 7)   /* yellow */
 	col = 2;
 
-    old = ajGraphSetFore(col);
+    old = ajGraphicsSetFgcolour(col);
 }
 
 int main(int argc, char * argv[])
@@ -343,15 +343,15 @@ int main(int argc, char * argv[])
     AjBool doend = ajTrue;
     ajuint isigstart, isigend;
 
-    ajGraphInitP ("topo", argc, argv, "TOPO");
+    embInitPV("topo", argc, argv, "TOPO", VERSION);
   
     sequence = ajAcdGetSeq("sequence");
     graph  = ajAcdGetGraph("graph");
 
-    ajGraphSetTitlePlus(graph, ajSeqGetUsaS(sequence));
+    ajGraphAppendTitleS(graph, ajSeqGetUsaS(sequence));
 
     ajGraphOpenWin(graph,0.0,150.0,0.0,100.0);
-    ajGraphSetCharScale(0.5);
+    ajGraphicsSetCharscale(0.5);
 
     sq.seq[0] = ' '; /* hopefully sort out the fortran to c offset worrys :) */
 
@@ -383,13 +383,14 @@ int main(int argc, char * argv[])
     nsece=0 ;
 
     regions = ajAcdGetRange ("sections");
-    tmcount = ajRangeNumber(regions);
+    tmcount = ajRangeGetSize(regions);
     istart = (ajuint *) AJALLOC((tmcount+1)*sizeof(ajuint)); 
     iend = (ajuint *) AJALLOC((tmcount+1)*sizeof(ajuint));  
-    ajRangeValues(regions,tmcount,&istart[0],&iend[0]); /* again offset by 1*/
+    ajRangeElementGetValues(regions,tmcount,
+                            &istart[0],&iend[0]); /* again offset by 1*/
     for(i=0;i<=tmcount;i++){
-	ajRangeValues(regions,i,
-		      &istart[i+1],&iend[i+1]); /* again offset by 1 */
+	ajRangeElementGetValues(regions,i,
+                                &istart[i+1],&iend[i+1]); /* ... offset by 1 */
     }
   
     outstart = ajAcdGetBoolean("membrane");
@@ -474,11 +475,11 @@ int main(int argc, char * argv[])
     if(ajspnum){
 	/* num num code sets */
 	sigregions = ajAcdGetRange ("sigrange");
-	ii = ajRangeNumber(sigregions);
+	ii = ajRangeGetSize(sigregions);
 	for(i=0;i<ii;i++){
 	    AjPStr val = NULL;
-	    ajRangeValues(sigregions,i,&isigstart,&isigend);
-	    if(ajRangeText(sigregions,i,&val)){
+	    ajRangeElementGetValues(sigregions,i,&isigstart,&isigend);
+	    if(ajRangeElementGetText(sigregions,i,&val)){
 		symsign = getValFromStr(val);
 	    }
 	    else{
@@ -701,7 +702,7 @@ int main(int argc, char * argv[])
 	      for the second */ 
 	    /*c	      call closef(fn) */ 
 	    /*c start up the second page */ 
-	    ajGraphNewPage(graph,AJFALSE);
+	    ajGraphNewpage(graph,AJFALSE);
 	    page = 2;
 	    /*c start a new membrane */ 
 	    topoMembrane();
@@ -844,7 +845,7 @@ int main(int argc, char * argv[])
 	}
     }
 
-    ajGraphCloseWin() ;
+    ajGraphicsCloseWin() ;
 
     ajGraphxyDel(&graph);
     AJFREE(istart);
@@ -1898,7 +1899,7 @@ void  topoSymbol(const float x,float y,char stran,int sym)
 	xhex[5] = x+1.4; yhex[5]=y+0.7;
 	xhex[6] = x; yhex[6]=y+1.4;
 
-	ajGraphPoly(7,xhex,yhex);
+	ajGraphicsDrawsetPoly(7,xhex,yhex);
 	topoMoveTo(x,y) ;
 	str[0]=stran ;
 	topoPlotText(str) ;
@@ -1912,7 +1913,7 @@ void  topoSymbol(const float x,float y,char stran,int sym)
 	xhex[2]=x; yhex[2]=y+1.4;
 	xhex[3]=x-1.4; yhex[3]=y-1.05;
 	xhex[4]=x; yhex[4]=y-1.4;
-	ajGraphPoly(5,xhex,yhex);
+	ajGraphicsDrawsetPoly(5,xhex,yhex);
 
 	topoMoveTo(x,y-.45) ;
 	str[0]=stran ;
@@ -1928,7 +1929,7 @@ void  topoSymbol(const float x,float y,char stran,int sym)
 	xhex[3]=x+1.4; yhex[3]=y+1.05;
 	xhex[4]=x; yhex[4]=y+1.4;
 
-	ajGraphPoly(5,xhex,yhex);
+	ajGraphicsDrawsetPoly(5,xhex,yhex);
 
 	topoMoveTo(x,y+.45) ;
 	str[0]=stran ;
@@ -1996,7 +1997,7 @@ void  topoSymbol(const float x,float y,char stran,int sym)
 	/*c unknown color square */ 
 	if(sym == 21)topoNewColour(8) ;
 
-	ajGraphBoxFill(x-1.4,y-1.4,2.8);
+	ajGraphicsDrawposBoxFill(x-1.4,y-1.4,2.8);
 
 	topoNewColour(1) ;
 	topoMoveTo(x,y) ;
@@ -2032,7 +2033,7 @@ void  topoSymbol(const float x,float y,char stran,int sym)
 	xhex[6] = x; yhex[6]=y+1.4;
 
 
-	ajGraphPolyFill(7,xhex,yhex);
+	ajGraphicsDrawsetPolyFill(7,xhex,yhex);
 
 	topoNewColour(1) ;
 	topoMoveTo(x,y) ;
@@ -2065,7 +2066,7 @@ void  topoSymbol(const float x,float y,char stran,int sym)
 	xhex[2]=x; yhex[2]=y+1.4;
 	xhex[3]=x-1.4; yhex[3]=y-1.05;
 	xhex[4]=x; yhex[4]=y-1.4;
-	ajGraphPolyFill(5,xhex,yhex);
+	ajGraphicsDrawsetPolyFill(5,xhex,yhex);
 
 	topoNewColour(1) ;
 	topoMoveTo(x,y-.45) ;
@@ -2098,7 +2099,7 @@ void  topoSymbol(const float x,float y,char stran,int sym)
 	xhex[3]=x+1.4; yhex[3]=y+1.05;
 	xhex[4]=x; yhex[4]=y+1.4;
 
-	ajGraphPolyFill(5,xhex,yhex);
+	ajGraphicsDrawsetPolyFill(5,xhex,yhex);
 
 	topoNewColour(1) ;
 	topoMoveTo(x,y+.45) ;
@@ -2822,7 +2823,7 @@ void  starttop7full(AjPGraph graph, const int tmcount,
 	      topoSymbol(x,y,stran,sym) ;
 	   }  /*end if*/
 	}  /*end for*/
-  ajGraphNewPage(graph,AJFALSE);
+  ajGraphNewpage(graph,AJFALSE);
 return ;
 }
  
@@ -3247,7 +3248,7 @@ void  endtop7full(AjPGraph graph, const int tmcount,
 	      topoSymbol(x,y,stran,sym) ;
 	   }  /*end if*/
 	}  /*end for*/
-  ajGraphNewPage(graph,AJFALSE);
+  ajGraphNewpage(graph,AJFALSE);
 	return ;
 }
  
@@ -3669,7 +3670,7 @@ void  startbot7full(AjPGraph graph, const int tmcount,
 	      topoSymbol(x,y,stran,sym) ;
 	   }  /*end if*/
 	}  /*end for*/
-  ajGraphNewPage(graph, AJFALSE);
+  ajGraphNewpage(graph, AJFALSE);
 	return ;
 }
  
@@ -4093,7 +4094,7 @@ void  endbot7full(AjPGraph graph, const int tmcount,
 	      topoSymbol(x,y,stran,sym) ;
 	   }  /*end if*/
 	}  /*end for*/
-  ajGraphNewPage(graph, AJFALSE);
+  ajGraphNewpage(graph, AJFALSE);
 	return ;
 }
  
@@ -8901,7 +8902,7 @@ void  condownsmall(const int is,int *ie,char *strand,int *syms)
 	sym=syms[*ie+12+6*ihole+j] ;
 	topoSymbol(x,y,stran,sym) ;
     }  /*end for*/
-    ajGraphNewPage(graph,AJFALSE);
+    ajGraphNewpage(graph,AJFALSE);
     return ;
 }
  
@@ -9409,11 +9410,11 @@ void  conupbig2(const int is,int *ie,char *strand,int *syms)
 	topoSymbol(x,y,stran,sym) ;
     }  /*end for*/
  
-    ajGraphSetCharScale(0.5) ;
+    ajGraphicsSetCharscale(0.5) ;
     topoMoveTo(105.0,5.0) ;
 /*c	call topoPlotText(title)    */ 
 /*!	call closef(fn) */ 
-    ajGraphNewPage(graph,AJFALSE);
+    ajGraphNewpage(graph,AJFALSE);
     return ;
 }
  
@@ -9917,11 +9918,11 @@ void  condownbig2(const int is,int *ie,char *strand,int *syms)
 	topoSymbol(x,y,stran,sym) ;
     }  /*end for*/
  
-    ajGraphSetCharScale(0.5) ;
+    ajGraphicsSetCharscale(0.5) ;
     topoMoveTo(105.0,5.0) ;
 /*c        call topoPlotText(title) */ 
 /*!       call closef(fn) */ 
-    ajGraphNewPage(graph,AJFALSE);
+    ajGraphNewpage(graph,AJFALSE);
     return ;
 }    /*end subroutine*/
 
@@ -10419,10 +10420,10 @@ void  condownbig3(const int is,int *ie,char *strand,int *syms)
 	topoSymbol(x,y,stran,sym) ;
     }  /*end for*/
  
-    ajGraphSetCharScale(0.5) ;
+    ajGraphicsSetCharscale(0.5) ;
     topoMoveTo(105.0,5.0) ;
 /*c        call topoPlotText(title) */ 
 /*!       call closef(fn) */ 
-    ajGraphNewPage(graph,AJFALSE);
+    ajGraphNewpage(graph,AJFALSE);
     return ;
 }    /*end subroutine*/
