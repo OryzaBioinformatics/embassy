@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-EXTRA_DIST = Makefile.am
+EXTRA_DIST = Makefile.am template.c
 
 if !ESYSTEMLIBS
 LLINCLUDES = -I../../../ajax/expat -I../../../ajax/zlib
