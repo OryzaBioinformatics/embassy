@@ -945,7 +945,7 @@ GA   0 ; 1
 6.0 USAGE
 
 Generate ligand-binding signatures from a CON file
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-confile]           infile     This option specifies the name of the CON

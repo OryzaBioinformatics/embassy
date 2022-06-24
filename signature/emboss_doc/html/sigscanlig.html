@@ -831,7 +831,7 @@ SIGSCANLIG requires a matrix of 3D:1D scores (residue:environment scoring matrix
 <tr><td>
 <pre>
 Search ligand-signature library and writes hits (LHF file)
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-siginfilesdir]     dirlist    [./] This option specifies the directory of
@@ -941,6 +941,7 @@ Version: EMBOSS:6.5.0.0
    -slower2            boolean    Make lower case
    -supper2            boolean    Make upper case
    -scircular2         boolean    Sequence is circular
+   -squick2            boolean    Read id and sequence only
    -sformat2           string     Input sequence format
    -iquery2            string     Input query fields or ID list
    -ioffset2           integer    Input start position offset
@@ -1200,6 +1201,14 @@ Version: EMBOSS:6.5.0.0
 <td> -scircular2<br>-scircular_dbseqall</td>
 <td>boolean</td>
 <td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -squick2<br>-squick_dbseqall</td>
+<td>boolean</td>
+<td>Read id and sequence only</td>
 <td>Boolean value Yes/No</td>
 <td>N</td>
 </tr>
@@ -1548,22 +1557,22 @@ The user specifies the gap insertion and extension penalties. The gap insertion 
 <tr><th>Program name</th>
 <th>Description</th></tr>
 <tr>
-<td><a href="/emboss/apps/profit.html">profit</a></td>
+<td><a href="../../emboss/apps/profit.html">profit</a></td>
 <td>Scan one or more sequences with a simple frequency matrix</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/prophecy.html">prophecy</a></td>
+<td><a href="../../emboss/apps/prophecy.html">prophecy</a></td>
 <td>Create frequency matrix or profile from a multiple alignment</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/prophet.html">prophet</a></td>
+<td><a href="../../emboss/apps/prophet.html">prophet</a></td>
 <td>Scan one or more sequences with a Gribskov or Henikoff profile</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/domsearch/seqsearch.html">seqsearch</a></td>
+<td><a href="../domsearch/seqsearch.html">seqsearch</a></td>
 <td>Generate PSI-BLAST hits (DHF file) from a DAF file</td>
 </tr>
 

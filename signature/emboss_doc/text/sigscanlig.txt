@@ -1069,7 +1069,7 @@ FOK       1         1         -1000000.00
 6.0 USAGE
 
 Search ligand-signature library and writes hits (LHF file)
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-siginfilesdir]     dirlist    [./] This option specifies the directory of
@@ -1179,6 +1179,7 @@ Version: EMBOSS:6.5.0.0
    -slower2            boolean    Make lower case
    -supper2            boolean    Make upper case
    -scircular2         boolean    Sequence is circular
+   -squick2            boolean    Read id and sequence only
    -sformat2           string     Input sequence format
    -iquery2            string     Input query fields or ID list
    -ioffset2           integer    Input start position offset
