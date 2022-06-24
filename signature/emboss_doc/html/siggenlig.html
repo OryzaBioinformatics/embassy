@@ -52,7 +52,7 @@
 <br><br><br><H2> 1.0   SUMMARY  </H2>
 Generates ligand-binding signatures from a CON file (contacts file) of residue-ligand contacts.
 
-Generates ligand-binding signatures from a CON file
+Generate ligand-binding signatures from a CON file
 
 <!-- INPUTS & OUTPUTS
      Short summary of the application inputs and outputs in its different 
@@ -81,7 +81,7 @@ The format of the CCF files is described in <a href="pdbparse.html">PDBPARSE doc
 
 <a name="input.1"></a>
 <h3>Input files for usage example </h3>
-<p><h3>File: ../sites-keep/SITES.con</h3>
+<p><h3>File: ../sites-signature/SITES.con</h3>
 <table width="90%"><tr><td bgcolor="#FFCCFF">
 <pre>
 XX   Residue-ligand contact data (for domains).
@@ -1033,8 +1033,8 @@ SIGGENLIG does not use any data files.
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" >
 <tr><td>
 <pre>
-Generates ligand-binding signatures from a CON file
-Version: EMBOSS:6.4.0.0
+Generate ligand-binding signatures from a CON file
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-confile]           infile     This option specifies the name of the CON
@@ -1275,7 +1275,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-ccfpdir" associated directory qualifiers
+<td align="left" colspan=5>"-ccfpdir" associated directory qualifiers
 </td>
 </tr>
 
@@ -1288,7 +1288,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-ccfddir" associated directory qualifiers
+<td align="left" colspan=5>"-ccfddir" associated directory qualifiers
 </td>
 </tr>
 
@@ -1301,7 +1301,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-sigoutdir" associated outdir qualifiers
+<td align="left" colspan=5>"-sigoutdir" associated outdir qualifiers
 </td>
 </tr>
 
@@ -1314,7 +1314,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-logfile" associated outfile qualifiers
+<td align="left" colspan=5>"-logfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -1438,10 +1438,10 @@ Here is a sample session with <b>siggenlig</b>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
 % <b>siggenlig </b>
-Generates ligand-binding signatures from a CON file
-Structure contacts file: <b>../sites-keep/SITES.con</b>
-Clean protein structure coordinates directory (optional) [.]: <b>../pdbplus-keep</b>
-Clean domain coordinates directory (optional) [.]: <b>../domainer-keep</b>
+Generate ligand-binding signatures from a CON file
+Structure contacts file: <b>../sites-signature/SITES.con</b>
+Clean protein structure coordinates directory (optional) [.]: <b>../pdbplus-signature</b>
+Clean domain coordinates directory (optional) [.]: <b>../domainer-signature</b>
 Available modes
          1 : Full-length signature mode
          2 : Patch signature mode
@@ -1586,17 +1586,17 @@ For example,
 <th>Description</th></tr>
 <tr>
 <td><a href="/embassy/cbstools/echlorop.html">echlorop</a></td>
-<td>Reports presence of chloroplast transit peptides</td>
+<td>Report presence of chloroplast transit peptides</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/cbstools/elipop.html">elipop</a></td>
-<td>Prediction of lipoproteins</td>
+<td>Predict lipoproteins</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/cbstools/esignalp.html">esignalp</a></td>
-<td>Reports protein signal cleavage sites</td>
+<td>Report protein signal cleavage sites</td>
 </tr>
 
 <tr>
@@ -1626,22 +1626,22 @@ For example,
 
 <tr>
 <td><a href="/emboss/apps/sigcleave.html">sigcleave</a></td>
-<td>Reports on signal cleavage sites in a protein sequence</td>
+<td>Report on signal cleavage sites in a protein sequence</td>
 </tr>
 
 <tr>
 <td><a href="siggen.html">siggen</a></td>
-<td>Generates a sparse protein signature from an alignment</td>
+<td>Generate a sparse protein signature from an alignment</td>
 </tr>
 
 <tr>
 <td><a href="sigscan.html">sigscan</a></td>
-<td>Generates hits (DHF file) from a signature search</td>
+<td>Generate hits (DHF file) from a signature search</td>
 </tr>
 
 <tr>
 <td><a href="sigscanlig.html">sigscanlig</a></td>
-<td>Searches ligand-signature library and writes hits (LHF file)</td>
+<td>Search ligand-signature library and writes hits (LHF file)</td>
 </tr>
 
 <tr>
@@ -1651,7 +1651,7 @@ For example,
 
 <tr>
 <td><a href="/embassy/topo/topo.html">topo</a></td>
-<td>Draws an image of a transmembrane protein</td>
+<td>Draw an image of a transmembrane protein</td>
 </tr>
 
 </table>
@@ -1716,6 +1716,18 @@ See also <a href="http://emboss.sourceforge.net/">http://emboss.sourceforge.net/
 
 <H3>14.1 Other useful references  </H3>
  
+<H2>
+    History
+</H2>
+
+
+<H2>
+    Comments
+</H2>
+
+<pre>
+None
+</pre>
 
 </BODY>
 </HTML>

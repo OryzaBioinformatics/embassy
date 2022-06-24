@@ -58,7 +58,7 @@ int main(ajint argc, char **argv)
     AjPFile   dcfinfile=NULL;    /* Pointer to domain classification file.   */
     AjPFile   coninfile=NULL;    /* Pointer to CON file.                     */
     AjPFile   liginfile=NULL;    /* Pointer to ligand list file.             */
-    AjPFile   logf=NULL;         /* matgen3d logfile*/
+    AjPFile   logfile = NULL;    /* matgen3d logfile*/
     AjPFile   Calclogf=NULL;     /* log file for sums for the calculation of 
 				    the final matrix.                        */
 
@@ -159,12 +159,12 @@ int main(ajint argc, char **argv)
     dcfinfile   = ajAcdGetInfile("dcfinfile");
     coninfile   = ajAcdGetInfile("coninfile");
     liginfile   = ajAcdGetInfile("liginfile");
-    logf        = ajAcdGetOutfile("logfile");
+    logfile     = ajAcdGetOutfile("logfile");
     SCMatrixOut = ajAcdGetOutfile("scmatrixfile");
     Calclogf    = ajAcdGetOutfile("calclogfile");
-    mode        = ajAcdGetListSingle("mode");
-    model       = ajAcdGetListSingle("model");
-    modee       = ajAcdGetListSingle("modee");
+    mode        = ajAcdGetListSingle("modeposition");
+    model       = ajAcdGetListSingle("modeligand");
+    modee       = ajAcdGetListSingle("modeenvir");
 
 
     /*Assigns the options as integers */
@@ -285,7 +285,7 @@ int main(ajint argc, char **argv)
 		notopened++;
 		ajFmtPrintS(&msg, "Could not open for reading %S",
 			    IdName);
-		ajFmtPrintF(logf, "WARN\tCould not open for reading %S\n",
+		ajFmtPrintF(logfile, "WARN\tCould not open for reading %S\n",
 			    IdName);
 		/*	    ajWarn(ajStrGetPtr(msg)); */
 		ajStrDel(&IdName);
@@ -300,7 +300,7 @@ int main(ajint argc, char **argv)
 		notopened++;
 		ajFmtPrintS(&msg, "Could not open for reading %S",
 			    IdName);
-		ajFmtPrintF(logf, "WARN\tCould not open for reading %S\n",
+		ajFmtPrintF(logfile, "WARN\tCould not open for reading %S\n",
 			    IdName);
 		/*	    ajWarn(ajStrGetPtr(msg)); */
 		ajStrDel(&IdName);
@@ -316,7 +316,7 @@ int main(ajint argc, char **argv)
 	if(!(Pdb = ajPdbReadFirstModelNew(DCorFptr)))
 	{
 	    ajFmtPrintS(&msg, "Error reading coordinate file");
-	    ajFmtPrintF(logf, "WARN\tError reading coordinate file\n");
+	    ajFmtPrintF(logfile, "WARN\tError reading coordinate file\n");
 	    ajWarn(ajStrGetPtr(msg));
 	    ajStrDel(&IdName);
 	    ajFileClose(&DCorFptr);
@@ -328,7 +328,7 @@ int main(ajint argc, char **argv)
 /*	    ajFmtPrint("%d/%d\n", opened, IDNum);*/
 	}
 
-	ajFmtPrintF(logf, "%S\n\n", Pdb->Pdb);
+	ajFmtPrintF(logfile, "%S\n\n", Pdb->Pdb);
 
 
 	/* Ligand-binding positions only.  Construct array of residue
@@ -375,9 +375,9 @@ int main(ajint argc, char **argv)
 
 	    /*Call to function that assigns the secondary structure
               environment class*/
-	    if((!ajResidueSSEnv(res, &SEnv, logf)))
+	    if((!ajResidueSSEnv(res, &SEnv, logfile)))
 	    {
-		ajFmtPrintF(logf, "SEnv unassigned for residue %d\n",
+		ajFmtPrintF(logfile, "SEnv unassigned for residue %d\n",
 			    res->Idx);
 		/* PrevRes = res->Idx; */
 		continue;
@@ -386,49 +386,49 @@ int main(ajint argc, char **argv)
 	    
 	    /*Call to function that assigns the overall environment class*/
 	    if(modeei == 1)
-		NUMENV = ajResidueEnv1(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv1(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 2)
-		NUMENV = ajResidueEnv2(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv2(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 3)
-		NUMENV = ajResidueEnv3(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv3(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 4)
-		NUMENV = ajResidueEnv4(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv4(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 5)
-		NUMENV = ajResidueEnv5(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv5(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 6)
-		NUMENV = ajResidueEnv6(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv6(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 7)
-		NUMENV = ajResidueEnv7(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv7(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 8)
-		NUMENV = ajResidueEnv8(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv8(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 9)
-		NUMENV = ajResidueEnv9(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv9(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 10)
-		NUMENV = ajResidueEnv10(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv10(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 11)
-		NUMENV = ajResidueEnv11(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv11(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 12)
-		NUMENV = ajResidueEnv12(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv12(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 13)
-		NUMENV = ajResidueEnv13(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv13(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 14)
-		NUMENV = ajResidueEnv14(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv14(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 15)
-		NUMENV = ajResidueEnv15(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv15(res, SEnv, &OEnv, logfile);
 	    else if(modeei == 16)
-		NUMENV = ajResidueEnv16(res, SEnv, &OEnv, logf);
+		NUMENV = ajResidueEnv16(res, SEnv, &OEnv, logfile);
 
 
 	    /*Skip if the overall environment cannot be assigned*/
 	    if( (!MAJSTRGETLEN(OEnv)))
 	    {
-		ajFmtPrintF(logf, "OEnv unassigned for residue %d\n",
+		ajFmtPrintF(logfile, "OEnv unassigned for residue %d\n",
 			    res->Idx);
 		/* PrevRes = res->Idx; */
 		continue;
 	    }
 
-	    ajFmtPrintF(logf, "\tOEnv %S:%c\n", OEnv, res->Id1);
+	    ajFmtPrintF(logfile, "\tOEnv %S:%c\n", OEnv, res->Id1);
 
 	    /*Get idices into 2d matrix*/
 	    if(MAJSTRGETLEN(OEnv) == 1)
@@ -553,7 +553,7 @@ int main(ajint argc, char **argv)
     ajFloat2dDel(&SCRMatrix);
 
     /*Free ACD stuff*/
-    ajFileClose(&logf);
+    ajFileClose(&logfile);
     ajFileClose(&SCMatrixOut);
     ajFileClose(&dcfinfile);
     ajFileClose(&coninfile);

@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 	occur in the hits file.                                             */
     ajint        maxroc      = 0;
     
-    ajint        x           = 0;     /* Housekeeping                       */
+    ajuint       x           = 0U;    /* Housekeeping                       */
     
 
 
@@ -136,14 +136,14 @@ int main(int argc, char **argv)
 
 
 
-    for(x=0; x<hitsin_l->N; x++)
+    for(x = 0U; x < hitsin_l->N; x++)
 	ajListPushAppend(hitsin_tmp, (void *) hitsin_l->hits[x]);
-    ajListSort(hitsin_tmp, embMatchinvScore);
+    ajListSort(hitsin_tmp, &embMatchinvScore);
     AJFREE(hitsin_l->hits);
     hitsin_l->hits = NULL;
     nhitsin = ajListToarray(hitsin_tmp, (void ***) &hitsin_l->hits);
     
-    for(x=0; x<nhitsin; x++)
+    for(x = 0U; x < nhitsin; x++)
 	if(ajStrMatchC(hitsin_l->hits[x]->Typeobj, "FALSE"))
 	    maxroc++;
     
@@ -151,14 +151,13 @@ int main(int argc, char **argv)
 
     /* Write output file. */
     ajFmtPrintF(hitsout, "> RELATED %d ; ROC %d\n", nrelated, maxroc);
-    for(x=0; x<nhitsin; x++)
+    for(x = 0U; x < nhitsin; x++)
 	ajFmtPrintF(hitsout, "%-13S%-10S%-6d%-6d\n", 
 		    hitsin_l->hits[x]->Typeobj, 
 		    hitsin_l->hits[x]->Acc, 
 		    hitsin_l->hits[x]->Start, 
 		    hitsin_l->hits[x]->End);
     
-
 
     /* Free memory & exit cleanly. */
     ajFileClose(&hitsin);
@@ -175,6 +174,7 @@ int main(int argc, char **argv)
     ajStrDel(&mode[0]);
     AJFREE(mode);
 
-    ajExit();
+    embExit();
+
     return 0;
 }

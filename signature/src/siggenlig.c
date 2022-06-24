@@ -518,9 +518,9 @@ void siggenlig_new_sig_from_cmap(EmbPSignature *sig, AjPCmap cmap,
 
 
     if(typei==1)
-	(*sig)->Typesig = aj1D;
+	(*sig)->Typesig = embESignatureTypesig1D;
     if(typei==2)
-	(*sig)->Typesig = aj3D;
+	(*sig)->Typesig = embESignatureTypesig3D;
 
 
     return;

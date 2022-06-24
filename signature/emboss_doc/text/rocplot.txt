@@ -25,7 +25,7 @@ CONTENTS
    discriminating elements (e.g. profiles for protein families). rocplot
    reads file(s) of hits from discriminator-database search(es), performs
    ROC analysis on the hits, and writes graphs illustrating the diagnostic
-   performance of the discriminating elements. Performs ROC analysis on
+   performance of the discriminating elements. Perform ROC analysis on
    hits files
 
 2.0 INPUTS & OUTPUTS
@@ -741,7 +741,7 @@ th bezier title "False hits"
 
   File: _summary
 
-rocplot summary file (15 Jul 2011)
+rocplot summary file (15 Jul 2012)
 
 mode      == 2 (Multiple input file mode)
 multimode == 2 (Combine data: single ROC plot, single classification plot.)
@@ -797,8 +797,8 @@ hitcnt[0]: 80
 
   6.1 COMMAND LINE ARGUMENTS
 
-Performs ROC analysis on hits files
-Version: EMBOSS:6.4.0.0
+Perform ROC analysis on hits files
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-hitsfilespath]     dirlist    [rocplot] This option specifies the

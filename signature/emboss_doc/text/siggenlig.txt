@@ -22,7 +22,7 @@ CONTENTS
 1.0 SUMMARY
 
    Generates ligand-binding signatures from a CON file (contacts file) of
-   residue-ligand contacts. Generates ligand-binding signatures from a CON
+   residue-ligand contacts. Generate ligand-binding signatures from a CON
    file
 
 2.0 INPUTS & OUTPUTS
@@ -50,7 +50,7 @@ CONTENTS
 
   Input files for usage example
 
-  File: ../sites-keep/SITES.con
+  File: ../sites-signature/SITES.con
 
 XX   Residue-ligand contact data (for domains).
 XX
@@ -944,8 +944,8 @@ GA   0 ; 1
 
 6.0 USAGE
 
-Generates ligand-binding signatures from a CON file
-Version: EMBOSS:6.4.0.0
+Generate ligand-binding signatures from a CON file
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-confile]           infile     This option specifies the name of the CON

@@ -9,9 +9,9 @@ application: libgen [
   external: "hmmbuild HMMER 2.3.2"
   external: "blastpgp NCBI toolkit or blast executables"
   external: "modelfromalign SAM-tools http://compbio.soe.ucsc.edu/sam.html"
-  relations: "EDAM:0000736 topic Protein domains"
-  relations: "EDAM:0000188 topic Sequence profiles and HMMs"
-  relations: "EDAM:0000296 operation Sequence profile generation"
+  relations: "EDAM_topic:0736 Protein domains and folds"
+  relations: "EDAM_topic:0188 Sequence profiles and HMMs"
+  relations: "EDAM_operation:0296 Sequence profile generation"
 ]
 
 section: input [
@@ -33,8 +33,8 @@ section: input [
     default: "./"
     extension: "daf"
     knowntype: "domain alignment"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations:  "EDAM:0001384 data Sequence alignment (protein)"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations:  "EDAM_data:1384 Sequence alignment (protein)"
   ]
 
   matrixf: matrixfile [
@@ -44,7 +44,7 @@ section: input [
     help: "This option specifies the residue substitution matrix.
            Epprofile for Gribskov profiles or EBLOSUM62 otherwise."
     expected: "Epprofile for Gribskov type, or EBLOSUM62"
-    relations: "EDAM:0001449 data Comparison matrix (amino acid)"
+    relations: "EDAM_data:1449 Comparison matrix (amino acid)"
   ]
 
 endsection: input
@@ -73,7 +73,7 @@ section: required [
            package), hidden Markov models (SAM-T2K package) and
            position-specific scoring matrices."
     button: "Y"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: threshold [
@@ -85,7 +85,7 @@ section: required [
     help: "This option specifies the threshold reporting percentage.
            The threshold reporting percentage is used in the construction of
            the simple frequency matrix."
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
   float: gapopen [
@@ -98,7 +98,7 @@ section: required [
            default value assumes you are using the EBLOSUM62 matrix for
            protein sequences, and the EDNAFULL matrix for nucleotide
            sequences."
-    relations: "EDAM:0001397 data Gap opening penalty"
+    relations: "EDAM_data:1397 Gap opening penalty"
   ]
 
   float: gapextend [
@@ -111,7 +111,7 @@ section: required [
            Usually you will expect a few long gaps rather than many short
            gaps, so the gap extension penalty should be lower than the gap
            penalty."
-    relations: "EDAM:0001398 data Gap extension penalty"
+    relations: "EDAM_data:1398 Gap extension penalty"
   ]
 
 endsection: required
@@ -133,8 +133,8 @@ section: output [
            Markov models (SAM-T2K package) and position-specific scoring
            matrices."
     knowntype: "discriminator"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations:  "EDAM:0001354 data Sequence profile"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations:  "EDAM_data:1354 Sequence profile"
   ]
 
 endsection: output

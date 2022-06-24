@@ -1,12 +1,12 @@
 application: rocplot [
-  documentation: "Performs ROC analysis on hits files"
+  documentation: "Perform ROC analysis on hits files"
   groups: "Protein:Domains"
   gui: "yes"
   batch: "yes"
   cpu: "low"
   embassy: "signature"
-  relations: "EDAM:0000736 topic Protein domains"
-  relations: "EDAM:0002420 operation Analysis and processing"
+  relations: "EDAM_topic:0736 Protein domains and folds"
+  relations: "EDAM_operation:2420 Analysis and processing"
 ]
 
 section: input [
@@ -28,8 +28,8 @@ section: input [
            (ROC) analysis on the hits."
     default: "rocplot"
     knowntype: "hits"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations:  "EDAM:0000857 data Database hits (sequence)"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations:  "EDAM_data:0857 Database hits (sequence)"
   ]
 
 endsection: input
@@ -69,7 +69,7 @@ section: required [
            highest scoring / most significant hit being given in the highest
            rank (1); i.e. on the second line of the file. Other hits should
            then be given in order of decreasing score / significance."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: multimode [
@@ -100,7 +100,7 @@ section: required [
            true relatives for the different searches or (2) there is a
            different list of known true relatives for each different search
            (see the ACD option called 'datamode' for more information)"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: datamode [
@@ -120,7 +120,7 @@ section: required [
            calculated in cases where there are multiple input files (lists of
            hits) and the user has specified the data are to be combined. See
            rocplot.c for more information."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   integer: thresh [
@@ -143,7 +143,7 @@ section: required [
            are considered to be the same hit if the overlap threshold is 10
            or less."
     default: "10"
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
 endsection: required
@@ -162,7 +162,7 @@ section: advanced [
            have different accession numbers (no requirement for overlapping
            ranges)."
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: advanced
@@ -179,7 +179,7 @@ section: output [
     default: "./"
     knowntype: "output general"
     information: "General output file output directory"
-    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM_identifier:1049 Directory name"
   ]
 
   string: rocbasename [
@@ -198,7 +198,7 @@ section: output [
            distribution of ROC values."
     default: "_rocplot"
     knowntype: "filename prefix"
-    relations:  "EDAM:0001050 identifier File name"
+    relations:  "EDAM_identifier:1050 File name"
   ]
 
   outfile: outfile [
@@ -208,7 +208,7 @@ section: output [
            (output). A text file summarising the analysis."
     default: "_summary"
     knowntype: "rocplot summary"
-    relations:  "EDAM:0001678 data Tool log"
+    relations:  "EDAM_data:1678 Tool log"
   ]
 
   string: barbasename [
@@ -222,7 +222,7 @@ section: output [
            data (multiple ROC curves)."
     default: "_barchart"
     knowntype: "filename prefix"
-    relations:  "EDAM:0001050 identifier File name"
+    relations:  "EDAM_identifier:1050 File name"
   ]
 
   string: classbasename [
@@ -239,14 +239,14 @@ section: output [
            not combine data (multiple ROC curves)' mode."
     default: "_classplot"
     knowntype: "filename prefix"
-    relations:  "EDAM:0001050 identifier File name"
+    relations:  "EDAM_identifier:1050 File name"
   ]
 
   outfile: logfile [
     default: "rocplot.log"
     information: "Domainatrix log output file"
     knowntype: "domainatrix log"
-    relations:  "EDAM:0001678 data Tool log"
+    relations:  "EDAM_data:1678 Tool log"
   ]
 
 endsection: output

@@ -53,7 +53,7 @@
 <a name="1.0"></a>
 <br><br><br><H2> 1.0   SUMMARY  </H2>
 Generates a DHF (domain hits file) of hits (sequences) from scanning a signature against a sequence database.
-Generates hits (DHF file) from a signature search
+Generate hits (DHF file) from a signature search
 
 
 <!-- INPUTS & OUTPUTS
@@ -615,8 +615,8 @@ SIGSCAN requires a residue substitution matrix.
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" >
 <tr><td>
 <pre>
-Generates hits (DHF file) from a signature search
-Version: EMBOSS:6.4.0.0
+Generate hits (DHF file) from a signature search
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-siginfile]         infile     This option specifies the name of the
@@ -703,7 +703,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein2          boolean    Sequence is protein
    -slower2            boolean    Make lower case
    -supper2            boolean    Make upper case
+   -scircular2         boolean    Sequence is circular
    -sformat2           string     Input sequence format
+   -iquery2            string     Input query fields or ID list
+   -ioffset2           integer    Input start position offset
    -sdbname2           string     Database name
    -sid2               string     Entryname
    -ufo2               string     UFO features
@@ -846,7 +849,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-dbsequence" associated seqall qualifiers
+<td align="left" colspan=5>"-dbsequence" associated seqall qualifiers
 </td>
 </tr>
 
@@ -915,11 +918,35 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
+<td> -scircular2<br>-scircular_dbsequence</td>
+<td>boolean</td>
+<td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td> -sformat2<br>-sformat_dbsequence</td>
 <td>string</td>
 <td>Input sequence format</td>
 <td>Any string</td>
 <td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -iquery2<br>-iquery_dbsequence</td>
+<td>string</td>
+<td>Input query fields or ID list</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -ioffset2<br>-ioffset_dbsequence</td>
+<td>integer</td>
+<td>Input start position offset</td>
+<td>Any integer value</td>
+<td>0</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -963,7 +990,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-hitsfile" associated outfile qualifiers
+<td align="left" colspan=5>"-hitsfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -976,7 +1003,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-alignfile" associated outfile qualifiers
+<td align="left" colspan=5>"-alignfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -1100,7 +1127,7 @@ Here is a sample session with <b>sigscan</b>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
 % <b>sigscan </b>
-Generates hits (DHF file) from a signature search
+Generate hits (DHF file) from a signature search
 Domainatrix signature file: <b>../siggen-keep/54894.sig</b>
 Name of database to search.: <b>swsmall</b>
 Residue substitution matrix [EBLOSUM62]: <b></b>
@@ -1236,17 +1263,17 @@ The algorithm is based on approach first described in Daniel et al (1999) that w
 <th>Description</th></tr>
 <tr>
 <td><a href="/embassy/cbstools/echlorop.html">echlorop</a></td>
-<td>Reports presence of chloroplast transit peptides</td>
+<td>Report presence of chloroplast transit peptides</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/cbstools/elipop.html">elipop</a></td>
-<td>Prediction of lipoproteins</td>
+<td>Predict lipoproteins</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/cbstools/esignalp.html">esignalp</a></td>
-<td>Reports protein signal cleavage sites</td>
+<td>Report protein signal cleavage sites</td>
 </tr>
 
 <tr>
@@ -1276,22 +1303,22 @@ The algorithm is based on approach first described in Daniel et al (1999) that w
 
 <tr>
 <td><a href="/emboss/apps/sigcleave.html">sigcleave</a></td>
-<td>Reports on signal cleavage sites in a protein sequence</td>
+<td>Report on signal cleavage sites in a protein sequence</td>
 </tr>
 
 <tr>
 <td><a href="siggen.html">siggen</a></td>
-<td>Generates a sparse protein signature from an alignment</td>
+<td>Generate a sparse protein signature from an alignment</td>
 </tr>
 
 <tr>
 <td><a href="siggenlig.html">siggenlig</a></td>
-<td>Generates ligand-binding signatures from a CON file</td>
+<td>Generate ligand-binding signatures from a CON file</td>
 </tr>
 
 <tr>
 <td><a href="sigscanlig.html">sigscanlig</a></td>
-<td>Searches ligand-signature library and writes hits (LHF file)</td>
+<td>Search ligand-signature library and writes hits (LHF file)</td>
 </tr>
 
 <tr>
@@ -1301,7 +1328,7 @@ The algorithm is based on approach first described in Daniel et al (1999) that w
 
 <tr>
 <td><a href="/embassy/topo/topo.html">topo</a></td>
-<td>Draws an image of a transmembrane protein</td>
+<td>Draw an image of a transmembrane protein</td>
 </tr>
 
 </table>

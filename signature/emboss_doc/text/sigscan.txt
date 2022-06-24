@@ -22,7 +22,7 @@ CONTENTS
 1.0 SUMMARY
 
    Generates a DHF (domain hits file) of hits (sequences) from scanning a
-   signature against a sequence database. Generates hits (DHF file) from a
+   signature against a sequence database. Generate hits (DHF file) from a
    signature search
 
 2.0 INPUTS & OUTPUTS
@@ -760,8 +760,8 @@ SIGNATURE -      .
 
 6.0 USAGE
 
-Generates hits (DHF file) from a signature search
-Version: EMBOSS:6.4.0.0
+Generate hits (DHF file) from a signature search
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-siginfile]         infile     This option specifies the name of the
@@ -848,7 +848,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein2          boolean    Sequence is protein
    -slower2            boolean    Make lower case
    -supper2            boolean    Make upper case
+   -scircular2         boolean    Sequence is circular
    -sformat2           string     Input sequence format
+   -iquery2            string     Input query fields or ID list
+   -ioffset2           integer    Input start position offset
    -sdbname2           string     Database name
    -sid2               string     Entryname
    -ufo2               string     UFO features

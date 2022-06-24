@@ -54,6 +54,7 @@
 
 
 
+
 #include <config.h>
 #include "emboss.h"
 #include <math.h>
@@ -73,14 +74,19 @@
 #define  MAXBINS    20    /* For bar chart */
 #define  BINSTART   0.0   /* For bar chart */
 #define  BINSIZE    0.05  /* For bar chart */
-    
-char    *CLASSNAMES[]={"True", "Cross", "Uncertain", "Unknown", "False"};
+
+const char * const CLASSNAMES[] =
+{
+    "True",
+    "Cross",
+    "Uncertain",
+    "Unknown",
+    "False"
+};
 
 AjPFile    errf      = NULL;
 
 
-
-void seqsort_unused(void);      
 
 
 /******************************************************************************
@@ -89,7 +95,7 @@ void seqsort_unused(void);
 **
 ******************************************************************************/
 
-/* @data AjPHitdata *********************************************************
+/* @data AjPHitdata ***********************************************************
 **
 ** Hitdata object.
 **
@@ -105,7 +111,8 @@ void seqsort_unused(void);
 ** @alias AjOHitdata
 ** @alias AjSHitdata
 **
-****************************************************************************/
+******************************************************************************/
+
 typedef struct AjSHitdata
 {
     AjPStr    Class;      
@@ -113,6 +120,8 @@ typedef struct AjSHitdata
     ajint     Start;      
     ajint     End;        
 } AjOHitdata, *AjPHitdata;
+
+
 
 
 /* @data AjPXYdata **********************************************************
@@ -130,6 +139,7 @@ typedef struct AjSHitdata
 ** @alias AjSXYdata
 **
 ****************************************************************************/
+
 typedef struct AjSXYdata
 {
     float     X;      
@@ -138,11 +148,13 @@ typedef struct AjSXYdata
 
 
 
+
 /******************************************************************************
 **
 ** PROTOTYPES  
 **
 ******************************************************************************/
+
 static AjBool rocplot_write_summary(AjPDirout outdir, 
 				    AjPFile outf,
 				    ajint mode, 
@@ -243,8 +255,7 @@ static AjPXYdata rocplot_XYdataNew(void);
 static ajint rocplot_compX(const void *ptr1,
 		    const void *ptr2);
 
-
-
+void rocplot_unused(void);      
 
 
 
@@ -259,6 +270,7 @@ static ajint rocplot_compX(const void *ptr1,
 ** diagnostic performance of the discriminating elements.
 **
 ****************************************************************************/
+
 int main(int argc, char **argv)
 {
     /*************************/
@@ -779,10 +791,11 @@ int main(int argc, char **argv)
 
     /* Exit cleanly */
     ajFmtPrint("done!\n");
-    ajExit();
+
+    embExit();
+    
     return 0;
 }
-
 
 
 
@@ -828,6 +841,7 @@ int main(int argc, char **argv)
 ** @return [AjBool] True if all file formats were ok.
 ** @@
 ****************************************************************************/
+
 static AjBool rocplot_read_hits_files(int mode, int multimode, int datamode, 
 			       AjPList hitsfiles, AjPStr **hitsnames, 
 			       AjPList *hitslists, AjPInt *nrelatives,
@@ -1063,7 +1077,6 @@ static AjBool rocplot_read_hits_files(int mode, int multimode, int datamode,
 
 
 
-
 /* @funcstatic rocplot_HitdataNew *******************************************
 **
 ** Hitdata object constructor.
@@ -1072,6 +1085,7 @@ static AjBool rocplot_read_hits_files(int mode, int multimode, int datamode,
 ** @return [AjPHitdata] Pointer to an Hitdata object
 ** @@
 ****************************************************************************/
+
 static AjPHitdata rocplot_HitdataNew(void)
 {
     AjPHitdata ret = NULL;
@@ -1087,7 +1101,6 @@ static AjPHitdata rocplot_HitdataNew(void)
 
 
 
-
 /* @funcstatic rocplot_HitdataDel *******************************************
 **
 ** Destructor for Hitdata object.
@@ -1097,6 +1110,7 @@ static AjPHitdata rocplot_HitdataNew(void)
 ** @return [void]
 ** @@
 ****************************************************************************/
+
 static void rocplot_HitdataDel(AjPHitdata *thys)
 {
     AjPHitdata pthis = *thys;
@@ -1113,7 +1127,6 @@ static void rocplot_HitdataDel(AjPHitdata *thys)
 
     return;
 }
-
 
 
 
@@ -1142,6 +1155,7 @@ static void rocplot_HitdataDel(AjPHitdata *thys)
 ** @@
 **
 ****************************************************************************/
+
 static AjBool rocplot_hit_is_unique(AjPHitdata  hit, AjPList mrglist, 
 				    ajint thresh, AjBool norange)
 {
@@ -1173,7 +1187,6 @@ static AjBool rocplot_hit_is_unique(AjPHitdata  hit, AjPList mrglist,
 
 
 
-
 /* @funcstatic rocplot_overlap **********************************************
 **
 ** Checks for overlap and identical accession numbers between two hits.
@@ -1197,7 +1210,6 @@ static AjBool rocplot_overlap(AjPHitdata h1, AjPHitdata h2, ajint thresh)
 
     return ajFalse;
 }
-
 
 
 
@@ -1240,6 +1252,7 @@ static AjBool rocplot_overlap(AjPHitdata h1, AjPHitdata h2, ajint thresh)
 ** @@
 **
 ****************************************************************************/
+
 static AjBool rocplot_calcdata(int mode, int multimode, int datamode, 
 			       AjPList *hitslists, ajint numfiles, 
 			       ajint thresh, ajint roc, 
@@ -1541,7 +1554,6 @@ static AjBool rocplot_calcdata(int mode, int multimode, int datamode,
 
 
 
-
 /* @funcstatic rocplot_count_class ********************************************
 **
 ** Calculates x,y data for classification plot. Makes counts of different 
@@ -1560,6 +1572,7 @@ static AjBool rocplot_calcdata(int mode, int multimode, int datamode,
 ** @@
 **
 ******************************************************************************/
+
 static AjBool rocplot_count_class(AjPHitdata tmphit, ajint hitcnt, 
 				  ajint plotn, AjBool reset, 
 				  AjPFloat2d *classx, AjPFloat3d *classy, 
@@ -1621,7 +1634,6 @@ static AjBool rocplot_count_class(AjPHitdata tmphit, ajint hitcnt,
 
 
 
-
 /* @funcstatic rocplot_write_rocplot ******************************************
 **
 ** Writes a file of meta-data for drawing the ROC plot.
@@ -1642,6 +1654,7 @@ static AjBool rocplot_count_class(AjPHitdata tmphit, ajint hitcnt,
 ** @@
 **
 ******************************************************************************/
+
 static AjBool   rocplot_write_rocplot(AjPDirout outdir,AjPStr fname,
 				      AjPStr title, 
 				      AjPStr xlabel, AjPStr ylabel, 
@@ -1773,7 +1786,6 @@ static AjBool   rocplot_write_rocplot(AjPDirout outdir,AjPStr fname,
 
 
 
-
 /* @funcstatic rocplot_write_classplot ****************************************
 **
 ** Writes a file of meta-data for drawing the ROC plot.
@@ -1794,6 +1806,7 @@ static AjBool   rocplot_write_rocplot(AjPDirout outdir,AjPStr fname,
 ** @@
 **
 *****************************************************************************/
+
 static AjBool   rocplot_write_classplot(AjPDirout outdir,AjPStr fname, 
 					AjPStr title, 
 					AjPStr xlabel, AjPStr ylabel, 
@@ -1915,7 +1928,6 @@ static AjBool   rocplot_write_classplot(AjPDirout outdir,AjPStr fname,
 
 
 
-
 /* @funcstatic rocplot_write_barchart *****************************************
 **
 ** Writes a file of meta-data for drawing the ROC plot.
@@ -1935,6 +1947,7 @@ static AjBool   rocplot_write_classplot(AjPDirout outdir,AjPStr fname,
 ** @@
 **
 ******************************************************************************/
+
 static AjBool   rocplot_write_barchart(AjPDirout outdir,AjPStr fname, 
 				       AjPStr title, 
 				       AjPStr xlabel, AjPStr ylabel, 
@@ -2060,7 +2073,6 @@ static AjBool   rocplot_write_barchart(AjPDirout outdir,AjPStr fname,
 
 
 
-
 /* @funcstatic rocplot_write_summary ******************************************
 **
 ** Writes the summary file.
@@ -2080,6 +2092,7 @@ static AjBool   rocplot_write_barchart(AjPDirout outdir,AjPStr fname,
 ** @@
 **
 ******************************************************************************/
+
 static AjBool rocplot_write_summary(AjPDirout outdir,
                                     AjPFile outf, ajint mode, 
 				    ajint multimode, ajint datamode, 
@@ -2202,6 +2215,7 @@ static AjBool rocplot_write_summary(AjPDirout outdir,
 ** @return [AjPXYdata] Pointer to an XYdata object
 ** @@
 ******************************************************************************/
+
 static AjPXYdata rocplot_XYdataNew(void)
 {
     AjPXYdata ret = NULL;
@@ -2210,7 +2224,6 @@ static AjPXYdata rocplot_XYdataNew(void)
     
     return ret;
 }
-
 
 
 
@@ -2224,6 +2237,7 @@ static AjPXYdata rocplot_XYdataNew(void)
 ** @return [void]
 ** @@
 ******************************************************************************/
+
 static void rocplot_XYdataDel(AjPXYdata *thys)
 {
     AjPXYdata pthis = *thys;
@@ -2236,6 +2250,8 @@ static void rocplot_XYdataDel(AjPXYdata *thys)
 
     return;
 }
+
+
 
 
 /* @funcstatic rocplot_compX **************************************************
@@ -2255,8 +2271,8 @@ static ajint rocplot_compX(const void *ptr1, const void *ptr2)
     AjPXYdata a = NULL;
     AjPXYdata b = NULL;
 
-    a = (*(AjPXYdata*)ptr1);
-    b = (*(AjPXYdata*)ptr2);
+    a = *(AjPXYdata*)ptr1;
+    b = *(AjPXYdata*)ptr2;
     
     if(a->X > b->X)
 	return 1;
@@ -2274,7 +2290,7 @@ static ajint rocplot_compX(const void *ptr1, const void *ptr2)
 ** 
 ******************************************************************************/
 
-void seqsort_unused(void)
+void rocplot_unused(void)
 {
     rocplot_compX(NULL, NULL);
 }

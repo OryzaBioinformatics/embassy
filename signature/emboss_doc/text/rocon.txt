@@ -25,7 +25,7 @@ CONTENTS
    structural classification) and a domain families file (validation
    sequences of known classification) and writes a "hits file" for the
    hits, which are classified and rank-ordered on the basis of score.
-   Generates a hits file from comparing two DHF files
+   Generate a hits file from comparing two DHF files
 
 2.0 INPUTS & OUTPUTS
 
@@ -471,8 +471,8 @@ TRUE         Q9YBD5    95    135
 
 6.0 USAGE
 
-Generates a hits file from comparing two DHF files
-Version: EMBOSS:6.4.0.0
+Generate a hits file from comparing two DHF files
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-hitsinfile]        infile     This option specifies the location of the

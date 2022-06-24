@@ -21,7 +21,7 @@ CONTENTS
 
 1.0 SUMMARY
 
-   Generates a sparse protein signature from an alignment
+   Generate a sparse protein signature from an alignment
 
 2.0 INPUTS & OUTPUTS
 
@@ -303,8 +303,8 @@ GA   1 ; 2
 
   6.1 COMMAND LINE ARGUMENTS
 
-Generates a sparse protein signature from an alignment
-Version: EMBOSS:6.4.0.0
+Generate a sparse protein signature from an alignment
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-algpath]           dirlist    [./] This option specifies the location of
@@ -409,7 +409,7 @@ Version: EMBOSS:6.4.0.0
                                   upon the alignment (window size is
                                   identified by the WSIZ record in the
                                   signature output file). (Any integer value)
-*  -filtercon          toggle     [N] This option specifies whether to
+*  -confilter          toggle     [N] This option specifies whether to
                                   disregard positions forming few contacts
                                   only during the selection of signature
                                   positions.
@@ -418,7 +418,7 @@ Version: EMBOSS:6.4.0.0
                                   of key positions for the structure-based
                                   scoring scheme (number of contacts). (Any
                                   integer value)
-*  -[no]filterpsim     boolean    [Y] This option specifies whether to
+*  -[no]psimfilter     boolean    [Y] This option specifies whether to
                                   disregard alignment sites that were not
                                   aligned satisfactorily (STAMP alignments
                                   only).

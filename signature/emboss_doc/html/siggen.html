@@ -52,7 +52,7 @@
 <a name="1.0"></a>
 <br><br><br><H2> 1.0   SUMMARY  </H2>
 
-Generates a sparse protein signature from an alignment
+Generate a sparse protein signature from an alignment
 <!-- INPUTS & OUTPUTS
      Short summary of the application inputs and outputs in its different 
      modes of usage (if appropriate). More detail than the summary.
@@ -406,8 +406,8 @@ SIGGEN requires a residue substitution matrix.
 <H3> 6.1   COMMAND LINE ARGUMENTS </H3>
 
 <pre>
-Generates a sparse protein signature from an alignment
-Version: EMBOSS:6.4.0.0
+Generate a sparse protein signature from an alignment
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-algpath]           dirlist    [./] This option specifies the location of
@@ -512,7 +512,7 @@ Version: EMBOSS:6.4.0.0
                                   upon the alignment (window size is
                                   identified by the WSIZ record in the
                                   signature output file). (Any integer value)
-*  -filtercon          toggle     [N] This option specifies whether to
+*  -confilter          toggle     [N] This option specifies whether to
                                   disregard positions forming few contacts
                                   only during the selection of signature
                                   positions.
@@ -521,7 +521,7 @@ Version: EMBOSS:6.4.0.0
                                   of key positions for the structure-based
                                   scoring scheme (number of contacts). (Any
                                   integer value)
-*  -[no]filterpsim     boolean    [Y] This option specifies whether to
+*  -[no]psimfilter     boolean    [Y] This option specifies whether to
                                   disregard alignment sites that were not
                                   aligned satisfactorily (STAMP alignments
                                   only).
@@ -654,7 +654,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-filtercon</td>
+<td>-confilter</td>
 <td>toggle</td>
 <td>This option specifies whether to disregard positions forming few contacts only during the selection of signature positions.</td>
 <td>Toggle value Yes/No</td>
@@ -670,7 +670,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-[no]filterpsim</td>
+<td>-[no]psimfilter</td>
 <td>boolean</td>
 <td>This option specifies whether to disregard alignment sites that were not aligned satisfactorily (STAMP alignments only).</td>
 <td>Boolean value Yes/No</td>
@@ -706,7 +706,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-algpath" associated dirlist qualifiers
+<td align="left" colspan=5>"-algpath" associated dirlist qualifiers
 </td>
 </tr>
 
@@ -719,7 +719,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-conpath" associated directory qualifiers
+<td align="left" colspan=5>"-conpath" associated directory qualifiers
 </td>
 </tr>
 
@@ -732,7 +732,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-cpdbpath" associated directory qualifiers
+<td align="left" colspan=5>"-cpdbpath" associated directory qualifiers
 </td>
 </tr>
 
@@ -745,7 +745,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-sigoutdir" associated outdir qualifiers
+<td align="left" colspan=5>"-sigoutdir" associated outdir qualifiers
 </td>
 </tr>
 
@@ -869,8 +869,8 @@ Here is a sample session with <b>siggen</b>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
 % <b>siggen </b>
-Generates a sparse protein signature from an alignment
-Domain alignment directories [./]: <b>../domainalign-keep/daf</b>
+Generate a sparse protein signature from an alignment
+Domain alignment directories [./]: <b>../domainalign-signature/daf</b>
 Specify mode of signature generation
          1 : Use positions specified in alignment file
          2 : Use a scoring method
@@ -1242,17 +1242,17 @@ steps;  (iv) Select the top scoring 15% positions to make up the signature.
 
 <tr>
 <td><a href="siggenlig.html">siggenlig</a></td>
-<td>Generates ligand-binding signatures from a CON file</td>
+<td>Generate ligand-binding signatures from a CON file</td>
 </tr>
 
 <tr>
 <td><a href="sigscan.html">sigscan</a></td>
-<td>Generates hits (DHF file) from a signature search</td>
+<td>Generate hits (DHF file) from a signature search</td>
 </tr>
 
 <tr>
 <td><a href="sigscanlig.html">sigscanlig</a></td>
-<td>Searches ligand-signature library and writes hits (LHF file)</td>
+<td>Search ligand-signature library and writes hits (LHF file)</td>
 </tr>
 
 </table>

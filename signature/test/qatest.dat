@@ -1,0 +1,566 @@
+#########################################################
+#
+# EMBASSY (SIGNATURE)
+#
+#########################################################
+
+ID pdbparse-signature
+AY structure
+DL keep
+TI 120
+AX pdbparse
+IN ../../data/structure
+IN
+IN Y
+IN
+IN
+IN
+FI stdout
+FC = 3
+FP 3 /^Processing /
+FI stderr
+FC = 2
+FP 0 /^Warning:/
+FP 0 /^Error:/
+FP 0 /^Died:/
+FI pdbparse.log
+FC = 18
+FP 2 /^SEQRESLENDIF/
+FP 2 /^SECSTART       1 1 ILE 384\n/
+FP 3 /^SECBOTH/
+FP /^SECBOTH        1 1 VAL 78 ILE 81\n/
+FI 1cs4.ccf
+FC = 537
+FZ = 51361
+FP 475 /^AT /
+FI 1ii7.ccf
+FC = 462
+FZ = 44223
+FP 402 /^AT /
+FI 2hhb.ccf
+FC = 5398
+FZ = 533177
+FP 4779 /^AT /
+//
+
+ID pdbplus-signature
+AY structure
+DL keep
+AX pdbplus
+RQ stride
+RQ naccess
+CC Requires stride
+CC Requires naccess
+IN ../pdbparse-signature/
+IN ../../data/structure/
+IN  
+IN 3
+IN 4
+IN
+IN
+IN
+IN
+FI stderr
+FC = 6
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 11
+FP 3 /\S+naccess \S+\.ent/
+FP 2 /failures: 0\n/
+FI pdbplus.log
+FC = 28
+FP 3 /stride output for/
+FP 2 /failures: 0\n/
+FI stride.log
+FC = 0
+FZ = 0
+FI naccess.log
+FC = 6
+##
+## Yes, naccess does have a typo 'defual' in the message ...
+##
+FP 3 /naccess: using defualt vdw\.radii\n/
+FP 3 /naccess: using default STD FILE\n/
+FI 1cs4.ccf
+FC = 537
+FZ = 51361
+FP /^SQ   SEQUENCE    52 AA;   5817 MW;  D8CCAE0E1FC0849A CRC64;\n/
+FI 1ii7.ccf
+FC = 462
+FZ = 44223
+FP /^SQ   SEQUENCE    65 AA;   7395 MW;  75FBE75B22FD3678 CRC64;\n/
+FI 2hhb.ccf
+FC = 5398
+FZ = 533177
+FP /^SQ   SEQUENCE   141 AA;  15126 MW;  34D13618E62A33C1 CRC64;\n/
+//
+
+
+ID scopparse-signature
+AY domainatrix
+DL keep
+AX scopparse
+IN ../../data/structure/scop.cla.raw
+IN ../../data/structure/scop.des.raw
+IN Y
+IN N
+IN all.scop
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI all.scop
+FC = 52
+FZ = 809
+FP 2 /^ID   /
+//
+
+
+ID domainer-signature
+AY structure
+DL keep
+AX domainer
+IN ../scopparse-signature/all.scop
+IN ../pdbplus-signature/
+IN
+IN
+IN 1
+IN domainer_embl.log
+IN domainer_pdb.log
+FI stderr
+FC = 5
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 2
+FP /^D1CS4A_\n/
+FP /^D1II7A_\n/
+FI domainer_embl.log
+FZ = 0
+FI domainer_pdb.log
+FZ = 0
+FI d1cs4a_.ent
+FZ = 29889
+FC = 369
+FP /^ATOM\s+31\s+CA\s+PHE\s+A\s\d+\s+60\.914 -11\.143  59\.200  1\.00 58\.07\s+C\s+\n/
+FI d1cs4a_.ccf
+FZ = 40517
+FC = 418
+FP /SQ   SEQUENCE    52 AA;   5817 MW;  D8CCAE0E1FC0849A CRC64;\n/
+FI d1ii7a_.ent
+FZ = 29727
+FC = 367
+FP /ATOM      1  N   ASP A   8       7\.977  32\.254  19\.055  1\.00 26\.65           N  /
+FI d1ii7a_.ccf
+FZ = 39756
+FC = 413
+FP /SQ   SEQUENCE    65 AA;   7395 MW;  75FBE75B22FD3678 CRC64;/
+//
+
+ID sites-signature
+AY structure
+DL keep
+TI 120
+AX sites
+IN ../pdbplus-signature
+IN ../domainer-signature
+IN ../scopparse-signature/all.scop
+IN 1
+IN
+IN
+FI stdout
+FC = 5
+FP /^Entries in HetDic 4306\n/
+FP /^Entries in Dbase 4306\n/
+FP /CCF FILE:.*/1cs4\.ccf \([1-3]\/3\)/
+FP /CCF FILE:.*/1ii7\.ccf \([1-3]\/3\)/
+FP /CCF FILE:.*/2hhb\.ccf \([1-3]\/3\)/
+FI stderr
+FC = 2
+FP 0 /^Warning:/
+FP 0 /^Error:/
+FP 0 /^Died:/
+FI SITES.con
+FC = 299
+FZ = 5261
+FP 11 /^ID   /
+FP 3 /^LI   ASP 2/
+FP /ID   PDB 1cs4; DOM d1cs4a_; LIG POP;\n/
+FI sites.log
+FC = 3
+FP /^CCF:.*1cs4\.ccf HETS:YES NHETS:7 SCOP:YES NDOMS: 1\n/
+FP /^CCF:.*1ii7\.ccf HETS:YES NHETS:5 SCOP:YES NDOMS: 1\n/
+FP /^CCF:.*2hhb\.ccf HETS:YES NHETS:5 SCOP:NO NCHN:4\n/
+//
+
+
+ID domainalign-signature
+AY domalign
+DL keep
+AX domainalign
+PP mkdir daf
+RQ stamp
+CC requires a modified stamp to be installed
+IN ../../data/structure/all.scop2
+IN
+IN 4
+IN 1
+IN N
+IN daf
+IN
+IN
+FI stderr
+FC = 15
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 108
+FP 4 /^\S+\/stamp/
+FI 54894.ent
+FC = 1461
+FZ = 117967
+FP 11 /^REMARK/
+DI daf
+DF 54894.daf
+DF 55074.daf
+## FI daf/54894.daf
+## FC = 21
+## FZ = 856
+## FP 6 /^# XX/
+FI 55074.ent
+FC = 3343
+FZ = 270409
+FP 11 /^REMARK/
+## FI daf/55074.daf
+## FC = 36
+## FZ = 1773
+## FP 6 /^# XX/
+FI domainalign.log
+FC = 14
+FZ = 574
+FP 14 /^Replaced/
+//
+
+
+
+ID siggen-keep
+AB signature
+DL keep
+AA siggen
+IN ../domainalign-signature/daf
+IN 2
+IN 5
+IN 1
+IN EBLOSUM62
+IN 15
+IN 0
+IN Y
+IN
+CC output filename not set
+FI stderr
+FC = 16
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI 54894.sig
+FC = 136
+FZ = 1367
+FP 15 /^IN   /
+FI 55074.sig
+FC = 364
+FZ = 3520
+FP 38 /^IN   /
+//
+
+
+ID siggenlig-keep
+AB signature
+DL keep
+AA siggenlig
+IN ../sites-signature/SITES.con
+IN ../pdbplus-signature
+IN ../domainer-signature
+IN 1
+IN 1
+IN 
+IN 
+FI stderr
+FC = 8
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+FZ = 0
+FI 101.1.F.#.1cs4.d1cs4a_.sig
+FC = 62
+FZ = 610
+FP  /^IN   /
+FI 101.2.F.#.1ii7.d1ii7a_.sig
+FC = 30
+FZ = 318
+FP  /^IN   /
+FI FOK.1.F.#.1cs4.d1cs4a_.sig
+FC = 22
+FZ = 219
+FP  /^IN   /
+FI HEM.1.F.#.2hhb...sig
+FC = 150
+FZ = 1415
+FP  /^IN   /
+FI HEM.2.F.#.2hhb...sig
+FC = 150
+FZ = 1415
+FP  /^IN   /
+FI HEM.3.F.#.2hhb...sig
+FC = 166
+FZ = 1563
+FP  /^IN   /
+FI HEM.4.F.#.2hhb...sig
+FC = 134
+FZ = 1267
+FP  /^IN   /
+FI MG.1.F.#.1cs4.d1cs4a_.sig
+FC = 46
+FZ = 441
+FP  /^IN   /
+FI MN.1.F.#.1ii7.d1ii7a_.sig
+FC = 38
+FZ = 373
+FP  /^IN   /
+FI PO4.1.F.#.2hhb...sig
+FC = 30
+FZ = 290
+FP  /^IN   /
+FI POP.1.F.#.1cs4.d1cs4a_.sig
+FC = 62
+FZ = 590
+FP  /^IN   /
+FI siggenlig.log
+FC = 0
+FZ = 0
+//
+
+
+ID libgen-ex
+AB signature
+AA libgen
+RQ hmmer
+RQ sam-t2k
+IN ../domainalign-signature/daf
+IN EBLOSUM62
+IN 2
+IN
+FI stderr
+FC = 9
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI 54894.disc
+FC = 107
+FZ = 14558
+FP /Length\s+94\n/
+FI 55074.disc
+FC = 265
+FZ = 38268
+FP /Length\s+252\n/
+//
+
+ID matgen3d-ex
+AB signature
+AA matgen3d
+IN 1
+IN ../scopparse-signature/all.scop
+IN ../domainer-signature
+IN 1
+IN 
+IN 
+IN 
+FI stderr
+FC = 22
+FP 0 /^Warning:/
+FP 0 /^Error:/
+FP 0 /^Died:/
+FI stdout
+FC = 0
+FZ = 0
+FI matgen3d.calc
+FC = 128
+FZ = 3801
+FP /SUMiNijArr/
+FI matgen3d.log
+FC = 182
+FZ = 2686
+FP 1 /D1CS4A/
+FP 1 /D1II7A_/
+FI matgen3d.out
+FC = 28
+FZ = 3563
+FP 1 /AU   -0\.01  1\.19  0\.91  0\.50  1\.19  0\.68 -0\.11  2\.00  1\.19  0\.35 -0\.11  0\.91  2\.29  0\.35  2\.29  1\.60  1\.19 -2\.20  2\.29  1\.19 -2\.20 -2\.20 -2\.20 -2\.64/
+//
+
+
+ID sigscan-ex
+AB signature
+AA sigscan
+IN ../siggen-keep/54894.sig
+IN ../../data/structure/swsmall
+IN
+IN
+IN
+IN
+IN
+IN
+IN
+CC depends on siggen-keep test
+FI stderr
+FC = 6
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 5
+FP 5 / ok\n/
+FI SIGSCAN.dhf
+FC = 200
+FP /> P00478/
+FI SIGSCAN.aln
+FC = 1113
+FZ = 73700
+FP /^SIGNATURE -      ----------\*-\*--------------------------\*-------------\n/
+//
+
+
+
+ID sigscanlig-ex
+AB signature
+AA sigscanlig
+PP mkdir lhf
+PP mkdir aln
+PP mkdir results
+IN ../siggenlig-keep
+IN ../../data/structure/swtiny
+IN
+IN 1
+IN
+IN
+IN
+IN lhf
+IN aln
+IN results
+FI stderr
+FC = 9
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+DI lhf
+DF Q99396^.^262^473^.^55074^Alpha.lhf   
+DF Q9DGG6^.^380^560^.^55074^Alpha.lhf   
+DF Q9ERL9^.^480^631^.^55074^Alpha.lhf   
+DF Q9WVI4^.^516^664^.^55074^Alpha.lhf
+DI aln
+DF Q99396^.^262^473^.^55074^Alpha.aln   
+DF Q9DGG6^.^380^560^.^55074^Alpha.aln   
+DF Q9ERL9^.^480^631^.^55074^Alpha.aln   
+DF Q9WVI4^.^516^664^.^55074^Alpha.aln
+DI results
+DF Q99396^.^262^473^.^55074^Alpha.results       
+DF Q9DGG6^.^380^560^.^55074^Alpha.results       
+DF Q9ERL9^.^480^631^.^55074^Alpha.results       
+DF Q9WVI4^.^516^664^.^55074^Alpha.results
+//
+
+
+ID rocon-ex
+AB signature
+AA rocon
+IN ../../data/structure/rocon/rocon.dhf
+IN ../../data/structure/rocon.valid
+IN 10
+IN 1
+IN rocon.hits
+FI stderr
+FC = 5
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI rocon.hits
+FC = 9
+FZ = 308
+FP 3 /^TRUE /
+FP 2 /^FALSE /
+FP 2 /^CROSS /
+FP 1 /^UNKNOWN /
+//
+
+ID rocplot-ex
+AB signature
+AA rocplot
+IN ../../data/structure/rocplot/hitsin
+IN 2
+IN 2
+IN 1
+IN
+IN
+IN
+IN
+IN
+FI stderr
+FC = 11
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 5
+FP 2 /^Processing /
+FI _rocplot       
+FC = 12
+FZ = 353
+FP /^plot "_rocplot_dat0" smooth bezier title "Combined dataset \(0\.185\)"\n/
+FI _rocplot_dat0
+FC = 81
+FZ = 1242
+FP /^0\.625    0\.214\n/
+FI _classplot      
+FC = 9
+FZ = 580
+FP /^plot "_classplot_dat0" .* "_classplot_dat4" .* title "False hits"\n/
+FI _classplot_dat0 
+FC = 81
+FZ = 1315
+FP /^80\.000    0\.375\n/
+FI _classplot_dat1 
+FC = 81
+FZ = 1316
+FP /^80\.000    0\.100\n/
+FI _classplot_dat2 
+FC = 81
+FZ = 1320
+FP /^80\.000    0\.050\n/
+FI _classplot_dat3 
+FC = 81
+FZ = 1318
+FP /^80\.000    0\.100\n/
+FI _classplot_dat4 
+FC = 81
+FZ = 1316
+FP /^80\.000    0\.375\n/
+FI _summary
+FC = 11
+FZ = 333
+FP /ROC50     == 0\.185 \(combined\)/
+FI  rocplot.log
+FC = 33
+FP /^rocn\[0\]:/
+FP /^numfiles: 2\n/
+//
+
+
+

@@ -267,9 +267,9 @@ static AjBool sigscan_SignatureAlignWrite(AjPFile outf,
 
     /* Print header info and SCOP classification records of signature. */
     ajFmtPrintF(outf, "# DE   Results of signature search\n# XX\n");
-    if((sig->Type == ajSCOP))  
+    if((sig->Type == embESignatureTypeSCOP))  
 	ajFmtPrintF(outf, "# TY   SCOP\n# XX\n");
-    else if ((sig->Type == ajCATH))
+    else if ((sig->Type == embESignatureTypeCATH))
 	ajFmtPrintF(outf, "# TY   CATH\n# XX\n");
     ajFmtPrintF(outf,"# CL   %S",sig->Class);
     ajFmtPrintSplit(outf,sig->Fold,"\n# XX\n# FO   ",75," \t\n\r");
@@ -404,17 +404,15 @@ static AjBool sigscan_SignatureAlignWriteBlock(AjPFile outf,
 
     /* Print header info and SCOP classification records of signature */
     ajFmtPrintF(outf, "# DE   Results of signature search\n# XX\n");
-    if((sig->Type == ajSCOP))  
+    if((sig->Type == embESignatureTypeSCOP))  
 	ajFmtPrintF(outf, "# TY   SCOP\n# XX\n");
-    else if ((sig->Type == ajCATH))
+    else if ((sig->Type == embESignatureTypeCATH))
 	ajFmtPrintF(outf, "# TY   CATH\n# XX\n");
     ajFmtPrintF(outf,"# CL   %S",sig->Class);
     ajFmtPrintSplit(outf,sig->Fold,"\n# XX\n# FO   ",75," \t\n\r");
     ajFmtPrintSplit(outf,sig->Superfamily,"# XX\n# SF   ",75," \t\n\r");
     ajFmtPrintSplit(outf,sig->Family,"# XX\n# FA   ",75," \t\n\r");
     ajFmtPrintF(outf,"# XX\n# SI   %d\n", sig->Sunid_Family);
-
-
     
     /* Main loop for printing alignment. */
     for(x=0;x<hits->N; x++)

@@ -48,7 +48,7 @@
 -->
 <a name="1.0"></a>
 <br><br><br><H2> 1.0   SUMMARY  </H2>
-Searches ligand-signature library and writes hits (LHF file)
+Search ligand-signature library and writes hits (LHF file)
 <p>
 Generates LHF files (ligand hits file) of hits from scanning sequences against a library of ligand-binding signatures.
 
@@ -830,8 +830,8 @@ SIGSCANLIG requires a matrix of 3D:1D scores (residue:environment scoring matrix
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" >
 <tr><td>
 <pre>
-Searches ligand-signature library and writes hits (LHF file)
-Version: EMBOSS:6.4.0.0
+Search ligand-signature library and writes hits (LHF file)
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-siginfilesdir]     dirlist    [./] This option specifies the directory of
@@ -940,7 +940,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein2          boolean    Sequence is protein
    -slower2            boolean    Make lower case
    -supper2            boolean    Make upper case
+   -scircular2         boolean    Sequence is circular
    -sformat2           string     Input sequence format
+   -iquery2            string     Input query fields or ID list
+   -ioffset2           integer    Input start position offset
    -sdbname2           string     Database name
    -sid2               string     Entryname
    -ufo2               string     UFO features
@@ -1112,7 +1115,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-siginfilesdir" associated dirlist qualifiers
+<td align="left" colspan=5>"-siginfilesdir" associated dirlist qualifiers
 </td>
 </tr>
 
@@ -1125,7 +1128,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-dbseqall" associated seqall qualifiers
+<td align="left" colspan=5>"-dbseqall" associated seqall qualifiers
 </td>
 </tr>
 
@@ -1194,11 +1197,35 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
+<td> -scircular2<br>-scircular_dbseqall</td>
+<td>boolean</td>
+<td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td> -sformat2<br>-sformat_dbseqall</td>
 <td>string</td>
 <td>Input sequence format</td>
 <td>Any string</td>
 <td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -iquery2<br>-iquery_dbseqall</td>
+<td>string</td>
+<td>Input query fields or ID list</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -ioffset2<br>-ioffset_dbseqall</td>
+<td>integer</td>
+<td>Input start position offset</td>
+<td>Any integer value</td>
+<td>0</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -1242,7 +1269,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-hitsoutdir" associated outdir qualifiers
+<td align="left" colspan=5>"-hitsoutdir" associated outdir qualifiers
 </td>
 </tr>
 
@@ -1255,7 +1282,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-alignoutdir" associated outdir qualifiers
+<td align="left" colspan=5>"-alignoutdir" associated outdir qualifiers
 </td>
 </tr>
 
@@ -1268,7 +1295,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-resultsoutdir" associated outdir qualifiers
+<td align="left" colspan=5>"-resultsoutdir" associated outdir qualifiers
 </td>
 </tr>
 
@@ -1393,7 +1420,7 @@ Here is a sample session with <b>sigscanlig</b>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
 % <b>sigscanlig </b>
-Searches ligand-signature library and writes hits (LHF file)
+Search ligand-signature library and writes hits (LHF file)
 Domainatrix signature directories [./]: <b>../siggenlig-keep</b>
 Database of query sequences.: <b>swtiny</b>
 Scoring matrix [EBLOSUM62]: <b></b>
@@ -1542,17 +1569,17 @@ The user specifies the gap insertion and extension penalties. The gap insertion 
 
 <tr>
 <td><a href="siggen.html">siggen</a></td>
-<td>Generates a sparse protein signature from an alignment</td>
+<td>Generate a sparse protein signature from an alignment</td>
 </tr>
 
 <tr>
 <td><a href="siggenlig.html">siggenlig</a></td>
-<td>Generates ligand-binding signatures from a CON file</td>
+<td>Generate ligand-binding signatures from a CON file</td>
 </tr>
 
 <tr>
 <td><a href="sigscan.html">sigscan</a></td>
-<td>Generates hits (DHF file) from a signature search</td>
+<td>Generate hits (DHF file) from a signature search</td>
 </tr>
 
 </table>
@@ -1619,6 +1646,18 @@ See also <a href="http://emboss.sourceforge.net/">http://emboss.sourceforge.net/
 
 <H3>14.1 Other useful references  </H3>
  
+<H2>
+    History
+</H2>
+
+
+<H2>
+    Comments
+</H2>
+
+<pre>
+None
+</pre>
 
 </BODY>
 </HTML>

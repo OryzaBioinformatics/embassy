@@ -90,7 +90,7 @@ The format of the DCF file (domain classification file) is described in the <a h
 
 <a name="input.1"></a>
 <h3>Input files for usage example </h3>
-<p><h3>File: ../scopparse-keep/all.scop</h3>
+<p><h3>File: ../scopparse-signature/all.scop</h3>
 <table width="90%"><tr><td bgcolor="#FFCCFF">
 <pre>
 ID   D1CS4A_
@@ -462,15 +462,15 @@ MATGEN3D does not use any data files.
 <tr><td>
 <pre>
 Generate a 3D-1D scoring matrix from CCF files.
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
-   -mode               menu       [1] This option specifies the amino acid
+   -modeposition       menu       [1] This option specifies the amino acid
                                   residue positions to use in calculating the
                                   substitution data. (Values: 1 (All amino
                                   acid positions for domains in a DCF file); 2
                                   (Ligand-binding positions.))
-*  -model              menu       [1] This option specifies whether to use all
+*  -modeligand         menu       [1] This option specifies whether to use all
                                   ligands or a specific set of ligands
                                   present in a CON file when calculating the
                                   substitution data. (Values: 1 (All ligands
@@ -529,7 +529,7 @@ Version: EMBOSS:6.4.0.0
                                   for residue solvent accessibility and
                                   secondary structure are added to the file by
                                   using PDBPLUS.
-   -modee              menu       [1] This option specifies the environment
+   -modeenvir          menu       [1] This option specifies the environment
                                   definition. See matgen3d documentation for
                                   description of definitions. (Values: 1
                                   (Env1); 2 (Env2); 3 (Env3); 4 (Env4); 5
@@ -598,7 +598,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-mode</td>
+<td>-modeposition</td>
 <td>list</td>
 <td>This option specifies the amino acid residue positions to use in calculating the substitution data.</td>
 <td><table><tr><td>1</td> <td><i>(All amino acid positions for domains in a DCF file)</i></td></tr><tr><td>2</td> <td><i>(Ligand-binding positions.)</i></td></tr></table></td>
@@ -606,7 +606,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-model</td>
+<td>-modeligand</td>
 <td>list</td>
 <td>This option specifies whether to use all ligands or a specific set of ligands present in a CON file when calculating the substitution data.</td>
 <td><table><tr><td>1</td> <td><i>(All ligands within a CON file)</i></td></tr><tr><td>2</td> <td><i>(Select ligands within a CON file.)</i></td></tr></table></td>
@@ -654,7 +654,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-modee</td>
+<td>-modeenvir</td>
 <td>list</td>
 <td>This option specifies the environment definition. See matgen3d documentation for description of definitions.</td>
 <td><table><tr><td>1</td> <td><i>(Env1)</i></td></tr><tr><td>2</td> <td><i>(Env2)</i></td></tr><tr><td>3</td> <td><i>(Env3)</i></td></tr><tr><td>4</td> <td><i>(Env4)</i></td></tr><tr><td>5</td> <td><i>(Env5)</i></td></tr><tr><td>6</td> <td><i>(Env6)</i></td></tr><tr><td>7</td> <td><i>(Env7)</i></td></tr><tr><td>8</td> <td><i>(Env8)</i></td></tr><tr><td>9</td> <td><i>(Env9)</i></td></tr><tr><td>10</td> <td><i>(Env10)</i></td></tr><tr><td>11</td> <td><i>(Env11)</i></td></tr><tr><td>12</td> <td><i>(Env12)</i></td></tr><tr><td>13</td> <td><i>(Env13)</i></td></tr><tr><td>14</td> <td><i>(Env14)</i></td></tr><tr><td>15</td> <td><i>(Env15)</i></td></tr><tr><td>16</td> <td><i>(Env16)</i></td></tr></table></td>
@@ -706,7 +706,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-ccfddir" associated directory qualifiers
+<td align="left" colspan=5>"-ccfddir" associated directory qualifiers
 </td>
 </tr>
 
@@ -719,7 +719,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-ccfpdir" associated directory qualifiers
+<td align="left" colspan=5>"-ccfpdir" associated directory qualifiers
 </td>
 </tr>
 
@@ -732,7 +732,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-scmatrixfile" associated outfile qualifiers
+<td align="left" colspan=5>"-scmatrixfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -745,7 +745,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-calclogfile" associated outfile qualifiers
+<td align="left" colspan=5>"-calclogfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -758,7 +758,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-logfile" associated outfile qualifiers
+<td align="left" colspan=5>"-logfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -887,8 +887,8 @@ DCF file amino acid positions
          1 : All amino acid positions for domains in a DCF file
          2 : Ligand-binding positions.
 This option specifies the amino acid residue positions to use in calculating the substitution data. [1]: <b>1</b>
-Domain classification file (optional): <b>../scopparse-keep/all.scop</b>
-Clean domain coordinates directory [./]: <b>../domainer-keep</b>
+Domain classification file (optional): <b>../scopparse-signature/all.scop</b>
+Clean domain coordinates directory [./]: <b>../domainer-signature</b>
 Choose environment definition.
          1 : Env1
          2 : Env2
@@ -1014,7 +1014,7 @@ MATGEN3D generates a matrix of 3D:1D scores which give the probability of findin
 <th>Description</th></tr>
 <tr>
 <td><a href="/embassy/domainatrix/cathparse.html">cathparse</a></td>
-<td>Generates DCF file from raw CATH files</td>
+<td>Generate DCF file from raw CATH files</td>
 </tr>
 
 <tr>
@@ -1024,7 +1024,7 @@ MATGEN3D generates a matrix of 3D:1D scores which give the probability of findin
 
 <tr>
 <td><a href="/embassy/domainatrix/domainnr.html">domainnr</a></td>
-<td>Removes redundant domains from a DCF file</td>
+<td>Remove redundant domains from a DCF file</td>
 </tr>
 
 <tr>
@@ -1034,7 +1034,7 @@ MATGEN3D generates a matrix of 3D:1D scores which give the probability of findin
 
 <tr>
 <td><a href="/embassy/domainatrix/domainseqs.html">domainseqs</a></td>
-<td>Adds sequence records to a DCF file</td>
+<td>Add sequence records to a DCF file</td>
 </tr>
 
 <tr>
@@ -1054,17 +1054,17 @@ MATGEN3D generates a matrix of 3D:1D scores which give the probability of findin
 
 <tr>
 <td><a href="/emboss/apps/pepcoil.html">pepcoil</a></td>
-<td>Predicts coiled coil regions in protein sequences</td>
+<td>Predict coiled coil regions in protein sequences</td>
 </tr>
 
 <tr>
 <td><a href="rocon.html">rocon</a></td>
-<td>Generates a hits file from comparing two DHF files</td>
+<td>Generate a hits file from comparing two DHF files</td>
 </tr>
 
 <tr>
 <td><a href="rocplot.html">rocplot</a></td>
-<td>Performs ROC analysis on hits files</td>
+<td>Perform ROC analysis on hits files</td>
 </tr>
 
 <tr>
@@ -1079,7 +1079,7 @@ MATGEN3D generates a matrix of 3D:1D scores which give the probability of findin
 
 <tr>
 <td><a href="/embassy/domsearch/seqfraggle.html">seqfraggle</a></td>
-<td>Removes fragment sequences from DHF files</td>
+<td>Remove fragment sequences from DHF files</td>
 </tr>
 
 <tr>
@@ -1089,7 +1089,7 @@ MATGEN3D generates a matrix of 3D:1D scores which give the probability of findin
 
 <tr>
 <td><a href="/embassy/domsearch/seqwords.html">seqwords</a></td>
-<td>Generates DHF files from keyword search of UniProt</td>
+<td>Generate DHF files from keyword search of UniProt</td>
 </tr>
 
 <tr>
@@ -1154,6 +1154,19 @@ See also <a href="http://emboss.sourceforge.net/">http://emboss.sourceforge.net/
 
 <H3>14.1 Other useful references  </H3>
  
+<H2>
+    History
+</H2>
+
+
+<H2>
+    Comments
+</H2>
+
+<pre>
+None
+</pre>
+
 
 </BODY>
 </HTML>

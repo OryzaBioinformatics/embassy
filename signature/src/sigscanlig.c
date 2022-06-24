@@ -267,7 +267,7 @@ int main(int argc, char **argv)
 	
 
 	/* Rank-order the list of hits by score */
-	ajListSort(hits, embMatchinvScore);
+	ajListSort(hits, &embMatchinvScore);
 
 	
 	/* Write ligand hits & alignment files (output)  */	
@@ -293,7 +293,7 @@ int main(int argc, char **argv)
 
 	/* Sort list of hits by ligand type and site number.
 	   Process list of ligands and print out. */
-	ajListSortTwo(hits, embMatchLigid, embMatchSN);
+	ajListSortTwo(hits, &embMatchLigid, &embMatchSN);
 
 
 	if(modei==1)
@@ -627,9 +627,9 @@ AjBool sigscanlig_WriteFasta(AjPFile outf, AjPList hits)
 	ajFmtPrintF(outf,"%d^", sig->pn);
 	ajFmtPrintF(outf,"%d^", sig->np);
 	
-	if(sig->Typesig == aj1D)
+	if(sig->Typesig == embESignatureTypesig1D)
 	    ajFmtPrintF(outf,"1D");
-	else if(sig->Typesig == aj3D)
+	else if(sig->Typesig == embESignatureTypesig3D)
 	    ajFmtPrintF(outf,"3D");
 	else
 	    ajFatal("Signature type unknown in sigscanlig_WriteFasta");
@@ -805,9 +805,9 @@ AjBool sigscanlig_WriteFastaHit(AjPFile outf, AjPList hits, ajint n,
     ajFmtPrintF(outf,"%d^", sig->pn);
     ajFmtPrintF(outf,"%d^", sig->np);
     
-    if(sig->Typesig == aj1D)
+    if(sig->Typesig == embESignatureTypesig1D)
 	ajFmtPrintF(outf,"1D");
-    else if(sig->Typesig == aj3D)
+    else if(sig->Typesig == embESignatureTypesig3D)
 	ajFmtPrintF(outf,"3D");
     else
 	ajFatal("Signature type unknown in sigscanlig_WriteFasta");
@@ -923,7 +923,7 @@ AjPList sigscanlig_score_ligands_patch(AjPList hits)
 	ajListPushAppend(ret, lighit);
     }
 	
-    ajListSort(ret, sigscanlig_MatchinvScore);
+    ajListSort(ret, &sigscanlig_MatchinvScore);
     
 
     ajListIterDel(&iter);
@@ -1052,7 +1052,7 @@ AjPList sigscanlig_score_ligands_site(AjPList hits)
     }
 	
 
-    ajListSort(ret, sigscanlig_MatchinvScore);
+    ajListSort(ret, &sigscanlig_MatchinvScore);
     
 
     ajListIterDel(&iter);

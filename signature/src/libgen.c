@@ -63,6 +63,7 @@
 ** PROTOTYPES  
 **
 ******************************************************************************/
+
 static void libgen_simple_matrix(AjPSeqset seqset, 
 				 AjPFile outf,
 				 AjPStr name,
@@ -128,7 +129,7 @@ int main(int argc, char **argv)
     AjPSeqset  seqset    = NULL;  /* Input for profile generating functions*/
     AjPSeq     seq       = NULL;  /* Sequence object.                      */
     AjPStr     cmd       = NULL;  /* Command line for external apps.       */
-    ajint      i         = 0;     /* Loop counter.                         */
+    ajuint     i         = 0U;    /* Loop counter.                         */
 
     AjPStr     cons      = NULL;  /* Housekeeping.                         */
 
@@ -192,7 +193,7 @@ int main(int argc, char **argv)
 	else
 	{
 	    /* Create seqset with input sequences. */
-	    for(i=0; i<scopalg->N; i++)
+	    for(i = 0U; i < scopalg->Number; i++)
             {
 		seq = ajSeqNewNameS(scopalg->Seqs[i], scopalg->Codes[i]);
 		ajStrAssignS(&seq->Acc,scopalg->Codes[i]);
@@ -228,7 +229,7 @@ int main(int argc, char **argv)
 	    else
 	    {
 		ajFmtPrintF(seqsf, "\n"); 
-		for(i=0;i<ajSeqsetGetSize(seqset);++i)
+		for(i = 0; i < ajSeqsetGetSize(seqset); i++)
 		    ajFmtPrintF(seqsf,"%S_%d   %s\n", 
 				ajSeqsetGetseqNameS(seqset, i),	
 				ajSeqsetGetseqSeqC(seqset, i));
@@ -357,11 +358,11 @@ static void libgen_simple_matrix(AjPSeqset seqset,
 				 ajint threshold)
 {
     const char *p;
-    ajint nseqs;
-    ajint mlen;
-    ajint len;
-    ajint i;
-    ajint j;
+    ajuint nseqs = 0U;
+    ajuint mlen = 0U;
+    ajuint len = 0U;
+    ajuint i = 0U;
+    ajuint j = 0U;
     ajint x;
     ajint px;
     
@@ -377,22 +378,22 @@ static void libgen_simple_matrix(AjPSeqset seqset,
     mlen = ajSeqsetGetLen(seqset);
     
     /* Check sequences are the same length. Warn if not. */
-    for(i=0;i<nseqs;++i)
+    for(i = 0U; i < nseqs; i++)
     {
         p = ajSeqsetGetseqSeqC(seqset,i);
-        if(strlen(p)!=mlen)
+        if(strlen(p) != mlen)
             ajWarn("Sequence lengths are not equal!");
     }
     
-    for(i=0;i<LIBGEN_AZ+2;++i)
+    for(i = 0U; i < LIBGEN_AZ + 2; i++)
         AJCNEW0(matrix[i], mlen);
 
     /* Load matrix. */
-    for(i=0;i<nseqs;++i)
+    for(i = 0U; i < nseqs; i++)
     {
         p = ajSeqsetGetseqSeqC(seqset,i);      
         len = strlen(p);
-        for(j=0;j<len;++j)
+        for(j = 0U; j < len; j++)
         {
             x = toupper((ajint)*p++);
             ++matrix[ajBasecodeToInt(x)][j];
@@ -401,10 +402,10 @@ static void libgen_simple_matrix(AjPSeqset seqset,
 
     /* Get consensus sequence. */
     cons = ajStrNew();
-    for(i=0;i<mlen;++i)
+    for(i = 0U; i < mlen; i++)
     {
         px=x=-INT_MAX;
-        for(j=0;j<LIBGEN_AZ-1;++j)
+        for(j = 0U; j < LIBGEN_AZ - 1; j++)
             if(matrix[j][i]>x)
             {
                 x=matrix[j][i];
@@ -415,9 +416,9 @@ static void libgen_simple_matrix(AjPSeqset seqset,
     
     /* Find maximum score for matrix. */
     maxscore=0;
-    for(i=0;i<mlen;++i)
+    for(i = 0U; i < mlen; i++)
     {
-        for(j=score=0;j<LIBGEN_AZ;++j)
+        for(j = score = 0U; j < LIBGEN_AZ; j++)
             score = AJMAX(score,matrix[j][i]);
         maxscore += score;
     }
@@ -433,14 +434,14 @@ static void libgen_simple_matrix(AjPSeqset seqset,
     ajFmtPrintF(outf,"Consensus\t%s\n",ajStrGetPtr(cons));
 
 
-    for(i=0;i<mlen;++i)
+    for(i = 0U; i < mlen; i++)
     {
-        for(j=0;j<LIBGEN_AZ;++j)
+        for(j = 0U; j < LIBGEN_AZ; j++)
             ajFmtPrintF(outf,"%-2d ",matrix[j][i]);
         ajFmtPrintF(outf,"\n");
     }
     
-    for(i=0;i<LIBGEN_AZ+2;++i)
+    for(i = 0U; i < LIBGEN_AZ + 2; i++)
         AJFREE (matrix[i]);
 
     ajStrDel(&cons);
@@ -478,17 +479,17 @@ static void libgen_gribskov_profile(AjPSeqset seqset,
 				    float gapextend, 
 				    AjPStr *cons)
 {
-    AjPMatrixf matrix=0;
-    AjPSeqCvt cvt=0;
-    AjPStr mname=NULL;
+    AjPMatrixf matrix = NULL;
+    AjPSeqCvt cvt = NULL;
+    AjPStr mname = NULL;
     float **mat;
-    ajint nseqs;
-    ajint mlen;
-    ajint i;
-    ajint j;
-    static char *valid="ACDEFGHIKLMNPQRSTVWY";
-    const char *p;
-    char *q;
+    ajuint nseqs = 0U;
+    ajuint mlen = 0U;
+    ajuint i = 0U;
+    ajuint j = 0U;
+    const char *valid = "ACDEFGHIKLMNPQRSTVWY";
+    const char *p = NULL;
+    const char *q = NULL;
     float score;
     float sum;
     ajint   gsum;
@@ -497,7 +498,7 @@ static void libgen_gribskov_profile(AjPSeqset seqset,
     float   psum;
     ajint  start;
     ajint  end;
-    ajint  pos;
+    ajuint  pos = 0U;
     float  x;
     ajint  px;
     
@@ -523,24 +524,24 @@ static void libgen_gribskov_profile(AjPSeqset seqset,
        position. */
     AJCNEW(gaps, mlen);
 
-    for(i=0;i<mlen;++i)
+    for(i = 0U; i < mlen; i++)
     {
         gsum=0;
-        for(j=0;j<nseqs;++j)
+        for(j = 0U; j < nseqs; j++)
         {
             p=ajSeqsetGetseqSeqC(seqset,j);
-            if(i>=strlen(p))
+            if(i >= strlen(p))
                 continue;
-            if(ajBasecodeToInt(p[i])!=27)  /* If not a gap. */
+            if(ajBasecodeToInt(p[i]) != 27)  /* If not a gap. */
                 continue;
             pos = i;
-            while(pos>-1 && ajBasecodeToInt(p[pos])==27)
+            while(pos != 0U && ajBasecodeToInt(p[pos]) == 27)
                 --pos;
             start = ++pos;
-            pos=i;
-            while(pos<mlen && ajBasecodeToInt(p[pos])==27)
+            pos = i;
+            while(pos < mlen && ajBasecodeToInt(p[pos]) == 27)
                 ++pos;
-            end = pos-1;
+            end = pos - 1;
             gsum = AJMAX(gsum, (end-start)+1);
         }
         gaps[i]=gsum;
@@ -552,7 +553,7 @@ static void libgen_gribskov_profile(AjPSeqset seqset,
     p=valid;
     while(*p)
     {
-        q=valid;
+        q = valid;
         while(*q)
         {
             mmax=(mmax>sub[ajSeqcvtGetCodeK(cvt,*p)]
@@ -573,8 +574,8 @@ static void libgen_gribskov_profile(AjPSeqset seqset,
      **  Count the number of times each residue occurs at each
      **  position in the alignment
      */
-    for(i=0;i<mlen;++i)
-        for(j=0;j<nseqs;++j)
+    for(i = 0U; i < mlen; i++)
+        for(j = 0U; j < nseqs; j++)
         {
             p=ajSeqsetGetseqSeqC(seqset,j);
             if(i>=strlen(p))
@@ -585,10 +586,10 @@ static void libgen_gribskov_profile(AjPSeqset seqset,
 
 
     px = -INT_MAX;
-    for(i=0;i<mlen;++i)
+    for(i = 0U; i < mlen; i++)
     {
         x = (float)-INT_MAX;
-        for(j=0;j<LIBGEN_AZ-1;++j)
+        for(j = 0U; j < LIBGEN_AZ - 1; j++)
             if(weights[i][j]>x)
             {
                 x=weights[i][j];
@@ -599,18 +600,18 @@ static void libgen_gribskov_profile(AjPSeqset seqset,
     
     
     /* Normalise the weights. */
-    for(i=0;i<mlen;++i)
-        for(j=0;j<GRIBSKOV_LENGTH;++j)
+    for(i = 0U; i < mlen; i++)
+        for(j = 0U; j < GRIBSKOV_LENGTH; j++)
             weights[i][j] /= (float)nseqs;
 
 
     /* Create the profile matrix n*GRIBSKOV_LENGTH and zero it. */
     AJCNEW(mat, mlen);
-    for(i=0;i<mlen;++i)
+    for(i = 0U; i < mlen; i++)
         AJCNEW0(mat[i],GRIBSKOV_LENGTH);
 
     /* Fill the profile with aa scores. */
-    for(i=0;i<mlen;++i)
+    for(i = 0U; i < mlen; i++)
         for(p=valid;*p;++p)
         {
             sum = 0.0;
@@ -627,17 +628,17 @@ static void libgen_gribskov_profile(AjPSeqset seqset,
         }
 
     /* Calculate gap penalties. */
-    for(i=0;i<mlen;++i)
+    for(i = 0U; i < mlen; i++)
         mat[i][GRIBSKOV_LENGTH-1]=
 	    (mmax / (gapopen+gapextend+(float)gaps[i]));
 
 
     /* Get maximum matrix score. */
     psum=0.0;
-    for(i=0;i<mlen;++i)
+    for(i = 0U; i < mlen; i++)
     {
         pmax= (float)-INT_MAX;
-        for(j=0;j<LIBGEN_AZ;++j)
+        for(j = 0U; j < LIBGEN_AZ; j++)
             pmax=(pmax>mat[i][j]) ? pmax : mat[i][j];
         psum+=pmax;
     }
@@ -658,15 +659,15 @@ static void libgen_gribskov_profile(AjPSeqset seqset,
     ajFmtPrintF(outf,"Gap_extend\t%.2f\n",gapextend);
     ajFmtPrintF(outf,"Consensus\t%s\n",ajStrGetPtr(*cons));
     
-    for(i=0;i<mlen;++i)
+    for(i = 0U; i < mlen; i++)
     {
-        for(j=0;j<GRIBSKOV_LENGTH;++j)
+        for(j = 0U; j < GRIBSKOV_LENGTH; j++)
             ajFmtPrintF(outf,"%.2f ",mat[i][j]);
         ajFmtPrintF(outf,"%.2f\n",mat[i][GRIBSKOV_LENGTH-1]);
     }
 
 
-    for(i=0;i<mlen;++i)
+    for(i = 0U; i < mlen; i++)
     {
         AJFREE (mat[i]);
         AJFREE (weights[i]);
@@ -678,9 +679,11 @@ static void libgen_gribskov_profile(AjPSeqset seqset,
 
     ajMatrixfDel(&matrix);
     
-
     return;
 }
+
+
+
 
 /* @funcstatic  libgen_henikoff_profile *************************************
 **
@@ -698,6 +701,7 @@ static void libgen_gribskov_profile(AjPSeqset seqset,
 ** @return [void]
 ** @@
 ****************************************************************************/
+
 static void libgen_henikoff_profile(AjPSeqset seqset, 
 				    AjPMatrixf matrix, 
 				    ajint threshold,  
@@ -707,14 +711,14 @@ static void libgen_henikoff_profile(AjPSeqset seqset,
 				    float gapextend, 
 				    AjPStr *cons)
 {
-    float **mat;
-    ajint nseqs;
-    ajint mlen;
-    ajint i;
-    ajint j;
-    static char *valid="ACDEFGHIKLMNPQRSTVWY";
-    const char *p;
-    char *q;
+    float **mat = NULL;
+    ajuint nseqs = 0U;
+    ajuint mlen = 0U;
+    ajuint i = 0U;
+    ajuint j = 0U;
+    const char *valid = "ACDEFGHIKLMNPQRSTVWY";
+    const char *p = NULL;
+    const char *q = NULL;
     float score;
     float sum;
     float psum;
@@ -723,7 +727,7 @@ static void libgen_henikoff_profile(AjPSeqset seqset,
     ajint   mmax;
     ajint  start;
     ajint  end;
-    ajint  pos;
+    ajuint  pos = 0U;
     
     float **weights;
     ajint *gaps;
@@ -735,7 +739,6 @@ static void libgen_henikoff_profile(AjPSeqset seqset,
 
     AjPSeqCvt cvt=NULL;
     
-
     nseqs = ajSeqsetGetSize(seqset);
     mlen  = ajSeqsetGetLen(seqset);
 
@@ -747,25 +750,25 @@ static void libgen_henikoff_profile(AjPSeqset seqset,
      * including that position
      */
     AJCNEW(gaps, mlen);
-    for(i=0;i<mlen;++i)
+    for(i = 0U; i < mlen; i++)
     {
-        gsum=0;
-        for(j=0;j<nseqs;++j)
+        gsum = 0;
+        for(j = 0U; j < nseqs; j++)
         {
             p=ajSeqsetGetseqSeqC(seqset,j);
-            if(i>=strlen(p))
+            if(i >= strlen(p))
                 continue;
             if(ajBasecodeToInt(p[i])!=27)
                 continue; /* If not a gap. */
             pos = i;
-            while(pos>-1 && ajBasecodeToInt(p[pos])==27)
+            while(pos != 0U && ajBasecodeToInt(p[pos]) == 27)
                 --pos;
             start = ++pos;
-            pos=i;
-            while(pos<mlen && ajBasecodeToInt(p[pos])==27)
+            pos = i;
+            while(pos < mlen && ajBasecodeToInt(p[pos]) == 27)
                 ++pos;
-            end = pos-1;
-            gsum = AJMAX(gsum, (end-start)+1);
+            end = pos - 1;
+            gsum = AJMAX(gsum, (end-start) + 1);
         }
         gaps[i]=gsum;
     }
