@@ -8,7 +8,7 @@ AC_INIT([MYEMBOSS],
 [emboss-bug@emboss.open-bio.org],
 [MYEMBOSS],
 [http://emboss.open-bio.org/])
-AC_REVISION([$Revision: 1.35 $])
+AC_REVISION([$Revision: 1.36 $])
 AC_CONFIG_SRCDIR([src/template.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
