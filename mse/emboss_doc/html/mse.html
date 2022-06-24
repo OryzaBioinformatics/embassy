@@ -46,7 +46,7 @@ Please help by correcting and extending the Wiki pages.
 <H2>
     Function
 </H2>
-Multiple Sequence Editor
+Multiple sequence editor
 <!--
 DON'T WRITE ANYTHING HERE.
 IT IS DONE FOR YOU.
@@ -98,7 +98,7 @@ Here is a sample session with <b>mse</b>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
 % <b>mse dna.msf msf::mse.msf </b>
-Multiple Sequence Editor
+Multiple sequence editor
 
 </pre></td></tr></table><p>
 <p>
@@ -112,8 +112,8 @@ Multiple Sequence Editor
 
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
-Multiple Sequence Editor
-Version: EMBOSS:6.4.0.0
+Multiple sequence editor
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqset     File containing a sequence alignment
@@ -137,7 +137,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -238,7 +241,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-sequence" associated seqset qualifiers
+<td align="left" colspan=5>"-sequence" associated seqset qualifiers
 </td>
 </tr>
 
@@ -307,11 +310,35 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
+<td> -scircular1<br>-scircular_sequence</td>
+<td>boolean</td>
+<td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td> -sformat1<br>-sformat_sequence</td>
 <td>string</td>
 <td>Input sequence format</td>
 <td>Any string</td>
 <td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -iquery1<br>-iquery_sequence</td>
+<td>string</td>
+<td>Input query fields or ID list</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -ioffset1<br>-ioffset_sequence</td>
+<td>integer</td>
+<td>Input start position offset</td>
+<td>Any integer value</td>
+<td>0</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -355,7 +382,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outseq" associated seqoutset qualifiers
+<td align="left" colspan=5>"-outseq" associated seqoutset qualifiers
 </td>
 </tr>
 
@@ -885,6 +912,15 @@ Please report all bugs to the EMBOSS bug team (emboss-bug&nbsp;&copy;&nbsp;embos
 
 This program is intended to be used by everyone and everything, from naive users to embedded scripts.
 
+
+
+<H2>
+    Comments
+</H2>
+
+<pre>
+None
+</pre>
 
 
 

@@ -73,7 +73,7 @@ Boolean start;
 	else
 	  printf(" %s [ %s ] ? ",prompt, string);
 
-Get:	if ( gets(newString) == NULL ) { printf("\n"); exit(0);}
+  Get:	if ( fgets(newString,512, stdin) == NULL ) { printf("\n"); exit(0);}
 
 
 	length = strlen(newString);

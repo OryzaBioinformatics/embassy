@@ -1,0 +1,26 @@
+#######################################
+# MSE
+#######################################
+
+ID mse-ex
+AB mse
+AA mse
+CL ../../data/dna.msf msf::mse.msf
+IK :21
+IK :1 up
+IK acgt:25 28 delete
+IK ----:exit
+FI stderr
+FC = 1
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FK stdout
+FZ > 2875
+FP /exit/
+FI mse.msf
+FC = 25
+FP /^MSFM2      ACGTACGTACGTACGTACGTacgt\.\.\.\.ACGTACGTACGTACGTACGTAC\n/
+FP 9 /^MSFM/
+//
+

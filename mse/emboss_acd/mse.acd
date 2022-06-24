@@ -1,10 +1,10 @@
 application: mse [
-  documentation: "Multiple Sequence Editor"
+  documentation: "Multiple sequence editor"
   groups: "Alignment:multiple"
   gui: "N"
   embassy: "mse"
-  relations: "EDAM:0000182 topic Sequence alignment"
-  relations: "EDAM:0002122 operation Sequence alignment editing"
+  relations: "EDAM_topic:0182 Sequence alignment"
+  relations: "EDAM_operation:2122 Sequence alignment file processing"
 ]
 
 section: input [
@@ -18,7 +18,7 @@ section: input [
     type: "gapany"
     aligned: "N"
     nullok: "Y"
-    relations: "EDAM:0000863 data Sequence alignment"
+    relations: "EDAM_data:0863 Sequence alignment"
   ]
 
 endsection: input
@@ -31,13 +31,13 @@ section: advanced [
   boolean: gcgmode [
     information: "Use GCG Unix mode for keyboard shortcuts and commands"
     default: "N"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
   
   boolean: protein [
     information: "Sequences are protein"
     default: "$(acdprotein)"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
   
 endsection: advanced
@@ -49,7 +49,7 @@ section: output [
 
   seqoutset: outseq [
     parameter: "Y"
-    relations: "EDAM:0000863 data Sequence alignment"
+    relations: "EDAM_data:0863 Sequence alignment"
   ]
 
 endsection: output
