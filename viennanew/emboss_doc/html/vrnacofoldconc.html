@@ -1,0 +1,1430 @@
+<HTML>
+<HEAD>
+  <TITLE>
+  EMBASSY: VIENNA: vrnacofoldconc
+  </TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" text="#000000">
+
+<table align=center border=0 cellspacing=0 cellpadding=0>
+<tr><td valign=top>
+<A HREF="/" ONMOUSEOVER="self.status='Go to the EMBOSS home page';return true"><img border=0 src="emboss_icon.jpg" alt="" width=150 height=48></a>
+</td>
+<td align=left valign=middle>
+<b><font size="+6">
+vrnacofoldconc
+</font></b>
+</td></tr>
+</table>
+<br>&nbsp;
+<p>
+
+
+
+<H2>
+    Function
+</H2>
+RNA cofolding with concentrations
+<!--
+DON'T WRITE ANYTHING HERE.
+IT IS DONE FOR YOU.
+-->
+
+
+
+
+<H2>
+    Description
+</H2>
+
+This is a port of the Vienna RNA package program RNAcofold.
+<p>
+The original program has additional inputs and produces different
+outputs, depending on the options selected. In the EMBASSY
+implementation it is split into
+<b>vrnacofold</b> <b>vrnacofoldconc</b> and <b>vrnacofoldpf</b>
+
+
+
+<H2>
+    Algorithm
+</H2>
+
+See the original documentation for the Vienna RNA package
+http://www.tbi.univie.ac.at/~ivo/RNA/
+
+
+
+
+<H2>
+    Usage
+</H2>
+
+<!--  
+	Example usage, as run from the command-line.
+        Many examples illustrating different behaviours is good.
+ -->
+
+<b>Here is a sample session with vrnacofoldconc</b>
+<p>
+
+<p>
+<table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
+
+% <b>vrnacofoldconc </b>
+RNA cofolding with concentrations
+Input nucleotide sequence: <b>cofold-red.fasta</b>
+Second nucleotide sequence: <b>cofold-blue.fasta</b>
+Vienna RNA concentration data file: <b>cofold-conc.dat</b>
+Vienna RNAfold output file [red.vrnacofoldconc]: <b></b>
+
+</pre></td></tr></table><p>
+<p>
+<a href="#input.1">Go to the input files for this example</a><br><a href="#output.1">Go to the output files for this example</a><p><p>
+
+
+
+<H2>
+    Command line arguments
+</H2>
+
+<table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
+<pre>
+   Standard (Mandatory) qualifiers:
+  [-asequence]         sequence   Nucleotide sequence filename and optional
+                                  format, or reference (input USA)
+  [-bsequence]         sequence   Nucleotide sequence filename and optional
+                                  format, or reference (input USA)
+  [-concentrationfile] infile     Vienna RNA concentration data file
+  [-outfile]           outfile    [*.vrnacofoldconc] Vienna RNAfold output
+                                  file
+
+   Additional (Optional) qualifiers: (none)
+   Advanced (Unprompted) qualifiers:
+   -aconstraintfile    infile     Vienna RNA structure constraints file
+                                  (optional)
+   -bconstraintfile    infile     Second vienna RNA structure constraints file
+                                  (optional)
+   -paramfile          infile     Vienna RNA parameters file (optional)
+   -temperature        float      [37.0] Temperature (Any numeric value)
+   -[no]gu             boolean    [Y] Allow GU pairs
+   -[no]closegu        boolean    [Y] Allow GU pairs at end of helices
+   -[no]lp             boolean    [Y] Allow lonely pairs
+   -[no]convert        boolean    [Y] Convert T to U
+   -nsbases            string     Non-standard bases (Any string is accepted)
+   -[no]tetraloop      boolean    [Y] Stabilizing energies for tetra-loops
+   -energy             menu       [0] Rarely used option to fold sequences
+                                  from the ABCD... alphabet (Values: 0 (BP); 1
+                                  (Any with GC); 2 (Any with AU parameters))
+   -scale              float      [1.07] Estimate of ensemble free energy (Any
+                                  numeric value)
+   -dangles            menu       [1] Method (Values: 0 (Ignore); 1 (Only
+                                  unpaired bases for just one dangling end); 2
+                                  (Always use dangling energies); 3 (Allow
+                                  coaxial stacking of adjacent helices))
+   -paired             boolean    [N] Calculate probabilities of base pairing
+   -ssoutfile          outfile    [*.vrnacofoldconc] Output file name
+   -aoutfile           outfile    [*.vrnacofoldconc] First (a) vienna dotplot
+                                  output file
+   -aaoutfile          outfile    [*.vrnacofoldconc] Second (a-a) vienna
+                                  dotplot output file
+   -boutfile           outfile    [*.vrnacofoldconc] Third (b) vienna dotplot
+                                  output file
+   -bboutfile          outfile    [*.vrnacofoldconc] Fourth (b-b) vienna
+                                  dotplot output file
+   -aboutfile          outfile    [*.vrnacofoldconc] Fifth (a-b) vienna
+                                  dotplot output file
+
+   Associated qualifiers:
+
+   "-asequence" associated qualifiers
+   -sbegin1            integer    Start of the sequence to be used
+   -send1              integer    End of the sequence to be used
+   -sreverse1          boolean    Reverse (if DNA)
+   -sask1              boolean    Ask for begin/end/reverse
+   -snucleotide1       boolean    Sequence is nucleotide
+   -sprotein1          boolean    Sequence is protein
+   -slower1            boolean    Make lower case
+   -supper1            boolean    Make upper case
+   -sformat1           string     Input sequence format
+   -sdbname1           string     Database name
+   -sid1               string     Entryname
+   -ufo1               string     UFO features
+   -fformat1           string     Features format
+   -fopenfile1         string     Features file name
+
+   "-bsequence" associated qualifiers
+   -sbegin2            integer    Start of the sequence to be used
+   -send2              integer    End of the sequence to be used
+   -sreverse2          boolean    Reverse (if DNA)
+   -sask2              boolean    Ask for begin/end/reverse
+   -snucleotide2       boolean    Sequence is nucleotide
+   -sprotein2          boolean    Sequence is protein
+   -slower2            boolean    Make lower case
+   -supper2            boolean    Make upper case
+   -sformat2           string     Input sequence format
+   -sdbname2           string     Database name
+   -sid2               string     Entryname
+   -ufo2               string     UFO features
+   -fformat2           string     Features format
+   -fopenfile2         string     Features file name
+
+   "-outfile" associated qualifiers
+   -odirectory4        string     Output directory
+
+   "-ssoutfile" associated qualifiers
+   -odirectory         string     Output directory
+
+   "-aoutfile" associated qualifiers
+   -odirectory         string     Output directory
+
+   "-aaoutfile" associated qualifiers
+   -odirectory         string     Output directory
+
+   "-boutfile" associated qualifiers
+   -odirectory         string     Output directory
+
+   "-bboutfile" associated qualifiers
+   -odirectory         string     Output directory
+
+   "-aboutfile" associated qualifiers
+   -odirectory         string     Output directory
+
+   General qualifiers:
+   -auto               boolean    Turn off prompts
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
+   -options            boolean    Prompt for standard and additional values
+   -debug              boolean    Write debug output to program.dbg
+   -verbose            boolean    Report some/full command line options
+   -help               boolean    Report command line options. More
+                                  information on associated and general
+                                  qualifiers can be found with -help -verbose
+   -warning            boolean    Report warnings
+   -error              boolean    Report errors
+   -fatal              boolean    Report fatal errors
+   -die                boolean    Report dying program messages
+
+</pre>
+</td></tr></table>
+<P>
+<table border cellspacing=0 cellpadding=3 bgcolor="#ccccff">
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=2>Standard (Mandatory) qualifiers</th>
+<th align="left">Allowed values</th>
+<th align="left">Default</th>
+</tr>
+
+<tr>
+<td>[-asequence]<br>(Parameter 1)</td>
+<td>Nucleotide sequence filename and optional format, or reference (input USA)</td>
+<td>Readable sequence</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>[-bsequence]<br>(Parameter 2)</td>
+<td>Nucleotide sequence filename and optional format, or reference (input USA)</td>
+<td>Readable sequence</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>[-concentrationfile]<br>(Parameter 3)</td>
+<td>Vienna RNA concentration data file</td>
+<td>Input file</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>[-outfile]<br>(Parameter 4)</td>
+<td>Vienna RNAfold output file</td>
+<td>Output file</td>
+<td><i>&lt;*&gt;</i>.vrnacofoldconc</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=2>Additional (Optional) qualifiers</th>
+<th align="left">Allowed values</th>
+<th align="left">Default</th>
+</tr>
+
+<tr>
+<td colspan=4>(none)</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=2>Advanced (Unprompted) qualifiers</th>
+<th align="left">Allowed values</th>
+<th align="left">Default</th>
+</tr>
+
+<tr>
+<td>-aconstraintfile</td>
+<td>Vienna RNA structure constraints file (optional)</td>
+<td>Input file</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>-bconstraintfile</td>
+<td>Second vienna RNA structure constraints file (optional)</td>
+<td>Input file</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>-paramfile</td>
+<td>Vienna RNA parameters file (optional)</td>
+<td>Input file</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>-temperature</td>
+<td>Temperature</td>
+<td>Any numeric value</td>
+<td>37.0</td>
+</tr>
+
+<tr>
+<td>-[no]gu</td>
+<td>Allow GU pairs</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-[no]closegu</td>
+<td>Allow GU pairs at end of helices</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-[no]lp</td>
+<td>Allow lonely pairs</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-[no]convert</td>
+<td>Convert T to U</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-nsbases</td>
+<td>Non-standard bases</td>
+<td>Any string is accepted</td>
+<td><i>An empty string is accepted</i></td>
+</tr>
+
+<tr>
+<td>-[no]tetraloop</td>
+<td>Stabilizing energies for tetra-loops</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-energy</td>
+<td>Rarely used option to fold sequences from the ABCD... alphabet</td>
+<td><table><tr><td>0</td> <td><i>(BP)</i></td></tr><tr><td>1</td> <td><i>(Any with GC)</i></td></tr><tr><td>2</td> <td><i>(Any with AU parameters)</i></td></tr></table></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>-scale</td>
+<td>Estimate of ensemble free energy</td>
+<td>Any numeric value</td>
+<td>1.07</td>
+</tr>
+
+<tr>
+<td>-dangles</td>
+<td>Method</td>
+<td><table><tr><td>0</td> <td><i>(Ignore)</i></td></tr><tr><td>1</td> <td><i>(Only unpaired bases for just one dangling end)</i></td></tr><tr><td>2</td> <td><i>(Always use dangling energies)</i></td></tr><tr><td>3</td> <td><i>(Allow coaxial stacking of adjacent helices)</i></td></tr></table></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>-paired</td>
+<td>Calculate probabilities of base pairing</td>
+<td>Boolean value Yes/No</td>
+<td>No</td>
+</tr>
+
+<tr>
+<td>-ssoutfile</td>
+<td>Output file name</td>
+<td>Output file</td>
+<td><i>&lt;*&gt;</i>.vrnacofoldconc</td>
+</tr>
+
+<tr>
+<td>-aoutfile</td>
+<td>First (a) vienna dotplot output file</td>
+<td>Output file</td>
+<td><i>&lt;*&gt;</i>.vrnacofoldconc</td>
+</tr>
+
+<tr>
+<td>-aaoutfile</td>
+<td>Second (a-a) vienna dotplot output file</td>
+<td>Output file</td>
+<td><i>&lt;*&gt;</i>.vrnacofoldconc</td>
+</tr>
+
+<tr>
+<td>-boutfile</td>
+<td>Third (b) vienna dotplot output file</td>
+<td>Output file</td>
+<td><i>&lt;*&gt;</i>.vrnacofoldconc</td>
+</tr>
+
+<tr>
+<td>-bboutfile</td>
+<td>Fourth (b-b) vienna dotplot output file</td>
+<td>Output file</td>
+<td><i>&lt;*&gt;</i>.vrnacofoldconc</td>
+</tr>
+
+<tr>
+<td>-aboutfile</td>
+<td>Fifth (a-b) vienna dotplot output file</td>
+<td>Output file</td>
+<td><i>&lt;*&gt;</i>.vrnacofoldconc</td>
+</tr>
+
+</table>
+
+<!--
+DON'T WRITE ANYTHING HERE.
+IT IS DONE FOR YOU.
+-->
+
+
+
+
+
+
+
+
+<H2>
+    Input file format
+</H2>
+
+<!-- 
+        This includes example input file formats.
+        This should be a detailed description and example - assume
+        someone will want to parse this file and will want to know what
+        happens in unusual cases - null input, etc. 
+   -->
+
+<b>vrnacofoldconc</b> reads any normal sequence USAs.
+
+<p>
+
+
+<a name="input.1"></a>
+<h3>Input files for usage example </h3>
+<p><h3>File: cofold-red.fasta</h3>
+<table width="90%"><tr><td bgcolor="#FFCCFF">
+<pre>
+&gt;red
+AUGAAGAUGA
+</pre>
+</td></tr></table><p>
+<p><h3>File: cofold-blue.fasta</h3>
+<table width="90%"><tr><td bgcolor="#FFCCFF">
+<pre>
+&gt;blue
+CUGUCUGUCUUGAGACA
+</pre>
+</td></tr></table><p>
+<p><h3>File: cofold-conc.dat</h3>
+<table width="90%"><tr><td bgcolor="#FFCCFF">
+<pre>
+10 10
+</pre>
+</td></tr></table><p>
+
+
+
+
+
+<H2>
+    Output file format
+</H2>
+
+<!-- 
+        This includes example output file formats.
+        This should be a detailed description and example - assume
+        someone will want to parse this file and will want to know what
+        happens in unusual cases - null output, errors etc. 
+
+        If you wish to include the standard description of the avalable
+	report formats, use:
+#include file="inc/reportformats.ihtml"
+   -->
+
+<b>vrnacofoldconc</b> 
+outputs a graph to the specified graphics device. 
+outputs a report format file. The default format is ...
+
+
+<p>
+
+
+<a name="output.1"></a>
+<h3>Output files for usage example </h3>
+<p><h3>File: red.vrnacofoldconc</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+AUGAAGAUGA&amp;CUGUCUGUCUUGAGACA
+....((((..&amp;..))))(((....))). ( -4.40)
+....((((,.&amp;..)))}(((....))). [ -5.88]
+ frequency of mfe structure in ensemble 0.279848 , delta G binding= -1.57
+Free Energies:
+AB		AA		BB		A		B
+-5.838299	1.006546	-16.231717	-0.003662	-4.266495
+Kaa..0.193006 266048 12.7351
+Initial concentrations		relative Equilibrium concentrations
+A		 B		 AB		 AA		 BB		 A		 B
+10        	10        	0.01066 	0.14707 	0.24456 	0.19519 	0.00021
+</pre>
+</td></tr></table><p>
+<p><h3>File: red.ssps</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+%!PS-Adobe-3.0 EPSF-3.0
+%%Creator: ePS_dot.c,v 1.6 2008/06/26 08:40:00 rice Exp $, ViennaRNA-1.7.2
+%%CreationDate: Sun Jul 15 12:00:00 2007
+%%Title: RNA Secondary Structure Plot
+%%BoundingBox: 66 210 518 662
+%%DocumentFonts: Helvetica
+%%Pages: 1
+%%EndComments
+
+%Options: 
+% to switch off outline pairs of sequence comment or
+% delete the appropriate line near the end of the file
+
+%%BeginProlog
+/RNAplot 100 dict def
+RNAplot begin
+/fsize  14 def
+/outlinecolor {0.2 setgray} bind def
+/paircolor    {0.2 setgray} bind def
+/seqcolor     {0   setgray} bind def
+/cshow  { dup stringwidth pop -2 div fsize -3 div rmoveto show} bind def
+/min { 2 copy gt { exch } if pop } bind def
+/max { 2 copy lt { exch } if pop } bind def
+/drawoutline {
+  gsave outlinecolor newpath
+  coor 0 get aload pop 0.8 0 360 arc % draw 5' circle of 1st sequence
+  currentdict /cutpoint known        % check if cutpoint is defined
+  {coor 0 cutpoint getinterval
+   {aload pop lineto} forall         % draw outline of 1st sequence
+   coor cutpoint get aload pop
+   2 copy moveto 0.8 0 360 arc       % draw 5' circle of 2nd sequence
+   coor cutpoint coor length cutpoint sub getinterval
+   {aload pop lineto} forall}        % draw outline of 2nd sequence
+  {coor {aload pop lineto} forall}   % draw outline as a whole
+  ifelse
+  stroke grestore
+} bind def
+/drawpairs {
+  paircolor
+  0.7 setlinewidth
+  [9 3.01] 9 setdash
+  newpath
+  pairs {aload pop
+     coor exch 1 sub get aload pop moveto
+     coor exch 1 sub get aload pop lineto
+  } forall
+  stroke
+} bind def
+% draw bases
+/drawbases {
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+AUGAAGAUGACUGUCUGUCUUGAGACA\
+) def
+/coor [
+[96.276 111.415]
+[91.331 110.049]
+[86.992 106.486]
+[84.234 101.044]
+[83.858 94.465]
+[73.252 83.858]
+[62.645 73.252]
+[52.039 62.645]
+[36.067 58.926]
+[31.562 43.157]
+[43.157 31.562]
+[58.926 36.067]
+[62.645 52.039]
+[73.252 62.645]
+[83.858 73.252]
+[94.465 83.858]
+[107.979 90.367]
+[122.885 92.046]
+[137.791 93.726]
+[152.597 86.675]
+[165.951 96.194]
+[164.115 112.490]
+[148.978 118.799]
+[136.111 108.631]
+[121.206 106.952]
+[106.300 105.272]
+[104.357 108.419]
+] def
+/pairs [
+[5 16]
+[6 15]
+[7 14]
+[8 13]
+[17 26]
+[18 25]
+[19 24]
+] def
+
+init
+
+% switch off outline pairs or bases by removing these lines
+drawoutline
+drawpairs
+drawbases
+% show it
+showpage
+end
+%%EOF
+</pre>
+</td></tr></table><p>
+<p><h3>File: red.aps</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+%!PS-Adobe-3.0 EPSF-3.0
+%%Title: RNA Dot Plot
+%%Creator: ePS_dot.c,v 1.6 2008/06/26 08:40:00 rice Exp $, ViennaRNA-1.7.2
+%%CreationDate: Sun Jul 15 12:00:00 2007
+%%BoundingBox: 66 211 518 662
+%%DocumentFonts: Helvetica
+%%Pages: 1
+%%EndComments
+
+%Options: -d2 
+% 
+%Monomer A FreeEnergy= -0.003661585
+
+%This file contains the square roots of the base pair probabilities in the form
+% i  j  sqrt(p(i,j)) ubox
+
+%%BeginProlog
+/DPdict 100 dict def
+DPdict begin
+/logscale false def
+/lpmin 1e-05 log def
+
+/box { %size x y box - draws box centered on x,y
+   2 index 0.5 mul sub            % x -= 0.5
+   exch 2 index 0.5 mul sub exch  % y -= 0.5
+   3 -1 roll dup rectfill
+} bind def
+
+/ubox {
+   logscale {
+      log dup add lpmin div 1 exch sub dup 0 lt { pop 0 } if
+   } if
+   3 1 roll
+   exch len exch sub 1 add box
+} bind def
+
+/lbox {
+   3 1 roll
+   len exch sub 1 add box
+} bind def
+
+/drawseq {
+% print sequence along all 4 sides
+[ [0.7 -0.3 0 ]
+  [0.7 0.7 len add 0]
+  [-0.3 len sub -0.4 -90]
+  [-0.3 len sub 0.7 len add -90]
+] {
+   gsave
+    aload pop rotate translate
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+     len lineto 
+     dup
+     len exch sub 0 exch moveto
+     len exch len exch sub lineto
+     stroke
+  } for
+  [] 0 setdash
+  0.04 setlinewidth 
+  currentdict /cutpoint known {
+    cutpoint 1 sub
+    dup dup -1 moveto len 1 add lineto
+    len exch sub dup
+    -1 exch moveto len 1 add exch lineto
+    stroke
+  } if
+  0.5 neg dup translate
+} bind def
+
+end
+%%EndProlog
+DPdict begin
+%delete next line to get rid of title
+270 665 moveto /Helvetica findfont 14 scalefont setfont (red.aps) show
+
+/sequence { (\
+AUGAAGAUGA\
+) } def
+/len { sequence length } bind def
+
+72 216 translate
+72 6 mul len 1 add div dup scale
+/Helvetica findfont 0.95 scalefont setfont
+
+drawseq
+0.5 dup translate
+% draw diagonal
+0.04 setlinewidth
+0 len moveto len 0 lineto stroke 
+
+drawgrid
+%data starts here
+1 8 0.056921184 ubox
+2 6 0.010665222 ubox
+2 7 0.059657315 ubox
+2 9 0.037641368 ubox
+2 10 0.014667470 ubox
+3 8 0.016991073 ubox
+4 8 0.013136244 ubox
+showpage
+end
+%%EOF
+</pre>
+</td></tr></table><p>
+<p><h3>File: red.aaps</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+%!PS-Adobe-3.0 EPSF-3.0
+%%Title: RNA Dot Plot
+%%Creator: ePS_dot.c,v 1.6 2008/06/26 08:40:00 rice Exp $, ViennaRNA-1.7.2
+%%CreationDate: Sun Jul 15 12:00:00 2007
+%%BoundingBox: 66 211 518 662
+%%DocumentFonts: Helvetica
+%%Pages: 1
+%%EndComments
+
+%Options: -d2 
+% 
+%Homodimer AA FreeEnergy= 1.006545912
+
+%This file contains the square roots of the base pair probabilities in the form
+% i  j  sqrt(p(i,j)) ubox
+
+%%BeginProlog
+/DPdict 100 dict def
+DPdict begin
+/logscale false def
+/lpmin 1e-05 log def
+
+/box { %size x y box - draws box centered on x,y
+   2 index 0.5 mul sub            % x -= 0.5
+   exch 2 index 0.5 mul sub exch  % y -= 0.5
+   3 -1 roll dup rectfill
+} bind def
+
+/ubox {
+   logscale {
+      log dup add lpmin div 1 exch sub dup 0 lt { pop 0 } if
+   } if
+   3 1 roll
+   exch len exch sub 1 add box
+} bind def
+
+/lbox {
+   3 1 roll
+   len exch sub 1 add box
+} bind def
+
+/drawseq {
+% print sequence along all 4 sides
+[ [0.7 -0.3 0 ]
+  [0.7 0.7 len add 0]
+  [-0.3 len sub -0.4 -90]
+  [-0.3 len sub 0.7 len add -90]
+] {
+   gsave
+    aload pop rotate translate
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+0 len moveto len 0 lineto stroke 
+
+drawgrid
+%data starts here
+1 8 0.012265566 ubox
+1 12 0.215587153 ubox
+1 18 0.288802765 ubox
+2 6 0.007382632 ubox
+2 7 0.017136911 ubox
+2 9 0.006557723 ubox
+2 11 0.215587153 ubox
+2 13 0.177137725 ubox
+2 14 0.261895917 ubox
+2 15 0.174189834 ubox
+2 16 0.162531888 ubox
+2 17 0.302055878 ubox
+2 19 0.178963082 ubox
+2 20 0.138746812 ubox
+3 8 0.007237926 ubox
+3 12 0.177137725 ubox
+3 18 0.177773670 ubox
+4 8 0.006556812 ubox
+4 12 0.261895917 ubox
+4 18 0.190988815 ubox
+5 12 0.174189834 ubox
+5 18 0.177450624 ubox
+6 12 0.162531888 ubox
+6 18 0.147070716 ubox
+7 12 0.302055878 ubox
+7 18 0.394330909 ubox
+8 11 0.288802765 ubox
+8 13 0.177773670 ubox
+8 14 0.190988815 ubox
+8 15 0.177450624 ubox
+8 16 0.147070716 ubox
+8 17 0.394330909 ubox
+8 19 0.176519887 ubox
+8 20 0.098710624 ubox
+9 12 0.178963082 ubox
+9 18 0.176519887 ubox
+10 12 0.138746812 ubox
+10 18 0.098710624 ubox
+11 18 0.012265566 ubox
+12 16 0.007382632 ubox
+12 17 0.017136911 ubox
+12 19 0.006557723 ubox
+13 18 0.007170919 ubox
+14 18 0.006512656 ubox
+showpage
+end
+%%EOF
+</pre>
+</td></tr></table><p>
+<p><h3>File: red.abps</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+%!PS-Adobe-3.0 EPSF-3.0
+%%Title: RNA Dot Plot
+%%Creator: ePS_dot.c,v 1.6 2008/06/26 08:40:00 rice Exp $, ViennaRNA-1.7.2
+%%CreationDate: Sun Jul 15 12:00:00 2007
+%%BoundingBox: 66 211 518 662
+%%DocumentFonts: Helvetica
+%%Pages: 1
+%%EndComments
+
+%Options: -d2 
+% 
+%Heterodimer AB FreeEnergy= -5.838299492
+
+%This file contains the square roots of the base pair probabilities in the form
+% i  j  sqrt(p(i,j)) ubox
+
+%%BeginProlog
+/DPdict 100 dict def
+DPdict begin
+/logscale false def
+/lpmin 1e-05 log def
+
+/box { %size x y box - draws box centered on x,y
+   2 index 0.5 mul sub            % x -= 0.5
+   exch 2 index 0.5 mul sub exch  % y -= 0.5
+   3 -1 roll dup rectfill
+} bind def
+
+/ubox {
+   logscale {
+      log dup add lpmin div 1 exch sub dup 0 lt { pop 0 } if
+   } if
+   3 1 roll
+   exch len exch sub 1 add box
+} bind def
+
+/lbox {
+   3 1 roll
+   len exch sub 1 add box
+} bind def
+
+/drawseq {
+% print sequence along all 4 sides
+[ [0.7 -0.3 0 ]
+  [0.7 0.7 len add 0]
+  [-0.3 len sub -0.4 -90]
+  [-0.3 len sub 0.7 len add -90]
+] {
+   gsave
+    aload pop rotate translate
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+6 26 0.010177101 ubox
+7 12 0.021632770 ubox
+7 14 0.855666290 ubox
+7 16 0.007717878 ubox
+7 18 0.452386699 ubox
+7 20 0.003307306 ubox
+8 13 0.832810588 ubox
+8 17 0.442059430 ubox
+8 27 0.013548766 ubox
+9 11 0.178755395 ubox
+9 12 0.506569088 ubox
+9 14 0.016728359 ubox
+9 15 0.203346599 ubox
+9 16 0.245771341 ubox
+9 19 0.006237182 ubox
+9 26 0.012991150 ubox
+10 12 0.036293322 ubox
+10 14 0.184145302 ubox
+10 16 0.016990375 ubox
+10 18 0.005640224 ubox
+11 17 0.008558761 ubox
+12 25 0.008108337 ubox
+12 27 0.080028280 ubox
+13 26 0.180825466 ubox
+14 23 0.012679048 ubox
+14 25 0.181430593 ubox
+15 22 0.012950484 ubox
+15 24 0.181499570 ubox
+16 22 0.007039813 ubox
+16 23 0.171288889 ubox
+16 27 0.300268293 ubox
+17 21 0.005675580 ubox
+17 26 0.853563809 ubox
+18 22 0.006794027 ubox
+18 23 0.006526663 ubox
+18 24 0.003206525 ubox
+18 25 0.854300760 ubox
+19 24 0.849253823 ubox
+20 25 0.003296357 ubox
+21 27 0.009002471 ubox
+22 26 0.014858566 ubox
+17 26 0.9746794 lbox
+18 25 0.9746794 lbox
+19 24 0.9746794 lbox
+5 16 0.9746794 lbox
+6 15 0.9746794 lbox
+7 14 0.9746794 lbox
+8 13 0.9746794 lbox
+showpage
+end
+%%EOF
+</pre>
+</td></tr></table><p>
+<p><h3>File: red.bps</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+%!PS-Adobe-3.0 EPSF-3.0
+%%Title: RNA Dot Plot
+%%Creator: ePS_dot.c,v 1.6 2008/06/26 08:40:00 rice Exp $, ViennaRNA-1.7.2
+%%CreationDate: Sun Jul 15 12:00:00 2007
+%%BoundingBox: 66 211 518 662
+%%DocumentFonts: Helvetica
+%%Pages: 1
+%%EndComments
+
+%Options: -d2 
+% 
+%Monomer B FreeEnergy= -4.266494644
+
+%This file contains the square roots of the base pair probabilities in the form
+% i  j  sqrt(p(i,j)) ubox
+
+%%BeginProlog
+/DPdict 100 dict def
+DPdict begin
+/logscale false def
+/lpmin 1e-05 log def
+
+/box { %size x y box - draws box centered on x,y
+   2 index 0.5 mul sub            % x -= 0.5
+   exch 2 index 0.5 mul sub exch  % y -= 0.5
+   3 -1 roll dup rectfill
+} bind def
+
+/ubox {
+   logscale {
+      log dup add lpmin div 1 exch sub dup 0 lt { pop 0 } if
+   } if
+   3 1 roll
+   exch len exch sub 1 add box
+} bind def
+
+/lbox {
+   3 1 roll
+   len exch sub 1 add box
+} bind def
+
+/drawseq {
+% print sequence along all 4 sides
+[ [0.7 -0.3 0 ]
+  [0.7 0.7 len add 0]
+  [-0.3 len sub -0.4 -90]
+  [-0.3 len sub 0.7 len add -90]
+] {
+   gsave
+    aload pop rotate translate
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+} bind def
+
+end
+%%EndProlog
+DPdict begin
+%delete next line to get rid of title
+270 665 moveto /Helvetica findfont 14 scalefont setfont (red.bps) show
+
+/sequence { (\
+CUGUCUGUCUUGAGACA\
+) } def
+/len { sequence length } bind def
+
+72 216 translate
+72 6 mul len 1 add div dup scale
+/Helvetica findfont 0.95 scalefont setfont
+
+drawseq
+0.5 dup translate
+% draw diagonal
+0.04 setlinewidth
+0 len moveto len 0 lineto stroke 
+
+drawgrid
+%data starts here
+1 14 0.005240367 ubox
+2 13 0.004453976 ubox
+2 15 0.020976246 ubox
+2 17 0.670298457 ubox
+3 9 0.003276457 ubox
+3 16 0.947914389 ubox
+4 13 0.030267916 ubox
+4 15 0.948345709 ubox
+5 12 0.031100569 ubox
+5 14 0.948406578 ubox
+6 12 0.036122707 ubox
+6 13 0.895017467 ubox
+6 17 0.221479258 ubox
+7 11 0.028943407 ubox
+7 16 0.313227070 ubox
+8 12 0.034859252 ubox
+8 13 0.014451769 ubox
+8 15 0.313262201 ubox
+9 14 0.311389763 ubox
+3 16 0.9746794 lbox
+4 15 0.9746794 lbox
+5 14 0.9746794 lbox
+6 13 0.9746794 lbox
+showpage
+end
+%%EOF
+</pre>
+</td></tr></table><p>
+<p><h3>File: red.bbps</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+%!PS-Adobe-3.0 EPSF-3.0
+%%Title: RNA Dot Plot
+%%Creator: ePS_dot.c,v 1.6 2008/06/26 08:40:00 rice Exp $, ViennaRNA-1.7.2
+%%CreationDate: Sun Jul 15 12:00:00 2007
+%%BoundingBox: 66 211 518 662
+%%DocumentFonts: Helvetica
+%%Pages: 1
+%%EndComments
+
+%Options: -d2 
+% 
+%Homodimer BB FreeEnergy= -16.231717299
+
+%This file contains the square roots of the base pair probabilities in the form
+% i  j  sqrt(p(i,j)) ubox
+
+%%BeginProlog
+/DPdict 100 dict def
+DPdict begin
+/logscale false def
+/lpmin 1e-05 log def
+
+/box { %size x y box - draws box centered on x,y
+   2 index 0.5 mul sub            % x -= 0.5
+   exch 2 index 0.5 mul sub exch  % y -= 0.5
+   3 -1 roll dup rectfill
+} bind def
+
+/ubox {
+   logscale {
+      log dup add lpmin div 1 exch sub dup 0 lt { pop 0 } if
+   } if
+   3 1 roll
+   exch len exch sub 1 add box
+} bind def
+
+/lbox {
+   3 1 roll
+   len exch sub 1 add box
+} bind def
+
+/drawseq {
+% print sequence along all 4 sides
+[ [0.7 -0.3 0 ]
+  [0.7 0.7 len add 0]
+  [-0.3 len sub -0.4 -90]
+  [-0.3 len sub 0.7 len add -90]
+] {
+   gsave
+    aload pop rotate translate
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+/cutpoint 18 def
+
+72 216 translate
+72 6 mul len 1 add div dup scale
+/Helvetica findfont 0.95 scalefont setfont
+
+drawseq
+0.5 dup translate
+% draw diagonal
+0.04 setlinewidth
+0 len moveto len 0 lineto stroke 
+
+drawgrid
+%data starts here
+1 7 0.003236657 ubox
+2 34 0.009973148 ubox
+3 33 0.012492742 ubox
+4 32 0.010908837 ubox
+4 34 0.009627671 ubox
+5 31 0.009623480 ubox
+6 30 0.006572250 ubox
+6 34 0.706535967 ubox
+7 33 0.999219530 ubox
+8 32 0.999724559 ubox
+9 31 0.999930230 ubox
+10 30 0.999844032 ubox
+11 29 0.525401232 ubox
+12 28 0.525401232 ubox
+13 23 0.006572250 ubox
+13 27 0.999844032 ubox
+14 22 0.009623480 ubox
+14 26 0.999930230 ubox
+15 21 0.010908837 ubox
+15 25 0.999724559 ubox
+16 20 0.012492742 ubox
+16 24 0.999219530 ubox
+17 19 0.009973148 ubox
+17 21 0.009627671 ubox
+17 23 0.706535967 ubox
+18 24 0.003236657 ubox
+7 33 0.9746794 lbox
+8 32 0.9746794 lbox
+9 31 0.9746794 lbox
+10 30 0.9746794 lbox
+13 27 0.9746794 lbox
+14 26 0.9746794 lbox
+15 25 0.9746794 lbox
+16 24 0.9746794 lbox
+showpage
+end
+%%EOF
+</pre>
+</td></tr></table><p>
+
+
+
+
+
+<H2>
+    Data files
+</H2>
+
+
+For details of Vienna RNA file formats, see the original documentation
+http://www.tbi.univie.ac.at/~ivo/RNA/
+
+
+<H2>
+    Notes
+</H2>
+
+<!-- 
+        Restrictions.
+        Interesting behaviour.
+        Useful things you can do with this program.
+   -->
+
+None.
+
+
+
+
+
+
+
+<H2>
+    References
+</H2>
+
+<!-- 
+        Bibliography for methods used.
+   -->
+
+None.
+
+
+
+
+
+
+
+
+<H2>
+    Warnings
+</H2>
+
+<!-- 
+        Potentially stupid things the program will let you do.
+   -->
+
+None.
+
+
+
+
+
+
+
+<H2>
+    Diagnostic Error Messages
+</H2>
+
+<!-- 
+        Error messages specific to this program, eg:
+        "FATAL xxx" - means you have not set up the xxx data using program <b>prog</b>.<p>
+   -->
+
+None.
+
+
+
+
+
+
+
+<H2>
+    Exit status
+</H2>
+
+<!-- 
+        Description of the exit status for various error conditions
+   -->
+
+It always exits with status 0.
+
+
+
+
+
+
+
+
+<H2>
+    Known bugs
+</H2>
+
+
+<!-- 
+        Bugs noted but not yet fixed.
+   -->
+
+None.
+
+
+
+
+
+
+
+
+<!--
+<H2>
+    See also
+</H2>
+-->
+<h2><a name="See also">See also</a></h2>
+<table border cellpadding=4 bgcolor="#FFFFF0">
+<tr><th>Program name</th>
+<th>Description</th></tr>
+<tr>
+<td><a href="/emboss/apps/einverted.html">einverted</a></td>
+<td>Finds inverted repeats in nucleotide sequences</td>
+</tr>
+
+<tr>
+<td><a href="vrnaalifold.html">vrnaalifold</a></td>
+<td>RNA alignment folding</td>
+</tr>
+
+<tr>
+<td><a href="vrnaalifoldpf.html">vrnaalifoldpf</a></td>
+<td>RNA alignment folding with partition</td>
+</tr>
+
+<tr>
+<td><a href="vrnacofold.html">vrnacofold</a></td>
+<td>RNA cofolding</td>
+</tr>
+
+<tr>
+<td><a href="vrnacofoldpf.html">vrnacofoldpf</a></td>
+<td>RNA cofolding with partitioning</td>
+</tr>
+
+<tr>
+<td><a href="vrnadistance.html">vrnadistance</a></td>
+<td>RNA distances</td>
+</tr>
+
+<tr>
+<td><a href="vrnaduplex.html">vrnaduplex</a></td>
+<td>RNA duplex calculation</td>
+</tr>
+
+<tr>
+<td><a href="vrnaeval.html">vrnaeval</a></td>
+<td>RNA eval</td>
+</tr>
+
+<tr>
+<td><a href="vrnaevalpair.html">vrnaevalpair</a></td>
+<td>RNA eval with cofold</td>
+</tr>
+
+<tr>
+<td><a href="vrnafold.html">vrnafold</a></td>
+<td>Calculate secondary structures of RNAs</td>
+</tr>
+
+<tr>
+<td><a href="vrnafoldpf.html">vrnafoldpf</a></td>
+<td>Secondary structures of RNAs with partition</td>
+</tr>
+
+<tr>
+<td><a href="vrnaheat.html">vrnaheat</a></td>
+<td>RNA melting</td>
+</tr>
+
+<tr>
+<td><a href="vrnainverse.html">vrnainverse</a></td>
+<td>RNA sequences matching a structure</td>
+</tr>
+
+<tr>
+<td><a href="vrnalfold.html">vrnalfold</a></td>
+<td>Calculate locally stable secondary structures of RNAs</td>
+</tr>
+
+<tr>
+<td><a href="vrnaplot.html">vrnaplot</a></td>
+<td>Plot vrnafold output</td>
+</tr>
+
+<tr>
+<td><a href="vrnasubopt.html">vrnasubopt</a></td>
+<td>Calculate RNA suboptimals</td>
+</tr>
+
+</table>
+<!-- 
+        Add any comments about other associated programs (to prepare
+        data files?) that seealso doesn't find. 
+   -->
+
+
+
+
+
+
+
+
+
+
+<H2>
+    Author(s)
+</H2>
+
+This program is an EMBOSS conversion of a program written by Ivo Hofacker
+as part of his VIENNA package.
+
+<p>
+Although we take every care to ensure that the results of the EMBOSS
+version are identical to those from the original package, we recommend
+that you check your inputs give the same results in both versions
+before publication.
+
+<p>
+Please report all bugs in the EMBOSS version to the EMBOSS bug team,
+not to the original author.
+
+<H2>
+    History
+</H2>
+
+Converted (October 2005) by Alan Bleasby
+
+
+
+<H2>
+    Target users
+</H2>
+
+<!--
+        For general users, requested by one user, for EMBOSS site
+        maintainers, for EMBOSS developers etc.
+        eg:
+        "This program is intended to be used by everyone and everything,
+        from naive users to embedded scripts." 
+	Which is easy to include using:
+   -->
+
+This program is intended to be used by everyone and everything, from naive users to embedded scripts.
+
+
+<H2>
+    Comments
+</H2>
+
+
+</BODY>
+</HTML>
+

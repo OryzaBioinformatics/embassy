@@ -1,0 +1,116 @@
+application: vrnaevalpair [
+  documentation: "RNA eval with cofold"
+  groups: "Nucleic:RNA folding, Nucleic:2D structure"
+  gui: "yes"
+  batch: "yes"
+  cpu: "medium"
+  embassy: "vienna"
+]
+
+section: input [
+  information: "Input section"
+  type: "page"
+]
+
+  sequence: asequence [
+    parameter: "Y"
+    type: "dna"
+  ]
+
+  infile: aconstraintfile [
+    parameter: "Y"
+    information: "Vienna RNA structure constraints file"
+    knowntype: "rna constraint"
+  ]
+
+  sequence: bsequence [
+    parameter: "Y"
+    type: "dna"
+  ]
+
+  infile: bconstraintfile [
+    parameter: "Y"
+    information: "Second vienna RNA structure constraints file"
+    knowntype: "rna constraint"
+  ]
+
+  infile: paramfile [
+    nullok: "Y"
+    default: ""
+    information: "Vienna RNA parameters file (optional)"
+    knowntype: "rna parameter"
+  ]
+
+endsection: input
+
+section: advanced [
+  information: "Advanced section"
+  type: "page"
+]
+
+  float: temperature [
+    default: "37.0"
+    information: "Temperature"
+  ]
+
+  boolean: convert [
+    default: "Y"
+    information: "Convert T to U"
+  ]
+
+  boolean: tetraloop [
+    default: "Y"
+    information: "Stabilising energies for tetra-loops"
+  ]
+
+  boolean: circular [
+    default: "N"
+    information: "Circular RNA"
+  ]
+
+  list: energy [
+    default: "0"
+    minimum: "1"
+    maximum: "1"
+    header: "Energy parameters"
+    values: "0:BP, 1:Any with GC, 2:Any with AU parameters"
+    delimiter: ","
+    codedelimiter: ":"
+    information: "Method"
+    help: "Rarely used option to fold sequences from the ABCD...
+           alphabet"
+  ]
+
+  list: dangles [
+    default: "1"
+    minimum: "1"
+    maximum: "1"
+    header: "How to treat dangling end energies"
+    values: "0:No stabilising energies for dangling ends, 1:Use
+             stabilising energies for dangling ends, 2:Dangling energies as
+             in a partition function 3:Allow coaxial stacking of adjacent
+             helices"
+    delimiter: ","
+    codedelimiter: ":"
+    information: "Method"
+  ]
+
+  boolean: logml [
+    default: "N"
+    information: "Use log scale for multiloop energies"
+  ]
+
+endsection: advanced
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+  outfile: outfile [
+    parameter: "Y"
+    knowntype: "rnaeval output"
+    information: "Vienna RNAeval output file"
+  ]
+
+endsection: output

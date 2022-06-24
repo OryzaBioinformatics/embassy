@@ -1,0 +1,589 @@
+
+                               vrnaalifoldpf 
+
+
+
+Function
+
+   RNA alignment folding with partition
+
+Description
+
+   This is a port of the Vienna RNA package program RNAalifold.
+
+   The original program produces different outputs, depending on the
+   options selected. In the EMBASSY implementation it is split into
+   vrnaalifold and vrnaalifoldpf
+
+Algorithm
+
+   See the original documentation for the Vienna RNA package
+   http://www.tbi.univie.ac.at/~ivo/RNA/
+
+Algorithm
+
+   See the original documentation for the Vienna RNA package
+   http://www.tbi.univie.ac.at/~ivo/RNA/
+
+Usage
+
+   Here is a sample session with vrnaalifoldpf
+
+
+% vrnaalifoldpf 
+RNA alignment folding with partition
+Input (aligned) nucleotide sequence set: ecoli6s.fasta
+Vienna RNAfold output file [ecoli6s.vrnaalifoldpf]: 
+
+   Go to the input files for this example
+   Go to the output files for this example
+
+Command line arguments
+
+   Standard (Mandatory) qualifiers:
+  [-sequence]          seqset     (Aligned) nucleotide sequence set filename
+                                  and optional format, or reference (input
+                                  USA)
+  [-outfile]           outfile    [*.vrnaalifoldpf] Vienna RNAfold output file
+
+   Additional (Optional) qualifiers: (none)
+   Advanced (Unprompted) qualifiers:
+   -constraintfile     infile     Vienna RNA structure constraints file
+                                  (optional)
+   -paramfile          infile     Vienna RNA parameters file (optional)
+   -temperature        float      [37.0] Temperature (Any numeric value)
+   -[no]gu             boolean    [Y] Allow GU pairs
+   -[no]closegu        boolean    [Y] Allow GU pairs at end of helices
+   -[no]lp             boolean    [Y] Allow lonely pairs
+   -[no]convert        boolean    [Y] Convert T to U
+   -nsbases            string     Non-standard bases (Any string is accepted)
+   -[no]tetraloop      boolean    [Y] Stabilizing energies for tetra-loops
+   -circular           boolean    [N] Circular RNA
+   -colour             boolean    [N] Colour structure plot
+   -energy             menu       [0] Rarely used option to fold sequences
+                                  from the ABCD... alphabet (Values: 0 (BP); 1
+                                  (Any with GC); 2 (Any with AU parameters))
+   -scale              float      [1.07] Estimate of ensemble free energy (Any
+                                  numeric value)
+   -dangles            menu       [2] Method (Values: 0 (Ignore); 1 (Only
+                                  unpaired bases for just one dangling end); 2
+                                  (Always use dangling energies); 3 (Allow
+                                  coaxial stacking of adjacent helices))
+   -covariance         float      [1.0] Weight for covariance (Any numeric
+                                  value)
+   -nspenalty          float      [1.0] Non-compatible sequence penalty (Any
+                                  numeric value)
+   -endgaps            boolean    [N] Mark end gaps
+   -most               boolean    [N] Use most informative sequence algorithm
+   -dotoutfile         outfile    [*.vrnaalifoldpf] Vienna dotplot postscript
+                                  output file
+   -ssoutfile          outfile    [*.vrnaalifoldpf] Vienna structure
+                                  postscript output file
+   -alignoutfile       outfile    [*.vrnaalifoldpf] Vienna alignment colour
+                                  postscript output file
+
+   Associated qualifiers:
+
+   "-sequence" associated qualifiers
+   -sbegin1            integer    Start of each sequence to be used
+   -send1              integer    End of each sequence to be used
+   -sreverse1          boolean    Reverse (if DNA)
+   -sask1              boolean    Ask for begin/end/reverse
+   -snucleotide1       boolean    Sequence is nucleotide
+   -sprotein1          boolean    Sequence is protein
+   -slower1            boolean    Make lower case
+   -supper1            boolean    Make upper case
+   -sformat1           string     Input sequence format
+   -sdbname1           string     Database name
+   -sid1               string     Entryname
+   -ufo1               string     UFO features
+   -fformat1           string     Features format
+   -fopenfile1         string     Features file name
+
+   "-outfile" associated qualifiers
+   -odirectory2        string     Output directory
+
+   "-dotoutfile" associated qualifiers
+   -odirectory         string     Output directory
+
+   "-ssoutfile" associated qualifiers
+   -odirectory         string     Output directory
+
+   "-alignoutfile" associated qualifiers
+   -odirectory         string     Output directory
+
+   General qualifiers:
+   -auto               boolean    Turn off prompts
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
+   -options            boolean    Prompt for standard and additional values
+   -debug              boolean    Write debug output to program.dbg
+   -verbose            boolean    Report some/full command line options
+   -help               boolean    Report command line options. More
+                                  information on associated and general
+                                  qualifiers can be found with -help -verbose
+   -warning            boolean    Report warnings
+   -error              boolean    Report errors
+   -fatal              boolean    Report fatal errors
+   -die                boolean    Report dying program messages
+
+Input file format
+
+   vrnaalifoldpf reads any normal sequence USAs.
+
+  Input files for usage example
+
+  File: ecoli6s.fasta
+
+>X01238.1/1-183
+AUUUCUCUGAGAUGUUCGCAAGCGGGC.CAGUCCCCUGAGCCGAUAUUUCAUACCACAAG
+AAUGUGGCGCUCCGCGGUUGGUGAGCAUGCUCGGUCCGU...............CCGAGA
+AGCCUUAAAACUGCGACGACACAUUCACCUUGAACCAA.GGGUUCAAGGGUUACAGCCUG
+CGGCGGCA.UC.UCGGAG.AUUC
+>AL627277.1/108623-108805
+AUUUCUCUGAGAUGUUUGCAAGCGGGC.CAGUCCCCUGAGCCGAUAUUUCAUACCACAAG
+AAUGUGGCGCUCCGCGGUUGGUGAGCAUGCUCGGUUCGU...............CCGAGA
+AGCCUUAAAACUGUGACGACACAUUCACCUUGAACCAA.GGGUUCAAGGGUUACAGCCUG
+CGGCGGCA.UC.UCGGAG.AUUC
+>AJ414145.1/90993-91174
+AUUUCUCUGAGGUGUUUGCCAGCGGGC.CAGUCCCCUGAGCCGAUAUUUAAUACCAACAG
+AAUGUAGUGCUCCGUAACCGGUGAGCAUGCUCGGUCCG................CCGAGA
+AGCCUUAAGGUUGCGACGCUGCGUUCACCUUGAACCAA.GGGUUCAAGGGUUACAGCCUG
+CGACGGCA.CC.UCGGAG.AUCC
+>U32767.1/6538-6734
+.AUUACCUGGAGUGUUCGUCAGUAGGC.UAUGUCCCUGAGCCGAUACUUUAAAUCUUAUA
+AAUU.GGUUUCCUAUCGUUGGUGUGUAGGCUUAACCUUUGACUCGUUCAUUGGGCUAAGA
+AACCUGAAAACGGUAUCAACUGAUUU.CCUUGAACCGUCGGGUUCAAGGACUACUGCCCG
+CAGCGGCACUC.UGGGGU.CUUC
+>AE006208.1/8365-8185
+.AUUACCUGAGGUGUUUGCCAGUGGGU.UAUGUCCCUGAGCCGAUACUUU.UAUUUUAUG
+AAUC.GGUUUCUAAUUGUUGGUGUGCAUGCUUAGCUUGA...............CUAAGA
+AGCCUAAAAAUAGUUAUAACUGAUUC.CCUUGAACCGUUGGGUUCAAGGACUGAGACUUG
+CAGCGGCA.UC.UCGGGUUCUUC
+>Y00334.1/77-254
+CGCUCCCUGGUGUGUUGGCCAGUCGGU.GAUGUCCCUGAGCCGAUAACUGCAACAAC..G
+GAGGUUGC.CAGUUGGACCGGUGUGCAUGUCCGCACG.................ACGGAA
+AGCCUUAAGGUCUAC.UGCAACCGCCACCUUGAACUUUCGGGUUCAAGGGCUA.ACCCGA
+CAGCGGCA.CGACCGGGG.AGCU
+>AE004317.1/5626-5807
+UUUACCCUGGGGUGUUCGUCAGCGGAUUUAUGUCCCUGAGCCGAUAAGCAACAUAAC..A
+GGGUUGGUAUUGGGUAGCUAUUGAGCAAGCUCGGCUUGUA..............CCGAGA
+AGCCUGCGGUUACCAUUACUGAUCCG.CCUUGAACCUGAUGGUUCAAGGGCUACGAUCCU
+CAACGGCA.UC.CCGGGG.UUC.
+
+Output file format
+
+   vrnaalifoldpf outputs a graph to the specified graphics device.
+   outputs a report format file. The default format is ...
+
+  Output files for usage example
+
+  File: ecoli6s.ssps
+
+%!PS-Adobe-3.0 EPSF-3.0
+%%Creator: ePS_dot.c,v 1.6 2008/06/26 08:40:00 rice Exp $, ViennaRNA-1.7.2
+%%CreationDate: Sun Jul 15 12:00:00 2007
+%%Title: RNA Secondary Structure Plot
+%%BoundingBox: 66 210 518 662
+%%DocumentFonts: Helvetica
+%%Pages: 1
+%%EndComments
+
+%Options: -d2
+% to switch off outline pairs of sequence comment or
+% delete the appropriate line near the end of the file
+
+%%BeginProlog
+/RNAplot 100 dict def
+RNAplot begin
+/fsize  14 def
+/outlinecolor {0.2 setgray} bind def
+/paircolor    {0.2 setgray} bind def
+/seqcolor     {0   setgray} bind def
+/cshow  { dup stringwidth pop -2 div fsize -3 div rmoveto show} bind def
+/min { 2 copy gt { exch } if pop } bind def
+/max { 2 copy lt { exch } if pop } bind def
+/drawoutline {
+  gsave outlinecolor newpath
+  coor 0 get aload pop 0.8 0 360 arc % draw 5' circle of 1st sequence
+  currentdict /cutpoint known        % check if cutpoint is defined
+  {coor 0 cutpoint getinterval
+   {aload pop lineto} forall         % draw outline of 1st sequence
+   coor cutpoint get aload pop
+   2 copy moveto 0.8 0 360 arc       % draw 5' circle of 2nd sequence
+   coor cutpoint coor length cutpoint sub getinterval
+   {aload pop lineto} forall}        % draw outline of 2nd sequence
+  {coor {aload pop lineto} forall}   % draw outline as a whole
+  ifelse
+  stroke grestore
+} bind def
+/drawpairs {
+  paircolor
+  0.7 setlinewidth
+  [9 3.01] 9 setdash
+  newpath
+  pairs {aload pop
+     coor exch 1 sub get aload pop moveto
+     coor exch 1 sub get aload pop lineto
+  } forall
+  stroke
+} bind def
+% draw bases
+/drawbases {
+
+
+  [Part of this file has been deleted for brevity]
+
+60 cmark
+146 cmark
+61 cmark
+145 cmark
+62 144 1 gmark
+62 cmark
+144 cmark
+63 cmark
+143 cmark
+64 cmark
+142 cmark
+65 141 2 gmark
+141 cmark
+66 cmark
+140 cmark
+73 135 2 gmark
+73 cmark
+135 cmark
+74 cmark
+134 cmark
+75 133 1 gmark
+75 cmark
+133 cmark
+76 132 1 gmark
+76 cmark
+132 cmark
+77 cmark
+131 cmark
+78 130 1 gmark
+78 cmark
+130 cmark
+79 cmark
+129 cmark
+86 cmark
+122 cmark
+90 cmark
+119 cmark
+91 cmark
+118 cmark
+92 cmark
+117 cmark
+93 cmark
+116 cmark
+94 115 2 gmark
+156 cmark
+
+% End Annotations
+% show it
+showpage
+end
+%%EOF
+
+  Graphics File: ecoli6s.ps
+
+   [vrnaalifoldpf results]
+
+  File: ecoli6s.alirnaps
+
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 0 0 576 428
+%%EndComments
+% draws Vienna RNA like colored boxes
+/box { % x1 y1 x2 y2 hue saturation
+  gsave
+  dup 0.3 mul 1 exch sub sethsbcolor
+  exch 3 index sub exch 2 index sub rectfill
+  grestore
+} def
+% draws a box in current color
+/box2 { % x1 y1 x2 y2
+  exch 3 index sub exch 2 index sub rectfill
+} def
+/string { % (Text) x y
+ 6 add
+ moveto
+  show
+} def
+0 428 translate
+1 -1 scale
+/Courier findfont
+[10 0 0 -10 0 0] makefont setfont
+192.0 11.5 198.0 20.0 0.16 1 box
+192.0 20.0 198.0 28.5 0.16 1 box
+192.0 28.5 198.0 37.0 0.16 1 box
+192.0 37.0 198.0 45.5 0.16 1 box
+192.0 45.5 198.0 54.0 0.16 1 box
+192.0 54.0 198.0 62.5 0.16 1 box
+192.0 62.5 198.0 71.0 0.16 1 box
+270.0 331.0 276.0 339.5 0.16 1 box
+270.0 339.5 276.0 348.0 0.16 1 box
+270.0 348.0 276.0 356.5 0.16 1 box
+270.0 356.5 276.0 365.0 0.16 1 box
+270.0 365.0 276.0 373.5 0.16 1 box
+270.0 373.5 276.0 382.0 0.16 1 box
+270.0 382.0 276.0 390.5 0.16 1 box
+198.0 11.5 204.0 20.0 0.16 1 box
+198.0 20.0 204.0 28.5 0.16 1 box
+198.0 28.5 204.0 37.0 0.16 1 box
+198.0 37.0 204.0 45.5 0.16 1 box
+198.0 45.5 204.0 54.0 0.16 1 box
+198.0 54.0 204.0 62.5 0.16 1 box
+198.0 62.5 204.0 71.0 0.16 1 box
+264.0 331.0 270.0 339.5 0.16 1 box
+264.0 339.5 270.0 348.0 0.16 1 box
+264.0 348.0 270.0 356.5 0.16 1 box
+264.0 356.5 270.0 365.0 0.16 1 box
+264.0 365.0 270.0 373.5 0.16 1 box
+264.0 373.5 270.0 382.0 0.16 1 box
+
+
+  [Part of this file has been deleted for brevity]
+
+516.0 306.9 522.0 315.0 box2
+522.0 304.2 528.0 315.0 box2
+0 setgray
+(\).\)\)\)\)\)\).\)\).\)\)\)\)\)\).....) 168.0 321.5 string
+(X01238.1/1-183) 6.0 332.0 string
+(CGGCGGCA-UC-UCGGAG-AUUC) 168.0 332.0 string
+(183) 312.0 332.0 string
+(AL627277.1/108623-108805) 6.0 340.5 string
+(CGGCGGCA-UC-UCGGAG-AUUC) 168.0 340.5 string
+(183) 312.0 340.5 string
+(AJ414145.1/90993-91174) 6.0 349.0 string
+(CGACGGCA-CC-UCGGAG-AUCC) 168.0 349.0 string
+(182) 312.0 349.0 string
+(U32767.1/6538-6734) 6.0 357.5 string
+(CAGCGGCACUC-UGGGGU-CUUC) 168.0 357.5 string
+(197) 312.0 357.5 string
+(AE006208.1/8365-8185) 6.0 366.0 string
+(CAGCGGCA-UC-UCGGGUUCUUC) 168.0 366.0 string
+(181) 312.0 366.0 string
+(Y00334.1/77-254) 6.0 374.5 string
+(CAGCGGCA-CGACCGGGG-AGCU) 168.0 374.5 string
+(178) 312.0 374.5 string
+(AE004317.1/5626-5807) 6.0 383.0 string
+(CAACGGCA-UC-CCGGGG-UUC-) 168.0 383.0 string
+(182) 312.0 383.0 string
+(.........190.......200.) 168.0 393.5 string
+0.6 setgray
+168.0 405.2 174.0 421.5 box2
+174.0 413.4 180.0 421.5 box2
+180.0 410.7 186.0 421.5 box2
+186.0 405.2 192.0 421.5 box2
+192.0 405.2 198.0 421.5 box2
+198.0 405.2 204.0 421.5 box2
+204.0 405.2 210.0 421.5 box2
+210.0 405.2 216.0 421.5 box2
+216.0 420.5 222.0 421.5 box2
+222.0 410.7 228.0 421.5 box2
+228.0 408.0 234.0 421.5 box2
+234.0 420.5 240.0 421.5 box2
+240.0 410.7 246.0 421.5 box2
+246.0 408.0 252.0 421.5 box2
+252.0 405.2 258.0 421.5 box2
+258.0 405.2 264.0 421.5 box2
+264.0 413.4 270.0 421.5 box2
+270.0 410.7 276.0 421.5 box2
+276.0 420.5 282.0 421.5 box2
+282.0 413.4 288.0 421.5 box2
+288.0 408.0 294.0 421.5 box2
+294.0 413.4 300.0 421.5 box2
+300.0 410.7 306.0 421.5 box2
+showpage
+
+  File: ecoli6s.vrnaalifoldpf
+
+AUUUCCCUGAGGUGUUCGCCAGCGGGC_CAUGUCCCUGAGCCGAUAUUUAAUACCACAAGAAUGUGGUGCUCCGUGGUU
+GGUGAGCAUGCUCGGCCCGU_______________CCGAGAAGCCUUAAAAUUGCGACGACACAUUCACCUUGAACCAA
+_GGGUUCAAGGGCUACAGCCUGCAGCGGCA_UC_UCGGGG_AUUC
+....(((((((((((.(((..((((((................................(((((((......(((((((
+...(.((...(((((....................)))))..)))....)))))))....))))))).(((((((((..
+..)))))))))......)))))).)))))).)).))))))..... (-56.91 = -48.71 +  -8.20)
+....(((((((((({{(((..((((((................................(((((((......(((((((
+...{.((...(((((....................)))))..)),....)))))))..,.))))))).(((((((((..
+..)))))))))......)))))).)))))).)).))))))..... [-59.30]
+ frequency of mfe structure in ensemble 0.0206905
+
+# Alignment section
+
+7 sequences; length of alignment 203
+alifold output
+   64   142  0 100.0%   0.000 CG:1    GC:4    UG:1    UA:1
+   63   143  0  99.9%   0.002 GC:1    GU:1    UG:1    UA:4
+   74   134  0  99.8%   0.005 GC:3    GU:1    AU:2    UA:1
+   77   131  0 100.0%   0.001 GC:3    GU:2    AU:2
+   10   193  0  99.8%   0.006 GC:2    GU:1    AU:4
+   76   132  1  99.9%   0.003 CG:1    GC:1    GU:2    AU:1    UA:1
+   79   129  0  99.3%   0.032 CG:2    UG:1    UA:4
+   66   140  0  98.3%   0.056 GC:4    GU:1    AU:1    UA:1
+   92   117  0 100.0%   0.000 CG:5    UA:2
+   91   118  0 100.0%   0.001 CG:1    UA:6
+    6   197  0 100.0%   0.001 CG:4    UA:3
+   90   119  0  99.9%   0.003 CG:6    UA:1
+   61   145  0  99.8%   0.005 GC:2    AU:5
+   93   116  0  99.8%   0.007 GC:5    AU:2
+   75   133  1  99.9%   0.003 CG:2    GU:1    UG:3
+    7   196  0 100.0%   0.000 CG:7
+   78   130  1  99.9%   0.010 CG:2    UA:4
+    8   195  0  99.8%   0.007 UG:7
+   62   144  1  99.7%   0.010 GC:1    AU:5
+    9   194  1  99.9%   0.003 GC:6
+   86   122  0  98.0%   0.083 CG:6    UA:1
+   65   141  2  99.1%   0.028 UG:2    UA:3
+   60   146  1  98.4%   0.050 GC:5    AU:1
+  152   165  0  98.0%   0.170 GC:7
+  155   162  0  98.0%   0.170 CG:7
+   85   123  0  97.9%   0.102 GC:7
+  153   164  0  97.9%   0.141 AU:7
+  154   163  0  97.9%   0.142 AU:7
+  151   166  0  97.5%   0.170 UA:7
+    5   198  0  96.3%   0.110 CG:5    AU:2
+  150   167  0  96.2%   0.158 UA:7
+   25   178  0  95.2%   0.329 GC:6    GU:1
+   26   177  0  95.1%   0.319 GC:6    AU:1
+   23   180  1  95.0%   0.199 CG:3    UG:2    UA:1
+   24   179  1  95.0%   0.320 CG:1    GC:1    GU:4
+   22   181  0  93.7%   0.311 GC:7
+  149   168  0  93.7%   0.404 CG:7
+  156   161  0  92.4%   0.322 CG:6    UG:1
+   27   176  1  91.6%   0.277 CG:4    UA:2
+   18   184  0  90.9%   0.490 GC:7
+   73   135  2  88.8%   0.331 CG:3    AU:1    UA:1
+
+
+  [Part of this file has been deleted for brevity]
+
+   25    36  0   0.6%   0.518 GC:7    +
+   24    37  1   0.6%   0.725 GU:5    AU:1    +
+   85   124  0   0.3%   0.462 GC:7    +
+  101   107  0   0.3%   0.080 AU:1    --:6    +
+   16   188  0   0.3%   0.831 UA:7    +
+  102   114  0   0.2%   0.070 CG:1    --:6    +
+  103   113  0   0.2%   0.070 UG:1    --:6    +
+  104   112  0   0.2%   0.052 CG:1    --:6    +
+   34    38  0   0.2%   0.894 CG:7    +
+   16    25  0   0.2%   0.927 UG:7    +
+  101   110  0   0.2%   0.061 AU:1    --:6    +
+   34    43  0   0.2%   0.658 CG:7    +
+   38    42  0   0.2%   0.938 GC:7    +
+   37    43  0   0.1%   0.727 UG:7    +
+  105   111  0   0.1%   0.030 GU:1    --:6    +
+  101   106  0   0.1%   0.063 AU:1    --:6    +
+  148   152  0   0.1%   0.237 CG:7    +
+   35    43  0   0.1%   0.641 CG:7    +
+   25    35  0   0.1%   0.629 GC:7    +
+   84   126  2   0.1%   0.039 UG:1    AU:3    UA:1    +
+  103   114  0   0.1%   0.071 UG:1    --:6    +
+  107   114  0   0.1%   0.072 UG:1    --:6    +
+   36   169  0   0.1%   0.882 CG:7    +
+  156   160  1   0.1%   0.158 CG:5    UG:1    +
+  104   113  0   0.1%   0.058 CG:1    --:6    +
+   15   188  0   0.1%   0.501 UA:7    +
+   35    40  0   0.1%   0.939 CG:7    +
+  155   160  1   0.5%   0.136 CG:6    +
+   26    35  1   0.5%   0.639 GC:6    +
+   81   126  2   0.2%   0.101 GU:4    UG:1    +
+   40    47  2   0.2%   0.584 GC:2    GU:3    +
+   81   123  1   0.4%   0.129 GC:6    +
+   80   124  1   0.4%   0.460 GC:6    +
+  151   157  2   0.2%   0.073 UG:2    UA:3    +
+   70   135  2   0.2%   0.499 CG:3    UA:2    +
+   82   127  1   0.3%   0.077 UA:6    +
+   81   125  1   0.3%   0.339 GU:6    +
+   19   182  2   0.1%   0.249 CG:3    UA:2    +
+   67    72  2   0.1%   0.036 GC:4    GU:1    +
+   79   128  2   0.1%   0.028 UG:1    UA:4    +
+   81   124  1   0.2%   0.483 GC:6    +
+  149   160  1   0.2%   0.141 CG:6    +
+   14   191  1   0.1%   0.284 GC:6    +
+   26    34  1   0.1%   0.634 GC:6    +
+  148   160  1   0.1%   0.241 CG:6    +
+   44    49  1   0.1%   0.062 AU:6    +
+   39    48  2   0.2%   0.416 AU:5    +
+   35   170  2   0.2%   1.006 CG:5    +
+   24    36  2   0.1%   0.486 GC:5    +
+   20    25  2   0.1%   0.419 CG:5    +
+....(((((((((({{(((..((((((................................(((((((......(((((((
+...{.((...(((((....................)))))..)),....)))))))..,.))))))).(((((((((..
+..)))))))))......)))))).)))))).)).)))))).....
+
+Data files
+
+   For details of Vienna RNA file formats, see the original documentation
+   http://www.tbi.univie.ac.at/~ivo/RNA/
+
+Notes
+
+   None.
+
+References
+
+   None.
+
+Warnings
+
+   None.
+
+Diagnostic Error Messages
+
+   None.
+
+Exit status
+
+   It always exits with status 0.
+
+Known bugs
+
+   None.
+
+See also
+
+    Program name                       Description
+   einverted      Finds inverted repeats in nucleotide sequences
+   vrnaalifold    RNA alignment folding
+   vrnacofold     RNA cofolding
+   vrnacofoldconc RNA cofolding with concentrations
+   vrnacofoldpf   RNA cofolding with partitioning
+   vrnadistance   RNA distances
+   vrnaduplex     RNA duplex calculation
+   vrnaeval       RNA eval
+   vrnaevalpair   RNA eval with cofold
+   vrnafold       Calculate secondary structures of RNAs
+   vrnafoldpf     Secondary structures of RNAs with partition
+   vrnaheat       RNA melting
+   vrnainverse    RNA sequences matching a structure
+   vrnalfold      Calculate locally stable secondary structures of RNAs
+   vrnaplot       Plot vrnafold output
+   vrnasubopt     Calculate RNA suboptimals
+
+Author(s)
+
+   This program is an EMBOSS conversion of a program written by Ivo
+   Hofacker as part of his VIENNA package.
+
+   Although we take every care to ensure that the results of the EMBOSS
+   version are identical to those from the original package, we recommend
+   that you check your inputs give the same results in both versions
+   before publication.
+
+   Please report all bugs in the EMBOSS version to the EMBOSS bug team,
+   not to the original author.
+
+History
+
+   Converted (October 2005) by Alan Bleasby
+
+Target users
+
+   This program is intended to be used by everyone and everything, from
+   naive users to embedded scripts.
+
+Comments

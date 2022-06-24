@@ -1,0 +1,957 @@
+<HTML>
+<HEAD>
+  <TITLE>
+  EMBASSY: VIENNA: vrnaalifold
+  </TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" text="#000000">
+
+<table align=center border=0 cellspacing=0 cellpadding=0>
+<tr><td valign=top>
+<A HREF="/" ONMOUSEOVER="self.status='Go to the EMBOSS home page';return true"><img border=0 src="emboss_icon.jpg" alt="" width=150 height=48></a>
+</td>
+<td align=left valign=middle>
+<b><font size="+6">
+vrnaalifold
+</font></b>
+</td></tr>
+</table>
+<br>&nbsp;
+<p>
+
+
+
+<H2>
+    Function
+</H2>
+RNA alignment folding
+<!--
+DON'T WRITE ANYTHING HERE.
+IT IS DONE FOR YOU.
+-->
+
+<H2>
+    Description
+</H2>
+
+
+This is a port of the Vienna RNA package program RNAalifold.
+<p>
+The original program produces different outputs, depending on the
+options selected. In the EMBASSY implementation it is split into
+<b>vrnaalifold</b> and <b>vrnaalifoldpf</b>
+
+<H2>
+    Algorithm
+</H2>
+
+See the original documentation for the Vienna RNA package
+http://www.tbi.univie.ac.at/~ivo/RNA/
+
+
+
+
+
+<H2>
+    Usage
+</H2>
+
+<!--  
+	Example usage, as run from the command-line.
+        Many examples illustrating different behaviours is good.
+ -->
+
+<b>Here is a sample session with vrnaalifold</b>
+<p>
+
+<p>
+<table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
+
+% <b>vrnaalifold </b>
+RNA alignment folding
+Input (aligned) nucleotide sequence set: <b>ecoli6s.fasta</b>
+Vienna RNAfold output file [ecoli6s.vrnaalifold]: <b></b>
+
+</pre></td></tr></table><p>
+<p>
+<a href="#input.1">Go to the input files for this example</a><br><a href="#output.1">Go to the output files for this example</a><p><p>
+
+
+
+<H2>
+    Command line arguments
+</H2>
+
+<table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
+<pre>
+   Standard (Mandatory) qualifiers:
+  [-sequence]          seqset     (Aligned) nucleotide sequence set filename
+                                  and optional format, or reference (input
+                                  USA)
+  [-outfile]           outfile    [*.vrnaalifold] Vienna RNAfold output file
+
+   Additional (Optional) qualifiers: (none)
+   Advanced (Unprompted) qualifiers:
+   -constraintfile     infile     Vienna RNA structure constraints file
+                                  (optional)
+   -paramfile          infile     Vienna RNA parameters file (optional)
+   -temperature        float      [37.0] Temperature (Any numeric value)
+   -[no]gu             boolean    [Y] Allow GU pairs
+   -[no]closegu        boolean    [Y] Allow GU pairs at end of helices
+   -[no]lp             boolean    [Y] Allow lonely pairs
+   -[no]convert        boolean    [Y] Convert T to U
+   -nsbases            string     Non-standard bases (Any string is accepted)
+   -[no]tetraloop      boolean    [Y] Stabilizing energies for tetra-loops
+   -circular           boolean    [N] Circular RNA
+   -colour             boolean    [N] Colour structure plot
+   -energy             menu       [0] Rarely used option to fold sequences
+                                  from the ABCD... alphabet (Values: 0 (BP); 1
+                                  (Any with GC); 2 (Any with AU parameters))
+   -scale              float      [1.07] Estimate of ensemble free energy (Any
+                                  numeric value)
+   -dangles            menu       [2] Method (Values: 0 (Ignore); 1 (Only
+                                  unpaired bases for just one dangling end); 2
+                                  (Always use dangling energies); 3 (Allow
+                                  coaxial stacking of adjacent helices))
+   -covariance         float      [1.0] Weight for covariance (Any numeric
+                                  value)
+   -nspenalty          float      [1.0] Non-compatible sequence penalty (Any
+                                  numeric value)
+   -endgaps            boolean    [N] Mark end gaps
+   -most               boolean    [N] Use most informative sequence algorithm
+   -ssoutfile          outfile    [*.vrnaalifold] Vienna structure postscript
+                                  output file
+   -alignoutfile       outfile    [*.vrnaalifold] Vienna alignment colour
+                                  postscript output file
+
+   Associated qualifiers:
+
+   "-sequence" associated qualifiers
+   -sbegin1            integer    Start of each sequence to be used
+   -send1              integer    End of each sequence to be used
+   -sreverse1          boolean    Reverse (if DNA)
+   -sask1              boolean    Ask for begin/end/reverse
+   -snucleotide1       boolean    Sequence is nucleotide
+   -sprotein1          boolean    Sequence is protein
+   -slower1            boolean    Make lower case
+   -supper1            boolean    Make upper case
+   -sformat1           string     Input sequence format
+   -sdbname1           string     Database name
+   -sid1               string     Entryname
+   -ufo1               string     UFO features
+   -fformat1           string     Features format
+   -fopenfile1         string     Features file name
+
+   "-outfile" associated qualifiers
+   -odirectory2        string     Output directory
+
+   "-ssoutfile" associated qualifiers
+   -odirectory         string     Output directory
+
+   "-alignoutfile" associated qualifiers
+   -odirectory         string     Output directory
+
+   General qualifiers:
+   -auto               boolean    Turn off prompts
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
+   -options            boolean    Prompt for standard and additional values
+   -debug              boolean    Write debug output to program.dbg
+   -verbose            boolean    Report some/full command line options
+   -help               boolean    Report command line options. More
+                                  information on associated and general
+                                  qualifiers can be found with -help -verbose
+   -warning            boolean    Report warnings
+   -error              boolean    Report errors
+   -fatal              boolean    Report fatal errors
+   -die                boolean    Report dying program messages
+
+</pre>
+</td></tr></table>
+<P>
+<table border cellspacing=0 cellpadding=3 bgcolor="#ccccff">
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=2>Standard (Mandatory) qualifiers</th>
+<th align="left">Allowed values</th>
+<th align="left">Default</th>
+</tr>
+
+<tr>
+<td>[-sequence]<br>(Parameter 1)</td>
+<td>(Aligned) nucleotide sequence set filename and optional format, or reference (input USA)</td>
+<td>Readable set of sequences</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>[-outfile]<br>(Parameter 2)</td>
+<td>Vienna RNAfold output file</td>
+<td>Output file</td>
+<td><i>&lt;*&gt;</i>.vrnaalifold</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=2>Additional (Optional) qualifiers</th>
+<th align="left">Allowed values</th>
+<th align="left">Default</th>
+</tr>
+
+<tr>
+<td colspan=4>(none)</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=2>Advanced (Unprompted) qualifiers</th>
+<th align="left">Allowed values</th>
+<th align="left">Default</th>
+</tr>
+
+<tr>
+<td>-constraintfile</td>
+<td>Vienna RNA structure constraints file (optional)</td>
+<td>Input file</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>-paramfile</td>
+<td>Vienna RNA parameters file (optional)</td>
+<td>Input file</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>-temperature</td>
+<td>Temperature</td>
+<td>Any numeric value</td>
+<td>37.0</td>
+</tr>
+
+<tr>
+<td>-[no]gu</td>
+<td>Allow GU pairs</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-[no]closegu</td>
+<td>Allow GU pairs at end of helices</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-[no]lp</td>
+<td>Allow lonely pairs</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-[no]convert</td>
+<td>Convert T to U</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-nsbases</td>
+<td>Non-standard bases</td>
+<td>Any string is accepted</td>
+<td><i>An empty string is accepted</i></td>
+</tr>
+
+<tr>
+<td>-[no]tetraloop</td>
+<td>Stabilizing energies for tetra-loops</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-circular</td>
+<td>Circular RNA</td>
+<td>Boolean value Yes/No</td>
+<td>No</td>
+</tr>
+
+<tr>
+<td>-colour</td>
+<td>Colour structure plot</td>
+<td>Boolean value Yes/No</td>
+<td>No</td>
+</tr>
+
+<tr>
+<td>-energy</td>
+<td>Rarely used option to fold sequences from the ABCD... alphabet</td>
+<td><table><tr><td>0</td> <td><i>(BP)</i></td></tr><tr><td>1</td> <td><i>(Any with GC)</i></td></tr><tr><td>2</td> <td><i>(Any with AU parameters)</i></td></tr></table></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>-scale</td>
+<td>Estimate of ensemble free energy</td>
+<td>Any numeric value</td>
+<td>1.07</td>
+</tr>
+
+<tr>
+<td>-dangles</td>
+<td>Method</td>
+<td><table><tr><td>0</td> <td><i>(Ignore)</i></td></tr><tr><td>1</td> <td><i>(Only unpaired bases for just one dangling end)</i></td></tr><tr><td>2</td> <td><i>(Always use dangling energies)</i></td></tr><tr><td>3</td> <td><i>(Allow coaxial stacking of adjacent helices)</i></td></tr></table></td>
+<td>2</td>
+</tr>
+
+<tr>
+<td>-covariance</td>
+<td>Weight for covariance</td>
+<td>Any numeric value</td>
+<td>1.0</td>
+</tr>
+
+<tr>
+<td>-nspenalty</td>
+<td>Non-compatible sequence penalty</td>
+<td>Any numeric value</td>
+<td>1.0</td>
+</tr>
+
+<tr>
+<td>-endgaps</td>
+<td>Mark end gaps</td>
+<td>Boolean value Yes/No</td>
+<td>No</td>
+</tr>
+
+<tr>
+<td>-most</td>
+<td>Use most informative sequence algorithm</td>
+<td>Boolean value Yes/No</td>
+<td>No</td>
+</tr>
+
+<tr>
+<td>-ssoutfile</td>
+<td>Vienna structure postscript output file</td>
+<td>Output file</td>
+<td><i>&lt;*&gt;</i>.vrnaalifold</td>
+</tr>
+
+<tr>
+<td>-alignoutfile</td>
+<td>Vienna alignment colour postscript output file</td>
+<td>Output file</td>
+<td><i>&lt;*&gt;</i>.vrnaalifold</td>
+</tr>
+
+</table>
+
+<!--
+DON'T WRITE ANYTHING HERE.
+IT IS DONE FOR YOU.
+-->
+
+
+
+
+
+
+
+
+<H2>
+    Input file format
+</H2>
+
+<!-- 
+        This includes example input file formats.
+        This should be a detailed description and example - assume
+        someone will want to parse this file and will want to know what
+        happens in unusual cases - null input, etc. 
+   -->
+
+<b>vrnaalifold</b> reads any normal sequence USAs.
+
+<p>
+
+
+<a name="input.1"></a>
+<h3>Input files for usage example </h3>
+<p><h3>File: ecoli6s.fasta</h3>
+<table width="90%"><tr><td bgcolor="#FFCCFF">
+<pre>
+&gt;X01238.1/1-183
+AUUUCUCUGAGAUGUUCGCAAGCGGGC.CAGUCCCCUGAGCCGAUAUUUCAUACCACAAG
+AAUGUGGCGCUCCGCGGUUGGUGAGCAUGCUCGGUCCGU...............CCGAGA
+AGCCUUAAAACUGCGACGACACAUUCACCUUGAACCAA.GGGUUCAAGGGUUACAGCCUG
+CGGCGGCA.UC.UCGGAG.AUUC
+&gt;AL627277.1/108623-108805
+AUUUCUCUGAGAUGUUUGCAAGCGGGC.CAGUCCCCUGAGCCGAUAUUUCAUACCACAAG
+AAUGUGGCGCUCCGCGGUUGGUGAGCAUGCUCGGUUCGU...............CCGAGA
+AGCCUUAAAACUGUGACGACACAUUCACCUUGAACCAA.GGGUUCAAGGGUUACAGCCUG
+CGGCGGCA.UC.UCGGAG.AUUC
+&gt;AJ414145.1/90993-91174
+AUUUCUCUGAGGUGUUUGCCAGCGGGC.CAGUCCCCUGAGCCGAUAUUUAAUACCAACAG
+AAUGUAGUGCUCCGUAACCGGUGAGCAUGCUCGGUCCG................CCGAGA
+AGCCUUAAGGUUGCGACGCUGCGUUCACCUUGAACCAA.GGGUUCAAGGGUUACAGCCUG
+CGACGGCA.CC.UCGGAG.AUCC
+&gt;U32767.1/6538-6734
+.AUUACCUGGAGUGUUCGUCAGUAGGC.UAUGUCCCUGAGCCGAUACUUUAAAUCUUAUA
+AAUU.GGUUUCCUAUCGUUGGUGUGUAGGCUUAACCUUUGACUCGUUCAUUGGGCUAAGA
+AACCUGAAAACGGUAUCAACUGAUUU.CCUUGAACCGUCGGGUUCAAGGACUACUGCCCG
+CAGCGGCACUC.UGGGGU.CUUC
+&gt;AE006208.1/8365-8185
+.AUUACCUGAGGUGUUUGCCAGUGGGU.UAUGUCCCUGAGCCGAUACUUU.UAUUUUAUG
+AAUC.GGUUUCUAAUUGUUGGUGUGCAUGCUUAGCUUGA...............CUAAGA
+AGCCUAAAAAUAGUUAUAACUGAUUC.CCUUGAACCGUUGGGUUCAAGGACUGAGACUUG
+CAGCGGCA.UC.UCGGGUUCUUC
+&gt;Y00334.1/77-254
+CGCUCCCUGGUGUGUUGGCCAGUCGGU.GAUGUCCCUGAGCCGAUAACUGCAACAAC..G
+GAGGUUGC.CAGUUGGACCGGUGUGCAUGUCCGCACG.................ACGGAA
+AGCCUUAAGGUCUAC.UGCAACCGCCACCUUGAACUUUCGGGUUCAAGGGCUA.ACCCGA
+CAGCGGCA.CGACCGGGG.AGCU
+&gt;AE004317.1/5626-5807
+UUUACCCUGGGGUGUUCGUCAGCGGAUUUAUGUCCCUGAGCCGAUAAGCAACAUAAC..A
+GGGUUGGUAUUGGGUAGCUAUUGAGCAAGCUCGGCUUGUA..............CCGAGA
+AGCCUGCGGUUACCAUUACUGAUCCG.CCUUGAACCUGAUGGUUCAAGGGCUACGAUCCU
+CAACGGCA.UC.CCGGGG.UUC.
+</pre>
+</td></tr></table><p>
+
+
+
+
+
+<H2>
+    Output file format
+</H2>
+
+<!-- 
+        This includes example output file formats.
+        This should be a detailed description and example - assume
+        someone will want to parse this file and will want to know what
+        happens in unusual cases - null output, errors etc. 
+
+        If you wish to include the standard description of the avalable
+	report formats, use:
+#include file="inc/reportformats.ihtml"
+   -->
+
+<b>vrnaalifold</b> 
+outputs a graph to the specified graphics device. 
+outputs a report format file. The default format is ...
+
+
+<p>
+
+
+<a name="output.1"></a>
+<h3>Output files for usage example </h3>
+<p><h3>File: ecoli6s.vrnaalifold</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+AUUUCCCUGAGGUGUUCGCCAGCGGGC_CAUGUCCCUGAGCCGAUAUUUAAUACCACAAGAAUGUGGUGCUCCGUGGUUGGUGAGCAUGCUCGGCCCGU_______________CCGAGAAGCCUUAAAAUUGCGACGACACAUUCACCUUGAACCAA_GGGUUCAAGGGCUACAGCCUGCAGCGGCA_UC_UCGGGG_AUUC
+....(((((((((((.(((..((((((................................(((((((......(((((((...(.((...(((((....................)))))..)))....)))))))....))))))).(((((((((....)))))))))......)))))).)))))).)).))))))..... (-56.91 = -48.71 +  -8.20) 
+</pre>
+</td></tr></table><p>
+<p><h3>File: ecoli6s.ssps</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+%!PS-Adobe-3.0 EPSF-3.0
+%%Creator: ePS_dot.c,v 1.6 2008/06/26 08:40:00 rice Exp $, ViennaRNA-1.7.2
+%%CreationDate: Sun Jul 15 12:00:00 2007
+%%Title: RNA Secondary Structure Plot
+%%BoundingBox: 66 210 518 662
+%%DocumentFonts: Helvetica
+%%Pages: 1
+%%EndComments
+
+%Options: -d2 
+% to switch off outline pairs of sequence comment or
+% delete the appropriate line near the end of the file
+
+%%BeginProlog
+/RNAplot 100 dict def
+RNAplot begin
+/fsize  14 def
+/outlinecolor {0.2 setgray} bind def
+/paircolor    {0.2 setgray} bind def
+/seqcolor     {0   setgray} bind def
+/cshow  { dup stringwidth pop -2 div fsize -3 div rmoveto show} bind def
+/min { 2 copy gt { exch } if pop } bind def
+/max { 2 copy lt { exch } if pop } bind def
+/drawoutline {
+  gsave outlinecolor newpath
+  coor 0 get aload pop 0.8 0 360 arc % draw 5' circle of 1st sequence
+  currentdict /cutpoint known        % check if cutpoint is defined
+  {coor 0 cutpoint getinterval
+   {aload pop lineto} forall         % draw outline of 1st sequence
+   coor cutpoint get aload pop
+   2 copy moveto 0.8 0 360 arc       % draw 5' circle of 2nd sequence
+   coor cutpoint coor length cutpoint sub getinterval
+   {aload pop lineto} forall}        % draw outline of 2nd sequence
+  {coor {aload pop lineto} forall}   % draw outline as a whole
+  ifelse
+  stroke grestore
+} bind def
+/drawpairs {
+  paircolor
+  0.7 setlinewidth
+  [9 3.01] 9 setdash
+  newpath
+  pairs {aload pop
+     coor exch 1 sub get aload pop moveto
+     coor exch 1 sub get aload pop lineto
+  } forall
+  stroke
+} bind def
+% draw bases
+/drawbases {
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+60 cmark
+146 cmark
+61 cmark
+145 cmark
+62 144 1 gmark
+62 cmark
+144 cmark
+63 cmark
+143 cmark
+64 cmark
+142 cmark
+65 141 2 gmark
+141 cmark
+66 cmark
+140 cmark
+73 135 2 gmark
+73 cmark
+135 cmark
+74 cmark
+134 cmark
+75 133 1 gmark
+75 cmark
+133 cmark
+76 132 1 gmark
+76 cmark
+132 cmark
+77 cmark
+131 cmark
+78 130 1 gmark
+78 cmark
+130 cmark
+79 cmark
+129 cmark
+86 cmark
+122 cmark
+90 cmark
+119 cmark
+91 cmark
+118 cmark
+92 cmark
+117 cmark
+93 cmark
+116 cmark
+94 115 2 gmark
+156 cmark
+
+% End Annotations
+% show it
+showpage
+end
+%%EOF
+</pre>
+</td></tr></table><p>
+<p><h3>File: ecoli6s.alirnaps</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 0 0 576 428
+%%EndComments
+% draws Vienna RNA like colored boxes
+/box { % x1 y1 x2 y2 hue saturation
+  gsave
+  dup 0.3 mul 1 exch sub sethsbcolor
+  exch 3 index sub exch 2 index sub rectfill
+  grestore
+} def
+% draws a box in current color
+/box2 { % x1 y1 x2 y2
+  exch 3 index sub exch 2 index sub rectfill
+} def
+/string { % (Text) x y
+ 6 add
+ moveto
+  show
+} def
+0 428 translate
+1 -1 scale
+/Courier findfont
+[10 0 0 -10 0 0] makefont setfont
+192.0 11.5 198.0 20.0 0.16 1 box
+192.0 20.0 198.0 28.5 0.16 1 box
+192.0 28.5 198.0 37.0 0.16 1 box
+192.0 37.0 198.0 45.5 0.16 1 box
+192.0 45.5 198.0 54.0 0.16 1 box
+192.0 54.0 198.0 62.5 0.16 1 box
+192.0 62.5 198.0 71.0 0.16 1 box
+270.0 331.0 276.0 339.5 0.16 1 box
+270.0 339.5 276.0 348.0 0.16 1 box
+270.0 348.0 276.0 356.5 0.16 1 box
+270.0 356.5 276.0 365.0 0.16 1 box
+270.0 365.0 276.0 373.5 0.16 1 box
+270.0 373.5 276.0 382.0 0.16 1 box
+270.0 382.0 276.0 390.5 0.16 1 box
+198.0 11.5 204.0 20.0 0.16 1 box
+198.0 20.0 204.0 28.5 0.16 1 box
+198.0 28.5 204.0 37.0 0.16 1 box
+198.0 37.0 204.0 45.5 0.16 1 box
+198.0 45.5 204.0 54.0 0.16 1 box
+198.0 54.0 204.0 62.5 0.16 1 box
+198.0 62.5 204.0 71.0 0.16 1 box
+264.0 331.0 270.0 339.5 0.16 1 box
+264.0 339.5 270.0 348.0 0.16 1 box
+264.0 348.0 270.0 356.5 0.16 1 box
+264.0 356.5 270.0 365.0 0.16 1 box
+264.0 365.0 270.0 373.5 0.16 1 box
+264.0 373.5 270.0 382.0 0.16 1 box
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+516.0 306.9 522.0 315.0 box2
+522.0 304.2 528.0 315.0 box2
+0 setgray
+(\).\)\)\)\)\)\).\)\).\)\)\)\)\)\).....) 168.0 321.5 string
+(X01238.1/1-183) 6.0 332.0 string
+(CGGCGGCA-UC-UCGGAG-AUUC) 168.0 332.0 string
+(183) 312.0 332.0 string
+(AL627277.1/108623-108805) 6.0 340.5 string
+(CGGCGGCA-UC-UCGGAG-AUUC) 168.0 340.5 string
+(183) 312.0 340.5 string
+(AJ414145.1/90993-91174) 6.0 349.0 string
+(CGACGGCA-CC-UCGGAG-AUCC) 168.0 349.0 string
+(182) 312.0 349.0 string
+(U32767.1/6538-6734) 6.0 357.5 string
+(CAGCGGCACUC-UGGGGU-CUUC) 168.0 357.5 string
+(197) 312.0 357.5 string
+(AE006208.1/8365-8185) 6.0 366.0 string
+(CAGCGGCA-UC-UCGGGUUCUUC) 168.0 366.0 string
+(181) 312.0 366.0 string
+(Y00334.1/77-254) 6.0 374.5 string
+(CAGCGGCA-CGACCGGGG-AGCU) 168.0 374.5 string
+(178) 312.0 374.5 string
+(AE004317.1/5626-5807) 6.0 383.0 string
+(CAACGGCA-UC-CCGGGG-UUC-) 168.0 383.0 string
+(182) 312.0 383.0 string
+(.........190.......200.) 168.0 393.5 string
+0.6 setgray
+168.0 405.2 174.0 421.5 box2
+174.0 413.4 180.0 421.5 box2
+180.0 410.7 186.0 421.5 box2
+186.0 405.2 192.0 421.5 box2
+192.0 405.2 198.0 421.5 box2
+198.0 405.2 204.0 421.5 box2
+204.0 405.2 210.0 421.5 box2
+210.0 405.2 216.0 421.5 box2
+216.0 420.5 222.0 421.5 box2
+222.0 410.7 228.0 421.5 box2
+228.0 408.0 234.0 421.5 box2
+234.0 420.5 240.0 421.5 box2
+240.0 410.7 246.0 421.5 box2
+246.0 408.0 252.0 421.5 box2
+252.0 405.2 258.0 421.5 box2
+258.0 405.2 264.0 421.5 box2
+264.0 413.4 270.0 421.5 box2
+270.0 410.7 276.0 421.5 box2
+276.0 420.5 282.0 421.5 box2
+282.0 413.4 288.0 421.5 box2
+288.0 408.0 294.0 421.5 box2
+294.0 413.4 300.0 421.5 box2
+300.0 410.7 306.0 421.5 box2
+showpage
+</pre>
+</td></tr></table><p>
+
+
+
+
+
+<H2>
+    Data files
+</H2>
+
+<!-- 
+        Any data files used (e.g. translation table file)
+        This includes example data file formats if they are
+        not obvious.
+
+	If you wish to include the standard description of what data
+	files are and how to use embossdata to inspect and retrieve
+	them, use:
+#include file="inc/localfiles.ihtml"
+   -->
+
+For details of Vienna RNA file formats, see the original documentation
+http://www.tbi.univie.ac.at/~ivo/RNA/
+
+<H2>
+    Notes
+</H2>
+
+<!-- 
+        Restrictions.
+        Interesting behaviour.
+        Useful things you can do with this program.
+   -->
+
+None.
+
+
+
+
+
+
+
+<H2>
+    References
+</H2>
+
+<!-- 
+        Bibliography for methods used.
+   -->
+
+None.
+
+
+
+
+
+
+
+
+<H2>
+    Warnings
+</H2>
+
+<!-- 
+        Potentially stupid things the program will let you do.
+   -->
+
+None.
+
+
+
+
+
+
+
+<H2>
+    Diagnostic Error Messages
+</H2>
+
+<!-- 
+        Error messages specific to this program, eg:
+        "FATAL xxx" - means you have not set up the xxx data using program <b>prog</b>.<p>
+   -->
+
+None.
+
+
+
+
+
+
+
+<H2>
+    Exit status
+</H2>
+
+<!-- 
+        Description of the exit status for various error conditions
+   -->
+
+It always exits with status 0.
+
+
+
+
+
+
+
+
+<H2>
+    Known bugs
+</H2>
+
+
+<!-- 
+        Bugs noted but not yet fixed.
+   -->
+
+None.
+
+
+
+
+
+
+
+
+<!--
+<H2>
+    See also
+</H2>
+-->
+<h2><a name="See also">See also</a></h2>
+<table border cellpadding=4 bgcolor="#FFFFF0">
+<tr><th>Program name</th>
+<th>Description</th></tr>
+<tr>
+<td><a href="/emboss/apps/einverted.html">einverted</a></td>
+<td>Finds inverted repeats in nucleotide sequences</td>
+</tr>
+
+<tr>
+<td><a href="vrnaalifoldpf.html">vrnaalifoldpf</a></td>
+<td>RNA alignment folding with partition</td>
+</tr>
+
+<tr>
+<td><a href="vrnacofold.html">vrnacofold</a></td>
+<td>RNA cofolding</td>
+</tr>
+
+<tr>
+<td><a href="vrnacofoldconc.html">vrnacofoldconc</a></td>
+<td>RNA cofolding with concentrations</td>
+</tr>
+
+<tr>
+<td><a href="vrnacofoldpf.html">vrnacofoldpf</a></td>
+<td>RNA cofolding with partitioning</td>
+</tr>
+
+<tr>
+<td><a href="vrnadistance.html">vrnadistance</a></td>
+<td>RNA distances</td>
+</tr>
+
+<tr>
+<td><a href="vrnaduplex.html">vrnaduplex</a></td>
+<td>RNA duplex calculation</td>
+</tr>
+
+<tr>
+<td><a href="vrnaeval.html">vrnaeval</a></td>
+<td>RNA eval</td>
+</tr>
+
+<tr>
+<td><a href="vrnaevalpair.html">vrnaevalpair</a></td>
+<td>RNA eval with cofold</td>
+</tr>
+
+<tr>
+<td><a href="vrnafold.html">vrnafold</a></td>
+<td>Calculate secondary structures of RNAs</td>
+</tr>
+
+<tr>
+<td><a href="vrnafoldpf.html">vrnafoldpf</a></td>
+<td>Secondary structures of RNAs with partition</td>
+</tr>
+
+<tr>
+<td><a href="vrnaheat.html">vrnaheat</a></td>
+<td>RNA melting</td>
+</tr>
+
+<tr>
+<td><a href="vrnainverse.html">vrnainverse</a></td>
+<td>RNA sequences matching a structure</td>
+</tr>
+
+<tr>
+<td><a href="vrnalfold.html">vrnalfold</a></td>
+<td>Calculate locally stable secondary structures of RNAs</td>
+</tr>
+
+<tr>
+<td><a href="vrnaplot.html">vrnaplot</a></td>
+<td>Plot vrnafold output</td>
+</tr>
+
+<tr>
+<td><a href="vrnasubopt.html">vrnasubopt</a></td>
+<td>Calculate RNA suboptimals</td>
+</tr>
+
+</table>
+<!-- 
+        Add any comments about other associated programs (to prepare
+        data files?) that seealso doesn't find. 
+   -->
+
+
+
+
+
+
+
+
+
+
+<H2>
+    Author(s)
+</H2>
+
+This program is an EMBOSS conversion of a program written by Ivo Hofacker
+as part of his VIENNA package.
+
+<p>
+Although we take every care to ensure that the results of the EMBOSS
+version are identical to those from the original package, we recommend
+that you check your inputs give the same results in both versions
+before publication.
+
+<p>
+Please report all bugs in the EMBOSS version to the EMBOSS bug team,
+not to the original author.
+
+<H2>
+    History
+</H2>
+
+Converted (October 2005) by Alan Bleasby
+
+
+
+<H2>
+    Target users
+</H2>
+
+<!--
+        For general users, requested by one user, for EMBOSS site
+        maintainers, for EMBOSS developers etc.
+        eg:
+        "This program is intended to be used by everyone and everything,
+        from naive users to embedded scripts." 
+	Which is easy to include using:
+   -->
+
+This program is intended to be used by everyone and everything, from naive users to embedded scripts.
+
+
+<H2>
+    Comments
+</H2>
+
+
+</BODY>
+</HTML>
+

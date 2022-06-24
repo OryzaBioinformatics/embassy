@@ -1,0 +1,810 @@
+<HTML>
+<HEAD>
+  <TITLE>
+  EMBASSY: VIENNA: vrnacofoldpf
+  </TITLE>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" text="#000000">
+
+<table align=center border=0 cellspacing=0 cellpadding=0>
+<tr><td valign=top>
+<A HREF="/" ONMOUSEOVER="self.status='Go to the EMBOSS home page';return true"><img border=0 src="emboss_icon.jpg" alt="" width=150 height=48></a>
+</td>
+<td align=left valign=middle>
+<b><font size="+6">
+vrnacofoldpf
+</font></b>
+</td></tr>
+</table>
+<br>&nbsp;
+<p>
+
+
+
+<H2>
+    Function
+</H2>
+RNA cofolding with partitioning
+<!--
+DON'T WRITE ANYTHING HERE.
+IT IS DONE FOR YOU.
+-->
+
+
+
+
+<H2>
+    Description
+</H2>
+
+This is a port of the Vienna RNA package program RNAcofold.
+<p>
+The original program has additional inputs and produces different
+outputs, depending on the options selected. In the EMBASSY
+implementation it is split into
+<b>vrnacofold</b> <b>vrnacofoldconc</b> and <b>vrnacofoldpf</b>
+
+
+<H2>
+    Algorithm
+</H2>
+
+See the original documentation for the Vienna RNA package
+http://www.tbi.univie.ac.at/~ivo/RNA/
+
+
+
+<H2>
+    Usage
+</H2>
+
+<!--  
+	Example usage, as run from the command-line.
+        Many examples illustrating different behaviours is good.
+ -->
+
+<b>Here is a sample session with vrnacofoldpf</b>
+<p>
+
+<p>
+<table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
+
+% <b>vrnacofoldpf </b>
+RNA cofolding with partitioning
+Input nucleotide sequence: <b>cofold-red.fasta</b>
+Second nucleotide sequence: <b>cofold-blue.fasta</b>
+Vienna RNAfold output file [red.vrnacofoldpf]: <b></b>
+
+</pre></td></tr></table><p>
+<p>
+<a href="#input.1">Go to the input files for this example</a><br><a href="#output.1">Go to the output files for this example</a><p><p>
+
+
+
+<H2>
+    Command line arguments
+</H2>
+
+<table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
+<pre>
+   Standard (Mandatory) qualifiers:
+  [-asequence]         sequence   Nucleotide sequence filename and optional
+                                  format, or reference (input USA)
+  [-bsequence]         sequence   Nucleotide sequence filename and optional
+                                  format, or reference (input USA)
+  [-outfile]           outfile    [*.vrnacofoldpf] Vienna RNAfold output file
+
+   Additional (Optional) qualifiers: (none)
+   Advanced (Unprompted) qualifiers:
+   -aconstraintfile    infile     Vienna RNA structure constraints file
+                                  (optional)
+   -bconstraintfile    infile     Second vienna RNA structure constraints file
+                                  (optional)
+   -paramfile          infile     Vienna RNA parameters file (optional)
+   -temperature        float      [37.0] Temperature (Any numeric value)
+   -[no]gu             boolean    [Y] Allow GU pairs
+   -[no]closegu        boolean    [Y] Allow GU pairs at end of helices
+   -[no]lp             boolean    [Y] Allow lonely pairs
+   -[no]convert        boolean    [Y] Convert T to U
+   -nsbases            string     Non-standard bases (Any string is accepted)
+   -[no]tetraloop      boolean    [Y] Stabilizing energies for tetra-loops
+   -energy             menu       [0] Rarely used option to fold sequences
+                                  from the ABCD... alphabet (Values: 0 (BP); 1
+                                  (Any with GC); 2 (Any with AU parameters))
+   -scale              float      [1.07] Estimate of ensemble free energy (Any
+                                  numeric value)
+   -dangles            menu       [1] Method (Values: 0 (Ignore); 1 (Only
+                                  unpaired bases for just one dangling end); 2
+                                  (Always use dangling energies); 3 (Allow
+                                  coaxial stacking of adjacent helices))
+   -paired             boolean    [N] Calculate probabilities of base pairing
+   -ssoutfile          outfile    [*.vrnacofoldpf] Vienna structure postscript
+                                  output file
+   -dotoutfile         outfile    [*.vrnacofoldpf] Vienna dotplot postscript
+                                  output file
+
+   Associated qualifiers:
+
+   "-asequence" associated qualifiers
+   -sbegin1            integer    Start of the sequence to be used
+   -send1              integer    End of the sequence to be used
+   -sreverse1          boolean    Reverse (if DNA)
+   -sask1              boolean    Ask for begin/end/reverse
+   -snucleotide1       boolean    Sequence is nucleotide
+   -sprotein1          boolean    Sequence is protein
+   -slower1            boolean    Make lower case
+   -supper1            boolean    Make upper case
+   -sformat1           string     Input sequence format
+   -sdbname1           string     Database name
+   -sid1               string     Entryname
+   -ufo1               string     UFO features
+   -fformat1           string     Features format
+   -fopenfile1         string     Features file name
+
+   "-bsequence" associated qualifiers
+   -sbegin2            integer    Start of the sequence to be used
+   -send2              integer    End of the sequence to be used
+   -sreverse2          boolean    Reverse (if DNA)
+   -sask2              boolean    Ask for begin/end/reverse
+   -snucleotide2       boolean    Sequence is nucleotide
+   -sprotein2          boolean    Sequence is protein
+   -slower2            boolean    Make lower case
+   -supper2            boolean    Make upper case
+   -sformat2           string     Input sequence format
+   -sdbname2           string     Database name
+   -sid2               string     Entryname
+   -ufo2               string     UFO features
+   -fformat2           string     Features format
+   -fopenfile2         string     Features file name
+
+   "-outfile" associated qualifiers
+   -odirectory3        string     Output directory
+
+   "-ssoutfile" associated qualifiers
+   -odirectory         string     Output directory
+
+   "-dotoutfile" associated qualifiers
+   -odirectory         string     Output directory
+
+   General qualifiers:
+   -auto               boolean    Turn off prompts
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
+   -options            boolean    Prompt for standard and additional values
+   -debug              boolean    Write debug output to program.dbg
+   -verbose            boolean    Report some/full command line options
+   -help               boolean    Report command line options. More
+                                  information on associated and general
+                                  qualifiers can be found with -help -verbose
+   -warning            boolean    Report warnings
+   -error              boolean    Report errors
+   -fatal              boolean    Report fatal errors
+   -die                boolean    Report dying program messages
+
+</pre>
+</td></tr></table>
+<P>
+<table border cellspacing=0 cellpadding=3 bgcolor="#ccccff">
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=2>Standard (Mandatory) qualifiers</th>
+<th align="left">Allowed values</th>
+<th align="left">Default</th>
+</tr>
+
+<tr>
+<td>[-asequence]<br>(Parameter 1)</td>
+<td>Nucleotide sequence filename and optional format, or reference (input USA)</td>
+<td>Readable sequence</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>[-bsequence]<br>(Parameter 2)</td>
+<td>Nucleotide sequence filename and optional format, or reference (input USA)</td>
+<td>Readable sequence</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>[-outfile]<br>(Parameter 3)</td>
+<td>Vienna RNAfold output file</td>
+<td>Output file</td>
+<td><i>&lt;*&gt;</i>.vrnacofoldpf</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=2>Additional (Optional) qualifiers</th>
+<th align="left">Allowed values</th>
+<th align="left">Default</th>
+</tr>
+
+<tr>
+<td colspan=4>(none)</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=2>Advanced (Unprompted) qualifiers</th>
+<th align="left">Allowed values</th>
+<th align="left">Default</th>
+</tr>
+
+<tr>
+<td>-aconstraintfile</td>
+<td>Vienna RNA structure constraints file (optional)</td>
+<td>Input file</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>-bconstraintfile</td>
+<td>Second vienna RNA structure constraints file (optional)</td>
+<td>Input file</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>-paramfile</td>
+<td>Vienna RNA parameters file (optional)</td>
+<td>Input file</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr>
+<td>-temperature</td>
+<td>Temperature</td>
+<td>Any numeric value</td>
+<td>37.0</td>
+</tr>
+
+<tr>
+<td>-[no]gu</td>
+<td>Allow GU pairs</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-[no]closegu</td>
+<td>Allow GU pairs at end of helices</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-[no]lp</td>
+<td>Allow lonely pairs</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-[no]convert</td>
+<td>Convert T to U</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-nsbases</td>
+<td>Non-standard bases</td>
+<td>Any string is accepted</td>
+<td><i>An empty string is accepted</i></td>
+</tr>
+
+<tr>
+<td>-[no]tetraloop</td>
+<td>Stabilizing energies for tetra-loops</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>-energy</td>
+<td>Rarely used option to fold sequences from the ABCD... alphabet</td>
+<td><table><tr><td>0</td> <td><i>(BP)</i></td></tr><tr><td>1</td> <td><i>(Any with GC)</i></td></tr><tr><td>2</td> <td><i>(Any with AU parameters)</i></td></tr></table></td>
+<td>0</td>
+</tr>
+
+<tr>
+<td>-scale</td>
+<td>Estimate of ensemble free energy</td>
+<td>Any numeric value</td>
+<td>1.07</td>
+</tr>
+
+<tr>
+<td>-dangles</td>
+<td>Method</td>
+<td><table><tr><td>0</td> <td><i>(Ignore)</i></td></tr><tr><td>1</td> <td><i>(Only unpaired bases for just one dangling end)</i></td></tr><tr><td>2</td> <td><i>(Always use dangling energies)</i></td></tr><tr><td>3</td> <td><i>(Allow coaxial stacking of adjacent helices)</i></td></tr></table></td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>-paired</td>
+<td>Calculate probabilities of base pairing</td>
+<td>Boolean value Yes/No</td>
+<td>No</td>
+</tr>
+
+<tr>
+<td>-ssoutfile</td>
+<td>Vienna structure postscript output file</td>
+<td>Output file</td>
+<td><i>&lt;*&gt;</i>.vrnacofoldpf</td>
+</tr>
+
+<tr>
+<td>-dotoutfile</td>
+<td>Vienna dotplot postscript output file</td>
+<td>Output file</td>
+<td><i>&lt;*&gt;</i>.vrnacofoldpf</td>
+</tr>
+
+</table>
+
+<!--
+DON'T WRITE ANYTHING HERE.
+IT IS DONE FOR YOU.
+-->
+
+
+
+
+
+
+
+
+<H2>
+    Input file format
+</H2>
+
+<!-- 
+        This includes example input file formats.
+        This should be a detailed description and example - assume
+        someone will want to parse this file and will want to know what
+        happens in unusual cases - null input, etc. 
+   -->
+
+<b>vrnacofoldpf</b> reads any normal sequence USAs.
+
+<p>
+
+
+<a name="input.1"></a>
+<h3>Input files for usage example </h3>
+<p><h3>File: cofold-red.fasta</h3>
+<table width="90%"><tr><td bgcolor="#FFCCFF">
+<pre>
+&gt;red
+AUGAAGAUGA
+</pre>
+</td></tr></table><p>
+<p><h3>File: cofold-blue.fasta</h3>
+<table width="90%"><tr><td bgcolor="#FFCCFF">
+<pre>
+&gt;blue
+CUGUCUGUCUUGAGACA
+</pre>
+</td></tr></table><p>
+
+
+
+
+
+<H2>
+    Output file format
+</H2>
+
+<!-- 
+        This includes example output file formats.
+        This should be a detailed description and example - assume
+        someone will want to parse this file and will want to know what
+        happens in unusual cases - null output, errors etc. 
+
+        If you wish to include the standard description of the avalable
+	report formats, use:
+#include file="inc/reportformats.ihtml"
+   -->
+
+<b>vrnacofoldpf</b> 
+outputs a graph to the specified graphics device. 
+outputs a report format file. The default format is ...
+
+
+<p>
+
+
+<a name="output.1"></a>
+<h3>Output files for usage example </h3>
+<p><h3>File: red.vrnacofoldpf</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+AUGAAGAUGA&amp;CUGUCUGUCUUGAGACA
+....((((..&amp;..))))(((....))). ( -4.40)
+....((((,.&amp;..)))}(((....))). [ -5.88]
+ frequency of mfe structure in ensemble 0.279848 , delta G binding= -1.57
+</pre>
+</td></tr></table><p>
+<p><h3>Graphics File: red.ps</h3>
+<p><img src="vrnacofoldpf.1.red.gif" alt="[vrnacofoldpf results]">
+<p><h3>File: red.ssps</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+%!PS-Adobe-3.0 EPSF-3.0
+%%Creator: ePS_dot.c,v 1.6 2008/06/26 08:40:00 rice Exp $, ViennaRNA-1.7.2
+%%CreationDate: Sun Jul 15 12:00:00 2007
+%%Title: RNA Secondary Structure Plot
+%%BoundingBox: 66 210 518 662
+%%DocumentFonts: Helvetica
+%%Pages: 1
+%%EndComments
+
+%Options: 
+% to switch off outline pairs of sequence comment or
+% delete the appropriate line near the end of the file
+
+%%BeginProlog
+/RNAplot 100 dict def
+RNAplot begin
+/fsize  14 def
+/outlinecolor {0.2 setgray} bind def
+/paircolor    {0.2 setgray} bind def
+/seqcolor     {0   setgray} bind def
+/cshow  { dup stringwidth pop -2 div fsize -3 div rmoveto show} bind def
+/min { 2 copy gt { exch } if pop } bind def
+/max { 2 copy lt { exch } if pop } bind def
+/drawoutline {
+  gsave outlinecolor newpath
+  coor 0 get aload pop 0.8 0 360 arc % draw 5' circle of 1st sequence
+  currentdict /cutpoint known        % check if cutpoint is defined
+  {coor 0 cutpoint getinterval
+   {aload pop lineto} forall         % draw outline of 1st sequence
+   coor cutpoint get aload pop
+   2 copy moveto 0.8 0 360 arc       % draw 5' circle of 2nd sequence
+   coor cutpoint coor length cutpoint sub getinterval
+   {aload pop lineto} forall}        % draw outline of 2nd sequence
+  {coor {aload pop lineto} forall}   % draw outline as a whole
+  ifelse
+  stroke grestore
+} bind def
+/drawpairs {
+  paircolor
+  0.7 setlinewidth
+  [9 3.01] 9 setdash
+  newpath
+  pairs {aload pop
+     coor exch 1 sub get aload pop moveto
+     coor exch 1 sub get aload pop lineto
+  } forall
+  stroke
+} bind def
+% draw bases
+/drawbases {
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+AUGAAGAUGACUGUCUGUCUUGAGACA\
+) def
+/coor [
+[96.276 111.415]
+[91.331 110.049]
+[86.992 106.486]
+[84.234 101.044]
+[83.858 94.465]
+[73.252 83.858]
+[62.645 73.252]
+[52.039 62.645]
+[36.067 58.926]
+[31.562 43.157]
+[43.157 31.562]
+[58.926 36.067]
+[62.645 52.039]
+[73.252 62.645]
+[83.858 73.252]
+[94.465 83.858]
+[107.979 90.367]
+[122.885 92.046]
+[137.791 93.726]
+[152.597 86.675]
+[165.951 96.194]
+[164.115 112.490]
+[148.978 118.799]
+[136.111 108.631]
+[121.206 106.952]
+[106.300 105.272]
+[104.357 108.419]
+] def
+/pairs [
+[5 16]
+[6 15]
+[7 14]
+[8 13]
+[17 26]
+[18 25]
+[19 24]
+] def
+
+init
+
+% switch off outline pairs or bases by removing these lines
+drawoutline
+drawpairs
+drawbases
+% show it
+showpage
+end
+%%EOF
+</pre>
+</td></tr></table><p>
+
+
+
+
+
+<H2>
+    Data files
+</H2>
+
+For details of Vienna RNA file formats, see the original documentation
+http://www.tbi.univie.ac.at/~ivo/RNA/
+
+
+
+<H2>
+    Notes
+</H2>
+
+<!-- 
+        Restrictions.
+        Interesting behaviour.
+        Useful things you can do with this program.
+   -->
+
+None.
+
+
+
+
+
+
+
+<H2>
+    References
+</H2>
+
+<!-- 
+        Bibliography for methods used.
+   -->
+
+None.
+
+
+
+
+
+
+
+
+<H2>
+    Warnings
+</H2>
+
+<!-- 
+        Potentially stupid things the program will let you do.
+   -->
+
+None.
+
+
+
+
+
+
+
+<H2>
+    Diagnostic Error Messages
+</H2>
+
+<!-- 
+        Error messages specific to this program, eg:
+        "FATAL xxx" - means you have not set up the xxx data using program <b>prog</b>.<p>
+   -->
+
+None.
+
+
+
+
+
+
+
+<H2>
+    Exit status
+</H2>
+
+<!-- 
+        Description of the exit status for various error conditions
+   -->
+
+It always exits with status 0.
+
+
+
+
+
+
+
+
+<H2>
+    Known bugs
+</H2>
+
+
+<!-- 
+        Bugs noted but not yet fixed.
+   -->
+
+None.
+
+
+
+
+
+
+
+
+<!--
+<H2>
+    See also
+</H2>
+-->
+<h2><a name="See also">See also</a></h2>
+<table border cellpadding=4 bgcolor="#FFFFF0">
+<tr><th>Program name</th>
+<th>Description</th></tr>
+<tr>
+<td><a href="/emboss/apps/einverted.html">einverted</a></td>
+<td>Finds inverted repeats in nucleotide sequences</td>
+</tr>
+
+<tr>
+<td><a href="vrnaalifold.html">vrnaalifold</a></td>
+<td>RNA alignment folding</td>
+</tr>
+
+<tr>
+<td><a href="vrnaalifoldpf.html">vrnaalifoldpf</a></td>
+<td>RNA alignment folding with partition</td>
+</tr>
+
+<tr>
+<td><a href="vrnacofold.html">vrnacofold</a></td>
+<td>RNA cofolding</td>
+</tr>
+
+<tr>
+<td><a href="vrnacofoldconc.html">vrnacofoldconc</a></td>
+<td>RNA cofolding with concentrations</td>
+</tr>
+
+<tr>
+<td><a href="vrnadistance.html">vrnadistance</a></td>
+<td>RNA distances</td>
+</tr>
+
+<tr>
+<td><a href="vrnaduplex.html">vrnaduplex</a></td>
+<td>RNA duplex calculation</td>
+</tr>
+
+<tr>
+<td><a href="vrnaeval.html">vrnaeval</a></td>
+<td>RNA eval</td>
+</tr>
+
+<tr>
+<td><a href="vrnaevalpair.html">vrnaevalpair</a></td>
+<td>RNA eval with cofold</td>
+</tr>
+
+<tr>
+<td><a href="vrnafold.html">vrnafold</a></td>
+<td>Calculate secondary structures of RNAs</td>
+</tr>
+
+<tr>
+<td><a href="vrnafoldpf.html">vrnafoldpf</a></td>
+<td>Secondary structures of RNAs with partition</td>
+</tr>
+
+<tr>
+<td><a href="vrnaheat.html">vrnaheat</a></td>
+<td>RNA melting</td>
+</tr>
+
+<tr>
+<td><a href="vrnainverse.html">vrnainverse</a></td>
+<td>RNA sequences matching a structure</td>
+</tr>
+
+<tr>
+<td><a href="vrnalfold.html">vrnalfold</a></td>
+<td>Calculate locally stable secondary structures of RNAs</td>
+</tr>
+
+<tr>
+<td><a href="vrnaplot.html">vrnaplot</a></td>
+<td>Plot vrnafold output</td>
+</tr>
+
+<tr>
+<td><a href="vrnasubopt.html">vrnasubopt</a></td>
+<td>Calculate RNA suboptimals</td>
+</tr>
+
+</table>
+<!-- 
+        Add any comments about other associated programs (to prepare
+        data files?) that seealso doesn't find. 
+   -->
+
+
+
+
+
+
+
+
+
+
+<H2>
+    Author(s)
+</H2>
+
+This program is an EMBOSS conversion of a program written by Ivo Hofacker
+as part of his VIENNA package.
+
+<p>
+Although we take every care to ensure that the results of the EMBOSS
+version are identical to those from the original package, we recommend
+that you check your inputs give the same results in both versions
+before publication.
+
+<p>
+Please report all bugs in the EMBOSS version to the EMBOSS bug team,
+not to the original author.
+
+<H2>
+    History
+</H2>
+
+Converted (October 2005) by Alan Bleasby
+
+
+
+<H2>
+    Target users
+</H2>
+
+<!--
+        For general users, requested by one user, for EMBOSS site
+        maintainers, for EMBOSS developers etc.
+        eg:
+        "This program is intended to be used by everyone and everything,
+        from naive users to embedded scripts." 
+	Which is easy to include using:
+   -->
+
+This program is intended to be used by everyone and everything, from naive users to embedded scripts.
+
+
+<H2>
+    Comments
+</H2>
+
+
+</BODY>
+</HTML>
+
