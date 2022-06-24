@@ -133,7 +133,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
     if(minev) negallowed = true;
     else negallowed = ajAcdGetBool("negallowed");
   
-    matrixtype = ajAcdGetListI("matrixtype", 1);
+    matrixtype = ajAcdGetListSingle("matrixtype");
     if(ajStrMatchC(matrixtype, "l")) lower = true;
     else if(ajStrMatchC(matrixtype, "u")) upper = true;
 
@@ -904,7 +904,7 @@ void maketree()
     if (numtrees > MAXNUMTREES) {
       printf("\nERROR: number of input trees is read incorrectly from %s\n",
         intreename);
-      exxit(-1);
+      embExitBad();
     }
     if (treeprint) {
       fprintf(outfile, "User-defined tree");
@@ -1061,5 +1061,6 @@ int main(int argc, Char *argv[])
 #ifdef WIN32
   phyRestoreConsoleAttributes();
 #endif
+  embExit();
   return 0;
 }

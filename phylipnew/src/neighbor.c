@@ -72,13 +72,13 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 
     embInitP (pgm, argc, argv, "PHYLIPNEW");
    
-    matrixtype = ajAcdGetListI("matrixtype", 1);
+    matrixtype = ajAcdGetListSingle("matrixtype");
     if(ajStrMatchC(matrixtype, "l")) lower = true;
     else if(ajStrMatchC(matrixtype, "u")) upper = true;
 
     phylodist = ajAcdGetDistances("datafile");
 
-    treetype = ajAcdGetListI("treetype", 1);
+    treetype = ajAcdGetListSingle("treetype");
     if(ajStrMatchC(treetype, "n")) njoin = true;
     else if(ajStrMatchC(treetype, "u")) njoin = false;
 
@@ -437,7 +437,7 @@ void maketree()
   dist_inputdata(phylodist, replicates, printdata, lower, upper, x, reps);
   if (njoin && (spp < 3)) {
     printf("\nERROR: Neighbor-Joining runs must have at least 3 species\n\n");
-    exxit(-1);
+    embExitBad();
   }
   if (progress)
     putchar('\n');
@@ -507,10 +507,6 @@ int main(int argc, Char *argv[])
 #ifdef WIN32
   phyRestoreConsoleAttributes();
 #endif
+  embExit();
   return 0;
 }
-
-
-
-
-

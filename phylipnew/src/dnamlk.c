@@ -32,7 +32,7 @@ ajint numwts;
 /* function prototypes */
 //void   getoptions(void);
 void   emboss_getoptions(char *pgm, int argc, char *argv[]);
-void   initmemrates(); 
+void   initmemrates(void); 
 void   allocrest(void);
 void   doinit(void);
 void   inputoptions(void);
@@ -234,7 +234,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
 
     phyloratecat = ajAcdGetProperties("categories");      
 
-    gammamethod = ajAcdGetListI("gamma", 1);
+    gammamethod = ajAcdGetListSingle("gamma");
 
     if(ajStrMatchC(gammamethod, "n")) {
       rrate      = (double *) Malloc(rcategs*sizeof(double));
@@ -374,7 +374,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
 
 }  /* emboss_getoptions */
 
-void initmemrates() 
+void initmemrates(void)
 {
    probcat = (double *) Malloc(rcategs * sizeof(double));
    rrate = (double *) Malloc(rcategs * sizeof(double));
@@ -2322,7 +2322,7 @@ void maketree()
         printf ("ERROR: trees missing at end of file.\n");
         printf ("\tExpected number of trees:\t\t%ld\n", numtrees);
         printf ("\tNumber of trees actually in file:\t%ld.\n\n", which - 1);
-        exxit(-1);
+        embExitBad();
       }
       curtree.start = curtree.nodep[0]->back;
       treevaluate();
@@ -2407,5 +2407,6 @@ int main(int argc, Char *argv[])
 #ifdef WIN32
   phyRestoreConsoleAttributes();
 #endif
+  embExit();
   return 0;
 }  /* DNA Maximum Likelihood with molecular clock */

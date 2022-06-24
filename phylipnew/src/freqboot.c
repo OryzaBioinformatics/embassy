@@ -133,7 +133,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
 
 
 
-    test = ajAcdGetListI("test", 1);
+    test = ajAcdGetListSingle("test");
     
     if(ajStrMatchC(test, "b")) {
       bootstrap = true;
@@ -164,12 +164,12 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
 
     if(rewrite) {
       if (data == seqs) {
-        outputformat = ajAcdGetListI("rewriteformat", 1);
+        outputformat = ajAcdGetListSingle("rewriteformat");
 	if(ajStrMatchC(outputformat, "n")) nexus = true;
 	else if(ajStrMatchC(outputformat, "x")) xml = true;
         
         if( (nexus) || (xml) ) {
-          typeofseq = ajAcdGetListI("seqtype", 1);
+          typeofseq = ajAcdGetListSingle("seqtype");
           if(ajStrMatchC(typeofseq, "d"))  seq = dna;
           else if(ajStrMatchC(typeofseq, "r")) seq = rna;
           else if(ajStrMatchC(typeofseq, "p")) seq = protein;
@@ -189,7 +189,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
 
 
         if(!permute) {
-          justweights = ajAcdGetListI("justweights", 1); 
+          justweights = ajAcdGetListSingle("justweights"); 
           if(ajStrMatchC(justweights, "j")) justwts = true;
         }
 
@@ -377,7 +377,7 @@ void seqboot_inputdatafreq(AjPPhyloFreq freq)
       x = freq->Data[ipos++];
       if ((unsigned)x > 1.0) {
         printf("GENE FREQ OUTSIDE [0,1] in species %ld\n", i);
-        exxit(-1);
+        embExitBad();
       } else {
         nodef[i - 1][j - 1] = x;
         j++;
@@ -1022,5 +1022,6 @@ int main(int argc, Char *argv[])
 #ifdef WIN32
   phyRestoreConsoleAttributes();
 #endif
+  embExit();
   return 0;
 }

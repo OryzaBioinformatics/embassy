@@ -32,6 +32,7 @@ void makev(long, long, double *);
 void makedists(void);
 void writedists(void);
 void getinput(void);
+void reallocsites(void);
 /* function prototypes */
 #endif
 
@@ -114,13 +115,32 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
 }  /* emboss_getoptions */
 
 
+void reallocsites() 
+{
+  long i;
+
+  for (i = 0; i < spp; i++){
+    free(y[i]);
+    y[i] = (Char *)Malloc(sites*sizeof(Char));
+  }
+  
+  free(weight);
+  free(alias);
+  free(aliasweight);
+
+  weight = (steptr)Malloc((sites+1)*sizeof(long));
+  alias = (steptr)Malloc((sites+1)*sizeof(long));
+  aliasweight = (steptr)Malloc((sites+1)*sizeof(long));
+  makeweights();
+}
+
 void allocrest()
 {
   long i;
 
   y = (Char **)Malloc(spp*sizeof(Char *));
   for (i = 0; i < spp; i++)
-    y[i] = (Char *)Malloc(sites*sizeof(Char));
+    y[i] = (Char *)Malloc((sites+1)*sizeof(Char));
   nayme = (naym *)Malloc(spp*sizeof(naym));
   weight = (steptr)Malloc((sites+1)*sizeof(long));
   alias = (steptr)Malloc((sites+1)*sizeof(long));
@@ -153,10 +173,10 @@ void inputoptions(AjPPhyloState state)
     if (cursp != spp) {
       printf("\nERROR: INCONSISTENT NUMBER OF SPECIES IN DATA SET %4ld\n",
              ith);
-      exxit(-1);
+      embExitBad();
     }
     sites = curst;
-
+    reallocsites();
   }
   for (i = 1; i <= sites; i++)
     weight[i] = 1;
@@ -215,7 +235,7 @@ void restdist_inputdata(AjPPhyloState state)
           if (ch != '1' && ch != '0' && ch != '+' && ch != '-' && ch != '?') {
             printf(" ERROR -- Bad symbol %c",ch);
             printf(" at position %ld of species %ld\n", j+1, i);
-            exxit(-1);
+            embExitBad();
           }
           if (ch == '1')
             ch = '+';
@@ -357,11 +377,13 @@ void makev(long m, long n, double *v)
   numerator = 0;
   denominator = 0;
   for (i = 0; i < endsite; i++) {
-    ii = alias[i];
-    if ((y[m-1][ii-1] == '+') || (y[n-1][ii-1] == '+')) {
-      denominator += weight[i];
-      if ((y[m-1][ii-1] == '+') && (y[n-1][ii-1] == '+')) {
-        numerator += weight[i];
+    ii = alias[i+1];
+    if ((y[m-1][ii-1] == '+') ||
+	(y[n-1][ii-1] == '+')) {
+      denominator += weight[i+1];
+      if ((y[m-1][ii-1] == '+') &&
+	  (y[n-1][ii-1] == '+')) {
+        numerator += weight[i+1];
       }
     }
   }
@@ -370,7 +392,7 @@ void makev(long m, long n, double *v)
     if (exp(-sitelength*1.38629436) > f) {
       printf("\nERROR: Infinite distance between ");
       printf(" species %3ld and %3ld\n", m, n);
-      exxit(-1);
+      embExitBad();
     }
   }
   if (!restsites) {
@@ -478,7 +500,12 @@ void writedists()
     else
       k = spp;
     for (j = 1; j <= k; j++) {
-      fprintf(outfile, "%10.6f", d[i][j - 1]);
+      if (d[i][j-1] < 100.0)
+	fprintf(outfile, "%10.6f", d[i][j-1]);
+      else if (d[i][j-1] < 1000.0)
+        fprintf(outfile, " %10.6f", d[i][j-1]);
+        else
+          fprintf(outfile, " %11.6f", d[i][j-1]);
       if ((j + 1) % 7 == 0 && j < k)
         putc('\n', outfile);
     }
@@ -527,5 +554,6 @@ int main(int argc, Char *argv[])
   fixmacfile(outfilename);
 #endif
   printf("Done.\n\n");
+  embExit();
   return 0;
 }  /* distances from restriction sites or fragments */

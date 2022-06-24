@@ -100,7 +100,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 
     embInitP (pgm, argc, argv, "PHYLIPNEW");
 
-    matrixtype = ajAcdGetListI("matrixtype", 1);
+    matrixtype = ajAcdGetListSingle("matrixtype");
     if(ajStrMatchC(matrixtype, "l")) lower = true;
     else if(ajStrMatchC(matrixtype, "u")) upper = true;
 
@@ -914,5 +914,6 @@ int main(int argc, Char *argv[])
   phyRestoreConsoleAttributes();
 #endif
   printf("Done.\n\n");
+  embExit();
   return 0;
 }  /* Fitch-Margoliash criterion with contemporary tips */

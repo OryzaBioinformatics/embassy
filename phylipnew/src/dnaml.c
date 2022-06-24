@@ -34,7 +34,7 @@ void   doinit(void);
 void   inputoptions(void);
 void   makeweights(void);
 void   getinput(void);
-void   initmemrates(); 
+void   initmemrates(void); 
 void   inittable_for_usertree(char *);
 void   inittable(void);
 double evaluate(node *, boolean);
@@ -68,6 +68,8 @@ void   treevaluate(void);
 void   maketree(void);
 void   clean_up(void);
 void   reallocsites(void);
+void globrearrange(void) ;
+
 /* function prototypes */
 #endif
 
@@ -257,7 +259,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
 
     phyloratecat = ajAcdGetProperties("categories");      
 
-    gammamethod = ajAcdGetListI("gamma", 1);
+    gammamethod = ajAcdGetListSingle("gamma");
 
     if(ajStrMatchC(gammamethod, "n")) {
       rrate      = (double *) Malloc(rcategs*sizeof(double));
@@ -1320,7 +1322,7 @@ void addtraverse(node *p, node *q, boolean contin)
 }  /* addtraverse */
 
 
-void globrearrange() 
+void globrearrange(void) 
 {
   /* does global rearrangements */
   tree globtree;
@@ -2111,7 +2113,7 @@ void maketree()
         printf ("ERROR: trees missing at end of file.\n");
         printf ("\tExpected number of trees:\t\t%ld\n", numtrees);
         printf ("\tNumber of trees actually in file:\t%ld.\n\n", which - 1);
-        exxit(-1);
+        embExitBad();
       }
 
       curtree.start = curtree.nodep[0]->back;
@@ -2360,6 +2362,7 @@ int main(int argc, Char *argv[])
 #ifdef WIN32
   phyRestoreConsoleAttributes();
 #endif
+  embExit();
   return 0;
 }  /* DNA Maximum Likelihood */
  

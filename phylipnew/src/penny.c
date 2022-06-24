@@ -130,7 +130,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
     phyloanc = ajAcdGetProperties("ancfile");
     if(phyloanc) ancvar = true;
 
-    method = ajAcdGetListI("method", 1);
+    method = ajAcdGetListSingle("method");
 
     if(ajStrMatchC(method, "w")) allwagner = true;
     else if(ajStrMatchC(method, "c")) allsokal = true;
@@ -711,6 +711,7 @@ int main(int argc, Char *argv[])
 #ifdef WIN32
   phyRestoreConsoleAttributes();
 #endif
+  embExit();
   return 0;
 }  /* Penny's branch-and-bound method */
 

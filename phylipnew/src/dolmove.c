@@ -144,7 +144,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
     phyloanc = ajAcdGetProperties("ancfile");
     if(phyloanc) ancvar = true;
 
-    initialtree = ajAcdGetListI("initialtree", 1);
+    initialtree = ajAcdGetListSingle("initialtree");
 
     if(ajStrMatchC(initialtree, "a")) how = arb;
     if(ajStrMatchC(initialtree, "u")) how = use;
@@ -158,7 +158,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
     if(phylofact) factors = true;
 
 
-    method = ajAcdGetListI("method", 1);
+    method = ajAcdGetListSingle("method");
 
     if(ajStrMatchC(method, "d")) dollo = true;
     else dollo = false;
@@ -643,7 +643,12 @@ void dolmove_drawline(long i)
   if (i == (long)p->ycoord && (p == root || subtree)) {
     c = overt;
     if (p == root)
-      cc = guess[dispchar - 1];
+    {
+	if(!dispchar) 
+	    cc = guess[0];
+	else
+	    cc = guess[dispchar - 1];
+    }
     else
       cc = p->state;
     if (display) {
@@ -1520,6 +1525,7 @@ int main(int argc, Char *argv[])
 #ifdef WIN32
   phyRestoreConsoleAttributes();
 #endif
+  embExit();
   return 0;
 }  /* Interactive Dollo/polymorphism parsimony */
 

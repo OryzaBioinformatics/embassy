@@ -27,7 +27,7 @@ ajint numwts;
 void   init_protmats(void);
 //void   getoptions(void);
 void   emboss_getoptions(char *pgm, int argc, char *argv[]);
-void   initmemrates(); 
+void   initmemrates(void); 
 void   makeprotfreqs(void);
 void   allocrest(void); 
 void   doinit(void);
@@ -601,7 +601,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
     }
 
 
-    model = ajAcdGetListI("model", 1);
+    model = ajAcdGetListSingle("model");
 
     if(ajStrMatchC(model, "j")) usejtt = true;
     if(ajStrMatchC(model, "h")) usepmb = true;
@@ -625,7 +625,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
     phyloratecat = ajAcdGetProperties("categories");      
 
 
-    gammamethod = ajAcdGetListI("gamma", 1);
+    gammamethod = ajAcdGetListSingle("gamma");
 
     if(ajStrMatchC(gammamethod, "n")) {
       rrate      = (double *) Malloc(rcategs*sizeof(double));
@@ -726,7 +726,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
 }  /* emboss_getoptions */
 
 
-void initmemrates() 
+void initmemrates(void) 
 {
    probcat = (double *) Malloc(rcategs * sizeof(double));
    rrate = (double *) Malloc(rcategs * sizeof(double));
@@ -755,7 +755,7 @@ void allocrest()
   y     = (Char **)Malloc(spp*sizeof(Char *));
   nayme  = (naym *)Malloc(spp*sizeof(naym));
   for (i = 0; i < spp; i++)
-    y[i] = (char *)Malloc(sites * sizeof(char));
+    y[i] = (char *)Malloc((sites+1) * sizeof(char));
   enterorder  = (long *)Malloc(spp*sizeof(long));
   weight      = (long *)Malloc(sites*sizeof(long));
   category    = (long *)Malloc(sites*sizeof(long));
@@ -826,7 +826,7 @@ void input_protdata(AjPSeqset seqset, long chars)
     headings(chars, "Sequences", "---------");
   for(i=0;i<spp;i++){
     initnameseq(seqset, i);   
-    strncpy(&y[i][0],ajSeqsetSeq(seqset, i),chars);
+    strncpy(&y[i][0],ajSeqsetGetseqSeqC(seqset, i),chars);
     y[i][chars] = '\0';
   }
 
@@ -2767,7 +2767,7 @@ void maketree()
         printf ("ERROR: trees missing at end of file.\n");
         printf ("\tExpected number of trees:\t\t%ld\n", numtrees);
         printf ("\tNumber of trees actually in file:\t%ld.\n\n", which - 1);
-        exxit(-1);
+        embExitBad();
       } 
       curtree.start = curtree.nodep[0]->back;
       treevaluate();
@@ -2901,6 +2901,7 @@ int main(int argc, Char *argv[])
 #ifdef WIN32
   phyRestoreConsoleAttributes();
 #endif  
+  embExit();
   return 0;
 }  /* Protein Maximum Likelihood with molecular clock */
 

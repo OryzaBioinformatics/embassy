@@ -123,12 +123,12 @@ void seq_inputdata(AjPSeqset seqset, long chars)
     headings(chars, "Sequences", "---------");
 
   for(i=0;i<spp;i++){
-    ilen = ajStrGetLen(ajSeqsetName(seqset, i));
-    strncpy(&nayme[i][0],ajStrGetPtr(ajSeqsetName(seqset, i)),nmlngth);
+    ilen = ajStrGetLen(ajSeqsetGetseqNameS(seqset, i));
+    strncpy(&nayme[i][0],ajStrGetPtr(ajSeqsetGetseqNameS(seqset, i)),nmlngth);
     for (j=ilen;j<nmlngth;j++)
 	nayme[i][j] = ' ';
-    /*    ajUser("%s/n",ajSeqsetName(seqset, i));*/
-    strncpy(&y[i][0],ajSeqsetSeq(seqset, i),chars);
+    /*    ajUser("%s/n",ajSeqsetGetseqNameS(seqset, i));*/
+    strncpy(&y[i][0],ajSeqsetGetseqSeqC(seqset, i),chars);
     /*y[i][chars] = '\0';*/  /* phylip does not make space for a final NULL */
   }
   if (!printdata)
@@ -2528,6 +2528,7 @@ void hyptrav(node *r_, long *hypset_, long b1, long b2, boolean bottom_,
     } while (q != Vars.r);
   }
   chuckbase(ancset, garbage);
+  free(tempnuc);
 }  /* hyptrav */
 
 

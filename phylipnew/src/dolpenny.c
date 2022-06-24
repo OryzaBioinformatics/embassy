@@ -119,7 +119,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
       justwts = true;
     }
 
-    method = ajAcdGetListI("method", 1);
+    method = ajAcdGetListSingle("method");
 
     if(ajStrMatchC(method, "d")) dollo = true;
     else dollo = false;
@@ -614,5 +614,6 @@ int main(int argc, Char *argv[])
 #ifdef WIN32
   phyRestoreConsoleAttributes();
 #endif
+  embExit();
   return 0;
 }  /* branch-and-bound method for Dollo, polymorphism parsimony */

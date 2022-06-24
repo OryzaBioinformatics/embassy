@@ -133,7 +133,7 @@ double bsd_tree_diff(group_type **tree1, group_type **tree2,
   if (group_is_null (tree1, 0) || group_is_null (tree2, 0)) {
     printf ("Error computing tree difference between tree %ld and tree %ld\n",
              ntree1, ntree2);
-    exxit(-1);
+    embExitBad();
   }
 
   for (index1 = 0; index1 < patternsz1; index1++) {
@@ -142,7 +142,7 @@ double bsd_tree_diff(group_type **tree1, group_type **tree2,
         printf(
          "Error: tree %ld is missing a length from at least one branch\n",
          ntree1);
-        exxit(-1);
+        embExitBad();
         }
       }
     }
@@ -153,7 +153,7 @@ double bsd_tree_diff(group_type **tree1, group_type **tree2,
         printf(
          "Error: tree %ld is missing a length from at least one branch\n",
          ntree2);
-        exxit(-1);
+        embExitBad();
         }
       }
     }
@@ -930,19 +930,19 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
     if(outgrno != 0) outgropt = true;
     else outgrno = 1;
 
-    disttype = ajAcdGetListI("dtype", 1);
+    disttype = ajAcdGetListSingle("dtype");
 
     if(ajStrMatchC(disttype, "s")) dtype = PHYLIPSYMMETRIC;
     else dtype = PHYLIPBSD;
 
     noroot = !ajAcdGetBool("noroot");
 
-    tree_p = ajAcdGetListI("pairing", 1);
+    tree_p = ajAcdGetListSingle("pairing");
 
     if(ajStrMatchC(tree_p, "a")) tree_pairing = ADJACENT_PAIRS;
     else if(ajStrMatchC(tree_p, "p")) tree_pairing = ALL_IN_FIRST;
 
-    style = ajAcdGetListI("style", 1); 
+    style = ajAcdGetListSingle("style"); 
     if(ajStrMatchC(style, "f")) output_scheme = FULL_MATRIX;
     else if(ajStrMatchC(style, "s")) output_scheme = SPARSE;
     else if(ajStrMatchC(style, "v")) output_scheme = VERBOSE;
@@ -1030,6 +1030,7 @@ int main(int argc, Char *argv[])
   fixmacfile(outfilename);
   fixmacfile(outtreename);
 #endif
+  embExit();
   return 0;
 }  /* main */
 
