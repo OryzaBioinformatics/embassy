@@ -628,7 +628,7 @@ Command line arguments
    "advanced" options will never be prompted for.
 
 Multiple EM for Motif Elicitation. Text file only.
-Version: EMBOSS:6.3.0
+Version: EMBOSS:6.4.0.0
 
    Standard (Mandatory) qualifiers:
   [-dataset]           seqset     User must provide the full filename of a set
@@ -1626,7 +1626,7 @@ GAAAGTATTGAAAGTTAATTTGTGAGTGGTCGCACATATCCTGTT
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.2.0 (Release date: Wed Jul 22 01:12:17 PDT 2009)
+MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -1684,7 +1684,7 @@ GTGA[TC][CG][TC][ATG][GT][TC]TCACA
 
 
 
-Time  0.47 secs.
+Time  0.50 secs.
 
 ********************************************************************************
 
@@ -1736,7 +1736,7 @@ CPU: emboss4.ebi.ac.uk
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.2.0 (Release date: Wed Jul 22 01:12:17 PDT 2009)
+MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -1794,7 +1794,7 @@ problem with the MEME software.
 
 
 
-Time  0.07 secs.
+Time  0.50 secs.
 
 ********************************************************************************
 
@@ -1954,7 +1954,7 @@ AGAATAGCGCAAGTCAAGCG
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.2.0 (Release date: Wed Jul 22 01:12:17 PDT 2009)
+MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -2024,7 +2024,7 @@ TTCACATG[CG][CA][AGC][CA][CA][CT][CT]
 
 
 
-Time 10.22 secs.
+Time 11.50 secs.
 
 ********************************************************************************
 
@@ -2094,7 +2094,7 @@ AHLINEKDGETFQLMGLYGREPDLSSDIKERFAKLCEEHGILRENIIDLSNANRCLQARE
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.2.0 (Release date: Wed Jul 22 01:12:17 PDT 2009)
+MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -2185,7 +2185,7 @@ width:  minw=            8    maxw=           20    minic=        0.00
 
 
 
-Time  0.12 secs.
+Time  0.50 secs.
 
 ********************************************************************************
 
@@ -2268,7 +2268,7 @@ CIPQEIFNDFSKRCCF
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.2.0 (Release date: Wed Jul 22 01:12:17 PDT 2009)
+MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -2358,7 +2358,7 @@ Qx[EP][DE]GG[FL]G[GD]RP[GN]K[EL][VA][DH][GV]C[YH][TS]
 
 
 
-Time  1.49 secs.
+Time  1.50 secs.
 
 ********************************************************************************
 
@@ -2401,7 +2401,7 @@ CPU: emboss4.ebi.ac.uk
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.2.0 (Release date: Wed Jul 22 01:12:17 PDT 2009)
+MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -2491,7 +2491,7 @@ width:  minw=           10    maxw=           10    minic=        0.00
 
 
 
-Time  0.47 secs.
+Time  0.50 secs.
 
 ********************************************************************************
 
@@ -2542,7 +2542,7 @@ CPU: emboss4.ebi.ac.uk
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.2.0 (Release date: Wed Jul 22 01:12:17 PDT 2009)
+MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -2632,7 +2632,7 @@ INVEK[LV][IL][EQ][YF][ILV]LS
 
 
 
-Time  0.58 secs.
+Time  0.50 secs.
 
 ********************************************************************************
 
@@ -2797,7 +2797,7 @@ MAKVLPNPLFDAAARRLR
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.2.0 (Release date: Wed Jul 22 01:12:17 PDT 2009)
+MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -3078,32 +3078,17 @@ See also
 
    Program name     Description
    antigenic        Finds antigenic sites in proteins
-   digest           Reports on protein proteolytic enzyme or reagent cleavage sites
-   echlorop         Reports presence of chloroplast transit peptides
    eiprscan         Motif detection
    elipop           Prediction of lipoproteins
    emast            Motif detection
    ememe            Multiple EM for Motif Elicitation
-   enetnglyc        Reports N-glycosylation sites in human proteins
-   enetoglyc        Reports mucin type GalNAc O-glycosylation sites in mammalian
-                    proteins
-   enetphos         Reports ser, thr and tyr phosphorylation sites in eukaryotic
-                    proteins
    epestfind        Finds PEST motifs as potential proteolytic cleavage sites
-   eprop            Reports propeptide cleavage sites in proteins
-   esignalp         Reports protein signal cleavage sites
-   etmhmm           Reports transmembrane helices
-   eyinoyang        Reports O-(beta)-GlcNAc attachment sites
    fuzzpro          Search for patterns in protein sequences
    fuzztran         Search for patterns in protein sequences (translated)
-   helixturnhelix   Identify nucleic acid-binding motifs in protein
-                    sequences
-   oddcomp          Identify proteins with specified sequence word composition
    omeme            Motif detection
    patmatdb         Searches protein sequences with a sequence motif
    patmatmotifs     Scan a protein sequence with motifs from the PROSITE
                     database
-   pepcoil          Predicts coiled coil regions in protein sequences
    preg             Regular expression search of protein sequence(s)
    pscan            Scans protein sequence(s) with fingerprints from the PRINTS
                     database

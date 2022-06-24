@@ -3,6 +3,8 @@ application: ememetext [
   groups: "Protein:Motifs"
   embassy: "memenew"
   external: "meme MEME package http://meme.sdsc.edu/meme/"
+  relations: "EDAM:0000158 topic Sequence motifs"
+  relations: "EDAM:0000238 operation Sequence motif discovery"
 ]
 
 section: input [
@@ -17,7 +19,7 @@ section: input [
     help: "User must provide the full filename of a set of sequences,
            not an indirect reference, e.g. a USA is NOT acceptable."
     aligned: "N"
-    relations: "EDAM: Sequence record"                                     
+    relations: "EDAM:0000849 data Sequence record"
   ]
 
   infile: bfile [
@@ -34,7 +36,7 @@ section: input [
            (log-odds matrix). See application documentation for more
            information."
     knowntype: "background markov model meme"
-    relations:  "EDAM: MEME background Markov model"                   
+    relations:  "EDAM:0001364 data Hidden Markov model"
   ]
 
   infile: plibfile [
@@ -45,7 +47,7 @@ section: input [
     help: "The name of the file containing the Dirichlet prior in the
            format of file prior30.plib"
     knowntype: "dirichlet prior meme"
-    relations:  "EDAM: MEME Dirichlet prior record"                    
+    relations:  "EDAM:0001347 data Dirichlet distribution"
   ]
 
 endsection: input
@@ -97,7 +99,7 @@ section: additional [
     minimum: "1"
     delimiter: ","
     values: "oops, zoops, anr"
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: nmotifs [
@@ -106,7 +108,7 @@ section: additional [
     information: "Maximum number of motifs to find"
     help: "The number of *different* motifs to search for. MEME will
            search for and output <n> motifs."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001694 data Number of output entities"
   ]
 
   boolean: text [
@@ -114,7 +116,7 @@ section: additional [
     default: "N"
     information: "Output in text format (default is HTML)"
     help: "Default output is in HTML"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   selection: prior [
@@ -135,7 +137,7 @@ section: additional [
            with the size of the dataset. megap: Mega for all but last
            iteration of EM; dmix on last iteration. addone: Add +1 to each
            observed count."
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: evt [
@@ -147,7 +149,8 @@ section: additional [
            an extremely high default so by default MEME never quits before
            -nmotifs <n> have been found. A value of -1 here is a
            shorthand for infinity."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0001667 data E-value"
+    relations: "EDAM:0002146 data Threshold"
   ]
 
   integer: nsites [
@@ -166,7 +169,7 @@ section: additional [
            -maxsites is equal to the number of sequences (zoops) or MIN(5*
            num.sequences, 50) (anr). A value of -1 here represents nsites
            being unspecified."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: minsites [
@@ -185,7 +188,7 @@ section: additional [
            -maxsites is equal to the number of sequences (zoops) or MIN(5 *
            num.sequences, 50) (anr). A value of -1 here represents minsites
            being unspecified."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: maxsites [
@@ -204,7 +207,7 @@ section: additional [
            -maxsites is equal to the number of sequences (zoops) or MIN(5 *
            num.sequences, 50) (anr). A value of -1 here represents maxsites
            being unspecified."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: wnsites [
@@ -216,7 +219,7 @@ section: additional [
            minsites and maxsites sites) is. It is a number in the range
            [0..1). The larger it is, the stronger the bias towards motifs
            with exactly nsites occurrences is."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: w [
@@ -228,7 +231,7 @@ section: additional [
            -maxw are tried. Note: if width is less than the length of the
            shortest sequence in the dataset, width is reset by MEME to that
            value. A value of -1 here represents -w being unspecified."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001249 data Sequence length"
   ]
 
   integer: minw [
@@ -240,7 +243,7 @@ section: additional [
            -maxw are tried. Note: if width is less than the length of the
            shortest sequence in the dataset, width is reset by MEME to that
            value."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001249 data Sequence length"
   ]
 
   integer: maxw [
@@ -252,7 +255,7 @@ section: additional [
            -maxw are tried. Note: if width is less than the length of the
            shortest sequence in the dataset, width is reset by MEME to that
            value."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001249 data Sequence length"
   ]
 
   boolean: nomatrim [
@@ -267,7 +270,7 @@ section: additional [
            controlled by the switches -wg (gap cost), -ws (space cost) and
            -noendgaps (do not penalize endgaps). See application
            documentation for further information."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: wg [
@@ -281,7 +284,7 @@ section: additional [
            controlled by the switches -wg (gap cost), -ws (space cost) and
            -noendgaps (do not penalize endgaps). See application
            documentation for further information."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001397 data Gap opening penalty"
   ]
 
   integer: ws [
@@ -295,7 +298,7 @@ section: additional [
            controlled by the switches -wg (gap cost), -ws (space cost) and
            -noendgaps (do not penalize endgaps). See application
            documentation for further information."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001398 data Gap extension penalty"
   ]
 
   boolean: noendgaps [
@@ -310,7 +313,7 @@ section: additional [
            controlled by the switches -wg (gap cost), -ws (space cost) and
            -noendgaps (do not penalise endgaps). See application
            documentation for further information."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: revcomp [
@@ -320,7 +323,7 @@ section: additional [
     help: "Motif occurrences may be on the given DNA strand or on its
            reverse complement. The default is to look for DNA motifs only on
            the strand given in the training set."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: pal [
@@ -335,7 +338,7 @@ section: additional [
            averaged together. The averaging combines the frequency of A in
            one column with T in the other, and the frequency of C in one
            column with G in the other."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: nostatus [
@@ -344,7 +347,7 @@ section: additional [
     information: "Do not print progress reports to terminal"
     help: "Set this option to prevent progress reports to the
            terminal."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: additional
@@ -360,7 +363,7 @@ section: advanced [
     help: "The number of iterations of EM to run from any starting
            point. EM is run for <n> iterations or until convergence (see
            -distance, below) from each starting point."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001693 data Number of iterations"
   ]
 
   float: distance [
@@ -370,7 +373,7 @@ section: advanced [
            change in the motif frequency matrix is less than <a>. (Change is
            the euclidean distance between two successive frequency
            matrices.)"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: b [
@@ -382,7 +385,7 @@ section: advanced [
            These defaults are hardcoded into MEME (the value of the default
            in the ACD file is not used). A value of -1 here represents -b
            being unspecified."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: spfuzz [
@@ -392,7 +395,7 @@ section: advanced [
            than 0. Meaning depends on -spmap, see below. See the application
            documentation for more information. A value of -1.0 here
            represents -spfuzz being unspecified."
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   selection: spmap [
@@ -409,7 +412,7 @@ section: advanced [
            <a>: 0.5. pam: Use columns of PAM <a> matrix when converting a
            substring to an estimate of theta. Default -spfuzz <a>: 120 (PAM
            120). See the application documentation for more information."
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   string: cons [
@@ -421,13 +424,13 @@ section: advanced [
            starting point for finding the motif. See the application
            documentation for more information."
     knowntype: "sequence"
-    relations:  "EDAM: Sequence"                                       
+    relations:  "EDAM:0001209 format consensus"
   ]
 
   integer: maxsize [
     default: "-1"
     information: "Maximum dataset size in characters (-1 = use meme default)."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: p [
@@ -438,21 +441,21 @@ section: advanced [
            to be run. (By placing <np> in quotes you may pass installation
            specific switches to the 'mpirun' command. The number of
            processors to run on must be the first argument following -p)."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: time [
     default: "0"
     information: "Quit before <time> CPU seconds consumed"
     help: "Only values of more than 0 will be applied."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   string: sf [
     default: ""
     information: "Print <sf> as name of sequence file"
     knowntype: "sequence id output"
-    relations:  "EDAM: Sequence unique identifier"                     
+    relations:  "EDAM:0001050 identifier File name"
   ]
 
   integer: heapsize [
@@ -465,7 +468,7 @@ section: advanced [
            seeds. The fixed-size heap of seeds is used as the branch-heap
            during the first iteration of branching search. See the
            application documentation for more information."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: xbranch [
@@ -478,7 +481,7 @@ section: advanced [
            seeds. The fixed-size heap of seeds is used as the branch-heap
            during the first iteration of branching search. See the
            application documentation for more information."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: wbranch [
@@ -491,7 +494,7 @@ section: advanced [
            seeds. The fixed-size heap of seeds is used as the branch-heap
            during the first iteration of branching search. See the
            application documentation for more information."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: bfactor [
@@ -504,7 +507,7 @@ section: advanced [
            seeds. The fixed-size heap of seeds is used as the branch-heap
            during the first iteration of branching search. See the
            application documentation for more information."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001693 data Number of iterations"
   ]
 
 endsection: advanced
@@ -519,13 +522,13 @@ section: output [
     information: "MEME program text output file"
     knowntype: "meme text output"
     extension: "text"
-    relations:                                                 
+    relations: "EDAM:0000969 data Text"
   ]
 
   seqoutset: outseq [
     parameter: "Y"
     extension: "fasta"
-    relations: "EDAM: Sequence record"                                     
+    relations: "EDAM:0000849 data Sequence record"
   ]
 
 endsection: output
