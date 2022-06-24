@@ -57,10 +57,10 @@ int main(int argc, char **argv)
 
     hmmfile = ajAcdGetInfile("hmmfile");
     seed    = ajAcdGetInt("seed");
-    a       = ajAcdGetBool("a");
-    c       = ajAcdGetBool("c");
+    a       = ajAcdGetBoolean("a");
+    c       = ajAcdGetBoolean("c");
     nseq    = ajAcdGetInt("nseq");
-    q       = ajAcdGetBool("q");
+    q       = ajAcdGetBoolean("q");
     o       = ajAcdGetOutfile("o");
 
 
@@ -89,8 +89,8 @@ int main(int argc, char **argv)
     ajFmtPrintAppS(&cmd, " -n %d ", nseq);
     if(q)
 	ajStrAppendC(&cmd, " -q ");
-    ajFmtPrintAppS(&cmd, " -o %s ", ajFileName(o));
-    ajStrAppendS(&cmd, ajFileNameS(hmmfile));
+    ajFmtPrintAppS(&cmd, " -o %s ", ajFileGetNameC(o));
+    ajStrAppendS(&cmd, ajFileGetNameS(hmmfile));
 
     
     /* 3. Close ACD files. */

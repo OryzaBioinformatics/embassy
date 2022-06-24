@@ -72,23 +72,23 @@ int main(int argc, char **argv)
 
     hmmfile = ajAcdGetInfile("hmmfile");
     seqfile = ajAcdGetSeqall("seqfile");
-    nuc     = ajAcdGetBool("nuc");
+    nuc     = ajAcdGetBoolean("nuc");
     A       = ajAcdGetInt("A");
     E       = ajAcdGetFloat("E");
     T       = ajAcdGetFloat("T");
     Z       = ajAcdGetInt("Z");
-    acc     = ajAcdGetBool("acc");
-    compat  = ajAcdGetBool("compat");
+    acc     = ajAcdGetBoolean("acc");
+    compat  = ajAcdGetBoolean("compat");
     cpu     = ajAcdGetInt("cpu");
-    cutga   = ajAcdGetBool("cutga");
-    cuttc   = ajAcdGetBool("cuttc");
-    cutnc   = ajAcdGetBool("cutnc");
+    cutga   = ajAcdGetBoolean("cutga");
+    cuttc   = ajAcdGetBoolean("cuttc");
+    cutnc   = ajAcdGetBoolean("cutnc");
     dome    = ajAcdGetFloat("dome");
     domt    = ajAcdGetFloat("domt");
-    forward = ajAcdGetBool("forward");
-    nulltwo = ajAcdGetBool("nulltwo");
-        pvm = ajAcdGetBool("pvm");
-        xnu = ajAcdGetBool("xnu");
+    forward = ajAcdGetBoolean("forward");
+    nulltwo = ajAcdGetBoolean("nulltwo");
+        pvm = ajAcdGetBoolean("pvm");
+        xnu = ajAcdGetBoolean("xnu");
     outfile = ajAcdGetOutfile("outfile");
 
 
@@ -104,7 +104,7 @@ int main(int argc, char **argv)
     /* 2. Re-write seqfile to a temporary file in a format (fasta) HMMER can understand.
        We cannot just pass the name of seqfile to HMMER as the name provided might be a 
        USA which HMMER would not understand. */
-    ajStrAssignC(&rnd, ajFileTempName(NULL));
+    ajFilenameSetTempname(&rnd);
     rndo = ajSeqoutNew();
     if(!ajSeqoutOpenFilename(rndo, rnd))
 	ajFatal("Terminal ajSeqFileNewOut failure. Email EMBOSS helpdesk!\n");
@@ -153,9 +153,9 @@ int main(int argc, char **argv)
        rnd is the name of the rewritten seqfile.  
        MUST specify FASTA format explicitly. */
     ajFmtPrintAppS(&cmd, " --informat FASTA %s %S > %s", 
-		   ajFileName(hmmfile),
+		   ajFileGetNameC(hmmfile),
 		   rnd,
-		   ajFileName(outfile));
+		   ajFileGetNameC(outfile));
     
 
     /* 3. Close ACD files. */
