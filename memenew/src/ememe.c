@@ -90,7 +90,7 @@ int main(int argc, char **argv)
 
     
     /* ACD file processing */
-    embInitP("ememe",argc,argv,"MEMENEW");
+    embInitPV("ememe",argc,argv,"MEMENEW",VERSION);
     dataset   = ajAcdGetSeqset("dataset");
     bfile     = ajAcdGetInfile("bfile");
     plib      = ajAcdGetInfile("plibfile");
@@ -173,9 +173,7 @@ int main(int argc, char **argv)
        iii.Original MEME options (that don't appear in ACD file)
        iv. EMBASSY MEME new qualifiers and parameters.
        */
-    if(!ajNamGetValueC("meme", &cmd))
-	ajStrAssignC(&cmd, "meme");
-
+    ajStrAssignS(&cmd, ajAcdGetpathC("meme"));
     ajFmtPrintAppS(&cmd, " %S", outsname);
 
     if(bfile)
