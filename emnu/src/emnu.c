@@ -80,10 +80,15 @@ embGrpGetProgGroups
 #include <unistd.h>     /* for chdir, unlink */
 
 /* for curses etc. */
+#ifndef __CYGWIN__
 #include <curses.h>
 #include <menu.h>
 #include <form.h>
-
+#else
+#include <ncurses/curses.h>
+#include <ncurses/menu.h>
+#include <ncurses/form.h>
+#endif
 
 
 /* declare structure used to hold file information */
@@ -589,7 +594,7 @@ Check for 'cd' commands and do a chdir() instead!
 
 A new, blank window is created to display the commands against,
 the original terminal characteristics are recreated,
-the cursor is placed at the top of the screen (using system("clear") - ugly!)
+the cursor is placed at the top of the screen (using "clear" - ugly!)
 the command is run using system
 if status != 0 then a prompt is displayed - wait for key press
 the new window is deleted,
@@ -621,7 +626,7 @@ shellout(WINDOW *curwin, char *cmd)
 /* restore normal terminal characteristics, run command, prompt for key press */
     def_prog_mode();
     endwin();
-    system("clear");
+    ajSysExecC("clear");
     printf("%% %s\n", cmd);fflush(stdout);
     if (!strncmp(cmd, "cd ", 3)) {
         stripstartstr(&cmd[3]);	/* make sure there are no more spaces before dir name */
@@ -644,10 +649,7 @@ file - see what its creation time is and adjust our times accordingly?)
 */
         shellout_time = time(NULL)-5;
 
-        result = system(cmd);
-    }
-    if (result != 0) {
-    	printf("WARNING An error occurred when this command was run.\n");
+        ajSysExecC(cmd);
     }
     printf("Press RETURN to continue ");
     fflush(stdout);
@@ -1793,7 +1795,6 @@ char *unwanted = " \t/!@#$%^&*()+|~=\\`;':\",<>[]{}?";
 int got_unwanted=FALSE;
 char *ptr;
 char *file;
-char *cmd;
 char *title;
 
 /* get default file */
@@ -1823,22 +1824,13 @@ char *title;
     }
 
 /* run command 'cp file name' */
-    cmd = (char *)malloc(strlen(file)+strlen(name)+5);
-    strcpy(cmd, "cp ");
-    strcat(cmd, file);
-    strcat(cmd, " ");
-    strcat(cmd, name);
-    if (system(cmd)) {
-        message(w, "ERROR", "You can't copy that file.");
-    } else {
+    ajSysCommandCopyC(file, name);
 
 /* redisplay files menu */
-        if (type == FILES_MENU || type == NEW_FILES_MENU) {
-            update_dir_menu(type, pmenu, TRUE);
-        }
+    if (type == FILES_MENU || type == NEW_FILES_MENU) {
+        update_dir_menu(type, pmenu, TRUE);
     }
     
-    free(cmd);
     free(name);
     free(title);
 }
