@@ -264,8 +264,9 @@ No data files are used by PDBTOSP.
 
    General qualifiers:
    -auto               boolean    Turn off prompts
-   -stdout             boolean    Write standard output
-   -filter             boolean    Read standard input, write standard output
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
@@ -427,10 +428,11 @@ PDBTOSP relies on finding a line beginning with '____  _' in the input file (all
 
 <h2><a name="See also">See also</a></h2>
 <table border cellpadding=4 bgcolor="#FFFFF0">
-<tr><th>Program name</th><th>Description</th></tr>
+<tr><th>Program name</th>
+<th>Description</th></tr>
 <tr>
 <td><a href="/emboss/apps/aaindexextract.html">aaindexextract</a></td>
-<td>Extract data from AAINDEX</td>
+<td>Extract amino acid property data from AAINDEX</td>
 </tr>
 
 <tr>
@@ -445,7 +447,7 @@ PDBTOSP relies on finding a line beginning with '____  _' in the input file (all
 
 <tr>
 <td><a href="/emboss/apps/cutgextract.html">cutgextract</a></td>
-<td>Extract data from CUTG</td>
+<td>Extract codon usage tables from from CUTG database</td>
 </tr>
 
 <tr>
@@ -474,6 +476,11 @@ PDBTOSP relies on finding a line beginning with '____  _' in the input file (all
 </tr>
 
 <tr>
+<td><a href="/emboss/apps/jaspextract.html">jaspextract</a></td>
+<td>Extract data from JASPAR</td>
+</tr>
+
+<tr>
 <td><a href="pdbplus.html">pdbplus</a></td>
 <td>Add accessibility & secondary structure to a CCF file</td>
 </tr>
@@ -485,17 +492,17 @@ PDBTOSP relies on finding a line beginning with '____  _' in the input file (all
 
 <tr>
 <td><a href="/emboss/apps/printsextract.html">printsextract</a></td>
-<td>Extract data from PRINTS</td>
+<td>Extract data from PRINTS database for use by pscan</td>
 </tr>
 
 <tr>
 <td><a href="/emboss/apps/prosextract.html">prosextract</a></td>
-<td>Build the PROSITE motif database for use by patmatmotifs</td>
+<td>Processes the PROSITE motif database for use by patmatmotifs</td>
 </tr>
 
 <tr>
 <td><a href="/emboss/apps/rebaseextract.html">rebaseextract</a></td>
-<td>Extract data from REBASE</td>
+<td>Process the REBASE database for use by restriction enzyme applications</td>
 </tr>
 
 <tr>
@@ -520,7 +527,7 @@ PDBTOSP relies on finding a line beginning with '____  _' in the input file (all
 
 <tr>
 <td><a href="/emboss/apps/tfextract.html">tfextract</a></td>
-<td>Extract data from TRANSFAC</td>
+<td>Process TRANSFAC transcription factor database for use by tfscan</td>
 </tr>
 
 </table>

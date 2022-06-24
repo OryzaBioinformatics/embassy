@@ -568,8 +568,9 @@ CONTACTS uses a data file containing van der Waals radii for atoms in proteins (
 
    General qualifiers:
    -auto               boolean    Turn off prompts
-   -stdout             boolean    Write standard output
-   -filter             boolean    Read standard input, write standard output
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
@@ -824,7 +825,8 @@ Contact between two residues is defined when the van der Waals surface of any at
 
 <h2><a name="See also">See also</a></h2>
 <table border cellpadding=4 bgcolor="#FFFFF0">
-<tr><th>Program name</th><th>Description</th></tr>
+<tr><th>Program name</th>
+<th>Description</th></tr>
 <tr>
 <td><a href="/embassy/domalign/domainalign.html">domainalign</a></td>
 <td>Generate alignments (DAF file) for nodes in a DCF file</td>
@@ -857,7 +859,7 @@ Contact between two residues is defined when the van der Waals surface of any at
 
 <tr>
 <td><a href="/emboss/apps/psiphi.html">psiphi</a></td>
-<td>Phi and psi torsion angles from protein coordinates</td>
+<td>Calculates phi and psi torsion angles from protein coordinates</td>
 </tr>
 
 <tr>
