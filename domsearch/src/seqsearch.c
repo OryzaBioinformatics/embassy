@@ -149,7 +149,7 @@ int main(int argc, char **argv)
 
 
     /* Read data from acd. */
-    embInitP("seqsearch",argc,argv,"DOMSEARCH");
+    embInitPV("seqsearch",argc,argv,"DOMSEARCH",VERSION);
 
     mode       = ajAcdGetList("mode");
     inseqs     = ajAcdGetDirlist("inseqspath");
@@ -515,7 +515,8 @@ static AjPFile seqsearch_psialigned(AjPStr seqname,
     
     /* Run PSI-BLAST. */
     ajFmtPrintS(&temp,
-		"blastpgp -i %S -B %S -j %d -e %f -b %d -v %d -d %S > %S\n",
+		"%S -t 1 -i %S -B %S -j %d -e %f -b %d -v %d -d %S > %S\n",
+                ajAcdGetpathC("blastpgp"),
                 seq_in, seqs_in, niter,evalue, maxhits, maxhits, database,
 		*psiname);
     ajFmtPrint("%S\n", temp);
@@ -643,7 +644,8 @@ static AjPFile seqsearch_psisingle(AjPStr seqname,
     ajFileClose(&seqinf);
 
     /* Run PSI-BLAST. */
-    ajFmtPrintS(&temp,"blastpgp -i %S -j %d -e %f -b %d -v %d -d %S > %S\n",
+    ajFmtPrintS(&temp,
+                "blastpgp -i %S -j %d -e %f -b %d -v %d -d %S > %S\n",
                 seq_in, niter,evalue, maxhits, maxhits, database, *psiname);
     ajFmtPrint("%S\n", temp);
     system(ajStrGetPtr(temp));
