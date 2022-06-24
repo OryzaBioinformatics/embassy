@@ -1,0 +1,123 @@
+application: fneighbor [
+  documentation: "Phylogenies from distance matrix by N-J or
+                  UPGMA method"
+  groups: "Phylogeny:Distance matrix"
+  gui: "yes"
+  batch: "yes"
+  cpu: "high"
+  embassy: "phylipnew"
+]
+
+section: input [
+  information: "Input section"
+  type: "page"
+]
+
+distances: datafile  [
+  parameter: "Y"
+  knowntype: "distance matrix"
+]
+
+endsection: input
+
+section: additional [
+  information: "Additional section"
+  type: "page"
+]
+
+list: matrixtype  [
+	additional: "Y"
+	minimum: "1"
+	maximum: "1"
+	header: "Matrix type"
+	values: "s:Square;
+        	 u:Upper triangular;
+          	 l:Lower triangular"
+  	information: "Type of data matrix"
+  	default: "s"
+]
+
+list: treetype  [
+	additional: "Y"
+	minimum: "1"
+	maximum: "1"
+	header: "Tree type"
+	values: "n:Neighbor-joining;
+        	 u:UPGMA"
+  	information: "Neighbor-joining or UPGMA tree"
+  	default: "n"
+]
+
+integer: outgrno [
+	additional: "@($(treetype)==n)"
+	minimum: "0"  
+        maximum: "$(datafile.distancesize)"
+	default: "0"
+	information: "Species number to use as outgroup"
+]
+
+toggle: jumble  [
+  additional: "Y"
+  default: "N"
+  information: "Randomise input order of species"
+]
+
+integer: seed [
+	additional: "$(jumble)"
+	information: "Random number seed between 1 and 32767 (must be odd)"
+	minimum: "1"
+	maximum: "32767"
+	default: "1"
+]
+
+boolean: replicates  [
+  additional: "Y"
+  default: "N"
+  information: "Subreplicates"
+]
+
+
+endsection: additional
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+outfile: outfile  [
+  parameter: "Y"
+  knowntype: "neighbor output"
+]
+
+toggle: trout [
+	additional: "Y"
+	default: "Y"
+	information: "Write out trees to tree file"
+]
+
+outfile: outtreefile  [
+  additional: "$(trout)"
+  extension: "treefile"
+  information: "Tree file name"
+  knowntype: "newick tree"
+  nullok: "Y"
+]
+boolean: printdata [
+	additional: "Y"
+	default: "N"
+	information: "Print data at start of run"
+]
+
+boolean: progress [
+	additional: "Y"
+	default: "Y"
+	information: "Print indications of progress of run"
+]
+
+boolean: treeprint [
+	additional: "Y"
+	default: "Y"
+	information: "Print out tree"
+]
+
+endsection: output

@@ -1,0 +1,156 @@
+application: fmix [
+  documentation: "Mixed parsimony algorithm"
+  groups: "Phylogeny:Discrete characters"
+  embassy: "phylipnew"
+]
+
+section: input [
+  information: "Input section"
+  type: "page"
+]
+
+discretestates: infile  [
+  parameter: "Y"
+  characters: "01PB?"
+  help: "File containing one or more data sets"
+  knowntype: "discrete characters input"
+]
+
+tree: intreefile [
+	parameter: "Y"
+	nullok: "Y"
+	knowntype: "newick"
+]
+
+properties: weights [
+	additional: "Y"
+	characters: "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	information: "Weights file"
+	nullok: "Y"
+        length: "$(infile.discretelength)"
+        size: "1"
+]
+properties: ancfile [
+	additional: "Y"
+	characters: "01?"
+	information: "Ancestral states file"
+	nullok: "Y"
+        length: "$(infile.discretelength)"
+        size: "1"
+]
+properties: mixfile [
+	additional: "Y"
+	characters: "CSW"
+	information: "Mixture file"
+	nullok: "Y"
+        length: "$(infile.discretelength)"
+        size: "1"
+]
+endsection: input
+
+section: additional [
+  information: "Additional section"
+  type: "page"
+]
+
+list: method  [
+  additional: "y"
+  minimum: "1"
+  maximum: "1"
+  header: "Method"
+  values: "w:Wagner; 
+           c:Camin-Sokal; 
+           m:Mixed;"
+  information: "Choose the method to use"
+  default: "Wagner"
+]
+
+integer: njumble [
+	additional: "@(!$(intreefile.isdefined))"
+	default: "0"
+	minimum: "0"
+	information: "Number of times to randomise"
+]
+
+integer: seed [
+	additional: "$(njumble)"
+	information: "Random number seed between 1 and 32767 (must be odd)"
+	maximum: "32767"
+	minimum: "1"
+	default: "1"
+]
+
+
+integer: outgrno [
+	additional: "Y"
+	minimum: "0"  
+        maximum: "$(infile.discretesize)"
+	default: "0"
+	information: "Species number to use as outgroup"
+]
+
+float: threshold [
+	additional: "Y"
+	minimum: "1"
+	information: "Threshold value"
+	default: "$(infile.discretesize)" 
+]
+
+endsection: additional
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+outfile: outfile  [
+  parameter: "Y"
+  knowntype: "mix output"
+]
+
+toggle: trout [
+	additional: "Y"
+	default: "Y"
+	information: "Write out trees to tree file"
+]
+
+outfile: outtreefile  [
+  additional: "$(trout)"
+  extension: "treefile"
+  information: "Tree file name"
+  knowntype: "newick tree"
+  nullok: "Y"
+]
+
+boolean: printdata [
+	additional: "Y"
+	default: "N"
+	information: "Print data at start of run"
+]
+
+boolean: progress [
+	additional: "Y"
+	default: "Y"
+	information: "Print indications of progress of run"
+]
+
+
+boolean: treeprint [
+	additional: "Y"
+	default: "Y"
+	information: "Print out tree"
+]
+
+boolean: ancseq  [
+  additional: "Y"
+  default: "N"
+  information: "Print states at all nodes of tree"
+]
+
+boolean: stepbox  [
+  additional: "Y"
+  default: "N"
+  information: "Print out steps in each character"
+]
+
+endsection: output

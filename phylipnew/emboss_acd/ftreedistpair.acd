@@ -1,0 +1,88 @@
+application: ftreedistpair [
+  documentation: "Distances between two sets of trees"
+  groups: "Phylogeny:Consensus"
+  embassy: "phylipnew"
+]
+
+section: input [
+  information: "Input section"
+  type: "page"
+]
+
+tree: intreefile [
+  parameter: "Y"
+  knowntype: "newick tree"
+  information: "Tree file"
+]
+
+tree: bintreefile [
+  parameter: "Y"
+  knowntype: "newick tree"
+  information: "Second input tree file"
+  nullok: "Y"
+]
+
+endsection: input
+
+section: additional [
+  information: "Additional section"
+  type: "page"
+]
+
+list: dtype [
+  additional: "Y"
+  information: "Distance type"
+  values: "s:Symmetric difference;
+           b:Branch score distance"
+  default: "b"
+]
+
+list: pairing [
+  additional: "Y"
+  information: "Tree pairing method"
+  values: "c:Distances between corresponding pairs each tree file;
+           l:Distances between all possible pairs in each tree file"
+  default: "l"
+]
+
+list: style [
+  additional: "Y"
+  information: "Distances output option"
+  values: "f:Full_matrix;
+           v:One pair per line, verbose;
+           s:One pair per line, sparese"
+  default: "Verbose"
+  default: "v"
+]
+
+boolean: noroot [
+  additional: "Y"
+  default: "N"
+  information: "Trees to be treated as rooted"
+]
+
+integer: outgrno [
+	additional: "Y"
+	minimum: "0"  
+	default: "0"
+	information: "Species number to use as outgroup"
+]
+endsection: additional
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+outfile: outfile  [
+  parameter: "Y"
+  knowntype: "treedist output"
+]
+
+boolean: progress [
+  additional: "Y"
+  default: "N"
+  information: "Print indications of progress of run"
+]
+
+endsection: output
