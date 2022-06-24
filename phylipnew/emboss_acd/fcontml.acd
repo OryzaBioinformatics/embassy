@@ -82,6 +82,8 @@ section: additional [
     minimum: "0"
     maximum: "$(infile.freqsize)"
     default: "0"
+    failrange: "N"
+    trueminimum: "Y"
     information: "Species number to use as outgroup"
     relations: "EDAM: Generic integer"                                     
   ]

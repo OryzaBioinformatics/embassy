@@ -79,6 +79,8 @@ section: additional [
     additional: "Y"
     minimum: "0"
     maximum: "$(infile.discretesize)"
+    failrange: "N"
+    trueminimum: "Y"
     default: "0"
     information: "Species number to use as outgroup"
     relations: "EDAM: Generic integer"                                     

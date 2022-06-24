@@ -122,7 +122,7 @@ Done.
 Command line arguments
 
 Fitch-Margoliash and Least-Squares Distance Methods
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers:
   [-datafile]          distances  File containing one or more distance
@@ -322,13 +322,8 @@ Author(s)
                     This program is an EMBOSS conversion of a program written by Joe
                     Felsenstein as part of his PHYLIP package.
 
-                    Although we take every care to ensure that the results of the EMBOSS
-                    version are identical to those from the original package, we recommend
-                    that you check your inputs give the same results in both versions
-                    before publication.
-
-                    Please report all bugs in the EMBOSS version to the EMBOSS bug team,
-                    not to the original author.
+                    Please report all bugs to the EMBOSS bug team
+                    (emboss-bug (c) emboss.open-bio.org) not to the original author.
 
 History
 

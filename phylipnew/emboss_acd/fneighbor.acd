@@ -53,6 +53,8 @@ section: additional [
     additional: "@($(treetype)==n)"
     minimum: "0"
     maximum: "$(datafile.distancesize)"
+    failrange: "N"
+    trueminimum: "Y"
     default: "0"
     information: "Species number to use as outgroup"
     relations: "EDAM: Generic integer"                                     

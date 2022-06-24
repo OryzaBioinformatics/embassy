@@ -64,6 +64,8 @@ section: additional [
     additional: "Y"
     minimum: "0"
     maximum: "$(sequence.count)"
+    failrange: "N"
+    trueminimum: "Y"
     default: "0"
     information: "Species number to use as outgroup"
     relations: "EDAM: Generic integer"                                     
