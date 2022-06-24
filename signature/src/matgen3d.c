@@ -1,25 +1,25 @@
 /* @source matgen3d application
- **
- ** Generates a 3D-1D scoring matrix from CCF files (clean coordinate files).
- **
- ** @author: Copyright (C) Waqas Awan (wawan@hgmp.mrc.ac.uk)
- ** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
- ** @@
- **
- ** This program is free software; you can redistribute it and/or
- ** modify it under the terms of the GNU General Public License
- ** as published by the Free Software Foundation; either version 2
- ** of the License, or (at your option) any later version.
- **
- ** This program is distributed in the hope that it will be useful,
- ** but WITHOUT ANY WARRANTY; without even the implied warranty of
- ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- ** GNU General Public License for more details.
- **
- ** You should have received a copy of the GNU General Public License
- ** along with this program; if not, write to the Free Software
- ** Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
- ******************************************************************************/
+**
+** Generates a 3D-1D scoring matrix from CCF files (clean coordinate files).
+**
+** @author: Copyright (C) Waqas Awan 
+** @author: Copyright (C) Jon Ison (jison@ebi.ac.uk)
+** @@
+**
+** This program is free software; you can redistribute it and/or
+** modify it under the terms of the GNU General Public License
+** as published by the Free Software Foundation; either version 2
+** of the License, or (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+******************************************************************************/
 
 #include "emboss.h"
 #include <math.h>
@@ -33,19 +33,21 @@ float        CalcScoringMatrix(AjPFile calclogf, AjPInt2d CountMat,
 			       AjPFloat2d *ScoringMatrix);
 
 
-
-#define NUMAA   24   /* Length of AACODES string below */
-#define MAXENV  24   /* Max. number of environment that can be returned by an ajResEnvXXX function */  /* Jon */
+/* Length of AACODES string below */
+#define NUMAA   24
+/* Max. number of environments that can be returned by an ajResEnvXXX
+   function */ /* Jon */
+#define MAXENV  24 
 ajint   NUMENV  =0;
 
 char AACODES[]="ARNDCQEGHILKMFPSTWYVBZX*";
 
 
 /* @prog matgen3d *************************************************************
- **
- ** Generates a 3D-1D scoring matrix from CCF files (clean coordinate files).
- **
- ******************************************************************************/
+**
+** Generates a 3D-1D scoring matrix from CCF files (clean coordinate files).
+**
+******************************************************************************/
 
 int main(ajint argc, char **argv)
 {
@@ -149,8 +151,7 @@ int main(ajint argc, char **argv)
 
 
     /* ACD processing */
-    ajNamInit("emboss");
-    ajAcdInitP("matgen3d",argc,argv,"SIGNATURE"); 
+    embInitP("matgen3d",argc,argv,"SIGNATURE"); 
     
     ccfddir      = ajAcdGetDirectory("ccfddir");
     ccfpdir      = ajAcdGetDirectory("ccfpdir");
@@ -196,14 +197,14 @@ int main(ajint argc, char **argv)
 	while((ScopPtr=(AjPScop)ajListIterNext(ScopIter)))
 	{
 	    /*Only first member of each family*/
-	    if(ajStrMatch(PrevEntry, ScopPtr->Family))
+	    if(ajStrMatchS(PrevEntry, ScopPtr->Family))
 		continue;
       
 	    tmpID=ajStrNew();
-	    ajStrAssS(&tmpID, ScopPtr->Entry);
-	    ajStrToLower(&tmpID);
+	    ajStrAssignS(&tmpID, ScopPtr->Entry);
+	    ajStrFmtLower(&tmpID);
 	    ajListstrPushApp(ListIDs, tmpID);
-	    ajStrAssS(&PrevEntry, ScopPtr->Family);
+	    ajStrAssignS(&PrevEntry, ScopPtr->Family);
 	}
 	ajListIterFree(&ScopIter);  
     }
@@ -220,7 +221,7 @@ int main(ajint argc, char **argv)
 		lig_tmp = ajStrNew();
 		if((ajFmtScanS(line, "%S", lig_tmp) != 1))
 		    ajFatal("Ligand id not read from file");
-		ajStrToUpper(&lig_tmp);
+		ajStrFmtUpper(&lig_tmp);
 		ajListPushApp(list_lig, lig_tmp);
 	    }	
 	    lig_n = ajListToArray(list_lig, (void ***) &lig_arr);
@@ -235,7 +236,7 @@ int main(ajint argc, char **argv)
 	while((CmapPtr=(AjPCmap)ajListIterNext(CmapIter)))
 	{
 	    for(done=ajFalse, x=0; x<lig_n; x++)
-		if(ajStrMatch(lig_arr[x], CmapPtr->Ligid))
+		if(ajStrMatchS(lig_arr[x], CmapPtr->Ligid))
 		{
 		    done = ajTrue;
 		    break;
@@ -246,14 +247,14 @@ int main(ajint argc, char **argv)
 	    tmpID=ajStrNew();
 	    /* Use domain ID if it is defined (the CON file is for a domain), 
 	       otherwise pdb ID (the CON file is for a protein). */
-	    if(MAJSTRLEN(CmapPtr->Domid))
-		ajStrAssS(&tmpID, CmapPtr->Domid);
-	    else if(MAJSTRLEN(CmapPtr->Id))
-		ajStrAssS(&tmpID, CmapPtr->Id);
+	    if(MAJSTRGETLEN(CmapPtr->Domid))
+		ajStrAssignS(&tmpID, CmapPtr->Domid);
+	    else if(MAJSTRGETLEN(CmapPtr->Id))
+		ajStrAssignS(&tmpID, CmapPtr->Id);
 	    else
 		ajFatal("Neither domain or pdb id is defined");
 	    
-	    ajStrToLower(&tmpID);
+	    ajStrFmtLower(&tmpID);
 	    ajListstrPushApp(ListIDs, tmpID);
 	}
 	
@@ -276,27 +277,31 @@ int main(ajint argc, char **argv)
     for(x=0; ajListstrPop(ListIDs, &IdName); x++)
     {     	
 	/* PDB code */
-	if(MAJSTRLEN(IdName)==4)
+	if(MAJSTRGETLEN(IdName)==4)
 	{
 	    if((!(DCorFptr = ajFileNewDirF(ccfpdir, IdName))))
 	    {
 		notopened++;
-		ajFmtPrintS(&msg, "Could not open for reading %S", IdName);
-		ajFmtPrintF(logf, "WARN\tCould not open for reading %S\n", IdName);
-		/*	    ajWarn(ajStrStr(msg)); */
+		ajFmtPrintS(&msg, "Could not open for reading %S",
+			    IdName);
+		ajFmtPrintF(logf, "WARN\tCould not open for reading %S\n",
+			    IdName);
+		/*	    ajWarn(ajStrGetPtr(msg)); */
 		ajStrDel(&IdName);
 		continue;
 	    }	
 	}
 	/* Domain code */
-	if(MAJSTRLEN(IdName)==7)
+	if(MAJSTRGETLEN(IdName)==7)
 	{
 	    if((!(DCorFptr = ajFileNewDirF(ccfddir, IdName))))
 	    {
 		notopened++;
-		ajFmtPrintS(&msg, "Could not open for reading %S", IdName);
-		ajFmtPrintF(logf, "WARN\tCould not open for reading %S\n", IdName);
-		/*	    ajWarn(ajStrStr(msg)); */
+		ajFmtPrintS(&msg, "Could not open for reading %S",
+			    IdName);
+		ajFmtPrintF(logf, "WARN\tCould not open for reading %S\n",
+			    IdName);
+		/*	    ajWarn(ajStrGetPtr(msg)); */
 		ajStrDel(&IdName);
 		continue;
 	    }	
@@ -311,7 +316,7 @@ int main(ajint argc, char **argv)
 	{
 	    ajFmtPrintS(&msg, "Error reading coordinate file");
 	    ajFmtPrintF(logf, "WARN\tError reading coordinate file\n");
-	    ajWarn(ajStrStr(msg));
+	    ajWarn(ajStrGetPtr(msg));
 	    ajStrDel(&IdName);
 	    ajFileClose(&DCorFptr);
 	    continue;
@@ -325,8 +330,8 @@ int main(ajint argc, char **argv)
 	ajFmtPrintF(logf, "%S\n\n", Pdb->Pdb);
 
 
-	/* Ligand-binding positions only.
-	   Construct array of residue index numbers of ligand-contact residues */
+	/* Ligand-binding positions only.  Construct array of residue
+	   index numbers of ligand-contact residues */
 	if(modei==2)
 	{
 	    sites_arr = ajIntNew();
@@ -367,10 +372,12 @@ int main(ajint argc, char **argv)
 	    }
 	    
 
-	    /*Call to function that assigns the secondary structure environment class*/
+	    /*Call to function that assigns the secondary structure
+              environment class*/
 	    if((!ajResidueSSEnv(res, &SEnv, logf)))
 	    {
-		ajFmtPrintF(logf, "SEnv unassigned for residue %d\n", res->Idx);
+		ajFmtPrintF(logf, "SEnv unassigned for residue %d\n",
+			    res->Idx);
 		/* PrevRes = res->Idx; */
 		continue;
 	    }
@@ -412,9 +419,10 @@ int main(ajint argc, char **argv)
 
 
 	    /*Skip if the overall environment cannot be assigned*/
-	    if( (!MAJSTRLEN(OEnv)))
+	    if( (!MAJSTRGETLEN(OEnv)))
 	    {
-		ajFmtPrintF(logf, "OEnv unassigned for residue %d\n", res->Idx);
+		ajFmtPrintF(logf, "OEnv unassigned for residue %d\n",
+			    res->Idx);
 		/* PrevRes = res->Idx; */
 		continue;
 	    }
@@ -422,11 +430,11 @@ int main(ajint argc, char **argv)
 	    ajFmtPrintF(logf, "\tOEnv %S:%c\n", OEnv, res->Id1);
 
 	    /*Get idices into 2d matrix*/
-	    if(MAJSTRLEN(OEnv) == 1)
-		i = ajStrChar(OEnv, 0) - 'A';
-	    else if(MAJSTRLEN(OEnv) == 2)
-		i = ajStrChar(OEnv, 1) - 'A' + 
-		    ((ajStrChar(OEnv, 0) - 'A')*26);
+	    if(MAJSTRGETLEN(OEnv) == 1)
+		i = ajStrGetCharFirst(OEnv) - 'A';
+	    else if(MAJSTRGETLEN(OEnv) == 2)
+		i = ajStrGetCharPos(OEnv, 1) - 'A' + 
+		    ((ajStrGetCharFirst(OEnv) - 'A')*26);
 	    else
 		ajFatal("Matrix label too big in matgen3d");
 	    
@@ -478,10 +486,12 @@ int main(ajint argc, char **argv)
 		"A", "R", "N", "D", "C", "Q", "E", "G", "H", "I", "L", "K",
 		"M", "F", "P", "S", "T", "W", "Y", "V", "B", "Z", "X", "*");
 
-    for(labelcnt1=0, labelcnt2=0, RowEnvIdx=0; RowEnvIdx<NUMENV; RowEnvIdx++, labelcnt2++)
+    for(labelcnt1=0, labelcnt2=0, RowEnvIdx=0;
+	RowEnvIdx<NUMENV;
+	RowEnvIdx++, labelcnt2++)
     {	
-	ajStrAssK(&label, (char) labelcnt1+'A');
-	ajStrAppK(&label, (char) labelcnt2+'A');
+	ajStrAssignK(&label, (char) labelcnt1+'A');
+	ajStrAppendK(&label, (char) labelcnt2+'A');
 	if(labelcnt2 == 25)
 	{
 	    labelcnt1 +=  1;
@@ -568,24 +578,29 @@ int main(ajint argc, char **argv)
 
 
 /* @func CalcScoringMatrix ****************************************************
- ** Calculates a matrix of 3d-1d scores
- ** @param [r] CountMat [AjPInt2d]    Matrix of raw counts
- ** @return [float]
- ** @@
- ******************************************************************************/
+** Calculates a matrix of 3d-1d scores
+** @param [r] CountMat [AjPInt2d]    Matrix of raw counts
+** @return [float]
+** @@
+******************************************************************************/
 float   CalcScoringMatrix(AjPFile calclogf, 
 			  AjPInt2d CountMat,
 			  AjPFloat2d *ScoringMatrix)
 {
-    ajint       IntNij=0;		/*Integer to hold Nij value i.e. no. of res of type i in env j*/
-    ajint       IntSUMiNij=0;		/*Integer to hold single SUM i Nij value*/
-    AjPInt      SUMiNijArr=NULL;	/*Array Sum Nij values for any amino acid in environment j*/
+    ajint       IntNij=0;		/*Integer to hold Nij value
+					  i.e. no. of res of type i in env j*/
+    ajint       IntSUMiNij=0;		/*Integer to hold single SUM i
+					  Nij value*/
+    AjPInt      SUMiNijArr=NULL;	/*Array Sum Nij values for any
+					  amino acid in environment j*/
     ajint       IntNi=0;		/*Integer to hold single Ni value*/
     AjPInt      NiArr=NULL;		/*Total residues of type i*/
     ajint       IntSUMNi=0;		/*Total number of residues in dataset*/
   
     float       FloatPij=0.0;		/*To hold pij value*/
-    AjPFloat2d  PijMatrix=NULL;		/*Matrix of P(i:j) values i.e. probability of finding res i in env j*/
+    AjPFloat2d  PijMatrix=NULL;		/*Matrix of P(i:j) values
+					  i.e. probability of finding
+					  res i in env j*/
     float       FloatPi=0.0;		/*To hold single Pi value*/
     AjPFloat    PiArr=NULL;		/*Array of Pi values*/
 
@@ -599,7 +614,8 @@ float   CalcScoringMatrix(AjPFile calclogf,
     float       min=0.0;		/* Min. score from matrix */
   
    
-    /*Calculate values for Sum ij - totals for all amino acid in each environment (sum for Rows)*/
+    /*Calculate values for Sum ij - totals for all amino acid in each
+      environment (sum for Rows)*/
     /*Create and initialise array of Sum Nij values*/
     SUMiNijArr=ajIntNew();
 /*    for(i=0;i<Dim;i++)   */
@@ -625,7 +641,8 @@ float   CalcScoringMatrix(AjPFile calclogf,
 	ajFmtPrintF(calclogf, "%c\t%d\n", i+'A', ajIntGet(SUMiNijArr, i));
 
 
-    /*Calculate values of Ni - total number of residues of each type Sum of columns*/
+    /*Calculate values of Ni - total number of residues of each type
+      Sum of columns*/
     /*Create and initialise array of Ni values*/
     NiArr=ajIntNew();
     for(i=0;i<Dim;i++)
@@ -695,7 +712,8 @@ float   CalcScoringMatrix(AjPFile calclogf,
 	ajFmtPrintF(calclogf, "%c\t", RowEnvIdx+'A');
 	for(ColumnResIdx=0; ColumnResIdx<Dim; ColumnResIdx++)
 	{
-	    ajFmtPrintF(calclogf, "%.3f\t", ajFloat2dGet(PijMatrix, RowEnvIdx, ColumnResIdx));
+	    ajFmtPrintF(calclogf, "%.3f\t",
+			ajFloat2dGet(PijMatrix, RowEnvIdx, ColumnResIdx));
 	}
 	ajFmtPrintF(calclogf, "\n");
     }
@@ -755,7 +773,8 @@ float   CalcScoringMatrix(AjPFile calclogf,
 	/* Don't want the '*' hence -1 */
 	for(ColumnResIdx=0; ColumnResIdx<NUMAA-1; ColumnResIdx++)
 	{
-	    Scoreij = ajFloat2dGet(*ScoringMatrix, RowEnvIdx, (ajint) AACODES[ColumnResIdx]-'A');
+	    Scoreij = ajFloat2dGet(*ScoringMatrix, RowEnvIdx,
+				   (ajint) AACODES[ColumnResIdx]-'A');
 	  
 	    if(Scoreij < min)
 		min = Scoreij;
@@ -770,8 +789,3 @@ float   CalcScoringMatrix(AjPFile calclogf,
 
     return min;
 }
-
-
-
-
-
