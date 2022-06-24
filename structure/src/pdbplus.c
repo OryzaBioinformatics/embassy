@@ -154,7 +154,7 @@ int main(ajint argc, char **argv)
 
 
     /* Read data from acd. */
-    embInitP("pdbplus",argc,argv,"STRUCTURE");
+    embInitPV("pdbplus",argc,argv,"STRUCTURE",VERSION);
 
     ccfin        = ajAcdGetDirlist("ccfinpath");  
     pdbin        = ajAcdGetDirectory("pdbindir"); 
@@ -256,17 +256,14 @@ int main(ajint argc, char **argv)
 	     **  Call STRIDE by using ajSystem.
 	     */
 	    
-	    ajFmtPrintS(&syscmd, "stride %S -f%S >> %s 2>&1",  
-			pdb_name, randomname, ajFileGetNameC(serrf));
-	    ajFmtPrint("stride %S -f%S >> %s 2>&1\n",  
-		       pdb_name, randomname,ajFileGetNameC(serrf));
+	    ajFmtPrintS(&syscmd, "%S %S -f%S >> %s 2>&1",  
+			ajAcdGetpathC("stride"),
+                        pdb_name, randomname, ajFileGetNameC(serrf));
+	    ajFmtPrint("%S %S -f%S >> %s 2>&1\n",  
+		       ajAcdGetpathC("stride"),
+                       pdb_name, randomname,ajFileGetNameC(serrf));
 	    system(ajStrGetPtr(syscmd));  
 
-/*	    ajFmtPrintS(&syscmd, "stride %S -f%S >> %s",  
-			pdb_name, randomname, ajFileGetNameC(serrf));
-	    ajFmtPrint("stride %S -f%S >> %s\n",  
-		       pdb_name, randomname,ajFileGetNameC(serrf));
-	    system(ajStrGetPtr(syscmd));  */
 	    
 	    /* Open the stride output file */
 	    if (((tempf = ajFileNewInNameS(randomname)) == NULL))
@@ -400,21 +397,14 @@ int main(ajint argc, char **argv)
 	     **   use the .rsa file here). 
 	     */
 	    
-	    ajFmtPrintS(&syscmd, "naccess %S  >> %s 2>&1",  
-			pdb_name, 
+	    ajFmtPrintS(&syscmd, "%S %S  >> %s 2>&1",  
+			ajAcdGetpathC("naccess"), pdb_name, 
 			ajFileGetNameC(nerrf));
-	    ajFmtPrint("naccess %S  >> %s 2>&1\n",  
-		       pdb_name, 
+	    ajFmtPrint("%S %S  >> %s 2>&1\n",  
+		       ajAcdGetpathC("naccess"), pdb_name, 
 		       ajFileGetNameC(nerrf));
 	    system(ajStrGetPtr(syscmd));  
 
-/*	    ajFmtPrintS(&syscmd, "naccess %S  >> %s",  
-			pdb_name, 
-			ajFileGetNameC(nerrf));
-	    ajFmtPrint("naccess %S  >> %s\n",  
-		       pdb_name, 
-		       ajFileGetNameC(nerrf));
-	    system(ajStrGetPtr(syscmd));  */
 
 	    
 	    ajStrAssignS(&naccess_str, pdbprefix);
