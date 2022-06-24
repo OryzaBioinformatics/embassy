@@ -2,13 +2,19 @@
 
 bin_PROGRAMS = emnu
 
-FLAGS=
-
+if LOCALLINK
 INCLUDES = -I../../../plplot -I../../../nucleus -I../../../ajax
+else
+INCLUDES = -I${embprefix}/include
+endif
 
 if ISSHARED
 if ISAIXIA64
-AM_CFLAGS = -Wl,-bdynamic -Wl,-brtl -L../../../ajax/.libs -lajax -lajaxg
+if LOCALLINK
+AM_CFLAGS = -Wl,-bdynamic -Wl,-brtl -L../../../ajax/.libs -lajax
+else
+AM_CFLAGS = -Wl,-bdynamic -Wl,-brtl -L${embprefix}/lib -lajax
+endif
 else
 AM_CFLAGS =
 endif
@@ -16,8 +22,8 @@ endif
 
 emnu_SOURCES = emnu.c 
 
-LDADD = ../../../plplot/libplplot.la ../../../ajax/libajax.la ../../../nucleus/libnucleus.la -lmenu -lform $(XLIB)
-
-
-
-
+if LOCALLINK
+LDADD = ../../../nucleus/libnucleus.la ../../../ajax/libajax.la ../../../plplot/libplplot.la -lmenu -lform $(XLIB)
+else
+LDADD = -L${embprefix}/lib -lnucleus -lajax -lplplot -lmenu -lform $(XLIB)
+endif
