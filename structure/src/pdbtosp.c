@@ -2,7 +2,7 @@
 **
 ** Convert raw swissprot:pdb equivalence file to embl-like format.
 **
-** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
+** @author: Copyright (C) Jon Ison (jison@ebi.ac.uk)
 ** @@
 **
 ** This program is free software; you can redistribute it and/or
@@ -30,7 +30,7 @@
 **  Software Suite.  Trends in Genetics, 15:276-278.  
 **  See also http://www.uk.embnet.org/Software/EMBOSS
 **  
-**  Email Jon Ison (jison@rfcgr.mrc.ac.uk)
+**  Email Jon Ison (jison@ebi.ac.uk)
 **  
 **  NOTES
 **  
@@ -63,8 +63,8 @@ int main(int argc, char **argv)
           
 
     /* Read data from acd*/
-    ajNamInit("emboss");
-    ajAcdInitP("pdbtosp", argc, argv, "STRUCTURE");
+    embInitP("pdbtosp", argc, argv, "STRUCTURE");
+
     inf1  =  ajAcdGetInfile("infile");
     outf  =  ajAcdGetOutfile("outfile");
 

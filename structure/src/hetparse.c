@@ -3,8 +3,8 @@
 ** Converts raw dictionary of heterogen groups
 ** to a file in EMBL-like format.
 ** 
-** @author: Copyright (C) Waqas Awan (wawan@hgmp.mrc.ac.uk)
-** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
+** @author: Copyright (C) Waqas Awan
+** @author: Copyright (C) Jon Ison (jison@ebi.ac.uk)
 ** @@
 **
 ** This program is free software; you can redistribute it and/or
@@ -33,8 +33,7 @@
 **  Software Suite.  Trends in Genetics, 15:276-278.  
 **  See also http://www.uk.embnet.org/Software/EMBOSS
 **  
-**  Email jison@rfcgr.mrc.ac.uk
-**        wawan@rfcgr.mrc.ac.uk
+**  Email jison@ebi.ac.uk
 **  
 **  NOTES
 **  
@@ -78,8 +77,7 @@ int main(int argc, char **argv)
 
     
     /* Get values from acd. */
-    ajNamInit("emboss");    
-    ajAcdInitP("hetparse", argc, argv, "STRUCTURE");
+    embInitP("hetparse", argc, argv, "STRUCTURE");
 
     fin     = ajAcdGetInfile("infile");
     fout    = ajAcdGetOutfile("outfile");
@@ -195,7 +193,7 @@ static AjBool        hetparse_HetScan(AjPList listfiles,
 	    if(ajStrPrefixC(line,"HETATM"))
 	    {
 		/* Copy heterogen code from pdb file into <het>. */
-		ajStrAssSub(&het, line, 17, 19);
+		ajStrAssignSubS(&het, line, 17, 19);
 		
 
 		/* Initialise iterator to iterate through the list <listhet>. */
@@ -208,7 +206,7 @@ static AjBool        hetparse_HetScan(AjPList listfiles,
 		while((hettemp=(AjPStr)ajListIterNext(iter)))
 		{
 		    /* If <het> matches the current node, break. */
-		    if(ajStrMatch(hettemp, het))
+		    if(ajStrMatchS(hettemp, het))
 		    {
 			foundhet=ajTrue;
 			break;
@@ -219,7 +217,7 @@ static AjBool        hetparse_HetScan(AjPList listfiles,
 		if(!foundhet)
 		{
 		    hetcopy=ajStrNew();
-		    ajStrAss(&hetcopy, het);
+		    ajStrAssignRef(&hetcopy, het);
 		    ajListstrPush(listhet, hetcopy);
 		}
 		
@@ -243,7 +241,7 @@ static AjBool        hetparse_HetScan(AjPList listfiles,
 	       increment the counter if we have a match*/
 	    for(i=0; i< ptr->n; i++)
 	    {
-		if(ajStrMatch(hettemp, ptr->entries[i]->abv))
+		if(ajStrMatchS(hettemp, ptr->entries[i]->abv))
 		{
 		    ptr->entries[i]->cnt++;
 		    break;
