@@ -61,7 +61,6 @@ void restdist_inputnumbers(AjPPhyloState state)
 void emboss_getoptions(char *pgm, int argc, char *argv[])
 {
 
-  AjStatus retval;
   ajint numseqs;
 
   sitelength = 6.0;
@@ -79,8 +78,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
     printf("\nRestriction site or fragment distances, ");
     printf("version %s\n\n",VERSION);
  
-    ajNamInit("emboss");
-    retval = ajAcdInitP (pgm, argc, argv, "PHYLIP");
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
 
     phylostates = ajAcdGetDiscretestates("data");
 
@@ -213,7 +211,7 @@ void restdist_inputdata(AjPPhyloState state)
       done = false;
       while (!done) {
         while (j < sites) {
-          ch = ajStrChar(str, j);
+          ch = ajStrGetCharPos(str, j);
           if (ch != '1' && ch != '0' && ch != '+' && ch != '-' && ch != '?') {
             printf(" ERROR -- Bad symbol %c",ch);
             printf(" at position %ld of species %ld\n", j+1, i);

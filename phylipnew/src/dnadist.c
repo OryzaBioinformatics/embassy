@@ -70,7 +70,6 @@ void   writedists(void);
 
 void   emboss_getoptions(char *pgm, int argc, char *argv[])
 {
-    AjStatus retval;
     AjPStr method = NULL;
     AjPStr gammamethod = NULL;
     AjPFloat basefreq;
@@ -101,9 +100,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
   mulsets = false;
   datasets = 1;
 
-    ajNamInit("emboss");
-    retval = ajAcdInitP (pgm, argc, argv, "PHYLIP");
-
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
 
     seqsets = ajAcdGetSeqsetall("sequence");
 
@@ -190,8 +187,8 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
      emboss_openfile(embossoutfile, &outfile, &outfilename); 
 
 
-    fprintf(outfile, "\nNucleic acid sequence Distance Matrix program,");
-    fprintf(outfile, " version %s\n\n",VERSION);
+/*    fprintf(outfile, "\nNucleic acid sequence Distance Matrix program,");*/
+/*    fprintf(outfile, " version %s\n\n",VERSION);*/
 }  /* emboss_getoptions */
 
 

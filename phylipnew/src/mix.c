@@ -91,7 +91,6 @@ long *place, col;
 void emboss_getoptions(char *pgm, int argc, char *argv[])
 {
 
-  AjStatus retval;
   AjPStr method = NULL;
   ajint numseqs=0;
   ajint numwts=0;
@@ -116,9 +115,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   mulsets = false;
   msets = 1;
 
-
-    ajNamInit("emboss");
-    retval = ajAcdInitP (pgm, argc, argv, "PHYLIP");
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
 
     phylostates = ajAcdGetDiscretestates("infile");
 
@@ -744,7 +741,7 @@ void mix_treeread()
   for (i = 0; i < (spp); i++)
     names[i] = false;
   lparens = 0;
-  treestr = ajStrStrMod(&phylotrees[0]->Tree);
+  treestr = ajStrGetuniquePtr(&phylotrees[0]->Tree);
 
   mix_addelement(&root, &nextnode, &lparens, names, &treestr);
   if (ch == '[') {

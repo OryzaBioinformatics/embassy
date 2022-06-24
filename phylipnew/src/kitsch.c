@@ -78,7 +78,6 @@ boolean goteof, haslengths, lengths;  /* ditto ... */
 void   emboss_getoptions(char *pgm, int argc, char *argv[])
 {
  
-  AjStatus retval;
   AjPStr matrixtype = NULL;
   ajint nummatrices=0;
   long inseed0;
@@ -99,8 +98,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
   datasets = 1;
 
 
-    ajNamInit("emboss");
-    retval = ajAcdInitP (pgm, argc, argv, "PHYLIP");
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
 
     matrixtype = ajAcdGetListI("matrixtype", 1);
     if(ajStrMatchC(matrixtype, "l")) lower = true;
@@ -856,7 +854,7 @@ void maketree()
     names = (boolean *)Malloc(spp*sizeof(boolean));
     which = 1;
     while (which <= numtrees ) {
-      treestr = ajStrStrMod(&phylotrees[which-1]->Tree);
+      treestr = ajStrGetuniquePtr(&phylotrees[which-1]->Tree);
       treeread2 (&treestr, &curtree.root, curtree.nodep,
         lengths, &trweight, &goteof, &haslengths, &spp);
       evaluate(curtree.root);

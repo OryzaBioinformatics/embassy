@@ -66,7 +66,6 @@ double trweight;
 
 void emboss_getoptions(char *pgm, int argc, char *argv[])
 {
-  AjStatus retval;
   mulsets = false;
   nophylo = false;
   printdata = false;
@@ -75,8 +74,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   writecont = false;
   reg = true;
 
-    ajNamInit("emboss");
-    retval =  ajAcdInitP (pgm, argc, argv,"PHYLIP");
+    embInitP (pgm, argc, argv,"PHYLIPNEW");
 
     phylofreq = ajAcdGetFrequencies("infile");
     phylotrees = ajAcdGetTree("intreefile");
@@ -84,7 +82,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
     while (phylotrees[numtrees])
         numtrees++;
 
-    varywithin = ajAcdGetBool("varywithin");
+  varywithin = ajAcdGetBool("varywithin");
     if(varywithin) nophylo = ajAcdGetBool("nophylo");
     else {
       reg = ajAcdGetBool("reg");
@@ -754,7 +752,7 @@ void maketree()
     }
     nextnode = 0;
     nextnode = 0;
-    treestr = ajStrStrMod(&phylotrees[which-1]->Tree);
+    treestr = ajStrGetuniquePtr(&phylotrees[which-1]->Tree);
     treeread (&treestr, &curtree.start, curtree.nodep, &goteof, &first,
             curtree.nodep, &nextnode, &haslengths, &grbg, initcontrastnode);
     q = curtree.start;

@@ -468,7 +468,6 @@ void protdist_inputnumbers(AjPSeqset seqset)
 
 void   emboss_getoptions(char *pgm, int argc, char *argv[])
 {
-  AjStatus retval;
   AjPStr model = NULL;
   AjPStr gammamethod = NULL;
   AjPFloat basefreq;
@@ -502,10 +501,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
   mulsets = false;
   datasets = 1;
   
-
-
-    ajNamInit("emboss");
-    retval = ajAcdInitP (pgm, argc, argv, "PHYLIP");
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
 
     seqsets = ajAcdGetSeqsetall("sequence");
 
@@ -547,7 +543,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 
 
 
-    model = ajAcdGetListI("model", 1);
+    model = ajAcdGetListI("method", 1);
 
     if(ajStrMatchC(model, "j")) usejtt = true;
     else if(ajStrMatchC(model, "h")) usepmb = true;
@@ -601,10 +597,11 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
 
      emboss_openfile(embossoutfile, &outfile, &outfilename);
 
-    fprintf(outfile, "\nProtein distance algorithm, version %s\n\n",VERSION);
+/*    fprintf(outfile,
+      "\nProtein distance algorithm, version %s\n\n",VERSION);*/
 
 
-
+/*
     printf("\n weights: %s",(weights ? "true" : "false"));
     printf("\n progress: %s",(progress ? "true" : "false"));
     printf("\n similarity: %s",(similarity ? "true" : "false")); 
@@ -625,7 +622,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
     printf("\n mulsets: %s",(mulsets ? "true" : "false"));
     printf("\n datasets: %ld",(datasets));
     printf("\n printdata: %s",(printdata ? "true" : "false")); 
-
+*/
 
 }  /* emboss_getoptions */
 
@@ -765,7 +762,7 @@ void protdist_inputdata(AjPSeqset seqset)
       done = false;
       while (!done) {
         while (j < chars) {
-          charstate = ajStrChar(str, j);
+          charstate = ajStrGetCharPos(str, j);
           protdist_uppercase(&charstate);
           if ((!isalpha((int)charstate) && charstate != '.' && charstate != '?' &&
                charstate != '-' && charstate != '*') || charstate == 'J' ||
@@ -1648,7 +1645,11 @@ void makedists()
         putc(nayme[i][j], outfile);
       k = spp;
       for (j = 1; j <= k; j++) {
-        fprintf(outfile, "%10.6f", d[i][j - 1]);
+	  /* Quick fix to prevent mixed use of -0.000000 and 0.000000 in output */
+	  if((d[i][j - 1] < 0.0000005) && (d[i][j - 1] > -0.0000005))
+	      fprintf(outfile, "%10.6f", 0.0);
+	  else
+	      fprintf(outfile, "%10.6f", d[i][j - 1]);
         if ((j + 1) % 7 == 0 && j < k)
           putc('\n', outfile);
       }
@@ -1676,7 +1677,11 @@ void makedists()
         else
           n = spp;
         for (k = i; k < n ; k++)
-          fprintf(outfile, "%10.6f", d[j][k]);
+	    /* Quick fix to prevent mixed use of -0.000000 and 0.000000 in output */
+	    if((d[j][k] < 0.0000005) && (d[j][k] > -0.0000005))
+		fprintf(outfile, "%10.6f", 0.0);
+	    else
+		fprintf(outfile, "%10.6f", d[j][k]);
         putc('\n', outfile);
       }
       putc('\n', outfile);

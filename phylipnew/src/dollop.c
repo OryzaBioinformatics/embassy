@@ -91,7 +91,6 @@ bitptr steps;
 void   emboss_getoptions(char *pgm, int argc, char *argv[])
 {
 
-  AjStatus retval;
   ajint numseqs=0;
   ajint numwts=0;
   AjPStr method = NULL;
@@ -113,8 +112,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
   mulsets = false;
   msets = 1;
 
-    ajNamInit("emboss");
-    retval = ajAcdInitP (pgm, argc, argv, "PHYLIP");
+  embInitP (pgm, argc, argv, "PHYLIPNEW");
 
     phylostates = ajAcdGetDiscretestates("infile");
 
@@ -788,7 +786,7 @@ void maketree()
     for (i = 0; i < chars; i++)             /**/
       zeros[i] = 0;                         /**/
     while (which <= numtrees) {
-      treestr = ajStrStrMod(&phylotrees[which-1]->Tree);
+      treestr = ajStrGetuniquePtr(&phylotrees[which-1]->Tree);
       treeread(&treestr, &root, treenode, &goteof, &firsttree,
                 nodep, &nextnode, &haslengths,
                 &grbg, initdollopnode); /*debug*/

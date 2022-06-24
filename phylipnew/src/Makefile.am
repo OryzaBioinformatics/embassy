@@ -21,7 +21,7 @@ ftreedist ftreedistpair
 
 
 if LOCALLINK
-INCLUDES = -I../include -I../../../ajax
+INCLUDES = -I../include -I../../../ajax -I../../../nucleus -I../../../plplot
 else
 INCLUDES = -I../include -I${embprefix}/include
 endif
@@ -29,7 +29,11 @@ endif
 
 if ISSHARED
 if ISAIXIA64
-AM_CFLAGS = -Wl,-bdynamic -Wl,-brtl -L../../../ajax/.libs -lajax
+if LOCALLINK
+AM_CFLAGS = -Wl,-bdynamic -Wl,-brtl -L../../../plplot/.libs -L../../../ajax/.libs -L../../../nucleus/.libs -lnucleus -lajax -lplplot
+else
+AM_CFLAGS = -Wl,-bdynamic -Wl,-brtl -L${embprefix}/lib -lnucleus -lajax -lplplot
+endif
 else
 AM_CFLAGS =
 endif

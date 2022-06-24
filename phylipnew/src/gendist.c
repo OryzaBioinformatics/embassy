@@ -36,7 +36,6 @@ boolean all, cavalli, lower, nei, reynolds,  mulsets,
 
 void emboss_getoptions(char *pgm, int argc, char *argv[])
 {
-  AjStatus retval;
   AjPStr method = NULL;
   all = true;
   cavalli = false;
@@ -48,8 +47,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   mulsets = false;
   datasets = 1;
 
-    ajNamInit("emboss");
-    retval =  ajAcdInitP (pgm, argc, argv,"PHYLIP");
+    embInitP (pgm, argc, argv,"PHYLIPNEW");
 
     phylofreq = ajAcdGetFrequencies("infile");
 

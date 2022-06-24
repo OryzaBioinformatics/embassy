@@ -517,7 +517,6 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   long i;
   double probsum=0.0;
 
-  AjStatus retval;
   AjPStr model = NULL;
   AjPStr gammamethod = NULL;
   AjPFloat hmmrates;
@@ -554,9 +553,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   mulsets = false;
   datasets = 1;
   
-
-    ajNamInit("emboss");
-    retval = ajAcdInitP (pgm, argc, argv, "PHYLIP");
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
 
 
     seqsets = ajAcdGetSeqsetall("sequence");
@@ -817,7 +814,7 @@ void input_protdata(AjPSeqset seqset, long chars)
   for(i=0;i<spp;i++){
     initnameseq(seqset, i);
     strncpy(&y[i][0],ajSeqsetSeq(seqset, i),chars);
-    y[i][chars] = '\0';
+    /*y[i][chars] = '\0';*/ /* no trailing null - just the characters */
   }
   if (!printdata)
     return;
@@ -2567,7 +2564,7 @@ void maketree()
       dummy_first      = true;
       goteof           = false;
 
-      treestr = ajStrStrMod(&phylotrees[which-1]->Tree);
+      treestr = ajStrGetuniquePtr(&phylotrees[which-1]->Tree);
       treeread(&treestr, &root, dummy_treenode, &goteof, &dummy_first,
                curtree.nodep, &nextnode,
                &haslengths, &grbg, initpromlnode);

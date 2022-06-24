@@ -120,7 +120,6 @@ void restml_inputnumbers(AjPPhyloState state)
 void   emboss_getoptions(char *pgm, int argc, char *argv[])
 {
 
-  AjStatus retval;
   ajint numseqs;
 
   boolean rough;
@@ -144,8 +143,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
   mulsets = false;
   datasets = 1;
 
-    ajNamInit("emboss");
-    retval = ajAcdInitP (pgm, argc, argv, "PHYLIP");
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
 
     phylostates = ajAcdGetDiscretestates("data");
 
@@ -373,7 +371,7 @@ void restml_inputdata(AjPPhyloState state)
       done = false;
       while (!done) {
         while (j < sites) {
-          ch = ajStrChar(str, j);
+          ch = ajStrGetCharPos(str, j);
           uppercase(&ch);
           if (ch != '1' && ch != '0' && ch != '+' && ch != '-' && ch != '?') {
             printf(" ERROR: Bad symbol %c", ch);
@@ -1668,7 +1666,7 @@ void maketree()
     }
     which = 1;
     while (which <= numtrees) {
-      treestr = ajStrStrMod(&phylotrees[which-1]->Tree);
+      treestr = ajStrGetuniquePtr(&phylotrees[which-1]->Tree);
       treeread2 (&treestr, &curtree.start, curtree.nodep,
         lengths, &trweight, &goteof, &haslengths, &spp);
       treevaluate();

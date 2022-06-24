@@ -123,7 +123,6 @@ boolean *names;
 
 void emboss_getoptions(char *pgm, int argc, char *argv[])
 {
-  AjStatus retval;
   AjPStr initialtree = NULL;
   AjPStr method = NULL;
 
@@ -142,8 +141,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   scrollinc = 20;
   screenwidth = 80;
 
-    ajNamInit("emboss");
-    retval =  ajAcdInitP (pgm, argc, argv, "PHYLIP");
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
 
     phylostates = ajAcdGetDiscretestates("infile");
 
@@ -1006,7 +1004,7 @@ void buildtree()
     zeros = (long *)Malloc(chars*sizeof(long));         /**/
     for (i = 0; i < chars; i++)                           /**/
       zeros[i] = 0;                                         /**/
-    treestr = ajStrStrMod(&phylotrees[0]->Tree);
+    treestr = ajStrGetuniquePtr(&phylotrees[0]->Tree);
     treeread(&treestr, &root, treenode, &goteof, &firsttree,
                 nodep, &nextnode, &haslengths,
                 &grbg, initmovenode); /*debug*/

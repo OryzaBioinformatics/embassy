@@ -146,7 +146,6 @@ void restore_saved_tyme(tree *load_tree, double tymes[])
 
 void emboss_getoptions(char *pgm, int argc, char *argv[])
 {
-    AjStatus retval;
     AjPStr gammamethod = NULL;
     ajint i;
     AjPFloat basefreq;
@@ -182,9 +181,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   datasets = 1;
   mulsets = false;
 
-    ajNamInit("emboss");
-    retval = ajAcdInitP (pgm, argc, argv, "PHYLIP");
-
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
 
     seqsets = ajAcdGetSeqsetall("sequence");
 
@@ -2277,7 +2274,7 @@ void maketree()
       }
     } 
   } else {
-    treestr = ajStrStrMod(&phylotrees[0]->Tree);
+    treestr = ajStrGetuniquePtr(&phylotrees[0]->Tree);
     inittable_for_usertree (treestr);
     if(numtrees > MAXSHIMOTREES)
       shimotrees = MAXSHIMOTREES;
@@ -2306,7 +2303,7 @@ void maketree()
       dummy_first      = true;
       goteof           = false;
 
-      treestr = ajStrStrMod(&phylotrees[which-1]->Tree);
+      treestr = ajStrGetuniquePtr(&phylotrees[which-1]->Tree);
       treeread(&treestr, &root, dummy_treenode, &goteof, &dummy_first,
                curtree.nodep, &nextnode,
                &dummy_haslengths, &grbg, initdnamlnode);

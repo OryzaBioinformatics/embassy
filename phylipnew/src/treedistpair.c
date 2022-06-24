@@ -905,7 +905,7 @@ void read_second_file(pattern_elm ***pattern_array,
     goteof = false;
     nextnode = 0;
     haslengths = false;
-    treestr = ajStrStrMod(&treesource[itree++]->Tree);
+    treestr = ajStrGetuniquePtr(&treesource[itree++]->Tree);
     allocate_nodep(&nodep, treestr, &spp);
     treeread(&treestr, &root, treenode, &goteof, &firsttree2,
                nodep, &nextnode, &haslengths,
@@ -936,7 +936,6 @@ void read_second_file(pattern_elm ***pattern_array,
 void emboss_getoptions(char *pgm, int argc, char *argv[])
 {
 
-  AjStatus retval;
   AjPStr disttype = NULL;
   AjPStr tree_p = NULL;
   AjPStr style = NULL;
@@ -965,12 +964,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   trout = false;
   prntsets = false;
 
-
-
-    ajNamInit("emboss");
-    retval =  ajAcdInitP (pgm, argc, argv, "PHYLIPNEW");
-
-
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
 
     phylotrees = ajAcdGetTree("intreefile");
 

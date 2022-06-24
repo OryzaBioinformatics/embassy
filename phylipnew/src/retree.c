@@ -377,7 +377,6 @@ void copytree()
 void emboss_getoptions(char *pgm, int argc, char *argv[])
 {
 
-  AjStatus retval;
   AjPStr initialtree = NULL;
   AjPStr format = NULL;
 
@@ -390,8 +389,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   nexus = false;
   xmltree = false;
 
-    ajNamInit("emboss");
-    retval =  ajAcdInitP (pgm, argc, argv, "PHYLIP");
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
 
       phylotrees = ajAcdGetTree("intreefile");
 
@@ -1314,7 +1312,7 @@ treeconstruct.  Memory leak if user reads multiple trees. */
       /* This isn't the first time through here ... */
       firsttree = false;
     }
-    treestr = ajStrStrMod(&phylotrees[treesread]->Tree);
+    treestr = ajStrGetuniquePtr(&phylotrees[treesread]->Tree);
     allocate_nodep(&nodep, treestr, &spp);
     treesets[whichtree].nodep = nodep;
     

@@ -242,10 +242,8 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   AjPStr plottercode = NULL;
   AjPStr getpreviewer = NULL;
   AjPStr labeldirection = NULL;
-  AjStatus retval;    
-
-  ajNamInit("emboss");
-  retval = ajAcdInitP (pgm, argc, argv, "PHYLIPNEW");
+  
+  embInitP (pgm, argc, argv, "PHYLIPNEW");
 
   n = (int)((pagex-hpmargin-0.01)/(paperx-hpmargin)+1.0);
   m = (int)((pagey-vpmargin-0.01)/(papery-vpmargin)+1.0);
@@ -254,7 +252,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
  
     plottercode = ajAcdGetListI("plotter", 1);
     
-    getplotter(ajStrChar(plottercode,0));
+    getplotter(ajStrGetCharFirst(plottercode));
 
     labeldirection = ajAcdGetListI("labeldirection", 1);
 
@@ -616,7 +614,7 @@ void getparms(char numtochange)
 
   case 'P':
     plottercode = ajAcdGetListI("plotter", 1);
-    getplotter(ajStrChar(plottercode,0));
+    getplotter(ajStrGetCharFirst(plottercode));
     break;
 
   case 'V':
@@ -2505,7 +2503,7 @@ void setup_environment(int argc, Char *argv[])
 
   printf("Reading tree ... \n");
   firsttree = true;
-  treestr = ajStrStrMod(&phylotrees[0]->Tree); 
+  treestr = ajStrGetuniquePtr(&phylotrees[0]->Tree); 
   allocate_nodep(&nodep, treestr, &spp);
   treeread (&treestr, &root, treenode, &goteof, &firsttree,
             nodep, &nextnode, &haslengths,

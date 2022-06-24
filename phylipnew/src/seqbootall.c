@@ -102,7 +102,6 @@ longer seed;
 
 void emboss_getoptions(char *pgm, int argc, char *argv[])
 {
-  AjStatus retval;
   AjPStr typeofdata = NULL;
   AjPStr test = NULL; 
   AjPStr outputformat = NULL;
@@ -138,8 +137,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   factors = false;
   enzymes = false;
 
-    ajNamInit("emboss");
-    retval =  ajAcdInitP (pgm, argc, argv, "PHYLIP");
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
 
     seqset = ajAcdGetSeqset("infile");
 
@@ -336,7 +334,7 @@ void seqboot_inputfactors(AjPPhyloProp fact)
 
   j = 0;
   for (i = 0; i < (sites); i++) {
-    ch = ajStrChar(str,i);
+    ch = ajStrGetCharPos(str,i);
     if (ch != prevch)
       j++;
     prevch = ch;
@@ -490,7 +488,7 @@ void seqboot_inputdataseq(AjPSeqset seqset)
       done = false;
       while (!done) {
         while (j < sites ) {
-          charstate = ajStrChar(str, j);
+          charstate = ajStrGetCharPos(str, j);
           uppercase(&charstate);
           j++;
           if (charstate == '.')
@@ -735,7 +733,7 @@ void seqboot_inputdatafreq(AjPPhyloFreq freq)
       done = false;
       while (!done) {
         while (j < sites) {
-          charstate = ajStrChar(str, j);
+          charstate = ajStrGetCharPos(str, j);
           uppercase(&charstate);
           j++;
           if (charstate == '.')

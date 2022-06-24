@@ -200,10 +200,8 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   AjPStr plottercode = NULL;
   AjPStr getpreviewer = NULL;
   AjPStr getnodeposition = NULL;
-  AjStatus retval;    
-
-  ajNamInit("emboss");
-  retval = ajAcdInitP (pgm, argc, argv, "PHYLIP");
+  
+  embInitP (pgm, argc, argv, "PHYLIPNEW");
 
   n = (int)((pagex-hpmargin-0.01)/(paperx-hpmargin)+1.0);
   m = (int)((pagey-vpmargin-0.01)/(papery-vpmargin)+1.0);
@@ -212,7 +210,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
  
     plottercode = ajAcdGetListI("plotter", 1);
     
-    getplotter(ajStrChar(plottercode,0));
+    getplotter(ajStrGetCharFirst(plottercode));
 
     getpreviewer = ajAcdGetListI("previewer", 1);
 
@@ -958,7 +956,7 @@ void setup_environment(Char *argv[], boolean *canbeplotted)
   printf("DRAWGRAM from PHYLIP version %s\n",VERSION);
   printf("Reading tree ... \n");
   firsttree = true;
-  treestr = ajStrStrMod(&phylotrees[0]->Tree); 
+  treestr = ajStrGetuniquePtr(&phylotrees[0]->Tree); 
   allocate_nodep(&nodep, treestr, &spp);
   treeread (&treestr, &root, treenode, &goteof, &firsttree,
             nodep, &nextnode, &haslengths,

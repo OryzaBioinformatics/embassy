@@ -162,7 +162,6 @@ void dnamlcopy(tree *a, tree *b, long nonodes, long categs)
 
 void emboss_getoptions(char *pgm, int argc, char *argv[])
 {
-    AjStatus retval;
     AjPStr gammamethod = NULL;
     ajint i;
     AjPFloat basefreq;
@@ -202,8 +201,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   mulsets = false;
   datasets = 1;
 
-    ajNamInit("emboss");
-    retval = ajAcdInitP (pgm, argc, argv, "PHYLIP");
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
 
 
     seqsets = ajAcdGetSeqsetall("sequence");
@@ -2054,7 +2052,7 @@ void maketree()
   inittable();
 
   if (usertree) {
-    treestr = ajStrStrMod(&phylotrees[0]->Tree);
+    treestr = ajStrGetuniquePtr(&phylotrees[0]->Tree);
     inittable_for_usertree(treestr);
 
     if(numtrees > MAXSHIMOTREES)
@@ -2089,7 +2087,7 @@ void maketree()
       dummy_first      = true;
       goteof           = false;
 
-      treestr = ajStrStrMod(&phylotrees[which-1]->Tree);
+      treestr = ajStrGetuniquePtr(&phylotrees[which-1]->Tree);
       treeread(&treestr, &root, dummy_treenode, &goteof, &dummy_first,
                curtree.nodep, &nextnode,
                &haslengths, &grbg, initdnamlnode);

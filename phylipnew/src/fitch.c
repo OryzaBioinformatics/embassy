@@ -87,7 +87,6 @@ char *progname;
 void   emboss_getoptions(char *pgm, int argc, char *argv[])
 {
 
-  AjStatus retval;
   AjPStr matrixtype = NULL;
 
   long inseed0=0;
@@ -111,9 +110,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
   mulsets = false;
   datasets = 1;
 
-
-    ajNamInit("emboss");
-    retval = ajAcdInitP (pgm, argc, argv, "PHYLIP");
+    embInitP (pgm, argc, argv, "PHYLIPNEW");
    
     phylodist = ajAcdGetDistances("datafile");
 
@@ -918,7 +915,7 @@ void maketree()
     first = true;
     which = 1;
     while (which <= numtrees) {
-      treestr = ajStrStrMod(&phylotrees[which-1]->Tree);
+      treestr = ajStrGetuniquePtr(&phylotrees[which-1]->Tree);
       treeread2 (&treestr, &curtree.start, curtree.nodep,
 		 lengths, &trweight, &goteof, &haslengths, &spp);
       nums = spp;
