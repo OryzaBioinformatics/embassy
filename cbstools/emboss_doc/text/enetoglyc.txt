@@ -1,5 +1,4 @@
-
-                                 enetoglyc 
+                                  enetoglyc
 
 
 
@@ -24,15 +23,19 @@ Usage
    Here is a sample session with enetoglyc
 
 
-% enetoglyc 
+% enetoglyc
 Reports mucin type GalNAc O-glycosylation sites in mammalian proteins
 Input (aligned) sequence set: LEUK_RAT.fsa
-Output file [leuk_rat.enetoglyc]: 
+Output file [leuk_rat.enetoglyc]:
+
 
    Go to the input files for this example
    Go to the output files for this example
 
 Command line arguments
+
+Reports mucin type GalNAc O-glycosylation sites in mammalian proteins
+Version: EMBOSS:6.2.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqset     (Aligned) sequence set filename and optional
@@ -73,13 +76,15 @@ Command line arguments
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
-   -help               boolean    Report command line options. More
+   -help               boolean    Report command line options and exit. More
                                   information on associated and general
                                   qualifiers can be found with -help -verbose
    -warning            boolean    Report warnings
    -error              boolean    Report errors
    -fatal              boolean    Report fatal errors
    -die                boolean    Report dying program messages
+   -version            boolean    Report version number and exit
+
 
 Input file format
 
@@ -89,8 +94,8 @@ Input file format
 
   File: LEUK_RAT.fsa
 
->LEUK_RAT P13838 LEUKOSIALIN PRECURSOR (LEUCOCYTE SIALOGLYCOPROTEIN) (SIALOPHOR
-IN) (CD43) (W3/13 ANTIGEN) (FRAGMENT). - RATTUS NORVEGICUS (RAT).
+>LEUK_RAT P13838 LEUKOSIALIN PRECURSOR (LEUCOCYTE SIALOGLYCOPROTEIN) (SIALOPHORI
+N) (CD43) (W3/13 ANTIGEN) (FRAGMENT). - RATTUS NORVEGICUS (RAT).
 WAQVVSQENLPNTMTMLPFTPNSESPSTSEALSTYSSIATVPVTEDPKESISPWGQTTAP
 ASSIPLGTPELSSFFFTSAGASGNTPVPELTTSQEVSTEASLVLFPKSSGVASDPPVTIT
 NPATSSAVASTSLETFKGTSAPPVTVTSSTMTSGPFVATTVSSETSGPPVTMATGSLGPS
@@ -106,23 +111,15 @@ Output file format
   File: leuk_rat.enetoglyc
 
 Name:  LEUK_RAT         Length:  378
-WAQVVSQENLPNTMTMLPFTPNSESPSTSEALSTYSSIATVPVTEDPKESISPWGQTTAPASSIPLGTPELSSFFFTSA
-G
-ASGNTPVPELTTSQEVSTEASLVLFPKSSGVASDPPVTITNPATSSAVASTSLETFKGTSAPPVTVTSSTMTSGPFVAT
-T
-VSSETSGPPVTMATGSLGPSKETHGLSATIATSSGESSSVAGGTPVFSTKISTTSTPNPITTVPPRPGSSGMLLVSMLI
-A
-LTVVLVLVALLLLWRQRQKRRTGALTLSRGGKRNGTVDAWAGPARVPDEEATTASGSGGNKSSGAPETDGSGQRPTLTT
-F
+WAQVVSQENLPNTMTMLPFTPNSESPSTSEALSTYSSIATVPVTEDPKESISPWGQTTAPASSIPLGTPELSSFFFTSAG
+ASGNTPVPELTTSQEVSTEASLVLFPKSSGVASDPPVTITNPATSSAVASTSLETFKGTSAPPVTVTSSTMTSGPFVATT
+VSSETSGPPVTMATGSLGPSKETHGLSATIATSSGESSSVAGGTPVFSTKISTTSTPNPITTVPPRPGSSGMLLVSMLIA
+LTVVLVLVALLLLWRQRQKRRTGALTLSRGGKRNGTVDAWAGPARVPDEEATTASGSGGNKSSGAPETDGSGQRPTLTTF
 FSRRKSRQGSVALEELKPGTGPNLKGEEEPLVGSEDEAVETPTSDGPQAKDGAAPQSL
-..............T....T....S.STS...ST.SS..T...T.....S.S....TT.........T....S...T..
-.
-....T.....TT.....T..............S....T.T...TSS...STS..T...TS....T.TSST.TS.....T
-T
-.SS.TS....T..T.S...S..T.....T..TSS...SS....T...ST..STTST....TT.................
-.
-...................................................TT.S.S....SS....T.......T...
-.
+..............T....T....S.STS...ST.SS..T...T.....S.S....TT.........T....S...T...
+....T.....TT.....T..............S....T.T...TSS...STS..T...TS....T.TSST.TS.....TT
+.SS.TS....T..T.S...S..T.....T..TSS...SS....T...ST..STTST....TT..................
+...................................................TT.S.S....SS....T.......T....
 ........................................T.T.............S.
 
 Name                         S/T   Pos  G-score I-score Y/N  Comment
@@ -216,6 +213,7 @@ LEUK_RAT                      T    363   0.598   0.403   T   -
 LEUK_RAT                      S    364   0.492   0.463   .   -
 LEUK_RAT                      S    377   0.579   0.021   S   -
 ----------------------------------------------------------------------------
+
 
 
 Data files

@@ -1,5 +1,4 @@
-
-                                   eprop 
+                                    eprop
 
 
 
@@ -26,15 +25,19 @@ Usage
    Here is a sample session with eprop
 
 
-% eprop 
+% eprop
 Reports propeptide cleavage sites in proteins
 Input (aligned) sequence set: EDA_HUMAN.fsa
-Output file [eda_human.eprop]: 
+Output file [eda_human.eprop]:
+
 
    Go to the input files for this example
    Go to the output files for this example
 
 Command line arguments
+
+Reports propeptide cleavage sites in proteins
+Version: EMBOSS:6.2.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqset     (Aligned) sequence set filename and optional
@@ -77,13 +80,15 @@ Command line arguments
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
-   -help               boolean    Report command line options. More
+   -help               boolean    Report command line options and exit. More
                                   information on associated and general
                                   qualifiers can be found with -help -verbose
    -warning            boolean    Report warnings
    -error              boolean    Report errors
    -fatal              boolean    Report fatal errors
    -die                boolean    Report dying program messages
+   -version            boolean    Report version number and exit
+
 
 Input file format
 
@@ -93,8 +98,8 @@ Input file format
 
   File: EDA_HUMAN.fsa
 
->EDA_HUMAN   Q92838 Ectodysplasin A (Ectodermal dysplasia protein) (EDA protein
-). - Homo sapiens (Human).
+>EDA_HUMAN   Q92838 Ectodysplasin A (Ectodermal dysplasia protein) (EDA protein)
+. - Homo sapiens (Human).
 MGYPEVERRELLPAAAPRERGSQGCGCGGAPARAGEGNSCLLFLGFFGLSLALHLLTLCC
 YLELRSELRRERGAESRLGGSGTPGTSGTLSSLGGLDPDSPITSHLGQPSPKQQPLEPGE
 AALHSDSQDGHQMALLNFFFPDEKPYSEEESRRVRRNKRSKSNEGADGPVKNKKKGKKAG
@@ -114,31 +119,31 @@ Output file format
          ##### ProP v.1.0b ProPeptide Cleavage Site Prediction #####
 
 
-         ##### Furin-type cleavage site prediction (Arginine/Lysine residues) #
-####
+         ##### Furin-type cleavage site prediction (Arginine/Lysine residues) ##
+###
 
 
   391 EDA_HUMAN
-MGYPEVERRELLPAAAPRERGSQGCGCGGAPARAGEGNSCLLFLGFFGLSLALHLLTLCCYLELRSELRRERGAESRLG
-G      80
-SGTPGTSGTLSSLGGLDPDSPITSHLGQPSPKQQPLEPGEAALHSDSQDGHQMALLNFFFPDEKPYSEEESRRVRRNKR
-S     160
-KSNEGADGPVKNKKKGKKAGPPGPNGPPGPPGPPGPQGPPGIPGIPGIPGTTVMGPPGPPGPPGPQGPPGLQGPSGAAD
-K     240
-AGTRENQPAVVHLQGQGSAIQVKNDLSGGVLNDWSRITMNPKVFKLHPRSGELEVLVDGTYFIYSQVEVYYINFTDFAS
-Y     320
+MGYPEVERRELLPAAAPRERGSQGCGCGGAPARAGEGNSCLLFLGFFGLSLALHLLTLCCYLELRSELRRERGAESRLGG
+      80
+SGTPGTSGTLSSLGGLDPDSPITSHLGQPSPKQQPLEPGEAALHSDSQDGHQMALLNFFFPDEKPYSEEESRRVRRNKRS
+     160
+KSNEGADGPVKNKKKGKKAGPPGPNGPPGPPGPPGPQGPPGIPGIPGIPGTTVMGPPGPPGPPGPQGPPGLQGPSGAADK
+     240
+AGTRENQPAVVHLQGQGSAIQVKNDLSGGVLNDWSRITMNPKVFKLHPRSGELEVLVDGTYFIYSQVEVYYINFTDFASY
+     320
 EVVVDEKPFLQCTRSIETGKTNYNTCYTAGVCLLKARQKIAVKMVHADISINMSKHTTFFGAIRLGEAPAS
-      400
-...............................................................................
-.      80
-..............................................................................P
-.     160
-...............................................................................
-.     240
-...............................................................................
-.     320
+     400
+................................................................................
+      80
+..............................................................................P.
+     160
+................................................................................
+     240
+................................................................................
+     320
 .......................................................................
-      400
+     400
 
 Propeptide cleavage sites predicted:    Arg(R)/Lys(K): 1
 
@@ -189,6 +194,7 @@ EDA_HUMAN      363    RQKIAVK|MV  0.078    .
 EDA_HUMAN      375    ISINMSK|HT  0.067    .
 EDA_HUMAN      384    TFFGAIR|LG  0.076    .
 ____________________________^_________________
+
 
 
 
