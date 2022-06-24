@@ -2,7 +2,14 @@
 
 EXTRA_DIST = Makefile.am
 
-bin_PROGRAMS = myseq mytest
+## uncomment these lines and add the names of your binaries here
+## uncomment the _SOURCES lines below to define the source file(s)
+##     for each binary
+## this is all you need to do to compile and install your own applications
+## see the emboss_doc/master directory for adding application documentation
+
+##bin_PROGRAMS = myprog \
+##          myotherprog
 
 if LOCALLINK
 INCLUDES = -I../include -I../../../nucleus -I../../../ajax -I../../../plplot
@@ -24,13 +31,13 @@ endif
 endif
 
 
-myseq_SOURCES = myseq.c
-mytest_SOURCES = mytest.c
+#myprog_SOURCES = myprog.c
+#myotherprog_SOURCES = myotherprog.c
 
 
 
 if LOCALLINK
-LDADD = ../../../nucleus/libnucleus.la ../../../ajax/libajax.la ../../../plplot/libeplplot.la $(XLIB)
+LDADD = ../../../nucleus/libnucleus.la ../../../ajax/libajaxg.la ../../../ajax/libajax.la ../../../plplot/libeplplot.la $(XLIB)
 else
-LDADD = -L${embprefix}/lib -lnucleus -lajax -leplplot $(XLIB)
+LDADD = -L${embprefix}/lib -lnucleus -lajaxg -lajax -leplplot $(XLIB)
 endif
