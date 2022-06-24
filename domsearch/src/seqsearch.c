@@ -42,6 +42,7 @@
 
 
 
+#include <config.h>
 #include "emboss.h"
 
 
@@ -703,7 +704,6 @@ static EmbPHitlist seqsearch_ReadPsiblastOutput(AjPScopalg scopalg,
     ajint   fragend    = 0;     /* End of sequence fragment. */
     ajint   hitn       = 0;     /* The number of the hit we are on. */
     ajint   nhits      = 0;     /* No. of hits in alignment file. */
-    ajint   fseekr     = 0;
 
     float   offset     = 0;
     float   eval       = 0;
@@ -723,7 +723,8 @@ static EmbPHitlist seqsearch_ReadPsiblastOutput(AjPScopalg scopalg,
     while(ajReadlineTrim(psif,&line))
         if(ajStrFindCaseC(line,"score = ")>=0)
             nhits++;
-    fseekr = ajFileSeek(psif,offset,SEEK_SET);
+
+    ajFileSeek(psif,offset,SEEK_SET);
     
     
     /* Allocate memory for Hitlist object. */

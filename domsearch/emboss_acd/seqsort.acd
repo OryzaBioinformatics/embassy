@@ -1,11 +1,13 @@
 application: seqsort [
   documentation: "Remove ambiguous classified sequences from
                   DHF files."
-  groups: "Protein:3D Structure"
+  groups: "Protein:Domains"
   gui: "yes"
   batch: "yes"
   cpu: "medium"
   embassy: "domsearch"
+  relations: "EDAM:0000736 topic Protein domains"
+  relations: "EDAM:0002121 operation Sequence file processing"
 ]
 
 section: input [
@@ -26,7 +28,9 @@ section: input [
     default: "./"
     extension: "dhf"
     knowntype: "domain hits"
-    relations:  "EDAM: EMBASSY domain hits report"                     
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM:0001219 format pure protein"
   ]
 
 endsection: input
@@ -47,7 +51,7 @@ section: required [
            replaced by a hit that is produced from merging the two
            overlapping hits."
     default: "10"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001249 data Sequence length"
   ]
 
   toggle: dofamilies [
@@ -56,7 +60,7 @@ section: required [
     help: "This option specifies to write a domain families file. If
            this option is set a domain families file is written."
     default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   toggle: doambiguities [
@@ -66,7 +70,7 @@ section: required [
            file. If this option is set a domain ambiguities file is
            written."
     default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: required
@@ -89,7 +93,9 @@ section: output [
     default: "./"
     extension: "dhf"
     knowntype: "domain hits"
-    relations:  "EDAM: EMBASSY domain hits report"                     
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM:0001219 format pure protein"
   ]
 
   outfile: hitsfile [
@@ -109,7 +115,9 @@ section: output [
     knowntype: "Domain hits"
     default: "fam.dhf"
     nullok: "Y"
-    relations: "EDAM: Free text file"                                      
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM:0001219 format pure protein"
   ]
 
   outfile: ambigfile [
@@ -129,7 +137,9 @@ section: output [
     knowntype: "domain ambiguities"
     default: "oth.dhf"
     nullok: "Y"
-    relations:  "EDAM: EMBASSY domain hits report"                     
+    relations: "EDAM:0001049 identifier Directory name"
+    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM:0001219 format pure protein"
   ]
 
 endsection: output
