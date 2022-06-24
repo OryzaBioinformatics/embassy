@@ -1,5 +1,5 @@
 application: sigscanlig [
-  documentation: "Searches ligand-signature library & writes
+  documentation: "Searches ligand-signature library and writes
                   hits (LHF file)"
   groups: "Protein:3D Structure"
   gui: "yes"

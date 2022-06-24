@@ -462,7 +462,7 @@ MATGEN3D does not use any data files.
 <tr><td>
 <pre>
 Generate a 3D-1D scoring matrix from CCF files.
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
    -mode               menu       [1] This option specifies the amino acid
@@ -546,6 +546,12 @@ Version: EMBOSS:6.2.0
    Additional (Optional) qualifiers: (none)
    Advanced (Unprompted) qualifiers: (none)
    Associated qualifiers:
+
+   "-ccfddir" associated qualifiers
+   -extension1         string     Default file extension
+
+   "-ccfpdir" associated qualifiers
+   -extension          string     Default file extension
 
    "-scmatrixfile" associated qualifiers
    -odirectory2        string     Output directory
@@ -697,6 +703,32 @@ Version: EMBOSS:6.2.0
 
 <tr bgcolor="#FFFFCC">
 <th align="left" colspan=5>Associated qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-ccfddir" associated directory qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension1<br>-extension_ccfddir</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>ccf</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-ccfpdir" associated directory qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -extension</td>
+<td>string</td>
+<td>Default file extension</td>
+<td>Any string</td>
+<td>ccf</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -1067,7 +1099,7 @@ MATGEN3D generates a matrix of 3D:1D scores which give the probability of findin
 
 <tr>
 <td><a href="sigscanlig.html">sigscanlig</a></td>
-<td>Searches ligand-signature library & writes hits (LHF file)</td>
+<td>Searches ligand-signature library and writes hits (LHF file)</td>
 </tr>
 
 </table>
