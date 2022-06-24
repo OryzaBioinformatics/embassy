@@ -3,7 +3,7 @@
 **
 **  MSE, Multiple Sequence Editor
 **
-**  William Gilbert, Copyright (c) Whitehead Insitute
+**  William Gilbert, Copyright (c) Whitehead Institute
 **
 ******************************************************************************/
 #include "boolean.h"
@@ -33,7 +33,7 @@ WINDOW *Display;
 
 typedef struct MSEinternal MSEinternal;
 struct MSEinternal {
-     char* Code;      /* Code word, if used by the foramt               */
+     char* Code;      /* Code word, if used by the format               */
      char* File;      /* File with pathname or database name            */
   Boolean IsUser;         /* TRUE if this is a user-entry sequence          */
       int Format;         /* Sequence format for user-entry file            */
@@ -134,7 +134,7 @@ enum keydef {
  CSEQ,CCOM,CFORMAT,CTEXT,CREVERSE,CDNA,CRNA,CNAME,CTITLE,CTYPE,CSELECT,CREMOVE,
  CINSERT,CCANCEL,CMOVE,CELIMINATE,CCOPY,COFFSET,CMATCHES,CDIFFERENCES,CNEITHER, 
  CHARDCOPY,CANCHOR,CNOANCHOR,CSORT,CLOCK,CUNLOCK,COPEN,CMSF,CCONSENSUS,CUPPER,
- CLOWER,CDEGAP,CMELD,CALNED,CGELALIGN,CUNIQUE,CCREATE,CSAVE
+ CLOWER,CDEGAP,CMELD,CALNED,CGELALIGN,CUNIQUE,CCREATE,CSAVE,CDOWN,CUP
 };
 
 
@@ -142,6 +142,7 @@ enum keydef {
 #define BACKSPACE '\010'   /* Backspace or Control-H   */
 #define CNTRLL    '\014'   /* Control-L i.e. Form Feed */
 #define CARRET    '\n'   /* Carriage return          */
+#define CNTRLD    '\004'   /* Control-D, delete        */
 #define CNTRLE    '\005'   /* Control-E, go to EOL     */
 #define CNTRLR    '\022'   /* Control-R, repaint       */
 #define CNTRLW    '\027'   /* Control-W, repaint       */
@@ -199,7 +200,7 @@ void GelFind(int Frag, int Tuple, int Shift);
 Boolean NextPool(int *Frag);
 void DoMeld(int Start, int Finish, char *ArgStr);
 void DoWrite(int Start, int Finish, char *FName);
-void DoExit(char *FName);
+void DoExit(char *FName, AjPSeqout seqout);
 int CmdMatch(char *cmdstr, char *string);
 int InsertSymbol(int Line, int Pos, char Base);
 void DeleteSymbol(int Line, int Pos);
@@ -221,13 +222,13 @@ void DoFind(int Start, int Finish, char *Pattern);
 void DoHelp(int Start);
 void DoRedraw(void);
 void CleanUp(void);
-void ShowText(char *OneLine);
+void ShowText(const char *OneLine);
 void DrawScale(int Row, int Col, int Width, int Divs, int Offset);
 void NumberScale(int Row, int Col, int Width, int Divs, int Offset, int Start, int Step);
 SeqSpec *Get_SeqSpec(char *Line, SeqSpec *Spec, char *Prompt, char *DCLSymbol);
 int Get_Integer(char *Prompt, int Val, int Low, int High);
 void MakeScreen(void);
-void ShowError(char *errMsg);
+void ShowError(const char *errMsg);
 void ToInternal(int strand, SeqEntry *SeqIn);
 void FromInternal(int strand, SeqEntry *SeqOut);
 /* End of Include File for MSE */
