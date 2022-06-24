@@ -85,11 +85,11 @@ int main(int argc, char **argv)
        USA which HMMER would not understand. */
     ajStrAssignC(&rnd, ajFileTempName(NULL));
     rndo = ajSeqoutNew();
-    if(!ajSeqFileNewOut(rndo, rnd))
+    if(!ajSeqoutOpenFilename(rndo, rnd))
 	ajFatal("Terminal ajSeqFileNewOut failure. Email EMBOSS helpdesk!\n");
     ajSeqOutSetFormatC(rndo, "fasta");
-    ajSeqsetWrite(rndo, seqfile);
-    ajSeqWriteClose(rndo);
+    ajSeqoutWriteSet(rndo, seqfile);
+    ajSeqoutClose(rndo);
     ajSeqoutDel(&rndo);
 
 
@@ -149,6 +149,7 @@ int main(int argc, char **argv)
     ajSeqsetDel(&seqfile);
     ajFileClose(&mapali);
     ajFileClose(&withali);
+    ajAlignClose(o);
     ajAlignDel(&o);
 
     
@@ -165,8 +166,7 @@ int main(int argc, char **argv)
     ajStrDel(&tmp);
     ajStrDel(&fmt);
     ajStrDel(&rnd);
-
-    ajExit();
+    embExit();
 
     return 0;
 }
