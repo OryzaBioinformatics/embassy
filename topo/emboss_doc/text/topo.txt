@@ -38,7 +38,7 @@ Created topo.ps
 Command line arguments
 
 Draws an image of a transmembrane protein
-Version: EMBOSS:6.3.0
+Version: EMBOSS:6.4.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-sequence]          sequence   Protein sequence filename and optional
@@ -59,7 +59,7 @@ Version: EMBOSS:6.3.0
    -graph              graph      [$EMBOSS_GRAPHICS value, or x11] Graph type
                                   (ps, hpgl, hp7470, hp7580, meta, cps, x11,
                                   tek, tekt, none, data, xterm, png, gif, pdf,
-                                  svg, pdf, svg)
+                                  svg)
 
    Additional (Optional) qualifiers:
    -cyssymbol          menu       [CF] Code representing shape and colour for
@@ -439,40 +439,54 @@ Known bugs
 
 See also
 
-   Program name     Description
-   garnier          Predicts protein secondary structure using GOR method
-   helixturnhelix   Identify nucleic acid-binding motifs in protein
-                    sequences
-   hmoment          Calculate and plot hydrophobic moment for protein sequence(s)
-   pepcoil          Predicts coiled coil regions in protein sequences
-   pepnet           Draw a helical net for a protein sequence
-   pepwheel         Draw a helical wheel diagram for a protein sequence
-   tmap             Predict and plot transmembrane segments in protein sequences
+                   Program name                            Description
+                   abiview      Display the trace in an ABI sequencer file
+                   cirdna       Draws circular maps of DNA constructs
+                   echlorop     Reports presence of chloroplast transit peptides
+                   elipop       Prediction of lipoproteins
+                   esignalp     Reports protein signal cleavage sites
+                   etmhmm       Reports transmembrane helices
+                   iep          Calculate the isoelectric point of proteins
+                   lindna       Draws linear maps of DNA constructs
+                   pepinfo      Plot amino acid properties of a protein sequence in parallel
+                   pepnet       Draw a helical net for a protein sequence
+                   pepwheel     Draw a helical wheel diagram for a protein sequence
+                   plotorf      Plot potential open reading frames in a nucleotide sequence
+                   prettyplot   Draw a sequence alignment with pretty formatting
+                   prettyseq    Write a nucleotide sequence and its translation to file
+                   remap        Display restriction enzyme binding sites in a nucleotide sequence
+                   showfeat     Display features of a sequence in pretty format
+                   showpep      Displays protein sequences with features in pretty format
+                   sigcleave    Reports on signal cleavage sites in a protein sequence
+                   siggenlig    Generates ligand-binding signatures from a CON file
+                   sigscan      Generates hits (DHF file) from a signature search
+                   sixpack      Display a DNA sequence with 6-frame translation and ORFs
+                   tmap         Predict and plot transmembrane segments in protein sequences
 
 Author(s)
 
-   This program is an EMBOSS conversion of a Fortran program written by
-   Susan Jean Johns, VADMS Center, Biochemistry/Biophysics Department at
-   WSU.
+                    This program is an EMBOSS conversion of a Fortran program written by
+   Susan            Jean Johns, VADMS Center, Biochemistry/Biophysics Department at
+                    WSU.
 
-   This application was modified for inclusion in EMBOSS by Ian Longden
-   formerly at:
-   Informatics Division, The Sanger Centre, Wellcome Trust Genome Campus,
-   Hinxton, Cambridge, CB10 1SA, UK.
+                    This application was modified for inclusion in EMBOSS by Ian Longden
+                    formerly at:
+   Informatics      Division, The Sanger Centre, Wellcome Trust Genome Campus,
+   Hinxton,         Cambridge, CB10 1SA, UK.
 
-   Changes to the functionality in version 2 have been ported to the
-   EMBOSS version.
+                    Changes to the functionality in version 2 have been ported to the
+                    EMBOSS version.
 
-   Please report all bugs to the EMBOSS bug team
-   (emboss-bug (c) emboss.open-bio.org) not to the original author.
+                    Please report all bugs to the EMBOSS bug team
+                    (emboss-bug (c) emboss.open-bio.org) not to the original author.
 
 History
 
 Target users
 
-   This program is intended to be used by everyone and everything, from
-   naive users to embedded scripts.
+                    This program is intended to be used by everyone and everything, from
+                    naive users to embedded scripts.
 
 Comments
 
-   None
+                    None

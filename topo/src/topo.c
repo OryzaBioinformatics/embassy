@@ -10,6 +10,7 @@ First membrane from the outside [Y]: n
 Signature Sections: 74 82 sy 189 189 hm 239 239 sa 157 157 sa 262 262 sa
 */
 
+#include <config.h>
 #include "emboss.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -277,7 +278,6 @@ void topoPlotText(char *text)
 
 void topoNewColour(int col)
 {
-    int old;
     if(col == 1)       /*black */
 	col =0;
     else if(col == 2)  /* green */
@@ -293,7 +293,7 @@ void topoNewColour(int col)
     else if (col == 7)   /* yellow */
 	col = 2;
 
-    old = ajGraphicsSetFgcolour(col);
+    ajGraphicsSetFgcolour(col);
 }
 
 int main(int argc, char * argv[])
@@ -307,7 +307,7 @@ int main(int argc, char * argv[])
     topoSequence sq;
  
     char  *strand = NULL;	/*  */
-    int   i,tmcount,tmcount2,nsecs,nsece,nchain,length;
+    int   i,tmcount,tmcount2,nchain,length;
     int   j,iex,iex2;
     int   gap,page,pages,stsp;
     ajuint   *istart = NULL;
@@ -379,8 +379,6 @@ int main(int argc, char * argv[])
     /*c section to ask about the number of transmembrane sections wanted */ 
     /*c and how long they are */ 
     tmcount=0 ;
-    nsecs=0 ;
-    nsece=0 ;
 
     regions = ajAcdGetRange ("sections");
     tmcount = ajRangeGetSize(regions);
@@ -2118,13 +2116,12 @@ void  starttop7(AjPGraph graph, const int tmcount,const int istart,float *off,
 {
     char  stran ;
     int   j,sym ;
-    float x = 0.0,y,wide,shift ;
+    float x = 0.0,y,shift ;
 
     /*c this assumes 7 transmembrane sections */ 
     if(istart <= 9)shift=0.0 ;
     if(istart > 9)shift=1.4 ;
 
-    wide=16.8 ;
     if(tmcount == 1)
 {
 	*off=75.0 ;
@@ -4110,7 +4107,7 @@ void  endtop7(AjPGraph graph, const int tmcount,
  
 	char  stran ;
 	int    j,sym,remain;
-	float       x = 0.0,y,wide,shift,offref ;
+	float       x = 0.0,y,shift,offref ;
  
 /*c this assumes 7 transmembrane sections */ 
 	 
@@ -4118,7 +4115,6 @@ void  endtop7(AjPGraph graph, const int tmcount,
 	if(remain <= 9)shift=0.0 ;
 	if(remain > 9)shift=1.4 ;
  
-	wide=16.8 ;
 	if(tmcount == 1)
 {
 	   *off=75.0 ;
@@ -4445,13 +4441,12 @@ void  startbot7(AjPGraph graph, const int tmcount,const int istart,float *off,
 	char  stran ;
 	int    j,sym ;
 	float       x = 0.0,y ;
-	float       wide,shift ;
+	float       shift ;
  
 /*c this assumes 7 transmembrane sections */ 
 	if(istart <= 9)shift=0.0 ;
 	if(istart > 9)shift=1.4 ;
  
-	wide=16.8 ;
 	if(tmcount == 1)
 {
 	   *off=75.0 ;
@@ -7435,7 +7430,7 @@ void  conup(float *hold,const int i,const ajuint is,ajuint *ie,
     char   stran ;
     int     j,length,hole,hol2,hold3=0,ibridge,ibrid2 ;
     int     ihole,sym ;
-    float        x = 0.0,y,x2 ;
+    float        x = 0.0,y;
     float        spacer = 0.0,rhol2,diff,rhole ;
   
     /*c check to see the size of the connecting part */ 
@@ -7818,7 +7813,6 @@ void  conup(float *hold,const int i,const ajuint is,ajuint *ie,
     }
     else if (39 <= length && length <= 74)
     {
-	x2=.45 ;
 	hole=length-16 ;
 	rhole=(float)hole/6.0 ;
 	ihole=hole/6 ;
@@ -8052,7 +8046,7 @@ void  condown(float *hold1,const int i,const ajuint is,ajuint *ie,
 	char   stran ;
 	int     j,length,hole,hol2,hold3=0,ibridge,ibrid2 ;
 	int     ihole,sym ;
-	float        x = 0.0,y,x2 ;
+	float        x = 0.0,y;
         float        spacer = 0.0,rhol2,diff,rhole ;
  
 /*c check to see the size of the connecting part */ 
@@ -8441,7 +8435,6 @@ void  condown(float *hold1,const int i,const ajuint is,ajuint *ie,
 	}
 	else if (39 <= length && length <= 74)
 {
-	   x2=.45 ;
            hole=length-16 ;
 	   rhole=(float)hole/6.0 ;
 	   ihole=hole/6 ;
@@ -8672,7 +8665,7 @@ void  condownsmall(const int is,int *ie,char *strand,int *syms)
     int     j,length,hole ;
     int     ihole,sym ;
     float        x,y ;
-    float        spacer,diff,rhole ;
+    float        diff,rhole ;
  
     /*c draw the membrane */ 
     topoMoveTo(10.0,20.0) ;
@@ -8723,8 +8716,6 @@ void  condownsmall(const int is,int *ie,char *strand,int *syms)
     x=40.0-8.4	    ;
     /*!	   if(rhole == ihole)then */ 
     /*c standard 10 extra loop configuration */ 
-    spacer=0.0 ;
-    /*!	      if(nchain == 22)spacer=.45 */ 
     x=40.0-8.4 ;
     for(j=1;j<=ihole ;j++)
     {
@@ -8916,7 +8907,7 @@ void  conupbig2(const int is,int *ie,char *strand,int *syms)
     int     j,length,hole ;
     int     ihole,sym ;
     float   hold,x,y ;
-    float   spacer,diff,rhole ;
+    float   diff,rhole ;
 
 /*c comment everything in this image is rotated 90 degrees from usual */ 
 /*c and the image starts at the right side of the page and goes to the left */ 
@@ -8969,7 +8960,6 @@ void  conupbig2(const int is,int *ie,char *strand,int *syms)
     }  /*end for*/
 /*c start the 14 loops for the data */ 
 /*c down for loop 1 */ 
-    spacer=0.0 ;
 /*!	      if(nchain == 22)spacer=.45 */ 
     x=20.4 ;
     for(j=1;j<=ihole ;j++)
@@ -9428,7 +9418,7 @@ void  condownbig2(const int is,int *ie,char *strand,int *syms)
     int     j,length,hole ;
     int     ihole,sym ;
     float   hold,x,y ;
-    float   spacer,diff,rhole ;
+    float   diff,rhole ;
 
 /*c comment everything in this image is rotated 90 degrees from usual */ 
 /*c and the image starts at the right side of the page and goes to the left */ 
@@ -9482,7 +9472,6 @@ void  condownbig2(const int is,int *ie,char *strand,int *syms)
     }  /*end for*/
 /*c start the 14 loops for the data */ 
 /*c down for loop 1 */ 
-    spacer=0.0 ;
     x=20.4 ;
     for(j=1;j<=ihole ;j++)
     {
@@ -9937,7 +9926,7 @@ void  condownbig3(const int is,int *ie,char *strand,int *syms)
     int     j,length,hole ;
     int     ihole,sym ;
     float   hold,x,y ;
-    float   spacer,diff,rhole ;
+    float   diff,rhole ;
  
 /*c comment everything in this image is rotated 90 degrees from usual */ 
 /*c and the image starts at the right side of the page and goes to the left */ 
@@ -9984,7 +9973,6 @@ void  condownbig3(const int is,int *ie,char *strand,int *syms)
     }  /*end for*/
 /*c start the 14 loops for the data */ 
 /*c down for loop 1 */ 
-    spacer=0.0 ;
     x=20.4 ;
     for(j=1;j<=ihole ;j++)
     {
