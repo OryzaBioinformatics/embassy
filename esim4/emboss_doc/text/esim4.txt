@@ -44,7 +44,7 @@ Sim4 program output file [h45989.esim4]:
 Command line arguments
 
 Align an mRNA to a genomic DNA sequence
-Version: EMBOSS:6.2.0
+Version: EMBOSS:6.3.0
 
    Standard (Mandatory) qualifiers:
   [-asequence]         sequence   Nucleotide sequence filename and optional
@@ -354,8 +354,8 @@ RL   (http://www.geneservice.co.uk/) and BACPAC Resources
 RL   (http://bacpac.chori.org/)
 XX
 DR   EMBL-CON; GL000124.
-DR   EMBL-JOIN; Z69720.
 DR   GDB; 11502921.
+DR   RFAM; RF00017; SRP_euk_arch.
 XX
 CC   -------------- Genome Center
 CC   Center: Wellcome Trust Sanger Institute
@@ -489,13 +489,8 @@ Author(s)
                     This program is an EMBOSS conversion of a program written by Liliana
                     Florea as part of the SIM4 package.
 
-                    Although we take every care to ensure that the results of the EMBOSS
-                    version are identical to those from the original package, we recommend
-                    that you check your inputs give the same results in both versions
-                    before publication.
-
-                    Please report all bugs in the EMBOSS version to the EMBOSS bug team,
-                    not to the original author.
+                    Please report all bugs to the EMBOSS bug team
+                    (emboss-bug (c) emboss.open-bio.org) not to the original author.
 
 History
 
