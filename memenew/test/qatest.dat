@@ -1,0 +1,275 @@
+#######################################
+# MEMENEW
+# 1. Examples taken from meme_4.0.0/ README
+# 2. Data lives in: /emboss/emboss/test/data/memenew
+# 3. Do not use FZ lines as ememe & emast use temp 
+#    files with random names: these names are printed
+#    to the output files. 
+#######################################
+
+ID ememe-keep
+AB memenew
+RQ meme
+AA ememe
+DL keep
+CL ../../data/memenew/crp0.s -mod oops
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FP /^Multiple EM for motif elicitation\n/
+FI stdout
+FC = 0
+FI help.gif
+FZ = 70
+FP /GIF/
+FI logo1.eps
+FZ = 14498
+FP /^%%Pages: 0\n/
+FI logo1.png
+FZ > 12500
+FP /PNG/
+FI logo_rc1.eps
+FZ = 14498
+FP /^%%Pages: 0\n/
+FI logo_rc1.png
+FZ > 12500
+FP /PNG/
+FI meme.html
+FC = 2866
+FP /^ce1cg 1\.74e-03 1 105 [+]1 63 1\.91e-05 \n/
+FP /^ce1cg  \( 63\) TTTGATCGTTTTCAC 1\n/
+FI meme.fasta
+FC = 54
+FP 18 /^>/
+FI meme.txt
+FC = 272
+FP /^ce1cg +1\.0000    105  ara +1\.0000    105  \n/
+FI meme.xml
+FC = 861
+FP /^<contributing_site sequence_id="sequence_0" position="63" strand="plus" pvalue="1.91e-05" >\n/
+FP /^<scanned_sites sequence_id="sequence_0" pvalue="1.74e-03" num_sites="1"><scanned_site motif_id="motif_1" strand="plus" position="63" pvalue="1.91e-05"/>\n/
+//
+
+ID ememetext-ex
+AB memenew
+RQ meme
+AA ememetext
+CL ../../data/memenew/crp0.s  -mod oops -revcomp ex.text
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+FI crp0.fasta
+FC = 54
+FP 18 /^>/
+FI ex.text
+FC = 272
+FP /^ce1cg                    1\.0000    105  ara                      1\.0000    105  \n/
+FP /^bglr1                    1\.0000    105  crp                      1\.0000    105  \n/
+//
+
+ID ememetext-ex2
+AB memenew
+RQ meme
+AA ememetext
+CL ../../data/memenew/crp0.s -mod oops -revcomp -w 20 ex2.text
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+FI crp0.fasta
+FC = 54
+FP 18 /^>/
+FI ex2.text
+FC = 282
+FP /^ce1cg                    1\.0000    105  ara                      1\.0000    105  \n/
+FP /^bglr1                    1\.0000    105  crp                      1\.0000    105  \n/
+//
+
+ID ememetext-ex3
+AB memenew
+RQ meme
+AA ememetext
+TI 300
+CL ../../data/memenew/INO_up800.s -mod anr -revcomp
+CL -bfile ../../data/memenew/yeast.nc.6.freq ex3.text
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+FI ino_up800.fasta
+FC = 105
+FP 7 /^>/
+FI ex3.text
+FC = 237
+FP /^CHO1                     1\.0000    800  CHO2                     1\.0000    800  \n/
+FP /^FAS1                     1\.0000    800  FAS2                     1\.0000    800  \n/
+//
+
+ID ememetext-ex4
+AB memenew
+RQ meme
+AA ememetext
+CL ../../data/memenew/lipocalin.s -mod oops -maxw 20 -nmotifs 2 ex4.text
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+FI lipocalin.fasta
+FC = 22
+FP 5 /^>/
+FI ex4.text
+FC = 392
+FP /^ICYA_MANSE               1\.0000    189  LACB_BOVIN               1\.0000    178  \n/
+FP /^BBP_PIEBR                1\.0000    173  RETB_BOVIN               1\.0000    183  \n/
+//
+
+ID ememetext-ex5
+AB memenew
+RQ meme
+AA ememetext
+CL ../../data/memenew/farntrans5.s -mod anr -maxw 40 -maxsites 50
+CL ex5.text
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+FI farntrans5.fasta
+FC = 40
+FP 5 /^>/
+FI ex5.text
+FC = 272
+FP /^RAM1_YEAST               1\.0000    431  PFTB_RAT                 1\.0000    437  \n/
+FP /^BET2_YEAST               1\.0000    325  RATRABGERB               1\.0000    331  \n/
+//
+
+ID ememetext-ex6
+AB memenew
+RQ meme
+AA ememetext
+CL ../../data/memenew/farntrans5.s -mod anr -w 10 -maxsites 30 -nmotifs 3
+CL ex6.text
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+FI farntrans5.fasta
+FC = 40
+FP 5 /^>/
+FI ex6.text
+FC = 557
+FP /^RAM1_YEAST               1\.0000    431  PFTB_RAT                 1\.0000    437  \n/
+FP /^BET2_YEAST               1\.0000    325  RATRABGERB               1\.0000    331  \n/
+//
+
+ID ememetext-ex7
+AB memenew
+RQ meme
+AA ememetext
+CL ../../data/memenew/farntrans5.s -mod anr -maxw 12 -nsites 24 -nmotifs 3
+CL ex7.text
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+FI farntrans5.fasta
+FC = 40
+FP 5 /^>/
+FI ex7.text
+FC = 615
+FP /^RAM1_YEAST               1\.0000    431  PFTB_RAT                 1\.0000    437  \n/
+FP /^BET2_YEAST               1\.0000    325  RATRABGERB               1\.0000    331  \n/
+//
+
+ID ememetext-ex8
+AB memenew
+RQ meme
+AA ememetext
+TI 300
+CL ../../data/memenew/adh.s -mod zoops -nmotifs 20 -evt 0.01
+CL ex8.text
+IN
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 0
+FI adh.fasta
+FC = 219
+FP 33 /^>/
+FI ex8.text
+FC = 1817
+FP /^2BHD_STREX               1\.0000    255  3BHD_COMTE               1\.0000    253  \n/
+FP /^ADH_DROME                1\.0000    255  AP27_MOUSE               1\.0000    244  \n/
+//
+
+ID emast-ex
+AB memenew
+RQ meme
+AA emast
+## PP cp ../ememe-keep/ex1.html .
+## Cannot use output of ememe-keep test as input,
+## because temporary sequence file named in /ememe-keep/ex1.html
+## after "DATAFILE" will have been deleted.
+## Instead use data/memenew/ex1.html which names the sequence file "crp0.s"
+## which must be copied to the test directory. 
+PP cp ../../data/memenew/crp0.s .
+CL ../../data/memenew/ex1.html crp0.s
+IN
+IN
+IN
+FI stderr
+FC = 3
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FP /^Motif detection\n/
+FI stdout
+FC = 0
+FI crp0.s
+FC = 54
+FP /^>ce1cg\n/
+DI mast_out
+DF mast.txt
+DF mast.html
+DF mast.xml
+##FI mast.html
+##FC = 926
+##FP /^  LENGTH = 105  COMBINED P-VALUE = 4\.78e-04  E-VALUE =   0\.0086<BR>\n/
+##FP /^1    CTGGCTTAACTATGCGGCATCAGAGCAGATTGTACTGAGAGTGCACCATATGCGGTGTGAAATACCGCACAGATG\n/
+//
+
+

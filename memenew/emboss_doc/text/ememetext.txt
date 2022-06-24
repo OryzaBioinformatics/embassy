@@ -11,7 +11,7 @@ Wiki
 
 Function
 
-   Multiple EM for Motif Elicitation. Text file only
+   Multiple EM for motif elicitation, text file only
 
 Description
 
@@ -428,7 +428,7 @@ Usage
 
 
 % ememetext crp0.s  -mod oops -revcomp ex.text
-Multiple EM for Motif Elicitation. Text file only.
+Multiple EM for motif elicitation, text file only.
 output sequence set [crp0.fasta]:
 
 
@@ -439,7 +439,7 @@ output sequence set [crp0.fasta]:
 
 
 % ememetext crp0.s -mod oops -revcomp -w 20 ex2.text
-Multiple EM for Motif Elicitation. Text file only.
+Multiple EM for motif elicitation, text file only.
 output sequence set [crp0.fasta]:
 w set, setting max and min to 20#######
 
@@ -451,7 +451,7 @@ w set, setting max and min to 20#######
 
 % ememetext INO_up800.s -mod anr -revcomp -bfile memenew/yeast.nc.6.freq ex3.tex
 t
-Multiple EM for Motif Elicitation. Text file only.
+Multiple EM for motif elicitation, text file only.
 output sequence set [ino_up800.fasta]:
 
 
@@ -462,7 +462,7 @@ output sequence set [ino_up800.fasta]:
 
 
 % ememetext lipocalin.s -mod oops -maxw 20 -nmotifs 2 ex4.text
-Multiple EM for Motif Elicitation. Text file only.
+Multiple EM for motif elicitation, text file only.
 output sequence set [lipocalin.fasta]:
 
 
@@ -473,7 +473,7 @@ output sequence set [lipocalin.fasta]:
 
 
 % ememetext farntrans5.s -mod anr -maxw 40 -maxsites 50 ex5.text
-Multiple EM for Motif Elicitation. Text file only.
+Multiple EM for motif elicitation, text file only.
 output sequence set [farntrans5.fasta]:
 
 
@@ -484,7 +484,7 @@ output sequence set [farntrans5.fasta]:
 
 
 % ememetext farntrans5.s -mod anr -w 10 -maxsites 30 -nmotifs 3 ex6.text
-Multiple EM for Motif Elicitation. Text file only.
+Multiple EM for motif elicitation, text file only.
 output sequence set [farntrans5.fasta]:
 w set, setting max and min to 10#######
 
@@ -495,7 +495,7 @@ w set, setting max and min to 10#######
 
 
 % ememetext farntrans5.s -mod anr -maxw 12 -nsites 24 -nmotifs 3 ex7.text
-Multiple EM for Motif Elicitation. Text file only.
+Multiple EM for motif elicitation, text file only.
 output sequence set [farntrans5.fasta]:
 
 
@@ -505,7 +505,7 @@ output sequence set [farntrans5.fasta]:
 
 
 % ememetext adh.s -mod zoops -nmotifs 20 -evt 0.01 ex8.text
-Multiple EM for Motif Elicitation. Text file only.
+Multiple EM for motif elicitation, text file only.
 output sequence set [adh.fasta]:
 
 
@@ -627,8 +627,8 @@ Command line arguments
    in order to be prompted for a value for "additional" options but
    "advanced" options will never be prompted for.
 
-Multiple EM for Motif Elicitation. Text file only.
-Version: EMBOSS:6.4.0.0
+Multiple EM for motif elicitation, text file only.
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-dataset]           seqset     User must provide the full filename of a set
@@ -971,7 +971,10 @@ Version: EMBOSS:6.4.0.0
    -sprotein1          boolean    Sequence is protein
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
+   -scircular1         boolean    Sequence is circular
    -sformat1           string     Input sequence format
+   -iquery1            string     Input query fields or ID list
+   -ioffset1           integer    Input start position offset
    -sdbname1           string     Database name
    -sid1               string     Entryname
    -ufo1               string     UFO features
@@ -1626,7 +1629,7 @@ GAAAGTATTGAAAGTTAATTTGTGAGTGGTCGCACATATCCTGTT
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
+MEME version 4.7.0 (Release date: Wed Sep 28 17:30:10 EST 2011)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -1736,7 +1739,7 @@ CPU: emboss4.ebi.ac.uk
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
+MEME version 4.7.0 (Release date: Wed Sep 28 17:30:10 EST 2011)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -1954,7 +1957,7 @@ AGAATAGCGCAAGTCAAGCG
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
+MEME version 4.7.0 (Release date: Wed Sep 28 17:30:10 EST 2011)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -2094,7 +2097,7 @@ AHLINEKDGETFQLMGLYGREPDLSSDIKERFAKLCEEHGILRENIIDLSNANRCLQARE
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
+MEME version 4.7.0 (Release date: Wed Sep 28 17:30:10 EST 2011)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -2268,7 +2271,7 @@ CIPQEIFNDFSKRCCF
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
+MEME version 4.7.0 (Release date: Wed Sep 28 17:30:10 EST 2011)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -2401,7 +2404,7 @@ CPU: emboss4.ebi.ac.uk
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
+MEME version 4.7.0 (Release date: Wed Sep 28 17:30:10 EST 2011)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -2542,7 +2545,7 @@ CPU: emboss4.ebi.ac.uk
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
+MEME version 4.7.0 (Release date: Wed Sep 28 17:30:10 EST 2011)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -2797,7 +2800,7 @@ MAKVLPNPLFDAAARRLR
 ********************************************************************************
 MEME - Motif discovery tool
 ********************************************************************************
-MEME version 4.3.0 (Release date: Sat Sep 26 01:51:56 PDT 2009)
+MEME version 4.7.0 (Release date: Wed Sep 28 17:30:10 EST 2011)
 
 For further information on how to interpret these results or to get
 a copy of the MEME software please access http://meme.nbcr.net.
@@ -3077,22 +3080,22 @@ Known bugs
 See also
 
    Program name     Description
-   antigenic        Finds antigenic sites in proteins
+   antigenic        Find antigenic sites in proteins
    eiprscan         Motif detection
-   elipop           Prediction of lipoproteins
+   elipop           Predict lipoproteins
    emast            Motif detection
-   ememe            Multiple EM for Motif Elicitation
-   epestfind        Finds PEST motifs as potential proteolytic cleavage sites
+   ememe            Multiple EM for motif elicitation
+   epestfind        Find PEST motifs as potential proteolytic cleavage sites
    fuzzpro          Search for patterns in protein sequences
    fuzztran         Search for patterns in protein sequences (translated)
    omeme            Motif detection
-   patmatdb         Searches protein sequences with a sequence motif
+   patmatdb         Search protein sequences with a sequence motif
    patmatmotifs     Scan a protein sequence with motifs from the PROSITE
                     database
    preg             Regular expression search of protein sequence(s)
-   pscan            Scans protein sequence(s) with fingerprints from the PRINTS
+   pscan            Scan protein sequence(s) with fingerprints from the PRINTS
                     database
-   sigcleave        Reports on signal cleavage sites in a protein sequence
+   sigcleave        Report on signal cleavage sites in a protein sequence
 
 Author(s)
 
@@ -3115,3 +3118,7 @@ Target users
 
    This program is intended to be used by everyone and everything, from
    naive users to embedded scripts.
+
+Comments
+
+None

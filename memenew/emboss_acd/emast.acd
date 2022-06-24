@@ -2,9 +2,10 @@ application: emast [
   documentation: "Motif detection"
   groups: "Protein:Motifs"
   embassy: "memenew"
+  wrapper: "Y"
   external: "mast MEME package http://meme.sdsc.edu/meme/"
-  relations: "EDAM:0000158 topic Sequence motifs"
-  relations: "EDAM:0000238 operation Sequence motif discovery"
+  relations: "EDAM_topic:0158 Sequence motifs"
+  relations: "EDAM_operation:0238 Sequence motif discovery"
 ]
 
 section: input [
@@ -18,30 +19,24 @@ section: input [
     help: "If -d <database> is not given, MAST looks for database
            specified inside of <mfile>."
     knowntype: "meme output"
-    relations:  "EDAM:0001298 data Sequence features (motifs)"
+    relations:  "EDAM_data:1298 Sequence features (motifs)"
   ]
 
-  infile: dfile [
-    additional: "Y"
-    default: ""
-    nullok: "Y"
-    information: "MEME database file (optional)"
+  infile: sfile [
+    parameter: "Y"
+    information: "FASTA-formatted sequence file"
     help: "If -d <database> is not given, MAST looks for database
            specified inside of <mfile>."
-    knowntype: "meme database"
-    relations:  "EDAM:0001056 identifier Database name"
+    knowntype: "dna fasta set"
+    relations:  "EDAM_data:1298 Sequence features (motifs)"
   ]
 
-  infile: afile [
+  boolean: dblist [
     additional: "Y"
-    default: ""
-    nullok: "Y"
-    information: "MEME motif alphabet file (optional)"
-    help: "Input file <mfile> is assumed to contain motifs in the
-           format output by bin/make_logodds and <a> is their alphabet; -d
-           <database> or -stdin must be specified when this option is used."
-    knowntype: "meme alphabet"
-    relations:  "EDAM:0000950 data Biological model"
+    default: "N"
+    information: "Sequence file is a list of fasta-formatted databases"
+    help: "If provided, -sfile is a list of files"
+    relations:  "EDAM_data:2527 Parameter"
   ]
 
   infile: bfile [
@@ -56,7 +51,7 @@ section: input [
            directory tests: tests/nt.freq and tests/na.freq in the MEME
            distribution.)"
     knowntype: "meme background frequencies"
-    relations:  "EDAM:0000950 data Biological model"
+    relations:  "EDAM_data:0950 Biological model"
   ]
 
 endsection: input
@@ -70,15 +65,15 @@ section: required [
     standard: "Y"
     default: "10"
     information: "Print results for sequences with E-value"
-    relations: "EDAM:0001667 data E-value"
-    relations: "EDAM:0002146 data Threshold"
+    relations: "EDAM_data:1667 E-value"
+    relations: "EDAM_data:2146 Threshold"
   ]
 
   float: mt [
     standard: "Y"
     default: "0.0001"
     information: "Show motif matches with p-value < mt"
-    relations: "EDAM:0001669 data P-value"
+    relations: "EDAM_data:1669 P-value"
   ]
 
 endsection: required
@@ -88,36 +83,36 @@ section: additional [
   type: "page"
 ]
 
-  integer: smax [
-    additional: "Y"
-    default: "-1"
-    information: "Print results for no more than <smax>
-                  sequences"
-    relations: "EDAM:0001694 data Number of output entities"
-  ]
-
   boolean: stdin [
     additional: "Y"
     default: "N"
     information: "Read database from standard input"
     help: "The default is to read the database specified inside
            <mfile>."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: text [
     additional: "Y"
-    default: "N"
+    default: "Y"
     information: "Output in text (ASCII) format"
-    help: "Default is hypertext (HTML) format"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    help: "Default is text, HTML and XML"
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  boolean: html [
+    additional: "Y"
+    default: "Y"
+    information: "Output in hypertext (HTML) format"
+    help: "Default is text, HTML and XML"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: dna [
     additional: "Y"
     default: "N"
     information: "Translate DNA sequences to protein"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: comp [
@@ -132,49 +127,141 @@ section: additional [
            database. This option can increase search time substantially due
            to the need to compute a different score distribution for each
            high-scoring sequence."
-    relations: "EDAM:0002527 data Parameter or primitive"
-  ]
-
-  integer: rank [
-    additional: "Y"
-    default: "-1"
-    information: "Print results starting with <rank> best"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: best [
     additional: "Y"
     default: "N"
     information: "Include only the best motif in diagrams"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: remcorr [
     additional: "Y"
     default: "N"
     information: "Remove highly correlated motifs from query"
-    relations: "EDAM:0002527 data Parameter or primitive"
-  ]
-
-  boolean: brief [
-    additional: "Y"
-    default: "N"
-    information: "Brief output: do not print documentation."
-    relations: "EDAM:0002527 data Parameter or primitive"
-  ]
-
-  boolean: b [
-    additional: "Y"
-    default: "N"
-    information: "Print only sections I and II"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: nostatus [
     additional: "Y"
     default: "N"
     information: "Do not print progress report"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+endsection: additional
+
+section: advanced [
+  information: "Advanced section"
+  type: "page"
+]
+
+  integer: c [
+    default: "-1"
+    information: "Only use the first <c> motifs"
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  boolean: sep [
+    default: "N"
+    information: "Score reverse complement DNA strand as a
+                  separate sequence"
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  boolean: norc [
+    default: "N"
+    information: "Do not score reverse complement DNA strand"
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  boolean: weak [
+    default: "N"
+    information: "Show weak matches (mt<p-value<mt*10) in angle
+                  brackets"
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  boolean: seqp [
+    default: "N"
+    information: "Use SEQUENCE p-values for motif thresholds"
+    help: "The default is to use POSITION p-values."
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  string: mf [
+    default: ""
+    information: "Print <mf> as motif file name."
+    knowntype: "output identifier"
+    relations:  "EDAM_identifier:1050 File name"
+  ]
+
+  string: df [
+    default: ""
+    information: "Print <df> as database name."
+    knowntype: "string"
+    relations:  "EDAM_identifier:1056 Database name"
+  ]
+
+  string: dl [
+    default: ""
+    information: "Print <dl> as link to search sequence names."
+    knowntype: "string"
+    relations:  "EDAM_data:2527 Parameter"
+  ]
+
+  integer: minseqs [
+    default: "-1"
+    information: "Lower bound on number of sequences in db"
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  float: mev [
+    default: "-1"
+    information: "Use only motifs with E-values less than
+                  <mev>"
+    relations: "EDAM_data:1667 E-value"
+    relations: "EDAM_data:2146 Threshold"
+  ]
+
+  integer: m [
+    default: "-1"
+    information: "Use only motif(s) number <m>"
+    help: "Overrides value set by using -mev."
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+  string: diag [
+    default: ""
+    information: "Nominal order and spacing of motifs"
+    help: "See on-line documentation for a valid example."
+    knowntype: "meme motif order"
+    relations: "EDAM_data:2527 Parameter"
+  ]
+
+endsection: advanced
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+  outdir: outdirname [
+    parameter: "Y"
+    default: "mast_out"
+    create: "Y"
+    information: "MAST program output directory"
+    knowntype: "mast output"
+    relations:  "EDAM_data:0863 Sequence alignment"
+  ]
+
+  boolean: overwrite [
+    default: "Y"
+    information: "Overwrite files in the output directory"
+    help: "The default is to overwrite existing files"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   boolean: hitlist [
@@ -189,104 +276,7 @@ section: additional [
            DNA, blank for protein), <motif> is the motif number, <start> is
            the starting position of the hit, <end> is the ending position of
            the hit, and <p-value> is the position p-value of the hit."
-    relations: "EDAM:0002527 data Parameter or primitive"
-  ]
-
-endsection: additional
-
-section: advanced [
-  information: "Advanced section"
-  type: "page"
-]
-
-  integer: c [
-    default: "-1"
-    information: "Only use the first <c> motifs"
-    relations: "EDAM:0002527 data Parameter or primitive"
-  ]
-
-  boolean: sep [
-    default: "N"
-    information: "Score reverse complement DNA strand as a
-                  separate sequence"
-    relations: "EDAM:0002527 data Parameter or primitive"
-  ]
-
-  boolean: norc [
-    default: "N"
-    information: "Do not score reverse complement DNA strand"
-    relations: "EDAM:0002527 data Parameter or primitive"
-  ]
-
-  boolean: w [
-    default: "N"
-    information: "Show weak matches (mt<p-value<mt*10) in angle
-                  brackets"
-    relations: "EDAM:0002527 data Parameter or primitive"
-  ]
-
-  boolean: seqp [
-    default: "N"
-    information: "Use SEQUENCE p-values for motif thresholds"
-    help: "The default is to use POSITION p-values."
-    relations: "EDAM:0002527 data Parameter or primitive"
-  ]
-
-  string: mf [
-    default: ""
-    information: "Print <mf> as motif file name."
-    knowntype: "output identifier"
-    relations:  "EDAM:0001050 identifier File name"
-  ]
-
-  string: df [
-    default: ""
-    information: "Print <df> as database name."
-    knowntype: "string"
-    relations:  "EDAM:0001056 identifier Database name"
-  ]
-
-  integer: minseqs [
-    default: "-1"
-    information: "Lower bound on number of sequences in db"
-    relations: "EDAM:0002527 data Parameter or primitive"
-  ]
-
-  float: mev [
-    default: "-1"
-    information: "Use only motifs with E-values less than
-                  <mev>"
-    relations: "EDAM:0001667 data E-value"
-    relations: "EDAM:0002146 data Threshold"
-  ]
-
-  integer: m [
-    default: "-1"
-    information: "Use only motif(s) number <m>"
-    help: "Overrides value set by using -mev."
-    relations: "EDAM:0002527 data Parameter or primitive"
-  ]
-
-  string: diag [
-    default: ""
-    information: "Nominal order and spacing of motifs"
-    help: "See on-line documentation for a valid example."
-    knowntype: "meme motif order"
-    relations: "EDAM:0002527 data Parameter or primitive"
-  ]
-
-endsection: advanced
-
-section: output [
-  information: "Output section"
-  type: "page"
-]
-
-  outfile: outfile [
-    parameter: "Y"
-    information: "MAST program output file"
-    knowntype: "mast output"
-    relations:  "EDAM:0000863 data Sequence alignment"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: output

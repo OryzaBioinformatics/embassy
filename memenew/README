@@ -12,7 +12,7 @@ CONTENTS
 1. Installing EMBASSY MEME
 The EMBASSY MEME package contains "wrapper" applications providing an 
 EMBOSS-style interface to the applications in the original MEME package 
-version 4.0.0 developed by Timothy L. Bailey.
+version 4.7.0 developed by Timothy L. Bailey.
 
 Please read the file README in the EMBASSY MEME package distribution 
 for installation instructions.
@@ -59,8 +59,8 @@ Read the documentation on-line: http://emboss.sourceforge.net/apps/
 
 
 5. EMBASSY MEME notes
-EMBASSY MEME is a suite of application wrappers to the original meme v4.0.0 
-applications.  meme v4.0.0 must be installed on the same system as EMBOSS and 
+EMBASSY MEME is a suite of application wrappers to the original meme v4.7.0 
+applications.  meme v4.7.0 must be installed on the same system as EMBOSS and 
 the location of the meme executables must be defined in your path for EMBASSY
 MEME to work.
 
@@ -145,8 +145,8 @@ http://meme.nbcr.net/downloads/old_versions/
 
 7.2  Install software
 Follow the install instructions in the file README in the original MEME distro:
-   tar -xvf meme_4.0.0.tar.gz 
-   cd meme_4.0.0
+   tar -xvf meme_4.7.0.tar.gz 
+   cd meme_4.7.0
    bin/install meme
    bin/runtests  
 
@@ -280,7 +280,7 @@ i.  Do not use FZ lines as ememe & emast use temp files with random
 names: these names are printed to the output files.
 
 ii. Consider ommitting tests for all but the first example for
-MEME. For meme-4.0.0 these examples seemed to require a full-length
+MEME. For meme-4.7.0 these examples seemed to require a full-length
 swissprot database and a different MEME dictionary to that provided in
 the MEME distribution.
 

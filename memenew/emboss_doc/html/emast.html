@@ -154,10 +154,12 @@ Here is a sample session with <b>emast</b>
 <p>
 <table width="90%"><tr><td bgcolor="#CCFFFF"><pre>
 
-% <b>emast ex1.html ex1.out </b>
+% <b>emast ex1.html crp0.s </b>
 Motif detection
 Print results for sequences with E-value [10]: <b></b>
 Show motif matches with p-value < mt [0.0001]: <b></b>
+MAST program output directory [mast_out]: <b></b>
+Writing results to output directory 'mast_out/'.
 
 
 </pre></td></tr></table><p>
@@ -216,25 +218,21 @@ will never be prompted for.
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
 Motif detection
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers:
   [-mfile]             infile     If -d <database> is not given, MAST looks
+                                  for database specified inside of <mfile>.
+  [-sfile]             infile     If -d <database> is not given, MAST looks
                                   for database specified inside of <mfile>.
    -ev                 float      [10] Print results for sequences with
                                   E-value (Any numeric value)
    -mt                 float      [0.0001] Show motif matches with p-value <
                                   mt (Any numeric value)
-  [-outfile]           outfile    [*.emast] MAST program output file
+  [-outdirname]        outdir     [mast_out] MAST program output directory
 
    Additional (Optional) qualifiers:
-   -dfile              infile     If -d <database> is not given, MAST looks
-                                  for database specified inside of <mfile>.
-   -afile              infile     Input file <mfile> is assumed to contain
-                                  motifs in the format output by
-                                  bin/make_logodds and <a> is their alphabet;
-                                  -d <database> or -stdin must be specified
-                                  when this option is used.
+   -dblist             boolean    [N] If provided, -sfile is a list of files
    -bfile              infile     The random model uses the letter frequencies
                                   given in <bfile> instead of the
                                   non-redundant database frequencies. The
@@ -243,11 +241,10 @@ Version: EMBOSS:6.4.0.0
                                   documentation for details. Sample files are
                                   given in directory tests: tests/nt.freq and
                                   tests/na.freq in the MEME distribution.)
-   -smax               integer    [-1] Print results for no more than <smax>
-                                  sequences (Any integer value)
    -stdin              boolean    [N] The default is to read the database
                                   specified inside <mfile>.
-   -text               boolean    [N] Default is hypertext (HTML) format
+   -[no]text           boolean    [Y] Default is text, HTML and XML
+   -[no]html           boolean    [Y] Default is text, HTML and XML
    -dna                boolean    [N] Translate DNA sequences to protein
    -comp               boolean    [N] The random model uses the letter
                                   frequencies in the current target sequence
@@ -259,14 +256,9 @@ Version: EMBOSS:6.4.0.0
                                   search time substantially due to the need to
                                   compute a different score distribution for
                                   each high-scoring sequence.
-   -rank               integer    [-1] Print results starting with <rank> best
-                                  (Any integer value)
    -best               boolean    [N] Include only the best motif in diagrams
    -remcorr            boolean    [N] Remove highly correlated motifs from
                                   query
-   -brief              boolean    [N] Brief output: do not print
-                                  documentation.
-   -b                  boolean    [N] Print only sections I and II
    -nostatus           boolean    [N] Do not print progress report
    -hitlist            boolean    [N] If you specify the -hitlist switch to
                                   MAST, the motif 'diagram' takes the form of
@@ -287,11 +279,13 @@ Version: EMBOSS:6.4.0.0
                                   separate sequence
    -norc               boolean    [N] Do not score reverse complement DNA
                                   strand
-   -w                  boolean    [N] Show weak matches (mt<p-value<mt*10) in
+   -weak               boolean    [N] Show weak matches (mt<p-value<mt*10) in
                                   angle brackets
    -seqp               boolean    [N] The default is to use POSITION p-values.
    -mf                 string     Print <mf> as motif file name. (Any string)
    -df                 string     Print <df> as database name. (Any string)
+   -dl                 string     Print <dl> as link to search sequence names.
+                                  (Any string)
    -minseqs            integer    [-1] Lower bound on number of sequences in
                                   db (Any integer value)
    -mev                float      [-1] Use only motifs with E-values less than
@@ -300,11 +294,13 @@ Version: EMBOSS:6.4.0.0
                                   integer value)
    -diag               string     See on-line documentation for a valid
                                   example. (Any string)
+   -[no]overwrite      boolean    [Y] The default is to overwrite existing
+                                  files
 
    Associated qualifiers:
 
-   "-outfile" associated qualifiers
-   -odirectory2        string     Output directory
+   "-outdirname" associated qualifiers
+   -extension3         string     Default file extension
 
    General qualifiers:
    -auto               boolean    Turn off prompts
@@ -348,6 +344,14 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
+<td>[-sfile]<br>(Parameter 2)</td>
+<td>infile</td>
+<td>If -d &lt;database&gt; is not given, MAST looks for database specified inside of &lt;mfile&gt;.</td>
+<td>Input file</td>
+<td><b>Required</b></td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td>-ev</td>
 <td>float</td>
 <td>Print results for sequences with E-value</td>
@@ -364,11 +368,11 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>[-outfile]<br>(Parameter 2)</td>
-<td>outfile</td>
-<td>MAST program output file</td>
-<td>Output file</td>
-<td><i>&lt;*&gt;</i>.emast</td>
+<td>[-outdirname]<br>(Parameter 3)</td>
+<td>outdir</td>
+<td>MAST program output directory</td>
+<td>Output directory</td>
+<td>mast_out</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -376,19 +380,11 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-dfile</td>
-<td>infile</td>
-<td>If -d &lt;database&gt; is not given, MAST looks for database specified inside of &lt;mfile&gt;.</td>
-<td>Input file</td>
-<td><b>Required</b></td>
-</tr>
-
-<tr bgcolor="#FFFFCC">
-<td>-afile</td>
-<td>infile</td>
-<td>Input file &lt;mfile&gt; is assumed to contain motifs in the format output by bin/make_logodds and &lt;a&gt; is their alphabet; -d &lt;database&gt; or -stdin must be specified when this option is used.</td>
-<td>Input file</td>
-<td><b>Required</b></td>
+<td>-dblist</td>
+<td>boolean</td>
+<td>If provided, -sfile is a list of files</td>
+<td>Boolean value Yes/No</td>
+<td>No</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -400,14 +396,6 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-smax</td>
-<td>integer</td>
-<td>Print results for no more than &lt;smax&gt; sequences</td>
-<td>Any integer value</td>
-<td>-1</td>
-</tr>
-
-<tr bgcolor="#FFFFCC">
 <td>-stdin</td>
 <td>boolean</td>
 <td>The default is to read the database specified inside &lt;mfile&gt;.</td>
@@ -416,11 +404,19 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-text</td>
+<td>-[no]text</td>
 <td>boolean</td>
-<td>Default is hypertext (HTML) format</td>
+<td>Default is text, HTML and XML</td>
 <td>Boolean value Yes/No</td>
-<td>No</td>
+<td>Yes</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td>-[no]html</td>
+<td>boolean</td>
+<td>Default is text, HTML and XML</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -440,14 +436,6 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-rank</td>
-<td>integer</td>
-<td>Print results starting with &lt;rank&gt; best</td>
-<td>Any integer value</td>
-<td>-1</td>
-</tr>
-
-<tr bgcolor="#FFFFCC">
 <td>-best</td>
 <td>boolean</td>
 <td>Include only the best motif in diagrams</td>
@@ -459,22 +447,6 @@ Version: EMBOSS:6.4.0.0
 <td>-remcorr</td>
 <td>boolean</td>
 <td>Remove highly correlated motifs from query</td>
-<td>Boolean value Yes/No</td>
-<td>No</td>
-</tr>
-
-<tr bgcolor="#FFFFCC">
-<td>-brief</td>
-<td>boolean</td>
-<td>Brief output: do not print documentation.</td>
-<td>Boolean value Yes/No</td>
-<td>No</td>
-</tr>
-
-<tr bgcolor="#FFFFCC">
-<td>-b</td>
-<td>boolean</td>
-<td>Print only sections I and II</td>
 <td>Boolean value Yes/No</td>
 <td>No</td>
 </tr>
@@ -524,7 +496,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-w</td>
+<td>-weak</td>
 <td>boolean</td>
 <td>Show weak matches (mt&lt;p-value&lt;mt*10) in angle brackets</td>
 <td>Boolean value Yes/No</td>
@@ -551,6 +523,14 @@ Version: EMBOSS:6.4.0.0
 <td>-df</td>
 <td>string</td>
 <td>Print &lt;df&gt; as database name.</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td>-dl</td>
+<td>string</td>
+<td>Print &lt;dl&gt; as link to search sequence names.</td>
 <td>Any string</td>
 <td>&nbsp;</td>
 </tr>
@@ -588,18 +568,26 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
+<td>-[no]overwrite</td>
+<td>boolean</td>
+<td>The default is to overwrite existing files</td>
+<td>Boolean value Yes/No</td>
+<td>Yes</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <th align="left" colspan=5>Associated qualifiers</th>
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-outfile" associated outfile qualifiers
+<td align="left" colspan=5>"-outdirname" associated outdir qualifiers
 </td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td> -odirectory2<br>-odirectory_outfile</td>
+<td> -extension3<br>-extension_outdirname</td>
 <td>string</td>
-<td>Output directory</td>
+<td>Default file extension</td>
 <td>Any string</td>
 <td>&nbsp;</td>
 </tr>
@@ -740,111 +728,111 @@ IT IS DONE FOR YOU.
 <h3>Input files for usage example </h3>
 <p><h3>File: ex1.html</h3>
 <table width="90%"><tr><td bgcolor="#FFCCFF">
-&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
-&lt;HTML&gt;
-&lt;HEAD&gt;
-&lt;meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"&gt;
-&lt;TITLE&gt;MEME&lt;/TITLE&gt;
-&lt;STYLE type="text/css"&gt;
-  TD.invisible { color: '#D5F0FF'; }
-  TD.c0 { background: aqua; color: black; }
-  TD.cw0 { background: aqua; color: black; font: 50% sans-serif; }
-  TD.c1 { background: blue; color: white; }
-  TD.cw1 { background: blue; color: white; font: 50% sans-serif; }
-  TD.c2 { background: red; color: white; }
-  TD.cw2 { background: red; color: white; font: 50% sans-serif; }
-  TD.c3 { background: fuchsia; color: black; }
-  TD.cw3 { background: fuchsia; color: black; font: 50% sans-serif; }
-  TD.c4 { background: yellow; color: black; }
-  TD.cw4 { background: yellow; color: black; font: 50% sans-serif; }
-  TD.c5 { background: lime; color: black; }
-  TD.cw5 { background: lime; color: black; font: 50% sans-serif; }
-  TD.c6 { background: teal; color: white; }
-  TD.cw6 { background: teal; color: white; font: 50% sans-serif; }
-  TD.c7 { background: #444444; color: white; }
-  TD.cw7 { background: #444444; color: white; font: 50% sans-serif; }
-  TD.c8 { background: green; color: white; }
-  TD.cw8 { background: green; color: white; font: 50% sans-serif; }
-  TD.c9 { background: silver; color: black; }
-  TD.cw9 { background: silver; color: black; font: 50% sans-serif; }
-  TD.c10 { background: purple; color: white; }
-  TD.cw10 { background: purple; color: white; font: 50% sans-serif; }
-  TD.c11 { background: olive; color: black; }
-  TD.cw11 { background: olive; color: black; font: 50% sans-serif; }
-  TD.c12 { background: navy; color: white; }
-  TD.cw12 { background: navy; color: white; font: 50% sans-serif; }
-  TD.c13 { background: maroon; color: white; }
-  TD.cw13 { background: maroon; color: white; font: 50% sans-serif; }
-  TD.c14 { background: black; color: white; }
-  TD.cw14 { background: black; color: white; font: 50% sans-serif; }
-  TD.c15 { background: white; color: black; }
-  TD.cw15 { background: white; color: black; font: 50% sans-serif; }
-  B.red { color: red; }
-  TD.red { color: red; }
-  TH.red { color: red; }
-  B.blue { color: blue; }
-  TD.blue { color: blue; }
-  TH.blue { color: blue; }
-  B.orange { color: orange; }
-  TD.orange { color: orange; }
-  TH.orange { color: orange; }
-  B.green { color: green; }
-  TD.green { color: green; }
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+&lt;title&gt;MEME&lt;/title&gt;
+&lt;style type="text/css"&gt;
+    
+    /* START INCLUDED FILE "meme.css" */
+        /* The following is the content of meme.css */
+        body { background-color:white; font-size: 12px; font-family: Verdana, Arial, Helvetica, sans-serif;}
+
+        div.help {
+          display: inline-block;
+          margin: 0px;
+          padding: 0px;
+          width: 12px;
+          height: 13px;
+          cursor: pointer;
+          background-image: url("help.gif");
+          background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANAQMAAACn5x0BAAAAAXNSR0IArs4c6QAAAAZQTFRFAAAAnp6eqp814gAAAAF0Uk5TAEDm2GYAAAABYktHRACIBR1IAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH2gMJBQgGYqhNZQAAACZJREFUCNdj+P+BoUGAoV+AYeYEEGoWYGgTYGgRAAm2gRGQ8f8DAOnhC2lYnqs6AAAAAElFTkSuQmCC");
+        }
+
+        div.help2 {
+          color: #999;
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          border: 1px solid #999;
+          font-size: 13px;
+          line-height:12px;
+          font-family: Helvetica, sans-serif;
+          font-weight: bold;
+          font-style: normal;
+          cursor: pointer;
+        }
+        div.help2:hover {
+          color: #000;
+          border-color: #000;
+        }
+        
+        p.spaced { line-height: 1.8em;}
+        
+        span.citation { font-family: "Book Antiqua", "Palatino Linotype", serif; color: #004a4d;}
+
+        p.pad { padding-left: 30px; padding-top: 5px; padding-bottom: 10px;}
+
+        td.jump { font-size: 13px; color: #ffffff; background-color: #00666a;
+          font-family: Georgia, "Times New Roman", Times, serif;}
+
+        a.jump { margin: 15px 0 0; font-style: normal; font-variant: small-caps;
 
 
 <font color=red>  [Part of this file has been deleted for brevity]</font>
 
-for use by database search programs such as MAST.  This matrix is a
-log-odds matrix calculated
-by taking the log (base 2) of the ratio &lt;TT&gt;p/f&lt;/TT&gt; at each position in
-the motif where &lt;TT&gt;p&lt;/TT&gt; is the probability of a particular letter at that
-position in the motif, and &lt;TT&gt;f&lt;/TT&gt; is the background frequency of the
-letter (given in the &lt;A HREF=#command_doc&gt;command line summary&lt;/A&gt; section.)
-Each entry in the matrix is multiplied by 100 and rounded to the nearest
-integer before printing.
-This is the same matrix that is used above in computing the &lt;I&gt;p&lt;/I&gt;-values
-of the occurrences of the motif in the &lt;A HREF=#sites_doc2&gt;Occurrences of the
-Motif&lt;/A&gt; and &lt;A HREF=#diagrams_doc2&gt;Block Diagrams of Motif Occurrences&lt;/A&gt;
-sections.
-
-The scoring matrix is printed "sideways"--columns
-correspond to the letters in the alphabet (in the same order as shown in
-the simplified motif) and rows corresponding to the positions of the motif,
-position one first.  The scoring matrix is preceded by a line starting with
-"log-odds matrix:" and containing the length of the alphabet, width
-of the motif, number of characters in the training set and a scoring 
-threshold.
-
-&lt;P&gt;
-&lt;LI&gt; &lt;A NAME=pspm_doc2 HREF=#pspm1&gt;&lt;H4&gt;
-Position-Specific Probability Matrix&lt;/H4&gt;&lt;/A&gt;
-
-The motif itself is a position-specific probability matrix giving,
-for each position in the pattern, the observed frequency 
-("probability") of each possible letter.  
-The probability matrix is printed "sideways"--columns
-correspond to the letters in the alphabet (in the same order as shown in
-the simplified motif) and rows corresponding to the positions of the motif,
-position one first.
-The motif is preceded by a line starting with
-"letter-probability matrix:" and containing the length of the alphabet, width
-of the motif, number of occurrences of the motif, and the E-value of the
-motif.
+              For use with &lt;a href="http://blocks.fhcrc.org/blocks"&gt;BLOCKS tools&lt;/a&gt;.
+            &lt;/dd&gt;
+&lt;dt&gt;
+&lt;a name="format_FASTA_doc"&gt;&lt;/a&gt;FASTA Format&lt;/dt&gt;
+&lt;dd&gt;
+              The FASTA format as described &lt;a href="http://meme.nbcr.net/meme/doc/fasta-format.html"&gt;here&lt;/a&gt;.
+            &lt;/dd&gt;
+&lt;dt&gt;
+&lt;a name="format_raw_doc"&gt;&lt;/a&gt;Raw Format&lt;/dt&gt;
+&lt;dd&gt;
+              Just the sites of the sequences that contributed to the motif. One site per line.
+            &lt;/dd&gt;
+&lt;/dl&gt;
+&lt;/div&gt;
+&lt;a name="sites_doc"&gt;&lt;/a&gt;&lt;h5 class="doc"&gt;Sites&lt;/h5&gt;
+&lt;div class="doc"&gt;&lt;p&gt;
+            MEME displays the occurrences (sites) of the motif in the training set. The sites are shown aligned with each other, and the ten sequence
+            positions preceding and following each site are also shown. Each site is identified by the name of the sequence where it occurs,
+            the strand (if both strands of DNA sequences are being used), and the position in the sequence where the site begins.  When the DNA strand
+            is specified, '+' means the sequence in the training set, and '-' means the reverse complement of the training set sequence.
+            (For '-' strands, the 'start' position is actually the position on the &lt;b&gt;positive&lt;/b&gt; strand where the site ends.) The sites are &lt;b&gt;listed 
+              in order of increasing statistical significance&lt;/b&gt; (&lt;i&gt;p&lt;/i&gt;-value).  The &lt;i&gt;p&lt;/i&gt;-value of a site is computed from the the match score of 
+            the site with the &lt;a href="#format_PSSM_doc"&gt;position specific scoring matrix&lt;/a&gt; for the motif. The &lt;i&gt;p&lt;/i&gt;-value gives the probability of a 
+            random string (generated from the background letter frequencies) having the same match score or higher. (This is referred to as the 
+            &lt;b&gt;position &lt;i&gt;p&lt;/i&gt;-value&lt;/b&gt; by the MAST algorithm.)
+          &lt;/p&gt;&lt;/div&gt;
+&lt;a name="diagrams_doc"&gt;&lt;/a&gt;&lt;h5 class="doc"&gt;Block Diagrams&lt;/h5&gt;
+&lt;div class="doc"&gt;&lt;p&gt;
+            The occurrences of the motif in the training set sequences are shown as coloured blocks on a line. One diagram is printed for each
+            sequence showing all the sites contributating to that motif in that sequence. The sequences are &lt;b&gt;listed in the same order as in the input&lt;/b&gt; 
+            to make it easier to compare multiple block diagrams. Additionally the best &lt;i&gt;p&lt;/i&gt;-value for the sequence/motif combination is
+            listed though this may not be in ascending order as with the sites. The &lt;i&gt;p&lt;/i&gt;-value of an occurrence is the probability of a single
+            random subsequence the length of the motif, generated according to the 0-order background model, having a score at least as high as 
+            the score of the occurrence. When the DNA strand is specified '+', it means the motif appears from left to right on the sequence, and '-' 
+            means the motif appears from right to left on the complementary strand. A sequence position scale is shown at the end of each table of 
+            block diagrams. 
+          &lt;/p&gt;&lt;/div&gt;
+&lt;a name="combined_doc"&gt;&lt;/a&gt;&lt;h5&gt;Combined Block Diagrams&lt;/h5&gt;
+&lt;div class="doc"&gt;
 &lt;p&gt;
-&lt;b&gt;Note:&lt;/b&gt; Earlier versions
-of MEME gave the posterior probabilities--the probability after applying
-a prior on letter frequencies--rather than the observed frequencies.
-These versions of MEME also gave the number of &lt;I&gt;possible&lt;/I&gt;
-positions for the motif rather than the actual number of occurrences.
-The output from these earlier versions of MEME can be distinguished
-by "n=" rather than "nsites=" in the line preceding the matrix.
-
-&lt;/UL&gt;
-&lt;HR&gt;&lt;TABLE SUMMARY='buttons' ALIGN=LEFT CELLSPACING=0&gt;&lt;TR&gt;
-  &lt;TD BGCOLOR='#DDDDFF'&gt;&lt;A HREF="#top_buttons"&gt;&lt;B&gt;Go to top&lt;/B&gt;&lt;/A&gt;&lt;/TABLE&gt;&lt;BR&gt;
-&lt;/FORM&gt;
-&lt;/BODY&gt;
-&lt;/HTML&gt;
+            The motif occurrences shown in the motif summary &lt;b&gt;may not be exactly the same as those reported in each motif section&lt;/b&gt; because 
+            only motifs with a position &lt;em&gt;p&lt;/em&gt;-value of 0.0001 that don't overlap other, more significant motif occurrences are shown. 
+          &lt;/p&gt;
+&lt;p&gt;
+            See the documentation for &lt;a href="http://meme.nbcr.net/meme/mast-output.html"&gt;MAST output&lt;/a&gt; for the definition of position and
+            combined &lt;em&gt;p&lt;/em&gt;-values.
+          &lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;/form&gt;&lt;/body&gt;
+&lt;/html&gt;
 </td></tr></table><p>
 
 </pre>
@@ -992,116 +980,6 @@ include file="inc/reportformats.ihtml"
 
 <a name="output.1"></a>
 <h3>Output files for usage example </h3>
-<p><h3>File: ex1.out</h3>
-<table width="90%"><tr><td bgcolor="#CCFFCC">
-<pre>
-&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
-&lt;HTML&gt;
-&lt;HEAD&gt;
-&lt;meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"&gt;
-&lt;TITLE&gt;MAST&lt;/TITLE&gt;
-&lt;STYLE type="text/css"&gt;
-  TD.invisible { color: '#D5F0FF'; }
-  TD.c0 { background: aqua; color: black; }
-  TD.cw0 { background: aqua; color: black; font: 50% sans-serif; }
-  TD.c1 { background: blue; color: white; }
-  TD.cw1 { background: blue; color: white; font: 50% sans-serif; }
-  TD.c2 { background: red; color: white; }
-  TD.cw2 { background: red; color: white; font: 50% sans-serif; }
-  TD.c3 { background: fuchsia; color: black; }
-  TD.cw3 { background: fuchsia; color: black; font: 50% sans-serif; }
-  TD.c4 { background: yellow; color: black; }
-  TD.cw4 { background: yellow; color: black; font: 50% sans-serif; }
-  TD.c5 { background: lime; color: black; }
-  TD.cw5 { background: lime; color: black; font: 50% sans-serif; }
-  TD.c6 { background: teal; color: white; }
-  TD.cw6 { background: teal; color: white; font: 50% sans-serif; }
-  TD.c7 { background: #444444; color: white; }
-  TD.cw7 { background: #444444; color: white; font: 50% sans-serif; }
-  TD.c8 { background: green; color: white; }
-  TD.cw8 { background: green; color: white; font: 50% sans-serif; }
-  TD.c9 { background: silver; color: black; }
-  TD.cw9 { background: silver; color: black; font: 50% sans-serif; }
-  TD.c10 { background: purple; color: white; }
-  TD.cw10 { background: purple; color: white; font: 50% sans-serif; }
-  TD.c11 { background: olive; color: black; }
-  TD.cw11 { background: olive; color: black; font: 50% sans-serif; }
-  TD.c12 { background: navy; color: white; }
-  TD.cw12 { background: navy; color: white; font: 50% sans-serif; }
-  TD.c13 { background: maroon; color: white; }
-  TD.cw13 { background: maroon; color: white; font: 50% sans-serif; }
-  TD.c14 { background: black; color: white; }
-  TD.cw14 { background: black; color: white; font: 50% sans-serif; }
-  TD.c15 { background: white; color: black; }
-  TD.cw15 { background: white; color: black; font: 50% sans-serif; }
-  B.red { color: red; }
-  TD.red { color: red; }
-  TH.red { color: red; }
-  B.blue { color: blue; }
-  TD.blue { color: blue; }
-  TH.blue { color: blue; }
-  B.orange { color: orange; }
-  TD.orange { color: orange; }
-  TH.orange { color: orange; }
-  B.green { color: green; }
-  TD.green { color: green; }
-
-
-<font color=red>  [Part of this file has been deleted for brevity]</font>
-
-
-&lt;HR&gt;
-&lt;A NAME=a17&gt;&lt;/A&gt;ilv &lt;TABLE SUMMARY='buttons' ALIGN=LEFT CELLSPACING=0&gt;&lt;TR&gt;
-  &lt;TD BGCOLOR='#DDDD88'&gt;&lt;A HREF='#s17'&gt;S&lt;/A&gt;
-  &lt;TD BGCOLOR='#DDFFDD'&gt;&lt;A HREF='#d17'&gt;D&lt;/A&gt;
-  &lt;TD BGCOLOR='#FFFFFF'&gt;&lt;A HREF='#bh'&gt;?&lt;/A&gt;&lt;/TABLE&gt;&lt;BR CLEAR=LEFT&gt;
-  &lt;BR&gt;
-  LENGTH = 105  COMBINED P-VALUE = 6.93e-02  E-VALUE =      1.2&lt;BR&gt;
-  DIAGRAM: 105&lt;PRE&gt;
-
-
-&lt;/PRE&gt;
-
-&lt;HR&gt;
-&lt;A NAME=a18&gt;&lt;/A&gt;trn9cat &lt;TABLE SUMMARY='buttons' ALIGN=LEFT CELLSPACING=0&gt;&lt;TR&gt;
-  &lt;TD BGCOLOR='#DDDD88'&gt;&lt;A HREF='#s18'&gt;S&lt;/A&gt;
-  &lt;TD BGCOLOR='#DDFFDD'&gt;&lt;A HREF='#d18'&gt;D&lt;/A&gt;
-  &lt;TD BGCOLOR='#FFFFFF'&gt;&lt;A HREF='#bh'&gt;?&lt;/A&gt;&lt;/TABLE&gt;&lt;BR CLEAR=LEFT&gt;
-  &lt;BR&gt;
-  LENGTH = 105  COMBINED P-VALUE = 2.42e-01  E-VALUE =      4.4&lt;BR&gt;
-  DIAGRAM: 105&lt;PRE&gt;&lt;/PRE&gt;
-
-&lt;A NAME=debug&gt;&lt;/A&gt;&lt;HR&gt;&lt;CENTER&gt;&lt;H3&gt;Debugging Information&lt;/H3&gt;&lt;/CENTER&gt;&lt;HR&gt;
-&lt;PRE&gt;
-
-
-CPU: emboss4.ebi.ac.uk
-Time 0.001999 secs.
-
-mast ../../data/memenew/ex1.html -ev 10.000000 -mt 0.000100
-&lt;/PRE&gt;
-&lt;A NAME=bh&gt;&lt;/A&gt;
-&lt;A NAME=sbh&gt;&lt;/A&gt;
-&lt;A NAME=dbh&gt;&lt;/A&gt;
-&lt;A NAME=abh&gt;&lt;/A&gt;
-&lt;HR&gt;&lt;CENTER&gt;&lt;H3&gt;Button Help&lt;/H3&gt;&lt;/CENTER&gt;&lt;HR&gt;
-&lt;TABLE SUMMARY='buttons' ALIGN=LEFT CELLSPACING=0&gt;&lt;TR&gt;
-  &lt;TD BGCOLOR='#DDDDFF'&gt;&lt;A HREF='#bh'&gt;E&lt;/A&gt;&lt;/TABLE&gt;Links to Entrez database at &lt;A HREF='http://www.ncbi.nlm.nih.gov'&gt;NCBI&lt;/A&gt; &lt;BR CLEAR=LEFT&gt;
-&lt;TABLE SUMMARY='buttons' ALIGN=LEFT CELLSPACING=0&gt;&lt;TR&gt;
-  &lt;TD BGCOLOR='#DDDD88'&gt;&lt;A HREF='#sbh'&gt;S&lt;/A&gt;&lt;/TABLE&gt;Links to sequence scores (&lt;A HREF='#sec_i'&gt;section I&lt;/A&gt;) &lt;BR CLEAR=LEFT&gt;
-&lt;TABLE SUMMARY='buttons' ALIGN=LEFT CELLSPACING=0&gt;&lt;TR&gt;
-  &lt;TD BGCOLOR='#DDFFDD'&gt;&lt;A HREF='#dbh'&gt;D&lt;/A&gt;&lt;/TABLE&gt;Links to motif diagrams (&lt;A HREF='#sec_ii'&gt;section II&lt;/A&gt;) &lt;BR CLEAR=LEFT&gt;
-&lt;TABLE SUMMARY='buttons' ALIGN=LEFT CELLSPACING=0&gt;&lt;TR&gt;
-  &lt;TD BGCOLOR='#FFDDDD'&gt;&lt;A HREF='#abh'&gt;A&lt;/A&gt;&lt;/TABLE&gt;Links to sequence/motif annotated alignments (&lt;A HREF='#sec_iii'&gt;section III&lt;/A&gt;) &lt;BR CLEAR=LEFT&gt;
-&lt;TABLE SUMMARY='buttons' ALIGN=LEFT CELLSPACING=0&gt;&lt;TR&gt;
-  &lt;TD BGCOLOR='#FFFFFF'&gt;&lt;A HREF='#bh'&gt;?&lt;/A&gt;&lt;/TABLE&gt;This information &lt;BR CLEAR=LEFT&gt;
-
-&lt;HR&gt;&lt;TABLE SUMMARY='buttons' ALIGN=LEFT CELLSPACING=0&gt;&lt;TR&gt;
-  &lt;TD BGCOLOR='#DDDDFF'&gt;&lt;A HREF='#top_buttons'&gt;&lt;B&gt;Go to top&lt;/B&gt;&lt;/A&gt;&lt;/TABLE&gt;&lt;BR&gt;
-&lt;/BODY&gt;
-&lt;/HTML&gt;
-</pre>
-</td></tr></table><p>
 <p><h3>File: crp0.s</h3>
 <table width="90%"><tr><td bgcolor="#CCFFCC">
 <pre>
@@ -1159,6 +1037,336 @@ CGAAAATGAGACGTTGATCGGCACG
 &gt;tdc
 GATTTTTATACTTTAACTTGTTGATATTTAAAGGTATTTAATTGTAATAACGATACTCTGGAAAGTATTGAAAGTTAATT
 TGTGAGTGGTCGCACATATCCTGTT
+</pre>
+</td></tr></table><p>
+<p><h3>Directory: mast_out</h3>
+<p>This directory contains output files, for example mast.txt mast.html and mast.xml.
+<p><h3>File: mast_out/mast.txt</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+********************************************************************************
+MAST - Motif Alignment and Search Tool
+********************************************************************************
+	MAST version 4.7.0 (Release date: Wed Sep 28 17:30:10 EST 2011)
+
+	For further information on how to interpret these results or to get
+	a copy of the MAST software please access http://meme.nbcr.net.
+********************************************************************************
+
+
+********************************************************************************
+REFERENCE
+********************************************************************************
+	If you use this program in your research, please cite:
+
+	Timothy L. Bailey and Michael Gribskov,
+	"Combining evidence using p-values: application to sequence homology
+	searches", Bioinformatics, 14(48-54), 1998.
+********************************************************************************
+
+
+********************************************************************************
+DATABASE AND MOTIFS
+********************************************************************************
+	DATABASE ./crp0.s (nucleotide)
+	Last updated on Tue Jul 10 18:26:20 2012
+	Database contains 18 sequences, 1890 residues
+
+	Scores for positive and reverse complement strands are combined.
+
+	MOTIFS ../../data/memenew/ex1.html (nucleotide)
+	MOTIF WIDTH BEST POSSIBLE MATCH
+	----- ----- -------------------
+	  1    15   TGTGAACGAGCTCAC
+
+	Random model letter frequencies (from non-redundant database):
+	A 0.274 C 0.225 G 0.225 T 0.274 
+********************************************************************************
+
+
+********************************************************************************
+SECTION I: HIGH-SCORING SEQUENCES
+********************************************************************************
+	- Each of the following 18 sequences has E-value less than 10.
+	- The E-value of a sequence is the expected number of sequences
+	  in a random database of the same size that would match the motifs as
+	  well as the sequence does and is equal to the combined p-value of the
+	  sequence times the number of sequences in the database.
+	- The combined p-value of a sequence measures the strength of the
+	  match of the sequence to all the motifs and is calculated by
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+  
+  LENGTH = 105  COMBINED P-VALUE = 1.09e-02  E-VALUE =      0.2
+  DIAGRAM: 65_[+1]_25
+
+                                                                      [+1]
+                                                                      6.0e-05
+                                                                      TGTGAACGAG
+                                                                      ++  ++++++
+1    CACAAAGCGAAAGCTATGCTAAAACAGTCAGGATGCTACAGTAATACATTGATGTACTGCATGTATGCAAAGGAC
+
+     
+     
+     CTCAC
+      ++++
+76   GTCACATTACCGTGCAGTACAGTTGATAGC
+
+
+bglr1
+  
+  LENGTH = 105  COMBINED P-VALUE = 1.92e-02  E-VALUE =     0.35
+  DIAGRAM: 105
+
+
+
+malk
+  
+  LENGTH = 105  COMBINED P-VALUE = 3.23e-02  E-VALUE =     0.58
+  DIAGRAM: 105
+
+
+
+ilv
+  
+  LENGTH = 105  COMBINED P-VALUE = 5.93e-02  E-VALUE =      1.1
+  DIAGRAM: 105
+
+
+
+trn9cat
+  
+  LENGTH = 105  COMBINED P-VALUE = 1.14e-01  E-VALUE =        2
+  DIAGRAM: 105
+
+
+********************************************************************************
+
+
+CPU: emboss4.ebi.ac.uk
+Time 0.007000 secs.
+
+mast ../../data/memenew/ex1.html ./crp0.s -oc mast_out/ -ev 10.000000 -mt 0.000100
+</pre>
+</td></tr></table><p>
+<p><h3>File: mast_out/mast.html</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+&lt;meta charset="UTF-8"&gt;
+&lt;meta name="description" content="Motif Alignment and Search Tool (MAST) output."&gt;
+&lt;title&gt;MAST&lt;/title&gt;
+&lt;script type="text/javascript"&gt;
+        var motifs = new Array();
+        motifs["motif_1"] = new Motif("1", "nucleotide", "TGTGAACGAGCTCAC", "GTGAGCTCGTTCACA");
+
+        motifs.length = 1;
+
+        var wrap = undefined;//size to display on one line
+        var wrap_timer;
+
+        var seqmax = 105;
+
+        var loadedSequences = new Array();
+        //draging details
+        var moving_seq;
+        var moving_annobox;
+        var moving_left;
+        var moving_width;
+        var moving_both;
+
+        //drag needles
+        var dnl = null;
+        var dnr = null;
+        var drag_is_rc = undefined;
+        //container
+        var cont = null;
+        
+        function mouseCoords(ev) {
+          ev = ev || window.event;
+          if(ev.pageX || ev.pageY){ 
+	          return {x:ev.pageX, y:ev.pageY}; 
+	        } 
+	        return { 
+	          x:ev.clientX + document.body.scrollLeft - document.body.clientLeft, 
+	          y:ev.clientY + document.body.scrollTop  - document.body.clientTop 
+	        };
+        }
+
+        function setup() {
+          rewrap();
+          window.onresize = delayed_rewrap;
+        }
+
+        function calculate_wrap() {
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+1	GACAAAAACGCGTAACAAAAGTGTCTATAATCACGGCAGAAAAGTCCACATTGATTATTTGCACGGCGTCACACT
+"&gt;
+&lt;input type="hidden" id="seq_1_2_hits" value="
+58	motif_1	+	5.5e-05	+ ++ +++++ ++++	
+"&gt;
+&lt;input type="hidden" id="seq_1_4_len" value="105"&gt;
+&lt;input type="hidden" id="seq_1_4_desc" value=""&gt;
+&lt;input type="hidden" id="seq_1_4_combined_pvalue" value="1.09e-02"&gt;
+&lt;input type="hidden" id="seq_1_4_type" value="nucleotide"&gt;
+&lt;input type="hidden" id="seq_1_4_segs" value="
+1	CACAAAGCGAAAGCTATGCTAAAACAGTCAGGATGCTACAGTAATACATTGATGTACTGCATGTATGCAAAGGACGTCACATTACCGTGCAGTACAGTTGATAGC
+"&gt;
+&lt;input type="hidden" id="seq_1_4_hits" value="
+66	motif_1	+	6.0e-05	++  ++++++ ++++	
+"&gt;
+&lt;input type="hidden" id="seq_1_3_len" value="105"&gt;
+&lt;input type="hidden" id="seq_1_3_desc" value=""&gt;
+&lt;input type="hidden" id="seq_1_3_combined_pvalue" value="1.92e-02"&gt;
+&lt;input type="hidden" id="seq_1_3_type" value="nucleotide"&gt;
+&lt;input type="hidden" id="seq_1_3_segs" value="
+"&gt;
+&lt;input type="hidden" id="seq_1_3_hits" value="
+"&gt;
+&lt;input type="hidden" id="seq_1_11_len" value="105"&gt;
+&lt;input type="hidden" id="seq_1_11_desc" value=""&gt;
+&lt;input type="hidden" id="seq_1_11_combined_pvalue" value="3.23e-02"&gt;
+&lt;input type="hidden" id="seq_1_11_type" value="nucleotide"&gt;
+&lt;input type="hidden" id="seq_1_11_segs" value="
+"&gt;
+&lt;input type="hidden" id="seq_1_11_hits" value="
+"&gt;
+&lt;input type="hidden" id="seq_1_8_len" value="105"&gt;
+&lt;input type="hidden" id="seq_1_8_desc" value=""&gt;
+&lt;input type="hidden" id="seq_1_8_combined_pvalue" value="5.93e-02"&gt;
+&lt;input type="hidden" id="seq_1_8_type" value="nucleotide"&gt;
+&lt;input type="hidden" id="seq_1_8_segs" value="
+"&gt;
+&lt;input type="hidden" id="seq_1_8_hits" value="
+"&gt;
+&lt;input type="hidden" id="seq_1_17_len" value="105"&gt;
+&lt;input type="hidden" id="seq_1_17_desc" value=""&gt;
+&lt;input type="hidden" id="seq_1_17_combined_pvalue" value="1.14e-01"&gt;
+&lt;input type="hidden" id="seq_1_17_type" value="nucleotide"&gt;
+&lt;input type="hidden" id="seq_1_17_segs" value="
+"&gt;
+&lt;input type="hidden" id="seq_1_17_hits" value="
+"&gt;
+&lt;/form&gt;
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;span class="sequence" id="ruler" style="visibility:hidden; white-space:nowrap;"&gt;ACGTN&lt;/span&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</td></tr></table><p>
+<p><h3>File: mast_out/mast.xml</h3>
+<table width="90%"><tr><td bgcolor="#CCFFCC">
+<pre>
+&lt;?xml version='1.0' encoding='UTF-8' standalone='yes'?&gt;
+&lt;!DOCTYPE mast[
+&lt;!ELEMENT mast (model, alphabet, motifs, sequences, runtime)&gt;
+&lt;!ATTLIST mast version CDATA #REQUIRED release CDATA #REQUIRED&gt;
+&lt;!ELEMENT model (command_line, max_correlation, remove_correlated, strand_handling, translate_dna, max_seq_evalue,
+    adj_hit_pvalue, max_hit_pvalue, max_weak_pvalue, host, when)&gt;
+&lt;!ELEMENT command_line (#PCDATA)&gt;
+&lt;!ELEMENT max_correlation (#PCDATA)&gt;
+&lt;!ELEMENT remove_correlated EMPTY&gt;
+&lt;!ATTLIST remove_correlated value (y|n) #REQUIRED&gt;
+&lt;!ELEMENT strand_handling EMPTY&gt;
+&lt;!ATTLIST strand_handling value (combine|separate|norc|protein) #REQUIRED&gt;
+&lt;!ELEMENT translate_dna EMPTY&gt;
+&lt;!ATTLIST translate_dna value (y|n) #REQUIRED&gt;
+&lt;!ELEMENT max_seq_evalue (#PCDATA)&gt;
+&lt;!ELEMENT adj_hit_pvalue EMPTY&gt;
+&lt;!ATTLIST adj_hit_pvalue value (y|n) #REQUIRED&gt;
+&lt;!ELEMENT max_hit_pvalue (#PCDATA)&gt;
+&lt;!ELEMENT max_weak_pvalue (#PCDATA)&gt;
+&lt;!ELEMENT host (#PCDATA)&gt;
+&lt;!ELEMENT when (#PCDATA)&gt;
+&lt;!ELEMENT alphabet (letter+)&gt;
+&lt;!ATTLIST alphabet type (amino-acid|nucleotide) #REQUIRED bg_source (preset|file|sequence_composition) #REQUIRED bg_file CDATA #IMPLIED&gt;
+&lt;!ELEMENT letter EMPTY&gt;
+&lt;!ATTLIST letter symbol CDATA #REQUIRED ambig (y|n) "n" bg_value CDATA #IMPLIED&gt;
+&lt;!ELEMENT motifs (motif+,correlation*,nos*)&gt;
+&lt;!ATTLIST motifs source CDATA #REQUIRED name CDATA #REQUIRED last_mod_date CDATA #REQUIRED&gt;
+&lt;!ELEMENT motif EMPTY&gt;
+&lt;!-- num is simply the loading order of the motif, it's superfluous but makes things easier for XSLT --&gt;
+&lt;!ATTLIST motif id ID #REQUIRED num CDATA #REQUIRED name CDATA #REQUIRED width CDATA #REQUIRED
+   best_f CDATA #REQUIRED best_r CDATA #IMPLIED bad (y|n) "n"&gt;
+&lt;!-- for n &gt; 1 motifs there should be (n * (n - 1)) / 2 correlations, obviously there are none for only 1 motif --&gt;
+&lt;!ELEMENT correlation EMPTY&gt;
+&lt;!ATTLIST correlation motif_a IDREF #REQUIRED motif_b IDREF #REQUIRED value CDATA #REQUIRED&gt;
+&lt;!-- nos: Nominal Order and Spacing diagram, a rarely used feature where mast can adjust pvalues for an expected motif spacing --&gt;
+&lt;!ELEMENT nos (expect+)&gt;
+&lt;!-- length is in the same unit as the motifs, which is not always the same unit as the sequence --&gt;
+&lt;!ATTLIST nos length CDATA #REQUIRED&gt;
+&lt;!-- the expect tags are expected to be ordered by pos ascending --&gt;
+&lt;!ELEMENT expect EMPTY&gt;
+&lt;!ATTLIST expect pos CDATA #REQUIRED gap CDATA #REQUIRED motif IDREF #REQUIRED&gt;
+&lt;!ELEMENT sequences (database+, sequence*)&gt;
+&lt;!-- the database tags are expected to be ordered in file specification order --&gt;
+&lt;!ELEMENT database EMPTY&gt;
+&lt;!ATTLIST database id ID #REQUIRED num CDATA #REQUIRED source CDATA #REQUIRED name CDATA #REQUIRED last_mod_date CDATA #REQUIRED 
+    seq_count CDATA #REQUIRED residue_count CDATA #REQUIRED type (amino-acid|nucleotide) #REQUIRED link CDATA #IMPLIED&gt;
+&lt;!-- the sequence tags are expected to be ordered by best combined p-value (of contained score tags) ascending --&gt;
+&lt;!ELEMENT sequence (score+,seg*)&gt;
+&lt;!ATTLIST sequence id ID #REQUIRED db IDREF #REQUIRED num CDATA #REQUIRED name CDATA #REQUIRED comment CDATA "" length CDATA #REQUIRED&gt;
+&lt;!ELEMENT score EMPTY&gt;
+
+
+<font color=red>  [Part of this file has been deleted for brevity]</font>
+
+			&lt;score strand="both" combined_pvalue="8.40e-03" evalue="0.15"/&gt;
+			&lt;seg start="1"&gt;
+				&lt;data&gt;
+CCCATGAGAGTGAAATTGTTGTGATGTGGTTAACCCAATTAGAATTCGGGATTGACATGTCTTACCAAAAGGTAG
+				&lt;/data&gt;
+				&lt;hit pos="20" gap="19" motif="motif_1" pvalue="4.6e-05" strand="forward" match="+++++ ++++++ ++"/&gt;
+			&lt;/seg&gt;
+		&lt;/sequence&gt;
+		&lt;sequence id="seq_1_5" db="db_1" num="5" name="cya" comment="" length="105"&gt;
+			&lt;score strand="both" combined_pvalue="9.17e-03" evalue="0.16"/&gt;
+			&lt;seg start="1"&gt;
+				&lt;data&gt;
+ACGGTGCTACACTTGTATGTAGCGCATCTTTCTTTACGGTCAATCAGCAAGGTGTTAAATTGATCACGTTTTAGA
+				&lt;/data&gt;
+				&lt;hit pos="53" gap="52" motif="motif_1" pvalue="5.1e-05" strand="forward" match="+++ ++ + + ++++"/&gt;
+			&lt;/seg&gt;
+		&lt;/sequence&gt;
+		&lt;sequence id="seq_1_2" db="db_1" num="2" name="ara" comment="" length="105"&gt;
+			&lt;score strand="both" combined_pvalue="9.99e-03" evalue="0.18"/&gt;
+			&lt;seg start="1"&gt;
+				&lt;data&gt;
+GACAAAAACGCGTAACAAAAGTGTCTATAATCACGGCAGAAAAGTCCACATTGATTATTTGCACGGCGTCACACT
+				&lt;/data&gt;
+				&lt;hit pos="58" gap="57" motif="motif_1" pvalue="5.5e-05" strand="forward" match="+ ++ +++++ ++++"/&gt;
+			&lt;/seg&gt;
+		&lt;/sequence&gt;
+		&lt;sequence id="seq_1_4" db="db_1" num="4" name="crp" comment="" length="105"&gt;
+			&lt;score strand="both" combined_pvalue="1.09e-02" evalue="0.2"/&gt;
+			&lt;seg start="1"&gt;
+				&lt;data&gt;
+CACAAAGCGAAAGCTATGCTAAAACAGTCAGGATGCTACAGTAATACATTGATGTACTGCATGTATGCAAAGGAC
+GTCACATTACCGTGCAGTACAGTTGATAGC
+				&lt;/data&gt;
+				&lt;hit pos="66" gap="65" motif="motif_1" pvalue="6.0e-05" strand="forward" match="++  ++++++ ++++"/&gt;
+			&lt;/seg&gt;
+		&lt;/sequence&gt;
+		&lt;sequence id="seq_1_3" db="db_1" num="3" name="bglr1" comment="" length="105"&gt;
+			&lt;score strand="both" combined_pvalue="1.92e-02" evalue="0.35"/&gt;
+		&lt;/sequence&gt;
+		&lt;sequence id="seq_1_11" db="db_1" num="11" name="malk" comment="" length="105"&gt;
+			&lt;score strand="both" combined_pvalue="3.23e-02" evalue="0.58"/&gt;
+		&lt;/sequence&gt;
+		&lt;sequence id="seq_1_8" db="db_1" num="8" name="ilv" comment="" length="105"&gt;
+			&lt;score strand="both" combined_pvalue="5.93e-02" evalue="1.1"/&gt;
+		&lt;/sequence&gt;
+		&lt;sequence id="seq_1_17" db="db_1" num="17" name="trn9cat" comment="" length="105"&gt;
+			&lt;score strand="both" combined_pvalue="1.14e-01" evalue="2"/&gt;
+		&lt;/sequence&gt;
+	&lt;/sequences&gt;
+	&lt;runtime cycles="6999" seconds="0.007"/&gt;
+&lt;/mast&gt;
 </pre>
 </td></tr></table><p>
 
@@ -1528,7 +1736,7 @@ None.
 <th>Description</th></tr>
 <tr>
 <td><a href="/emboss/apps/antigenic.html">antigenic</a></td>
-<td>Finds antigenic sites in proteins</td>
+<td>Find antigenic sites in proteins</td>
 </tr>
 
 <tr>
@@ -1538,22 +1746,22 @@ None.
 
 <tr>
 <td><a href="/embassy/cbstools/elipop.html">elipop</a></td>
-<td>Prediction of lipoproteins</td>
+<td>Predict lipoproteins</td>
 </tr>
 
 <tr>
 <td><a href="ememe.html">ememe</a></td>
-<td>Multiple EM for Motif Elicitation</td>
+<td>Multiple EM for motif elicitation</td>
 </tr>
 
 <tr>
 <td><a href="ememetext.html">ememetext</a></td>
-<td>Multiple EM for Motif Elicitation. Text file only</td>
+<td>Multiple EM for motif elicitation, text file only</td>
 </tr>
 
 <tr>
 <td><a href="/emboss/apps/epestfind.html">epestfind</a></td>
-<td>Finds PEST motifs as potential proteolytic cleavage sites</td>
+<td>Find PEST motifs as potential proteolytic cleavage sites</td>
 </tr>
 
 <tr>
@@ -1573,7 +1781,7 @@ None.
 
 <tr>
 <td><a href="/emboss/apps/patmatdb.html">patmatdb</a></td>
-<td>Searches protein sequences with a sequence motif</td>
+<td>Search protein sequences with a sequence motif</td>
 </tr>
 
 <tr>
@@ -1588,12 +1796,12 @@ None.
 
 <tr>
 <td><a href="/emboss/apps/pscan.html">pscan</a></td>
-<td>Scans protein sequence(s) with fingerprints from the PRINTS database</td>
+<td>Scan protein sequence(s) with fingerprints from the PRINTS database</td>
 </tr>
 
 <tr>
 <td><a href="/emboss/apps/sigcleave.html">sigcleave</a></td>
-<td>Reports on signal cleavage sites in a protein sequence</td>
+<td>Report on signal cleavage sites in a protein sequence</td>
 </tr>
 
 </table>
@@ -1654,6 +1862,16 @@ None.
 This program is intended to be used by everyone and everything, from naive users to embedded scripts.
 
 
+
+
+
+
+<H2>
+    Comments
+</H2>
+<pre>
+None.
+</pre>
 
 
 

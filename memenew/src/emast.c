@@ -39,23 +39,22 @@ int main(int argc, char **argv)
 {
     /* ACD data item variables */
     AjPFile mfile    = NULL;
-    AjPFile d        = NULL;
-    AjPFile a        = NULL;
+    AjPFile sfile    = NULL;
+    AjPDirout outdir  = NULL;
+    const AjPStr  outdirname = NULL;
+    AjBool  dblist   = ajFalse;
     AjPFile bfile    = NULL;
-    ajint   smax     = 0;
     float   ev       = 0.0;
     float   mt       = 0.0;
-    AjBool  isstdin    = ajFalse;
     AjBool  text     = ajFalse;
+    AjBool  html     = ajFalse;
     AjBool  dna      = ajFalse;
     AjBool  comp     = ajFalse;
-    ajint   rank     = 0;
+    AjBool  overwrite = ajFalse;
+    AjBool  hitlist  = ajFalse;
     AjBool  best     = ajFalse;
     AjBool  remcorr  = ajFalse;
-    AjBool  brief    = ajFalse;
-    AjBool  b        = ajFalse;
     AjBool  nostatus = ajFalse;
-    AjBool  hitlist  = ajFalse;
     ajint   c        = 0;
     AjBool  sep      = ajFalse;
     AjBool  norc     = ajFalse;
@@ -63,52 +62,46 @@ int main(int argc, char **argv)
     AjBool  seqp     = ajFalse;
     AjPStr  mf       = NULL;
     AjPStr  df       = NULL;
+    AjPStr  dl       = NULL;
     ajint   minseqs  = 0;
     float   mev      = 0.0;
     ajint   m        = 0;
     AjPStr  diag     = NULL;
-    AjPFile outfile  = NULL;
 
     /* Housekeeping variables */
     AjPStr          cmd = NULL;
-    AjPStr  outfilename = NULL;   /* Name of outfile */
-    AjPStr  stdoutname  = NULL;   /* Name of temp. file for holding data written to stdout */
-    AjPStr  stdouttemp  = NULL;   /* Temp. string */
-    AjPFile stdoutf     = NULL;
     ajint ret;
     
     /* ACD file processing */
     embInitPV("emast",argc,argv,"MEME",VERSION);
     mfile    = ajAcdGetInfile("mfile");
-    d        = ajAcdGetInfile("dfile");
-    a        = ajAcdGetInfile("afile");
+    sfile    = ajAcdGetInfile("sfile");
+    outdir   = ajAcdGetOutdir("outdirname");
+    overwrite  = ajAcdGetBoolean("overwrite");
+    hitlist  = ajAcdGetBoolean("hitlist");
+    dblist    = ajAcdGetBoolean("dblist");
     bfile    = ajAcdGetInfile("bfile");
-    smax     = ajAcdGetInt("smax");
     ev       = ajAcdGetFloat("ev");
     mt       = ajAcdGetFloat("mt");
-    isstdin    = ajAcdGetBoolean("stdin");
     text     = ajAcdGetBoolean("text");
+    html     = ajAcdGetBoolean("html");
     dna      = ajAcdGetBoolean("dna");
     comp     = ajAcdGetBoolean("comp");
-    rank     = ajAcdGetInt("rank");
     best     = ajAcdGetBoolean("best");
     remcorr  = ajAcdGetBoolean("remcorr");
-    brief    = ajAcdGetBoolean("brief");
-    b        = ajAcdGetBoolean("b");
     nostatus = ajAcdGetBoolean("nostatus");
-    hitlist  = ajAcdGetBoolean("hitlist");
     c        = ajAcdGetInt("c");
     sep      = ajAcdGetBoolean("sep");
     norc     = ajAcdGetBoolean("norc");
-    w        = ajAcdGetBoolean("w");
+    w        = ajAcdGetBoolean("weak");
     seqp     = ajAcdGetBoolean("seqp");
     mf       = ajAcdGetString("mf");
     df       = ajAcdGetString("df");
+    dl       = ajAcdGetString("dl");
     minseqs  = ajAcdGetInt("minseqs");
     mev      = ajAcdGetFloat("mev");
     m        = ajAcdGetInt("m");
     diag     = ajAcdGetString("diag");
-    outfile  = ajAcdGetOutfile("outfile");
 
 
 
@@ -117,11 +110,6 @@ int main(int argc, char **argv)
     /* MAIN APPLICATION CODE */
     /* 1. Housekeeping */
     cmd         = ajStrNew();
-    outfilename = ajStrNew();
-    stdoutname  = ajStrNew();
-    stdouttemp  = ajStrNew();
-    ajFilenameSetTempname(&stdoutname);
-
 
     /* 2. Build emast command line */
     /* Command line is built in this order: 
@@ -131,128 +119,92 @@ int main(int argc, char **argv)
        iv. EMBASSY MAST new qualifiers and parameters.
     */
     ajStrAssignS(&cmd, ajAcdGetpathC("mast"));
-    ajFmtPrintAppS(&cmd, " %s ", ajFileGetNameC(mfile));
+    ajFmtPrintAppS(&cmd, " %S %S",
+                   ajFileGetNameS(mfile), ajFileGetNameS(sfile));
 
-    /* Warn user if both d and isstdin are specified and use only d */
-    if(d && isstdin)
-	ajWarn("Database options < -d > and < -stdin > were both set, only < -d > will be used!");
-    if(d)
-	ajFmtPrintAppS(&cmd, " -d %s ", ajFileGetNameC(d));
-    else if(isstdin)
-	ajFmtPrintAppS(&cmd, " -stdin ");
-    /* Presume 'a' is a file .. it doesn't say in the MAST docs ! */
-    if((d || isstdin) && a)
-	ajFmtPrintAppS(&cmd, " -a %s ", ajFileGetNameC(a));
-    if(b)
-	ajFmtPrintAppS(&cmd, " -b ");
     if(bfile)
-	ajFmtPrintAppS(&cmd, " -bfile %s ", ajFileGetNameC(bfile));
-    if(smax != -1)
-	ajFmtPrintAppS(&cmd, " -smax %d ", smax);
-    ajFmtPrintAppS(&cmd, " -ev %f ", ev);
-    ajFmtPrintAppS(&cmd, " -mt %f ", mt);
-    if(text)
-	ajFmtPrintAppS(&cmd, " -text ");
-    if(dna)
-	ajFmtPrintAppS(&cmd, " -dna ");
-    if(comp)
-	ajFmtPrintAppS(&cmd, " -comp ");
-    if(rank != -1)
-	ajFmtPrintAppS(&cmd, " -rank %d ", rank);
-    if(best)
-	ajFmtPrintAppS(&cmd, " -best ");
-    if(remcorr)
-	ajFmtPrintAppS(&cmd, " -remcorr ");
-    if(brief)
-	ajFmtPrintAppS(&cmd, " -brief ");
-    if(b)
-	ajFmtPrintAppS(&cmd, " -b ");
-    if(nostatus)
-	ajFmtPrintAppS(&cmd, " -nostatus ");
-    /* Disregard hitlist if text==ajFalse */
+	ajFmtPrintAppS(&cmd, " -bfile %S", ajFileGetNameS(bfile));
+    if(dblist)
+	ajFmtPrintAppS(&cmd, " -dblist");
+    outdirname = ajDiroutGetPath(outdir);
+    if(ajDiroutCreated(outdir))
+        ajSysCommandRemovedirS(outdirname);
+
+    if(overwrite)
+	ajFmtPrintAppS(&cmd, " -oc %S", outdirname);
+    else
+	ajFmtPrintAppS(&cmd, " -o %S", outdirname);
+    /* disregard hit_list if text is false */
     if(text && hitlist)
-	ajFmtPrintAppS(&cmd, " -hitlist ");
-    if(c != -1)
-	ajFmtPrintAppS(&cmd, " -c %d ", c);
-    if(sep)
-	ajFmtPrintAppS(&cmd, " -sep ");
-    if(norc)
-	ajFmtPrintAppS(&cmd, " -norc ");
-    if(w)
-	ajFmtPrintAppS(&cmd, " -w ");
-    if(seqp)
-	ajFmtPrintAppS(&cmd, " -seqp ");
-    if(MAJSTRGETLEN(mf))
-	ajFmtPrintAppS(&cmd, " -mf %S ", mf);
-    if(MAJSTRGETLEN(df))
-	ajFmtPrintAppS(&cmd, " -df %S ", df);
-    if(minseqs != -1)
-	ajFmtPrintAppS(&cmd, " -minseqs %d ", minseqs);
-    if(mev != -1)
-	ajFmtPrintAppS(&cmd, " -mev %f ", mev);
+	ajFmtPrintAppS(&cmd, " -hit_list");
+    if(remcorr)
+	ajFmtPrintAppS(&cmd, " -remcorr");
     if(m != -1)
-	ajFmtPrintAppS(&cmd, " -m %d ", m);
-    /* Not certain diag is really a string - it's not clear in the documentation ! */
+	ajFmtPrintAppS(&cmd, " -m %d", m);
+    if(c != -1)
+	ajFmtPrintAppS(&cmd, " -c %d", c);
+    if(mev != -1)
+	ajFmtPrintAppS(&cmd, " -mev %f", mev);
     if(MAJSTRGETLEN(diag))
-	ajFmtPrintAppS(&cmd, " -diag %S ", diag);
-    ajFmtPrintAppS(&cmd, " > %S ", stdoutname);
-    
-    
+	ajFmtPrintAppS(&cmd, " -diag %S", diag);
+    if(norc)
+	ajFmtPrintAppS(&cmd, " -norc");
+    if(sep)
+	ajFmtPrintAppS(&cmd, " -sep");
+    if(dna)
+	ajFmtPrintAppS(&cmd, " -dna");
+    if(comp)
+	ajFmtPrintAppS(&cmd, " -comp");
+    ajFmtPrintAppS(&cmd, " -ev %f", ev);
+    ajFmtPrintAppS(&cmd, " -mt %f", mt);
+    if(w)
+	ajFmtPrintAppS(&cmd, " -w");
+    if(best)
+	ajFmtPrintAppS(&cmd, " -best");
+    if(seqp)
+	ajFmtPrintAppS(&cmd, " -seqp");
+    if(MAJSTRGETLEN(mf))
+	ajFmtPrintAppS(&cmd, " -mf %S", mf);
+    if(MAJSTRGETLEN(df))
+	ajFmtPrintAppS(&cmd, " -df %S", df);
+    if(MAJSTRGETLEN(dl))
+	ajFmtPrintAppS(&cmd, " -dl %S", dl);
+    if(minseqs != -1)
+	ajFmtPrintAppS(&cmd, " -minseqs %d", minseqs);
+    if(nostatus)
+	ajFmtPrintAppS(&cmd, " -nostatus");
+    if(!text)
+	ajFmtPrintAppS(&cmd, " -notext");
+    if(!html)
+	ajFmtPrintAppS(&cmd, " -nohtml");
+
     /* 3. Close files from ACD before calling mast */
     ajFileClose(&mfile);
-    ajFileClose(&d);
-    ajFileClose(&a);
+    ajFileClose(&sfile);
     ajFileClose(&bfile);
 
 
     /* 4. Call mast */
     ajDebug("%S\n", cmd);
     ret = system(ajStrGetPtr(cmd));    
-    if(ret)
-        ajFatal("Error from mast program. Aborting.");
+    if(ret == -1)
+        ajFatal("Error (%d) from mast program. Aborting.", ret);
 
     
 
-    /* 5. The mast output file name is hard-coded to a name derived from the 
-       mast command-line (white-space removed, ".html" appended and other
-       undocumented subtle differences). The name of this file is written
-       to stdout, caught in the file stdoutf above.  This contains a 
-       single line, e.g. 
+    /* 5. Exit cleanly */
 
-       Writing to file mast.fred.evs10.000000.mt0.000100.html
-
-       Rename the mast output file to that specified in the ACD file.
-       Remove stdoutf */
-    stdoutf = ajFileNewInNameS(stdoutname);
-    if(!ajReadlineTrim(stdoutf, &stdouttemp))
-	ajFatal("File read error on mast output file (stdout)");
-    if(!ajFmtScanS(stdouttemp, "%*s %*s %*s %S", &outfilename))
-    	ajFatal("File read error on mast output file (stdout)");
-    ajFmtPrintS(&cmd, "mv %S %S", outfilename , ajFileGetNameS(outfile));
-    system(ajStrGetPtr(cmd));    
-    ajFmtPrintS(&cmd, "rm %S", stdoutname);
-    system(ajStrGetPtr(cmd));
-
-
-    /* 6. Exit cleanly */
-    /* Close file from ACD */
-    ajFileClose(&outfile);
     /* Free housekeeping variables */
+
     ajStrDel(&cmd);
-    ajStrDel(&stdoutname);
-    ajStrDel(&stdouttemp);
-    ajStrDel(&outfilename);
+
+    ajDiroutDel(&outdir);
 
     ajStrDel(&mf);
     ajStrDel(&df);
+    ajStrDel(&dl);
     ajStrDel(&diag);
 
-    ajFileClose(&mfile);
-    ajFileClose(&d);
-    ajFileClose(&a);
-    ajFileClose(&bfile);
-    ajFileClose(&stdoutf);
-    
     embExit();
 
     return 0;
