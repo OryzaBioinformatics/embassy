@@ -1,8 +1,11 @@
 application: eyinoyang [
   documentation: "Reports O-(beta)-GlcNAc attachment sites"
-  groups: "Protein:Motifs"
+  groups: "Protein:Modifications"
   embassy: "cbstools"
   external: "yinOyang CBStools website http://www.cbs.dtu.dk/services/"
+  relations: "EDAM:0000601 topic Protein modifications"
+  relations: "EDAM:0000417 operation Protein post-translation modification
+                                     prediction"
 ]
 
 section: input [
@@ -12,9 +15,9 @@ section: input [
 
   seqset: sequence [
     parameter: "Y"
-    type: "any"
+    type: "gapprotein"
     aligned: "Y"
-    relations: "EDAM: Sequence alignment data"                             
+    relations: "EDAM:0001384 data Sequence alignment (protein)"
   ]
 
 endsection: input
@@ -34,7 +37,7 @@ section: advanced [
   boolean: plot [
     default: "N"
     information: "Produce graphics"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   list: format [
@@ -46,13 +49,13 @@ section: advanced [
     delimiter: ","
     codedelimiter: ":"
     information: "Format"
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: netphos [
     default: "N"
     information: "Run netphos and predict Yin-Yang sites"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: threshold [
@@ -60,7 +63,7 @@ section: advanced [
     minimum: "0.0"
     maximum: "1.0"
     information: "Report netphos only scores above this value"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002146 data Threshold"
   ]
 
 endsection: advanced
@@ -73,7 +76,8 @@ section: output [
   outfile: outfile [
     parameter: "Y"
     knowntype: "eyinoyang output"
-    relations:  "EDAM:Protein post-translation modification site report"   
+    relations:  "EDAM:0001324 data Protein features
+                                   (post-translation modification sites)"
   ]
 
 endsection: output

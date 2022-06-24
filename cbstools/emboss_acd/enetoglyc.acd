@@ -1,8 +1,10 @@
 application: enetoglyc [
   documentation: "Reports mucin type GalNAc O-glycosylation sites in mammalian proteins"
-  groups: "Protein:Motifs"
+  groups: "Protein:Modifications"
   embassy: "cbstools"
   external: "netOglyc CBStools website http://www.cbs.dtu.dk/services/"
+  relations: "EDAM:0000601 topic Protein modifications"
+  relations: "EDAM:0000417 operation Protein post-translation modification prediction"
 ]
 
 section: input [
@@ -12,9 +14,9 @@ section: input [
 
   seqset: sequence [
     parameter: "Y"
-    type: "any"
+    type: "gapprotein"
     aligned: "Y"
-    relations: "EDAM: Sequence alignment data"                             
+    relations: "EDAM:0001384 data Sequence alignment (protein)"
   ]
 
 endsection: input
@@ -34,13 +36,13 @@ section: advanced [
   boolean: plot [
     default: "N"
     information: "Produce graphics"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: signalp [
     default: "N"
     information: "Run signalp on the sequences"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 
@@ -54,7 +56,8 @@ section: output [
   outfile: outfile [
     parameter: "Y"
     knowntype: "enetoglyc output"
-    relations:  "EDAM:Protein post-translation modification site report"   
+    relations:  "EDAM:0001324 data Protein features
+                                   (post-translation modification sites)"
   ]
 
 endsection: output

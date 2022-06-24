@@ -1,8 +1,12 @@
 application: enetphos [
-  documentation: "Reports ser, thr and tyr phosphorylation sites in eukaryotic proteins"
-  groups: "Protein:Motifs"
+  documentation: "Reports ser, thr and tyr phosphorylation sites in
+                  eukaryotic proteins"
+  groups: "Protein:Modifications"
   embassy: "cbstools"
   external: "netphos CBStools website http://www.cbs.dtu.dk/services/"
+  relations: "EDAM:0000751 topic Phosphorylation"
+  relations: "EDAM:0000417 operation Protein post-translation modification
+                                     prediction"
 ]
 
 section: input [
@@ -12,9 +16,9 @@ section: input [
 
   seqset: sequence [
     parameter: "Y"
-    type: "any"
+    type: "gapprotein"
     aligned: "Y"
-    relations: "EDAM: Sequence alignment data"                             
+    relations: "EDAM:0001384 data Sequence alignment (protein)"
   ]
 
 endsection: input
@@ -35,7 +39,7 @@ section: additional [
     additional: "Y"
     default: "0.0"
     information: "Report only scores above this value"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002146 data Threshold"
   ]
 
 endsection: additional
@@ -48,19 +52,19 @@ section: advanced [
   boolean: plot [
     default: "N"
     information: "Produce graphics"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: two [
     default: "N"
     information: "Run generic predictions only"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: kinase [
     default: "N"
     information: "Run kinase-specific only"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   list: residue [
@@ -72,25 +76,25 @@ section: advanced [
     delimiter: ","
     codedelimiter: ":"
     information: "Residues to predict with"
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: gff [
     default: "N"
     information: "Produce gff output"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: best [
     default: "N"
     information: "Report only the highest score for each residue"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: addseq [
     default: "N"
     information: "Add sequence to gff output"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
 endsection: advanced
@@ -103,7 +107,8 @@ section: output [
   outfile: outfile [
     parameter: "Y"
     knowntype: "enetphos output"
-    relations:  "EDAM:Protein post-translation modification site report"   
+    relations:  "EDAM:0001324 data Protein features
+                                   (post-translation modification sites)"
   ]
 
 endsection: output

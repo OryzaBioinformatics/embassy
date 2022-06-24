@@ -26,7 +26,7 @@ Usage
 
 % echlorop
 Reports presence of chloroplast transit peptides
-Input (aligned) sequence set: test1.fsa
+Input (aligned) protein sequence set: test1.fsa
 Output file [test1.echlorop]:
 
 
@@ -38,7 +38,7 @@ Output file [test1.echlorop]:
 
 % echlorop
 Reports presence of chloroplast transit peptides
-Input (aligned) sequence set: test12.fsa
+Input (aligned) protein sequence set: test12.fsa
 Output file [test12.echlorop]:
 
 
@@ -48,11 +48,11 @@ Output file [test12.echlorop]:
 Command line arguments
 
 Reports presence of chloroplast transit peptides
-Version: EMBOSS:6.3.0
+Version: EMBOSS:6.4.0.0
 
    Standard (Mandatory) qualifiers:
-  [-sequence]          seqset     (Aligned) sequence set filename and optional
-                                  format, or reference (input USA)
+  [-sequence]          seqset     (Aligned) protein sequence set filename and
+                                  optional format, or reference (input USA)
   [-outfile]           outfile    [*.echlorop] Output file name
 
    Additional (Optional) qualifiers: (none)
@@ -272,57 +272,34 @@ Known bugs
 
 See also
 
-   Program name     Description
-   antigenic        Finds antigenic sites in proteins
-   digest           Reports on protein proteolytic enzyme or reagent cleavage sites
-   eiprscan         Motif detection
-   elipop           Prediction of lipoproteins
-   emast            Motif detection
-   ememe            Multiple EM for Motif Elicitation
-   ememetext        Multiple EM for Motif Elicitation. Text file only
-   enetnglyc        Reports N-glycosylation sites in human proteins
-   enetoglyc        Reports mucin type GalNAc O-glycosylation sites in mammalian
-                    proteins
-   enetphos         Reports ser, thr and tyr phosphorylation sites in eukaryotic
-                    proteins
-   epestfind        Finds PEST motifs as potential proteolytic cleavage sites
-   eprop            Reports propeptide cleavage sites in proteins
-   esignalp         Reports protein signal cleavage sites
-   etmhmm           Reports transmembrane helices
-   eyinoyang        Reports O-(beta)-GlcNAc attachment sites
-   fuzzpro          Search for patterns in protein sequences
-   fuzztran         Search for patterns in protein sequences (translated)
-   helixturnhelix   Identify nucleic acid-binding motifs in protein
-                    sequences
-   oddcomp          Identify proteins with specified sequence word composition
-   omeme            Motif detection
-   patmatdb         Searches protein sequences with a sequence motif
-   patmatmotifs     Scan a protein sequence with motifs from the PROSITE
-                    database
-   pepcoil          Predicts coiled coil regions in protein sequences
-   preg             Regular expression search of protein sequence(s)
-   pscan            Scans protein sequence(s) with fingerprints from the PRINTS
-                    database
-   sigcleave        Reports on signal cleavage sites in a protein sequence
+                    Program name                         Description
+                    elipop       Prediction of lipoproteins
+                    esignalp     Reports protein signal cleavage sites
+                    etmhmm       Reports transmembrane helices
+                    sigcleave    Reports on signal cleavage sites in a protein sequence
+                    siggenlig    Generates ligand-binding signatures from a CON file
+                    sigscan      Generates hits (DHF file) from a signature search
+                    tmap         Predict and plot transmembrane segments in protein sequences
+                    topo         Draws an image of a transmembrane protein
 
 Author(s)
 
-   This program is an EMBOSS wrapper for a program written by the CBS
-   group http://www.cbs.dtu.dk/index.shtml
+                    This program is an EMBOSS wrapper for a program written by the CBS
+                    group http://www.cbs.dtu.dk/index.shtml
 
-   The original CBS group application must be licensed and installed to
-   use this wrapper.
+                    The original CBS group application must be licensed and installed to
+                    use this wrapper.
 
-   Please report all bugs to the EMBOSS bug team
-   (emboss-bug (c) emboss.open-bio.org) not to the original author.
+                    Please report all bugs to the EMBOSS bug team
+                    (emboss-bug (c) emboss.open-bio.org) not to the original author.
 
 History
 
 Target users
 
-   This program is intended to be used by everyone and everything, from
-   naive users to embedded scripts.
+                    This program is intended to be used by everyone and everything, from
+                    naive users to embedded scripts.
 
 Comments
 
-   None
+                    None

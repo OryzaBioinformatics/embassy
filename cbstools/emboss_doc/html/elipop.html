@@ -63,7 +63,7 @@ The LipoP 1.0 server produces predictions of lipoproteins and
         Many examples illustrating different behaviours is good.
  -->
 
-<b>Here is a sample session with elipop</b>
+Here is a sample session with <b>elipop</b>
 <p>
 
 <p>
@@ -71,7 +71,7 @@ The LipoP 1.0 server produces predictions of lipoproteins and
 
 % <b>elipop </b>
 Prediction of lipoproteins
-Input (aligned) sequence set: <b>5h2a_crigr.fsa</b>
+Input (aligned) protein sequence set: <b>5h2a_crigr.fsa</b>
 Output file [5h2a_crigr.elipop]: <b></b>
 
 </pre></td></tr></table><p>
@@ -87,11 +87,11 @@ Output file [5h2a_crigr.elipop]: <b></b>
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
 Prediction of lipoproteins
-Version: EMBOSS:6.3.0
+Version: EMBOSS:6.4.0.0
 
    Standard (Mandatory) qualifiers:
-  [-sequence]          seqset     (Aligned) sequence set filename and optional
-                                  format, or reference (input USA)
+  [-sequence]          seqset     (Aligned) protein sequence set filename and
+                                  optional format, or reference (input USA)
   [-outfile]           outfile    [*.elipop] Output file name
 
    Additional (Optional) qualifiers: (none)
@@ -159,7 +159,7 @@ Version: EMBOSS:6.3.0
 <tr bgcolor="#FFFFCC">
 <td>[-sequence]<br>(Parameter 1)</td>
 <td>seqset</td>
-<td>(Aligned) sequence set filename and optional format, or reference (input USA)</td>
+<td>(Aligned) protein sequence set filename and optional format, or reference (input USA)</td>
 <td>Readable set of sequences</td>
 <td><b>Required</b></td>
 </tr>
@@ -676,11 +676,6 @@ None.
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/digest.html">digest</a></td>
-<td>Reports on protein proteolytic enzyme or reagent cleavage sites</td>
-</tr>
-
-<tr>
 <td><a href="echlorop.html">echlorop</a></td>
 <td>Reports presence of chloroplast transit peptides</td>
 </tr>
@@ -706,28 +701,8 @@ None.
 </tr>
 
 <tr>
-<td><a href="enetnglyc.html">enetnglyc</a></td>
-<td>Reports N-glycosylation sites in human proteins</td>
-</tr>
-
-<tr>
-<td><a href="enetoglyc.html">enetoglyc</a></td>
-<td>Reports mucin type GalNAc O-glycosylation sites in mammalian proteins</td>
-</tr>
-
-<tr>
-<td><a href="enetphos.html">enetphos</a></td>
-<td>Reports ser, thr and tyr phosphorylation sites in eukaryotic proteins</td>
-</tr>
-
-<tr>
 <td><a href="/emboss/apps/epestfind.html">epestfind</a></td>
 <td>Finds PEST motifs as potential proteolytic cleavage sites</td>
-</tr>
-
-<tr>
-<td><a href="eprop.html">eprop</a></td>
-<td>Reports propeptide cleavage sites in proteins</td>
 </tr>
 
 <tr>
@@ -741,11 +716,6 @@ None.
 </tr>
 
 <tr>
-<td><a href="eyinoyang.html">eyinoyang</a></td>
-<td>Reports O-(beta)-GlcNAc attachment sites</td>
-</tr>
-
-<tr>
 <td><a href="/emboss/apps/fuzzpro.html">fuzzpro</a></td>
 <td>Search for patterns in protein sequences</td>
 </tr>
@@ -753,16 +723,6 @@ None.
 <tr>
 <td><a href="/emboss/apps/fuzztran.html">fuzztran</a></td>
 <td>Search for patterns in protein sequences (translated)</td>
-</tr>
-
-<tr>
-<td><a href="/emboss/apps/helixturnhelix.html">helixturnhelix</a></td>
-<td>Identify nucleic acid-binding motifs in protein sequences</td>
-</tr>
-
-<tr>
-<td><a href="/emboss/apps/oddcomp.html">oddcomp</a></td>
-<td>Identify proteins with specified sequence word composition</td>
 </tr>
 
 <tr>
@@ -781,11 +741,6 @@ None.
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/pepcoil.html">pepcoil</a></td>
-<td>Predicts coiled coil regions in protein sequences</td>
-</tr>
-
-<tr>
 <td><a href="/emboss/apps/preg.html">preg</a></td>
 <td>Regular expression search of protein sequence(s)</td>
 </tr>
@@ -798,6 +753,26 @@ None.
 <tr>
 <td><a href="/emboss/apps/sigcleave.html">sigcleave</a></td>
 <td>Reports on signal cleavage sites in a protein sequence</td>
+</tr>
+
+<tr>
+<td><a href="/embassy/signature/siggenlig.html">siggenlig</a></td>
+<td>Generates ligand-binding signatures from a CON file</td>
+</tr>
+
+<tr>
+<td><a href="/embassy/signature/sigscan.html">sigscan</a></td>
+<td>Generates hits (DHF file) from a signature search</td>
+</tr>
+
+<tr>
+<td><a href="/emboss/apps/tmap.html">tmap</a></td>
+<td>Predict and plot transmembrane segments in protein sequences</td>
+</tr>
+
+<tr>
+<td><a href="/embassy/topo/topo.html">topo</a></td>
+<td>Draws an image of a transmembrane protein</td>
 </tr>
 
 </table>

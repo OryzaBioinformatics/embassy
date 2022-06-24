@@ -1,8 +1,10 @@
 application: enetnglyc [
   documentation: "Reports N-glycosylation sites in human proteins"
-  groups: "Protein:Motifs"
+  groups: "Protein:Modifications"
   embassy: "cbstools"
   external: "netNglyc CBStools website http://www.cbs.dtu.dk/services/"
+  relations: "EDAM:0000601 topic Protein modifications"
+  relations: "EDAM:0000417 operation Protein post-translation modification prediction"
 ]
 
 section: input [
@@ -12,9 +14,9 @@ section: input [
 
   seqset: sequence [
     parameter: "Y"
-    type: "any"
+    type: "gapprotein"
     aligned: "Y"
-    relations: "EDAM: Sequence alignment data"                             
+    relations: "EDAM:0001384 data Sequence alignment (protein)"
   ]
 
 endsection: input
@@ -34,19 +36,19 @@ section: advanced [
   boolean: plot [
     default: "N"
     information: "Produce graphics"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: asparagines [
     default: "N"
     information: "Predict on all asparagines"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: thresholds [
     default: "N"
     information: "Show additional thresholds when -plot is used"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
 endsection: advanced
@@ -59,7 +61,8 @@ section: output [
   outfile: outfile [
     parameter: "Y"
     knowntype: "enetnglyc output"
-    relations:  "EDAM:Protein post-translation modification site report"   
+    relations:  "EDAM:0001324 data Protein features
+                                   (post-translation modification sites)"
   ]
 
 endsection: output

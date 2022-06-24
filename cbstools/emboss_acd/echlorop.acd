@@ -1,8 +1,11 @@
 application: echlorop [
   documentation: "Reports presence of chloroplast transit peptides"
-  groups: "Protein:Motifs"
+  groups: "Protein:Functional sites"
   embassy: "cbstools"
   external: "chlorop CBStools website http://www.cbs.dtu.dk/services/"
+  relations: "EDAM:0000748 topic Protein functional sites"
+  relations: "EDAM:0000140 topic Protein targeting and localization"
+  relations: "EDAM:0000418 operation Protein signal peptide detection"
 ]
 
 section: input [
@@ -12,9 +15,9 @@ section: input [
 
   seqset: sequence [
     parameter: "Y"
-    type: "any"
+    type: "gapprotein"
     aligned: "Y"
-    relations: "EDAM: Sequence alignment data"                             
+    relations: "EDAM:0001384 data Sequence alignment (protein)"
   ]
 
 endsection: input
@@ -27,7 +30,7 @@ section: advanced [
   boolean: full [
     default: "N"
     information: "Show full output"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: advanced
@@ -40,7 +43,7 @@ section: output [
   outfile: outfile [
     parameter: "Y"
     knowntype: "echlorop output"
-    relations:  "EDAM:Signal peptide sequence map report"                  
+    relations:  "EDAM:0001322 data Protein features (signal peptides)"
   ]
 
 endsection: output
