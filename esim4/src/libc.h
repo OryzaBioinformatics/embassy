@@ -1,6 +1,7 @@
 #ifndef LIBC_H
 #define LIBC_H
-/*$Id: libc.h,v 1.1 2002/02/25 09:33:49 hgmp Exp $*/
+/*$Id: libc.h,v 1.3 2010/09/23 13:47:04 ajb Exp $*/
+#include <config.h>
 #include <assert.h>
 #include <ctype.h>
 #include <errno.h>

@@ -2,6 +2,9 @@ application: esim4 [
   documentation: "Align an mRNA to a genomic DNA sequence"
   groups: "Alignment:Global"
   embassy: "esim4"
+  relations: "EDAM:0000182 topic Sequence alignment"
+  relations: "EDAM:0000494 operation Pairwise sequence alignment (global)"
+  relations: "EDAM:0000293 operation Hybrid sequence alignment"
 ]
 
 section: input [
@@ -12,14 +15,14 @@ section: input [
   sequence: asequence [
     parameter: "Y"
     type: "dna"
-    relations: "EDAM: Pure DNA sequence"                                   
+    relations: "EDAM:0002887 data Sequence record (nucleic acid)"
   ]
 
   seqall: bsequence [
     parameter: "Y"
     type: "dna"
     information: "Genomic sequence"
-    relations: "EDAM: DNA sequence record"                                 
+    relations: "EDAM:0002887 data Sequence record (nucleic acid)"
   ]
 
 endsection: input
@@ -32,18 +35,16 @@ section: additional [
   integer: word [
     additional: "Y"
     default: "12"
-    information: "Sets the word size (W) for blast hits.
-                  Default value: 12."
-    relations: "EDAM: Generic integer"                                     
+    information: "Sets the word size (W) for blast hits"
+    relations: "EDAM:0001250 data Word size"
   ]
 
   integer: extend [
     additional: "Y"
     default: "12"
     information: "Sets the word extension termination limit (X)
-                  for the blast-like stage of the algorithm. Default value:
-                  12."
-    relations: "EDAM: Generic integer"                                     
+                  for the blast-like stage of the algorithm."
+    relations: "EDAM:0001249 data Sequence length"
   ]
 
   integer: cutoff [
@@ -51,7 +52,7 @@ section: additional [
     default: "3"
     maximum: "10"
     information: "Sets the cutoff (E) in range [3,10]."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002146 data Threshold"
   ]
 
   toggle: useramsp [
@@ -59,7 +60,7 @@ section: additional [
     default: "N"
     information: "False: esim4 calculates mspA, True: value
                   from mspA command line argument."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: amsp [
@@ -73,7 +74,7 @@ section: additional [
            criteria.) For example, a good value for genomic sequences in the
            range of a few hundred Kb is 16. To avoid spurious matches,
            however, a larger value may be needed for longer sequences."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002146 data Threshold"
   ]
 
   toggle: userbmsp [
@@ -81,7 +82,7 @@ section: additional [
     default: "N"
     information: "False: esim4 calculates mspB, True: value
                   from mspB command line argument."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: bmsp [
@@ -93,7 +94,7 @@ section: additional [
            as-yet-unmatched fragments, during the second stage of the
            algorithm. By default, the smaller of the constant 12 and a
            statistics-based threshold is chosen."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002146 data Threshold"
   ]
 
   integer: weight [
@@ -101,7 +102,7 @@ section: additional [
     default: "0"
     information: "Weight value (H) (undocumented). 0 uses a
                   default, >0 is a value"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: diagonal [
@@ -109,7 +110,7 @@ section: additional [
     default: "10"
     information: "Bound (K) for the diagonal distance within
                   consecutive MSPs in an exon."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   list: strand [
@@ -123,7 +124,7 @@ section: additional [
            are 'forward' and 'reverse'."
     values: "both:Both strands; forward:Forward strand only;
              reverse:Reverse strand only"
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: format [
@@ -146,7 +147,7 @@ section: additional [
            option can be used with the S command line option to specify the
            endpoints of the CDS in the mRNA, and produces output in the exons
            file format required by PipMaker."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: cliptails [
@@ -159,7 +160,7 @@ section: additional [
            displayed as computed. When this feature is enabled (-cliptails),
            sim4 will remove the poly-A tails and all format options will
            produce additional lav alignment headers."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: smallexons [
@@ -170,7 +171,7 @@ section: additional [
            (N=1) guided by the splice-site recognition signals. This option
            can be used when a high accuracy match is expected. The default
            value is N=0, specifying no additional search."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: ambiguity [
@@ -182,7 +183,7 @@ section: additional [
            (ABCDGHKMNRSTVWXY) are allowed. By specifying -noambiguity, the
            set of acceptable characters is restricted to A,C,G,T,N and X
            only."
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   string: cdsregion [
@@ -197,35 +198,35 @@ section: additional [
            database, the command line specification for the CDS will apply to
            the first sequence in the file only."
     knowntype: "sequence range"
-    relations:  "EDAM: Sequence position range"                        
+    relations:  "EDAM:0001014 data Sequence position specification"
   ]
 
   integer: aoffset [
     additional: "Y"
     information: "Undocumented (f) - some sort of offset in
                   first sequence."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002145 data Sequence offset"
   ]
 
   integer: boffset [
     additional: "Y"
     information: "Undocumented (F) - some sort of offset in
                   second sequence."
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002145 data Sequence offset"
   ]
 
   integer: toa [
     additional: "Y"
     information: "Undocumented (t)- offset end of first
                   sequence?"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002145 data Sequence offset"
   ]
 
   integer: tob [
     additional: "Y"
     information: "Undocumented (T) - offset end of second
                   sequence?"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002145 data Sequence offset"
   ]
 
 endsection: additional
@@ -239,7 +240,7 @@ section: output [
     parameter: "Y"
     knowntype: "sim4 output"
     information: "Sim4 program output file"
-    relations:  "EDAM: Pairwise hybrid sequence alignment data"        
+    relations:  "EDAM:0001385 data Sequence alignment (hybrid)"
   ]
 
 endsection: output

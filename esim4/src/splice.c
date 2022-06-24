@@ -6,7 +6,7 @@
 #ifndef __lint
 /*@unused@*/
 static const char rcsid[] =
-"$Id: splice.c,v 1.3 2004/08/05 16:02:32 rice Exp $";
+"$Id: splice.c,v 1.4 2011/07/06 14:19:58 rice Exp $";
 #endif
 
 static int spl_encode[NACHARS];
@@ -41,7 +41,7 @@ void splice(sim4_uchar *in_seqx, int ls, int us, int le, int ue,
 {
    int p, q, *gtscore=NULL, *ctscore=NULL, *agscore=NULL, *acscore=NULL;
    int i, tmp;
-   int maxCscore, maxGscore, Gxs, Gxe, Gy, Cxs, Cxe, Cy, keep_Ci, keep_Gi;
+   int maxCscore, maxGscore, Gxs, Gxe, Gy, Cxs, Cxe, Cy /*, keep_Ci, keep_Gi*/;
    int *max_Cf=NULL, *max_Gf=NULL, *max_Cb=NULL, *max_Gb=NULL;
    int *start_Gi=NULL, *start_Ci=NULL, *end_Gi=NULL, *end_Ci=NULL;
    sim4_uchar *s;
@@ -105,7 +105,7 @@ void splice(sim4_uchar *in_seqx, int ls, int us, int le, int ue,
             maxGscore = tmp;
             /* save (i, start_Gi[i], end_Gi[i]); */
             Gxs = ls+start_Gi[i]-1; Gxe = le+end_Gi[i]-1; Gy = ys+i-1;
-            keep_Gi = i;
+            /*keep_Gi = i;*/
         }  
       }
       free(max_Gf); free(max_Gb); /* free(start_Gi); free(end_Gi); */
@@ -116,7 +116,7 @@ void splice(sim4_uchar *in_seqx, int ls, int us, int le, int ue,
             maxCscore = tmp;
             /* save (i, start_Ci[i], end_Ci[i]); */
             Cxs = ls+start_Ci[i]-1; Cxe = le+end_Ci[i]-1; Cy = ys+i-1;
-            keep_Ci = i;
+            /*keep_Ci = i;*/
         }
       }
       free(max_Cf); free(max_Cb); /* free(start_Ci); free(end_Ci); */

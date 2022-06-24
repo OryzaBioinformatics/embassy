@@ -44,7 +44,7 @@ Sim4 program output file [h45989.esim4]:
 Command line arguments
 
 Align an mRNA to a genomic DNA sequence
-Version: EMBOSS:6.3.0
+Version: EMBOSS:6.4.0.0
 
    Standard (Mandatory) qualifiers:
   [-asequence]         sequence   Nucleotide sequence filename and optional
@@ -53,12 +53,11 @@ Version: EMBOSS:6.3.0
   [-outfile]           outfile    [*.esim4] Sim4 program output file
 
    Additional (Optional) qualifiers (* if not always prompted):
-   -word               integer    [12] Sets the word size (W) for blast hits.
-                                  Default value: 12. (Any integer value)
+   -word               integer    [12] Sets the word size (W) for blast hits
+                                  (Any integer value)
    -extend             integer    [12] Sets the word extension termination
                                   limit (X) for the blast-like stage of the
-                                  algorithm. Default value: 12. (Any integer
-                                  value)
+                                  algorithm. (Any integer value)
    -cutoff             integer    [3] Sets the cutoff (E) in range [3,10].
                                   (Integer up to 10)
    -useramsp           toggle     [N] False: esim4 calculates mspA, True:

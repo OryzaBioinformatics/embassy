@@ -7,7 +7,7 @@
 
 #ifndef __lint
 /*@unused@*/
-static const char rcsid[] = "$Id: poly.c,v 1.3 2004/08/05 16:02:32 rice Exp $";
+static const char rcsid[] = "$Id: poly.c,v 1.4 2011/07/06 14:19:58 rice Exp $";
 #endif
 
 static void remove_polyT_front(struct edit_script_list **,Exon *,sim4_uchar *,sim4_uchar*,int *);
@@ -105,7 +105,7 @@ void remove_poly(struct edit_script_list **Script, Exon *Exons, sim4_uchar *s1, 
 }
 
 static void remove_polyA_back(struct edit_script_list **Sptr, Exon *Exons, sim4_uchar *s1, sim4_uchar *s2, int len2, int *lastA) {
-     Exon *t, *exons_tail, *prev; /* start from Lblock */
+    Exon *t, *exons_tail/*, *prev*/; /* start from Lblock */
      sim4_uchar *b, *end;
      int numA, pA, dummy, trim_p, reverse_script=0;
 
@@ -119,9 +119,9 @@ static void remove_polyA_back(struct edit_script_list **Sptr, Exon *Exons, sim4_
      }
 
      
-     exons_tail = Exons->next_exon; prev = Exons;
+     exons_tail = Exons->next_exon; /*prev = Exons;*/
      for ( ; exons_tail->next_exon && exons_tail->next_exon->to1; 
-             prev=exons_tail, exons_tail=exons_tail->next_exon);
+           /*prev=exons_tail,*/ exons_tail=exons_tail->next_exon);
 
      trim_p = SIMTRUE;
      while ((t=exons_tail)!=NULL && t->to1 && trim_p) {
