@@ -827,7 +827,7 @@ will never be prompted for.
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
 Multiple EM for motif elicitation, text file only.
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-dataset]           seqset     User must provide the full filename of a set
@@ -1171,6 +1171,7 @@ Version: EMBOSS:6.5.0.0
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
    -scircular1         boolean    Sequence is circular
+   -squick1            boolean    Read id and sequence only
    -sformat1           string     Input sequence format
    -iquery1            string     Input query fields or ID list
    -ioffset1           integer    Input start position offset
@@ -1617,6 +1618,14 @@ Version: EMBOSS:6.5.0.0
 <td> -scircular1<br>-scircular_dataset</td>
 <td>boolean</td>
 <td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -squick1<br>-squick_dataset</td>
+<td>boolean</td>
+<td>Read id and sequence only</td>
 <td>Boolean value Yes/No</td>
 <td>N</td>
 </tr>
@@ -2585,7 +2594,7 @@ tdc                              3.35e-03  81_[+1(1.84e-05)]_9
 Stopped because nmotifs = 1 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 </pre>
@@ -2698,7 +2707,7 @@ tdc                              4.03e-04  79_[-1(2.34e-06)]_6
 Stopped because nmotifs = 1 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 </pre>
@@ -2891,7 +2900,7 @@ TTCACATG[CG][CA][AGC][CA][CA][CT][CT]
 
 
 
-Time 11.50 secs.
+Time  7.41 secs.
 
 ********************************************************************************
 
@@ -2921,7 +2930,7 @@ OPI3                             1.57e-03  581_[-1(1.82e-06)]_40_[+1(1.00e-06)]_
 Stopped because nmotifs = 1 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 </pre>
@@ -3061,7 +3070,7 @@ MUP2_MOUSE                       2.28e-27  23_[1(1.21e-16)]_62_[2(1.09e-17)]_56
 Stopped because nmotifs = 2 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 </pre>
@@ -3219,7 +3228,7 @@ CAL1_YEAST                       2.42e-13  270_[1(6.78e-16)]_32_[1(4.48e-11)]_34
 Stopped because nmotifs = 1 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 </pre>
@@ -3332,7 +3341,7 @@ CAL1_YEAST                       5.03e-15  41_[2(7.36e-07)]_74_[3(3.01e-05)]_32_
 Stopped because nmotifs = 3 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 </pre>
@@ -3445,7 +3454,7 @@ CAL1_YEAST                       2.39e-16  10_[3(4.04e-07)]_19_[1(2.94e-07)]_79_
 Stopped because nmotifs = 3 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 </pre>
@@ -3668,7 +3677,7 @@ YURA_MYXXA                       5.59e-32  35_[8(6.92e-05)]_26_[3(6.11e-09)]_12_
 Stopped because motif E-value &gt; 1.00e-02.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 </pre>
@@ -3901,17 +3910,17 @@ None.
 <tr><th>Program name</th>
 <th>Description</th></tr>
 <tr>
-<td><a href="/emboss/apps/antigenic.html">antigenic</a></td>
+<td><a href="../../emboss/apps/antigenic.html">antigenic</a></td>
 <td>Find antigenic sites in proteins</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/iprscan/eiprscan.html">eiprscan</a></td>
+<td><a href="../iprscan/eiprscan.html">eiprscan</a></td>
 <td>Motif detection</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/cbstools/elipop.html">elipop</a></td>
+<td><a href="../cbstools/elipop.html">elipop</a></td>
 <td>Predict lipoproteins</td>
 </tr>
 
@@ -3926,47 +3935,47 @@ None.
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/epestfind.html">epestfind</a></td>
+<td><a href="../../emboss/apps/epestfind.html">epestfind</a></td>
 <td>Find PEST motifs as potential proteolytic cleavage sites</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/fuzzpro.html">fuzzpro</a></td>
+<td><a href="../../emboss/apps/fuzzpro.html">fuzzpro</a></td>
 <td>Search for patterns in protein sequences</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/fuzztran.html">fuzztran</a></td>
+<td><a href="../../emboss/apps/fuzztran.html">fuzztran</a></td>
 <td>Search for patterns in protein sequences (translated)</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/meme/omeme.html">omeme</a></td>
+<td><a href="../meme/omeme.html">omeme</a></td>
 <td>Motif detection</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/patmatdb.html">patmatdb</a></td>
+<td><a href="../../emboss/apps/patmatdb.html">patmatdb</a></td>
 <td>Search protein sequences with a sequence motif</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/patmatmotifs.html">patmatmotifs</a></td>
+<td><a href="../../emboss/apps/patmatmotifs.html">patmatmotifs</a></td>
 <td>Scan a protein sequence with motifs from the PROSITE database</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/preg.html">preg</a></td>
+<td><a href="../../emboss/apps/preg.html">preg</a></td>
 <td>Regular expression search of protein sequence(s)</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/pscan.html">pscan</a></td>
+<td><a href="../../emboss/apps/pscan.html">pscan</a></td>
 <td>Scan protein sequence(s) with fingerprints from the PRINTS database</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/sigcleave.html">sigcleave</a></td>
+<td><a href="../../emboss/apps/sigcleave.html">sigcleave</a></td>
 <td>Report on signal cleavage sites in a protein sequence</td>
 </tr>
 

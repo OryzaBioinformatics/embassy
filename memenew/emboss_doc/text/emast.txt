@@ -140,7 +140,7 @@ Command line arguments
    separate options.
 
 Motif detection
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-mfile]             infile     If -d  is not given, MAST looks
@@ -594,7 +594,7 @@ REFERENCE
 DATABASE AND MOTIFS
 ********************************************************************************
         DATABASE ./crp0.s (nucleotide)
-        Last updated on Tue Jul 10 18:26:20 2012
+        Last updated on Mon Jul 15 19:00:07 2013
         Database contains 18 sequences, 1890 residues
 
         Scores for positive and reverse complement strands are combined.
@@ -670,8 +670,8 @@ trn9cat
 ********************************************************************************
 
 
-CPU: emboss4.ebi.ac.uk
-Time 0.007000 secs.
+CPU: peterlenovo
+Time 0.012000 secs.
 
 mast ../../data/memenew/ex1.html ./crp0.s -oc mast_out/ -ev 10.000000 -mt 0.0001
 00
@@ -871,7 +871,7 @@ t="" length="105">
 2"/>
                 </sequence>
         </sequences>
-        <runtime cycles="6999" seconds="0.007"/>
+        <runtime cycles="12000" seconds="0.012"/>
 </mast>
 
           MAST outputs a file containing:

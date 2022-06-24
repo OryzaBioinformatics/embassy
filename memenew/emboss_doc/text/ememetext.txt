@@ -628,7 +628,7 @@ Command line arguments
    "advanced" options will never be prompted for.
 
 Multiple EM for motif elicitation, text file only.
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-dataset]           seqset     User must provide the full filename of a set
@@ -972,6 +972,7 @@ Version: EMBOSS:6.5.0.0
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
    -scircular1         boolean    Sequence is circular
+   -squick1            boolean    Read id and sequence only
    -sformat1           string     Input sequence format
    -iquery1            string     Input query fields or ID list
    -ioffset1           integer    Input start position offset
@@ -1728,7 +1729,7 @@ tdc                              3.35e-03  81_[+1(1.84e-05)]_9
 Stopped because nmotifs = 1 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 
@@ -1838,7 +1839,7 @@ tdc                              4.03e-04  79_[-1(2.34e-06)]_6
 Stopped because nmotifs = 1 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 
@@ -2027,7 +2028,7 @@ TTCACATG[CG][CA][AGC][CA][CA][CT][CT]
 
 
 
-Time 11.50 secs.
+Time  7.41 secs.
 
 ********************************************************************************
 
@@ -2061,7 +2062,7 @@ OPI3                             1.57e-03  581_[-1(1.82e-06)]_40_[+1(1.00e-06)]_
 Stopped because nmotifs = 1 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 
@@ -2217,7 +2218,7 @@ MUP2_MOUSE                       2.28e-27  23_[1(1.21e-16)]_62_[2(1.09e-17)]_56
 Stopped because nmotifs = 2 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 
@@ -2393,7 +2394,7 @@ CAL1_YEAST                       2.42e-13  270_[1(6.78e-16)]_32_[1(4.48e-11)]_34
 Stopped because nmotifs = 1 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 
@@ -2534,7 +2535,7 @@ _77
 Stopped because nmotifs = 3 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 
@@ -2677,7 +2678,7 @@ CAL1_YEAST                       2.39e-16  10_[3(4.04e-07)]_19_[1(2.94e-07)]_79_
 Stopped because nmotifs = 3 reached.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 
@@ -2940,7 +2941,7 @@ YURA_MYXXA                       5.59e-32  35_[8(6.92e-05)]_26_[3(6.11e-09)]_12_
 Stopped because motif E-value > 1.00e-02.
 ********************************************************************************
 
-CPU: emboss4.ebi.ac.uk
+CPU: peterlenovo
 
 ********************************************************************************
 
