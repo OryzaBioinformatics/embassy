@@ -11,13 +11,14 @@ endif
 
 
 if LOCALLINK
-INCLUDES = -I../include -I../../../nucleus -I../../../ajax/pcre \
+AM_CPPFLAGS = -I../include -I../../../nucleus -I../../../ajax/pcre \
 	$(LLINCLUDES) \
 	-I../../../ajax/core -I../../../ajax/graphics \
 	-I../../../ajax/ensembl -I../../../ajax/ajaxdb \
 	-I../../../ajax/acd -I../../../plplot
 else
-INCLUDES = -I../include -I${embprefix}/include -I${embprefix}/include/eplplot \
+AM_CPPFLAGS = -I../include -I${embprefix}/include \
+	-I${embprefix}/include/eplplot \
 	$(NLINCLUDES) \
 	-I${embprefix}/include/epcre
 endif
@@ -62,5 +63,5 @@ LDADD = ../../../nucleus/libnucleus.la ../../../ajax/acd/libacd.la \
 	../../../plplot/libeplplot.la $(XLIB)
 else
 LDADD = -L${embprefix}/lib -lnucleus -lacd -lajaxdb -lensembl -lajaxg \
-        -lajax -leexpat -lepcre -lezlib -leplplot $(XLIB)
+	-lajax -lepcre $(NLADD) -leplplot $(XLIB)
 endif

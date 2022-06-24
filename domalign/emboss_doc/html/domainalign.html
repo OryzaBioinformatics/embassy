@@ -683,7 +683,7 @@ PDB files used by STAMP.  This file should look like :
  
 <pre>
 Generate alignments (DAF file) for nodes in a DCF file.
-Version: EMBOSS:6.3.0
+Version: EMBOSS:6.4.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-dcfinfile]         infile     This option specifies the name of DCF file
@@ -1063,7 +1063,7 @@ Version: EMBOSS:6.3.0
 <H3> 6.2 EXAMPLE SESSION </H3>
 An example of interactive use of DOMAINALIGN is shown below.
 
-<b>Here is a sample session with domainalign</b>
+Here is a sample session with <b>domainalign</b>
 <p>
 
 <p>
@@ -1132,10 +1132,10 @@ POSTSTAMP, R.B. Russell 1995
  Reading domain descriptors/transformations from the file ./domainalign-1234567890.1234.1
  Reading alignment...
   Reading coordinates...
- Domain   1 /homes/pmr/cvsemboss/test/qa/domainer-keep2//d1cs4a_.ent d1cs4a_
+ Domain   1 /homes/user/test/qa/domainer-keep2//d1cs4a_.ent d1cs4a_
         all residues 189 CAs =>  189 CAs in total
  Transforming coordinates...
- Domain   2 /homes/pmr/cvsemboss/test/qa/domainer-keep2//d1fx2a_.ent d1fx2a__1
+ Domain   2 /homes/user/test/qa/domainer-keep2//d1fx2a_.ent d1fx2a__1
         all residues 235 CAs =>  235 CAs in total
  Transforming coordinates...
  ...done.
@@ -1187,10 +1187,10 @@ POSTSTAMP, R.B. Russell 1995
  Reading domain descriptors/transformations from the file ./domainalign-1234567890.1234.1
  Reading alignment...
   Reading coordinates...
- Domain   1 /homes/pmr/cvsemboss/test/qa/domainer-keep2//d4at1b1.ent d4at1b1
+ Domain   1 /homes/user/test/qa/domainer-keep2//d4at1b1.ent d4at1b1
         all residues  93 CAs =>   93 CAs in total
  Transforming coordinates...
- Domain   2 /homes/pmr/cvsemboss/test/qa/domainer-keep2//d4at1d1.ent d4at1d1_1
+ Domain   2 /homes/user/test/qa/domainer-keep2//d4at1d1.ent d4at1d1_1
         all residues  93 CAs =>   93 CAs in total
  Transforming coordinates...
  ...done.
@@ -1565,8 +1565,13 @@ None
 <tr><th>Program name</th>
 <th>Description</th></tr>
 <tr>
-<td><a href="/embassy/structure/contacts.html">contacts</a></td>
-<td>Generate intra-chain CON files from CCF files</td>
+<td><a href="/embassy/domainatrix/cathparse.html">cathparse</a></td>
+<td>Generates DCF file from raw CATH files</td>
+</tr>
+
+<tr>
+<td><a href="/embassy/domainatrix/domainnr.html">domainnr</a></td>
+<td>Removes redundant domains from a DCF file</td>
 </tr>
 
 <tr>
@@ -1575,13 +1580,18 @@ None
 </tr>
 
 <tr>
-<td><a href="/embassy/domainatrix/domainreso.html">domainreso</a></td>
-<td>Remove low resolution domains from a DCF file</td>
+<td><a href="/embassy/domainatrix/domainseqs.html">domainseqs</a></td>
+<td>Adds sequence records to a DCF file</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/structure/interface.html">interface</a></td>
-<td>Generate inter-chain CON files from CCF files</td>
+<td><a href="/embassy/domainatrix/domainsse.html">domainsse</a></td>
+<td>Add secondary structure records to a DCF file</td>
+</tr>
+
+<tr>
+<td><a href="/emboss/apps/helixturnhelix.html">helixturnhelix</a></td>
+<td>Identify nucleic acid-binding motifs in protein sequences</td>
 </tr>
 
 <tr>
@@ -1590,13 +1600,23 @@ None
 </tr>
 
 <tr>
+<td><a href="/emboss/apps/matcher.html">matcher</a></td>
+<td>Waterman-Eggert local alignment of two sequences</td>
+</tr>
+
+<tr>
 <td><a href="/embassy/signature/matgen3d.html">matgen3d</a></td>
 <td>Generate a 3D-1D scoring matrix from CCF files</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/psiphi.html">psiphi</a></td>
-<td>Calculates phi and psi torsion angles from protein coordinates</td>
+<td><a href="/embassy/hmmer/oalistat.html">oalistat</a></td>
+<td>Statistics for multiple alignment files</td>
+</tr>
+
+<tr>
+<td><a href="/emboss/apps/pepcoil.html">pepcoil</a></td>
+<td>Predicts coiled coil regions in protein sequences</td>
 </tr>
 
 <tr>
@@ -1610,6 +1630,11 @@ None
 </tr>
 
 <tr>
+<td><a href="/embassy/domainatrix/scopparse.html">scopparse</a></td>
+<td>Generate DCF file from raw SCOP files</td>
+</tr>
+
+<tr>
 <td><a href="seqalign.html">seqalign</a></td>
 <td>Extend alignments (DAF file) with sequences (DHF file)</td>
 </tr>
@@ -1620,8 +1645,8 @@ None
 </tr>
 
 <tr>
-<td><a href="/embassy/domsearch/seqsearch.html">seqsearch</a></td>
-<td>Generate PSI-BLAST hits (DHF file) from a DAF file</td>
+<td><a href="/emboss/apps/seqmatchall.html">seqmatchall</a></td>
+<td>All-against-all word comparison of a sequence set</td>
 </tr>
 
 <tr>
@@ -1635,23 +1660,28 @@ None
 </tr>
 
 <tr>
-<td><a href="/embassy/signature/siggen.html">siggen</a></td>
-<td>Generates a sparse protein signature from an alignment</td>
+<td><a href="/embassy/domainatrix/ssematch.html">ssematch</a></td>
+<td>Search a DCF file for secondary structure matches</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/signature/siggenlig.html">siggenlig</a></td>
-<td>Generates ligand-binding signatures from a CON file</td>
+<td><a href="/emboss/apps/supermatcher.html">supermatcher</a></td>
+<td>Calculate approximate local pair-wise alignments of larger sequences</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/signature/sigscan.html">sigscan</a></td>
-<td>Generates hits (DHF file) from a signature search</td>
+<td><a href="/emboss/apps/water.html">water</a></td>
+<td>Smith-Waterman local alignment of sequences</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/signature/sigscanlig.html">sigscanlig</a></td>
-<td>Searches ligand-signature library and writes hits (LHF file)</td>
+<td><a href="/emboss/apps/wordfinder.html">wordfinder</a></td>
+<td>Match large sequences against one or more other sequences</td>
+</tr>
+
+<tr>
+<td><a href="/emboss/apps/wordmatch.html">wordmatch</a></td>
+<td>Finds regions of identity (exact matches) of two sequences</td>
 </tr>
 
 </table>

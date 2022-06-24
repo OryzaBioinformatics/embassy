@@ -45,6 +45,7 @@
 
 
 
+#include <config.h>
 #include "emboss.h"
 #define MODE_STAMP    1
 #define MODE_TCOFFEE  2
@@ -174,7 +175,6 @@ int main(int argc, char **argv)
 				       and write them to an output file.         */
 
     AjPStr    temp      = NULL;	/* A temporary string.                       */
-    AjPStr    cmd       = NULL; /* The command line to execute t-coffee.     */
 
 
 
@@ -194,7 +194,6 @@ int main(int argc, char **argv)
     name     = ajStrNew();
     temp     = ajStrNew();
     temp1    = ajStrNew();
-    cmd      = ajStrNew();
     pdbnames = ajStrNew();
 
 

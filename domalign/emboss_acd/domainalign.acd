@@ -1,7 +1,7 @@
 application: domainalign [
   documentation: "Generate alignments (DAF file) for nodes in
                   a DCF file."
-  groups: "Protein:3D Structure"
+  groups: "Protein:Domains, Alignment:Local"
   gui: "yes"
   batch: "yes"
   cpu: "medium"
@@ -11,6 +11,9 @@ application: domainalign [
   external: "transform STAMP package http://www.compbio.dundee.ac.uk/"
   external: "poststamp STAMP package http://www.compbio.dundee.ac.uk/"
   external: "ver2hor STAMP package http://www.compbio.dundee.ac.uk/"
+  relations: "EDAM:0000182 topic Sequence alignment"
+  relations: "EDAM:0000736 topic Protein domains"
+  relations: "EDAM:0000292 operation Sequence alignment"
 ]
 
 section: input [
@@ -28,7 +31,7 @@ section: input [
            SCOPPARSE and CATHPARSE. Domain sequence information can be added
            to the file by using DOMAINSEQS."
     knowntype: "Domain classification"
-    relations: "EDAM: Free text file"                                      
+    relations: "EDAM:0000900 data Protein domain classification"
   ]
 
   directory: pdbdir [
@@ -41,7 +44,8 @@ section: input [
     default: "./"
     extension: "ent"
     knowntype: "domain pdb"
-    relations:  "EDAM: Protein tertiary structure"                     
+    relations:  "EDAM:0001468 data Protein domain"
+    relations:  "EDAM:0001049 identifier Directory name"
   ]
 
 endsection: input
@@ -68,7 +72,7 @@ section: required [
     codedelimiter: ":"
     header: "Node at which to remove redundancy"
     information: "Select number."
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   list: mode [
@@ -82,7 +86,7 @@ section: required [
     codedelimiter: ":"
     header: "Alignment algorithm option"
     information: "Select number."
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0001190 identifier Tool name"
   ]
 
   toggle: keepsinglets [
@@ -92,7 +96,7 @@ section: required [
            families to file. If you specify this option, the sequence for
            each singlet family are written to file (output)."
     default: "Y"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: required
@@ -117,7 +121,8 @@ section: output [
     default: "./"
     extension: "daf"
     knowntype: "domain alignment"
-    relations:  "EDAM: EMBASSY domain alignment file"                  
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM:0001384 data Sequence alignment (protein)"
   ]
 
   outdir: singletsoutdir [
@@ -131,7 +136,10 @@ section: output [
     default: "./"
     extension: "dhf"
     knowntype: "domain hits"
-    relations:  "EDAM: EMBASSY domain hits report"                     
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations: "EDAM:0000849 data Sequence record"
+    relations: "EDAM:0001219 format pure protein"
+
   ]
 
   outdir: superoutdir [
@@ -144,7 +152,8 @@ section: output [
     default: "./"
     extension: "ent"
     knowntype: "pdb"
-    relations:  "EDAM: PDB record"                                     
+    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM:0001481 data Structure alignment (protein)"
   ]
 
   outfile: logfile [
@@ -155,7 +164,7 @@ section: output [
            domainalign ran."
     default: "domainalign.log"
     knowntype: "domainatrix log"
-    relations:  "EDAM: Domainatrix log file"                           
+    relations:  "EDAM:0001678 data Tool log"
   ]
 
 endsection: output
