@@ -148,7 +148,7 @@ lambda :     0.267496
 max    :    -8.753000
 //
 
-hmmcalibrate --mean 350.000000  --num 5000  --sd 350.000000  --seed 1 ../ehmmbuild-ex-keep/globin.hmm
+/shared/software/bin/hmmcalibrate --mean 350.000000  --num 5000  --sd 350.000000  --seed 1 ../ehmmbuild-ex-keep/globin.hmm
 
 
 </pre></td></tr></table><p>
@@ -188,12 +188,12 @@ lambda :     0.229546
 max    :   -12.242000
 //
 HMM    : pkinase
-mu     :  -193.864883
-lambda :     0.143572
+mu     :  -193.864685
+lambda :     0.143557
 max    :  -157.132004
 //
 
-hmmcalibrate --mean 350.000000  --num 5000  --sd 350.000000  --seed 1 ../ehmmbuild-ex4-keep/myhmms
+/shared/software/bin/hmmcalibrate --mean 350.000000  --num 5000  --sd 350.000000  --seed 1 ../ehmmbuild-ex4-keep/myhmms
 
 
 </pre></td></tr></table><p>
@@ -211,6 +211,9 @@ Where possible, the same command-line qualifier names and parameter order is use
 
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
+Calibrate HMM search statistics
+Version: EMBOSS:6.2.0
+
    Standard (Mandatory) qualifiers:
   [-inhmmfile]         infile     File containing an HMM.
   [-outhmmfile]        outfile    [*.ehmmcalibrate] File containing an HMM
@@ -283,108 +286,251 @@ Where possible, the same command-line qualifier names and parameter order is use
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
-   -help               boolean    Report command line options. More
+   -help               boolean    Report command line options and exit. More
                                   information on associated and general
                                   qualifiers can be found with -help -verbose
    -warning            boolean    Report warnings
    -error              boolean    Report errors
    -fatal              boolean    Report fatal errors
    -die                boolean    Report dying program messages
+   -version            boolean    Report version number and exit
 
 </pre>
 </td></tr></table>
 <P>
 <table border cellspacing=0 cellpadding=3 bgcolor="#ccccff">
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=2>Standard (Mandatory) qualifiers</th>
+<th align="left">Qualifier</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
 <th align="left">Allowed values</th>
 <th align="left">Default</th>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>Standard (Mandatory) qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td>[-inhmmfile]<br>(Parameter 1)</td>
+<td>infile</td>
 <td>File containing an HMM.</td>
 <td>Input file</td>
 <td><b>Required</b></td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>[-outhmmfile]<br>(Parameter 2)</td>
+<td>outfile</td>
 <td>File containing an HMM with EVD parameters.</td>
 <td>Output file</td>
 <td><i>&lt;*&gt;</i>.ehmmcalibrate</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=2>Additional (Optional) qualifiers</th>
-<th align="left">Allowed values</th>
-<th align="left">Default</th>
+<th align="left" colspan=5>Additional (Optional) qualifiers</th>
 </tr>
 
 <tr>
-<td colspan=4>(none)</td>
+<td colspan=5>(none)</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=2>Advanced (Unprompted) qualifiers</th>
-<th align="left">Allowed values</th>
-<th align="left">Default</th>
+<th align="left" colspan=5>Advanced (Unprompted) qualifiers</th>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-cpu</td>
+<td>integer</td>
 <td>Sets the maximum number of CPUs that the program will run on. The default is to use all CPUs in the machine. Overrides the HMMER NCPU environment variable. Only affects threaded versions of HMMER (the default on most systems).</td>
 <td>Integer 0 or more</td>
 <td>0</td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-fixed</td>
+<td>integer</td>
 <td>Fix the length of the random sequences to &lt;n&gt;, where &lt;n&gt; is a positive (and reasonably sized) integer. The default is instead to generate sequences with a variety of different lengths, controlled by a Gaussian (normal) distribution.</td>
 <td>Integer 0 or more</td>
 <td>0</td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-mean</td>
+<td>float</td>
 <td>Set the mean length of the synthetic sequences to &lt;x&gt;, where &lt;x&gt; is a positive real number. The default is 350.</td>
 <td>Any numeric value</td>
 <td>350.0</td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-num</td>
+<td>integer</td>
 <td>Set the number of synthetic sequences to &lt;n&gt;, where &lt;n&gt; is a positive integer. If &lt;n&gt; is less than about 1000, the ft to the EVD may fail. Higher numbers of &lt;n&gt; will give better determined EVD parameters. The default is 5000; it was empirically chosen as a tradeoff between accuracy and computation time.</td>
 <td>Integer 0 or more</td>
 <td>5000</td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-pvm</td>
+<td>boolean</td>
 <td>Run on a Parallel Virtual Machine (PVM). The PVM must already be running. The client program hmmcalibrate-pvm must be installed on all the PVM nodes. Optional PVM support must have been compiled into HMMER.</td>
 <td>Boolean value Yes/No</td>
 <td>No</td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-sd</td>
+<td>float</td>
 <td>Set the standard deviation of the synthetic sequence length distribution to &lt;x&gt;, where &lt;x&gt; is a positive real number. The default is 350. Note that the Gaussian is left-truncated so that no sequences have lengths &lt;= 0.</td>
 <td>Number 0.000 or more</td>
 <td>350.0</td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-seed</td>
+<td>integer</td>
 <td>Set the random seed to &lt;n&gt;, where &lt;n&gt; is a positive integer. The default is to use time() to generate a different seed for each run, which means that two different runs of hmmcalibrate on the same HMM will give slightly different results. You can use this option to generate reproducible results for different hmmcalibrate runs on the same HMM.</td>
 <td>Integer 0 or more</td>
 <td>0</td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-histfile</td>
+<td>outfile</td>
 <td>Save a histogram of the scores and the fitted theoretical curve to file.</td>
 <td>Output file</td>
 <td><i>&lt;*&gt;</i>.ehmmcalibrate</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>Associated qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-outhmmfile" associated outfile qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -odirectory2<br>-odirectory_outhmmfile</td>
+<td>string</td>
+<td>Output directory</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-histfile" associated outfile qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -odirectory</td>
+<td>string</td>
+<td>Output directory</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>General qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -auto</td>
+<td>boolean</td>
+<td>Turn off prompts</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -stdout</td>
+<td>boolean</td>
+<td>Write first file to standard output</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -filter</td>
+<td>boolean</td>
+<td>Read first file from standard input, write first file to standard output</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -options</td>
+<td>boolean</td>
+<td>Prompt for standard and additional values</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -debug</td>
+<td>boolean</td>
+<td>Write debug output to program.dbg</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -verbose</td>
+<td>boolean</td>
+<td>Report some/full command line options</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -help</td>
+<td>boolean</td>
+<td>Report command line options and exit. More information on associated and general qualifiers can be found with -help -verbose</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -warning</td>
+<td>boolean</td>
+<td>Report warnings</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -error</td>
+<td>boolean</td>
+<td>Report errors</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -fatal</td>
+<td>boolean</td>
+<td>Report fatal errors</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -die</td>
+<td>boolean</td>
+<td>Report dying program messages</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -version</td>
+<td>boolean</td>
+<td>Report version number and exit</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
 </tr>
 
 </table>
@@ -436,9 +582,9 @@ ALPH  Amino
 RF    no
 CS    no
 MAP   yes
-COM   hmmbuild -n globins50 --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin.hmm ../../data/hmmnew/globins50.msf
+COM   /shared/software/bin/hmmbuild -n globins50 --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin.hmm ../../data/hmmnew/globins50.msf
 NSEQ  50
-DATE  Tue Jul 15 12:00:00 2008
+DATE  Thu Jan  7 16:51:40 2010
 CKSUM 9858
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -515,7 +661,7 @@ HMM        A      C      D      E      F      G      H      I      K      L     
    137   1308   -787    564   -132   -966  -1332   -203   -362    -49   -395    -57   -305  -1481     49   -437   -190   -182   1020  -1282   -802   153
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -    -23  -6528  -7571   -894  -1115   -701  -1378      *      * 
-   138  -1746  -1358  -3897  -3341   -216  -3621  -2478   1774  -3040   2442   1158  -3189  -3229  -2422  -2853  -2824  -1659    392  -1720  -1647   154
+   138  -1746  -1358  -3897  -3341   -216  -3621  -2478   1774  -3040   2442   1157  -3189  -3229  -2422  -2853  -2824  -1659    392  -1720  -1647   154
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -    -23  -6528  -7571   -894  -1115   -701  -1378      *      * 
    139   1176  -1289   -179    534  -1606   -607     34  -1278    734  -1372   -534     44  -1325    433    -89    521    826   -941  -1666  -1072   155
@@ -549,9 +695,9 @@ ALPH  Amino
 RF    no
 CS    no
 MAP   yes
-COM   hmmbuild -n rrm --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../data/hmmnew/rrm.sto
+COM   /shared/software/bin/hmmbuild -n rrm --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../data/hmmnew/rrm.sto
 NSEQ  90
-DATE  Tue Jul 15 12:00:00 2008
+DATE  Thu Jan  7 16:51:40 2010
 CKSUM 8325
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -625,7 +771,7 @@ HMM        A      C      D      E      F      G      H      I      K      L     
    287    109   -243    672   2304  -5103  -4283    488  -4854  -1317  -2269   -656   -492  -1519   2679   -655   -618  -3248  -4404  -4965  -1114   464
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -     -1 -11253 -12295   -894  -1115   -701  -1378      *      * 
-   288   1312   1294  -6215  -5593   -206  -1244  -4339   2188  -5201   1409    395  -5091  -5478  -4828  -5009  -4538  -3794   1162  -4188  -3846   465
+   288   1312   1294  -6215  -5593   -206  -1244  -4339   2188  -5201   1409    395  -5091  -5478  -4828  -5009  -4538  -3794   1162  -4187  -3846   465
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -    -23 -11253  -6022   -894  -1115   -701  -1378      *      * 
    289  -3562    799  -5767  -2054  -1235  -2075    318    138    237   2164   1713  -1454  -5145  -1272   -730  -4172  -1640   1071  -3865    -34   466
@@ -689,10 +835,10 @@ ALPH  Amino
 RF    no
 CS    no
 MAP   yes
-COM   hmmbuild -n globins50 --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin.hmm ../../data/hmmnew/globins50.msf
-COM   hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex-keep/globin.hmm
+COM   /shared/software/bin/hmmbuild -n globins50 --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin.hmm ../../data/hmmnew/globins50.msf
+COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex-keep/globin.hmm
 NSEQ  50
-DATE  Tue Jul 15 12:00:00 2008
+DATE  Thu Jan  7 16:51:40 2010
 CKSUM 9858
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -768,7 +914,7 @@ HMM        A      C      D      E      F      G      H      I      K      L     
    137   1308   -787    564   -132   -966  -1332   -203   -362    -49   -395    -57   -305  -1481     49   -437   -190   -182   1020  -1282   -802   153
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -    -23  -6528  -7571   -894  -1115   -701  -1378      *      * 
-   138  -1746  -1358  -3897  -3341   -216  -3621  -2478   1774  -3040   2442   1158  -3189  -3229  -2422  -2853  -2824  -1659    392  -1720  -1647   154
+   138  -1746  -1358  -3897  -3341   -216  -3621  -2478   1774  -3040   2442   1157  -3189  -3229  -2422  -2853  -2824  -1659    392  -1720  -1647   154
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -    -23  -6528  -7571   -894  -1115   -701  -1378      *      * 
    139   1176  -1289   -179    534  -1606   -607     34  -1278    734  -1372   -534     44  -1325    433    -89    521    826   -941  -1666  -1072   155
@@ -802,10 +948,10 @@ ALPH  Amino
 RF    no
 CS    no
 MAP   yes
-COM   hmmbuild -n rrm --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../data/hmmnew/rrm.sto
-COM   hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex4-keep/myhmms
+COM   /shared/software/bin/hmmbuild -n rrm --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../data/hmmnew/rrm.sto
+COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex4-keep/myhmms
 NSEQ  90
-DATE  Tue Jul 15 12:00:00 2008
+DATE  Thu Jan  7 16:51:40 2010
 CKSUM 8325
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -878,7 +1024,7 @@ HMM        A      C      D      E      F      G      H      I      K      L     
    287    109   -243    672   2304  -5103  -4283    488  -4854  -1317  -2269   -656   -492  -1519   2679   -655   -618  -3248  -4404  -4965  -1114   464
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -     -1 -11253 -12295   -894  -1115   -701  -1378      *      * 
-   288   1312   1294  -6215  -5593   -206  -1244  -4339   2188  -5201   1409    395  -5091  -5478  -4828  -5009  -4538  -3794   1162  -4188  -3846   465
+   288   1312   1294  -6215  -5593   -206  -1244  -4339   2188  -5201   1409    395  -5091  -5478  -4828  -5009  -4538  -3794   1162  -4187  -3846   465
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -    -23 -11253  -6022   -894  -1115   -701  -1378      *      * 
    289  -3562    799  -5767  -2054  -1235  -2075    318    138    237   2164   1713  -1454  -5145  -1272   -730  -4172  -1640   1071  -3865    -34   466

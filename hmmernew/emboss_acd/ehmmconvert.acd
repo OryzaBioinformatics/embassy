@@ -2,6 +2,7 @@ application: ehmmconvert [
   documentation: "Convert between profile HMM file formats"
   groups: "HMM"
   embassy: "hmmernew"
+  external: "hmmconvert HMMER 2.3.2 available from http://hmmer.wustl.edu/"
 ]
 
 section: input [
@@ -14,6 +15,7 @@ section: input [
     knowntype: "hmm"
     information: "HMMER hidden markov model file"
     help: "HMM input file"
+    relations:  "EDAM: HMMER hidden Markov model"                      
   ]
 
 endsection: input
@@ -34,6 +36,7 @@ section: required [
     header: "HMM format"
     information: "Select format"
     button: "Y"
+    relations: "EDAM: Generic string array"                                
   ]
 
 endsection: required
@@ -56,6 +59,7 @@ section: output [
     help: "HMM output file"
     append: "N"
     information: "HMMER hidden markov model output file"
+    relations:  "EDAM: HMMER hidden Markov model"                      
   ]
 
 endsection: output

@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 
 
     /* ACD file processing */
-    embInitP("ehmmsearch",argc,argv,"HMMERNEW");
+    embInitPV("ehmmsearch",argc,argv,"HMMERNEW",VERSION);
 
     hmmfile = ajAcdGetInfile("hmmfile");
     seqfile = ajAcdGetSeqall("seqfile");
@@ -103,7 +103,7 @@ int main(int argc, char **argv)
        iii.HMMER 'options' (that don't appear in ACD file)
        iv. HMMER & new parameters.
        */
-    ajFmtPrintS(&cmd, "hmmsearch");
+    ajStrAssignS(&cmd, ajAcdGetpathC("hmmsearch"));
     ajFmtPrintAppS(&cmd, " -A %d -E %f -T %f -Z %d", A, E, T, Z);
     if(compat)
 	ajStrAppendC(&cmd, " --compat ");

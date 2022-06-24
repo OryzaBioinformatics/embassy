@@ -142,7 +142,7 @@ SSI index:      ./myhmmso.ssi
 HMM names:      3
 HMM accessions: 2
 
-hmmindex ./myhmmso
+/shared/software/bin/hmmindex ./myhmmso
 
 
 </pre></td></tr></table><p>
@@ -160,6 +160,9 @@ Where possible, the same command-line qualifier names and parameter order is use
 
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
+Create a binary SSI index for an HMM database.
+Version: EMBOSS:6.2.0
+
    Standard (Mandatory) qualifiers:
   [-database]          infile     HMM database.
 
@@ -174,49 +177,161 @@ Where possible, the same command-line qualifier names and parameter order is use
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
-   -help               boolean    Report command line options. More
+   -help               boolean    Report command line options and exit. More
                                   information on associated and general
                                   qualifiers can be found with -help -verbose
    -warning            boolean    Report warnings
    -error              boolean    Report errors
    -fatal              boolean    Report fatal errors
    -die                boolean    Report dying program messages
+   -version            boolean    Report version number and exit
 
 </pre>
 </td></tr></table>
 <P>
 <table border cellspacing=0 cellpadding=3 bgcolor="#ccccff">
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=2>Standard (Mandatory) qualifiers</th>
+<th align="left">Qualifier</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
 <th align="left">Allowed values</th>
 <th align="left">Default</th>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>Standard (Mandatory) qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td>[-database]<br>(Parameter 1)</td>
+<td>infile</td>
 <td>HMM database.</td>
 <td>Input file</td>
 <td><b>Required</b></td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=2>Additional (Optional) qualifiers</th>
-<th align="left">Allowed values</th>
-<th align="left">Default</th>
+<th align="left" colspan=5>Additional (Optional) qualifiers</th>
 </tr>
 
 <tr>
-<td colspan=4>(none)</td>
+<td colspan=5>(none)</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=2>Advanced (Unprompted) qualifiers</th>
-<th align="left">Allowed values</th>
-<th align="left">Default</th>
+<th align="left" colspan=5>Advanced (Unprompted) qualifiers</th>
 </tr>
 
 <tr>
-<td colspan=4>(none)</td>
+<td colspan=5>(none)</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>Associated qualifiers</th>
+</tr>
+
+<tr>
+<td colspan=5>(none)</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>General qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -auto</td>
+<td>boolean</td>
+<td>Turn off prompts</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -stdout</td>
+<td>boolean</td>
+<td>Write first file to standard output</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -filter</td>
+<td>boolean</td>
+<td>Read first file from standard input, write first file to standard output</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -options</td>
+<td>boolean</td>
+<td>Prompt for standard and additional values</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -debug</td>
+<td>boolean</td>
+<td>Write debug output to program.dbg</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -verbose</td>
+<td>boolean</td>
+<td>Report some/full command line options</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -help</td>
+<td>boolean</td>
+<td>Report command line options and exit. More information on associated and general qualifiers can be found with -help -verbose</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -warning</td>
+<td>boolean</td>
+<td>Report warnings</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -error</td>
+<td>boolean</td>
+<td>Report errors</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -fatal</td>
+<td>boolean</td>
+<td>Report fatal errors</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -die</td>
+<td>boolean</td>
+<td>Report dying program messages</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -version</td>
+<td>boolean</td>
+<td>Report version number and exit</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
 </tr>
 
 </table>
@@ -297,10 +412,10 @@ ALPH  Amino
 RF    no
 CS    no
 MAP   yes
-COM   hmmbuild -n rrm --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../data/hmmnew/rrm.sto
-COM   hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex4-keep/myhmms
+COM   /shared/software/bin/hmmbuild -n rrm --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../data/hmmnew/rrm.sto
+COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex4-keep/myhmms
 NSEQ  90
-DATE  Tue Jul 15 12:00:00 2008
+DATE  Thu Jan  7 16:51:40 2010
 CKSUM 8325
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -373,7 +488,7 @@ HMM        A      C      D      E      F      G      H      I      K      L     
    287    109   -243    672   2304  -5103  -4283    488  -4854  -1317  -2269   -656   -492  -1519   2679   -655   -618  -3248  -4404  -4965  -1114   464
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -     -1 -11253 -12295   -894  -1115   -701  -1378      *      * 
-   288   1312   1294  -6215  -5593   -206  -1244  -4339   2188  -5201   1409    395  -5091  -5478  -4828  -5009  -4538  -3794   1162  -4188  -3846   465
+   288   1312   1294  -6215  -5593   -206  -1244  -4339   2188  -5201   1409    395  -5091  -5478  -4828  -5009  -4538  -3794   1162  -4187  -3846   465
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -    -23 -11253  -6022   -894  -1115   -701  -1378      *      * 
    289  -3562    799  -5767  -2054  -1235  -2075    318    138    237   2164   1713  -1454  -5145  -1272   -730  -4172  -1640   1071  -3865    -34   466

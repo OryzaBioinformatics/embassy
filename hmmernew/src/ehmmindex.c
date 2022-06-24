@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 
 
     /* ACD file processing */
-    embInitP("ehmmindex",argc,argv,"HMMERNEW");
+    embInitPV("ehmmindex",argc,argv,"HMMERNEW",VERSION);
 
     database   = ajAcdGetInfile("database");
 
@@ -69,7 +69,7 @@ int main(int argc, char **argv)
        iii.HMMER 'options' (that don't appear in ACD file)
        iv. HMMER & new parameters.
        */
-    ajFmtPrintS(&cmd, "hmmindex ");
+    ajFmtPrintS(&cmd, "%S ", ajAcdGetpathC("hmmindex"));
     ajStrAppendC(&cmd, ajFileGetNameC(database));
 
     

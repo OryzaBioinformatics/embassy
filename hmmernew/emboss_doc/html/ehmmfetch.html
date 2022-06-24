@@ -130,7 +130,7 @@ Please read the Userguide.pdf distributed with the original HMMER and included i
 Retrieve an HMM from an HMM database.
 
 
-hmmfetch ../ehmmindex-ex-keep/myhmmso pkinase > pkinase.ehmmfetch
+/shared/software/bin/hmmfetch ../ehmmindex-ex-keep/myhmmso pkinase > pkinase.ehmmfetch
 
 
 </pre></td></tr></table><p>
@@ -149,9 +149,12 @@ Where possible, the same command-line qualifier names and parameter order is use
 
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
+Retrieve an HMM from an HMM database.
+Version: EMBOSS:6.2.0
+
    Standard (Mandatory) qualifiers:
   [-database]          infile     HMMER hmm database file
-  [-name]              string     Entry name (Any string is accepted)
+  [-name]              string     Entry name (Any string)
   [-outfile]           outfile    [*.ehmmfetch] HMMER hidden markov model
                                   output file
 
@@ -176,66 +179,190 @@ Where possible, the same command-line qualifier names and parameter order is use
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
-   -help               boolean    Report command line options. More
+   -help               boolean    Report command line options and exit. More
                                   information on associated and general
                                   qualifiers can be found with -help -verbose
    -warning            boolean    Report warnings
    -error              boolean    Report errors
    -fatal              boolean    Report fatal errors
    -die                boolean    Report dying program messages
+   -version            boolean    Report version number and exit
 
 </pre>
 </td></tr></table>
 <P>
 <table border cellspacing=0 cellpadding=3 bgcolor="#ccccff">
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=2>Standard (Mandatory) qualifiers</th>
+<th align="left">Qualifier</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
 <th align="left">Allowed values</th>
 <th align="left">Default</th>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>Standard (Mandatory) qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td>[-database]<br>(Parameter 1)</td>
+<td>infile</td>
 <td>HMMER hmm database file</td>
 <td>Input file</td>
 <td><b>Required</b></td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>[-name]<br>(Parameter 2)</td>
+<td>string</td>
 <td>Entry name</td>
-<td>Any string is accepted</td>
-<td><i>An empty string is accepted</i></td>
+<td>Any string</td>
+<td>&nbsp;</td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>[-outfile]<br>(Parameter 3)</td>
+<td>outfile</td>
 <td>HMMER hidden markov model output file</td>
 <td>Output file</td>
 <td><i>&lt;*&gt;</i>.ehmmfetch</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=2>Additional (Optional) qualifiers</th>
-<th align="left">Allowed values</th>
-<th align="left">Default</th>
+<th align="left" colspan=5>Additional (Optional) qualifiers</th>
 </tr>
 
 <tr>
-<td colspan=4>(none)</td>
+<td colspan=5>(none)</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=2>Advanced (Unprompted) qualifiers</th>
-<th align="left">Allowed values</th>
-<th align="left">Default</th>
+<th align="left" colspan=5>Advanced (Unprompted) qualifiers</th>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-nhmm</td>
+<td>boolean</td>
 <td>Interpret name as an HMM number instead of a name. Numbering starts at 0. For example, to fetch the frst HMM from an HMM database called foo, you would do 'hmmfetch -n 0 foo'.</td>
 <td>Boolean value Yes/No</td>
 <td>No</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>Associated qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-outfile" associated outfile qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -odirectory3<br>-odirectory_outfile</td>
+<td>string</td>
+<td>Output directory</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>General qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -auto</td>
+<td>boolean</td>
+<td>Turn off prompts</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -stdout</td>
+<td>boolean</td>
+<td>Write first file to standard output</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -filter</td>
+<td>boolean</td>
+<td>Read first file from standard input, write first file to standard output</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -options</td>
+<td>boolean</td>
+<td>Prompt for standard and additional values</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -debug</td>
+<td>boolean</td>
+<td>Write debug output to program.dbg</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -verbose</td>
+<td>boolean</td>
+<td>Report some/full command line options</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -help</td>
+<td>boolean</td>
+<td>Report command line options and exit. More information on associated and general qualifiers can be found with -help -verbose</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -warning</td>
+<td>boolean</td>
+<td>Report warnings</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -error</td>
+<td>boolean</td>
+<td>Report errors</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -fatal</td>
+<td>boolean</td>
+<td>Report fatal errors</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -die</td>
+<td>boolean</td>
+<td>Report dying program messages</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -version</td>
+<td>boolean</td>
+<td>Report version number and exit</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
 </tr>
 
 </table>
@@ -286,10 +413,10 @@ ALPH  Amino
 RF    no
 CS    no
 MAP   yes
-COM   hmmbuild -n rrm --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../data/hmmnew/rrm.sto
-COM   hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex4-keep/myhmms
+COM   /shared/software/bin/hmmbuild -n rrm --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../data/hmmnew/rrm.sto
+COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex4-keep/myhmms
 NSEQ  90
-DATE  Tue Jul 15 12:00:00 2008
+DATE  Thu Jan  7 16:37:52 2010
 CKSUM 8325
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -362,7 +489,7 @@ HMM        A      C      D      E      F      G      H      I      K      L     
    287    109   -243    672   2304  -5103  -4283    488  -4854  -1317  -2269   -656   -492  -1519   2679   -655   -618  -3248  -4404  -4965  -1114   464
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -     -1 -11253 -12295   -894  -1115   -701  -1378      *      * 
-   288   1312   1294  -6215  -5593   -206  -1244  -4339   2188  -5201   1409    395  -5091  -5478  -4828  -5009  -4538  -3794   1162  -4188  -3846   465
+   288   1312   1294  -6215  -5593   -206  -1244  -4339   2188  -5201   1409    395  -5091  -5478  -4828  -5009  -4538  -3794   1162  -4187  -3846   465
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -    -23 -11253  -6022   -894  -1115   -701  -1378      *      * 
    289  -3562    799  -5767  -2054  -1235  -2075    318    138    237   2164   1713  -1454  -5145  -1272   -730  -4172  -1640   1071  -3865    -34   466
@@ -428,17 +555,17 @@ ALPH  Amino
 RF    no
 CS    no
 MAP   yes
-COM   hmmbuild -n pkinase --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../data/hmmnew/pkinase.sto
-COM   hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex4-keep/myhmms
+COM   /shared/software/bin/hmmbuild -n pkinase --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F myhmms ../../data/hmmnew/pkinase.sto
+COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex4-keep/myhmms
 NSEQ  67
-DATE  Tue Jul 15 12:00:00 2008
+DATE  Thu Jan  7 16:37:53 2010
 CKSUM 4536
 GA    -57.9 -57.9
 TC    -57.7 -57.7
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
 NULE     595  -1558     85    338   -294    453  -1158    197    249    902  -1085   -142    -21   -313     45    531    201    384  -1998   -644 
-EVD   -193.864883   0.143572
+EVD   -193.864685   0.143557
 HMM        A      C      D      E      F      G      H      I      K      L      M      N      P      Q      R      S      T      V      W      Y    
          m-&gt;m   m-&gt;i   m-&gt;d   i-&gt;m   i-&gt;i   d-&gt;m   d-&gt;d   b-&gt;m   m-&gt;e
           -21      *  -6109
@@ -463,7 +590,7 @@ HMM        A      C      D      E      F      G      H      I      K      L     
      7  -6084  -5527  -8663  -8230  -4683  -8506  -7801   2582  -2005   2411   -444  -8189  -7866  -7357  -7914  -7892  -6017    898  -6516  -6551     7
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -     -1 -11253 -12295   -894  -1115   -701  -1378      *      * 
-     8  -1162  -4907  -7014  -7375  -7618   3734  -6813  -7450  -7402  -7698  -6730  -5890  -5975   -453  -7118  -4539  -1742  -6121  -7823  -7778     8
+     8  -1162  -4907  -7014  -7376  -7618   3734  -6813  -7450  -7402  -7698  -6730  -5890  -5975   -453  -7118  -4539  -1742  -6121  -7823  -7778     8
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -     -1 -11253 -12295   -894  -1115   -701  -1378      *      * 
      9     21  -4782  -1460   1735  -1488  -2091  -2941  -1034    378  -4798   -702   -451  -1594   1320   1488   1403   -804  -2034  -4965  -4282     9
@@ -502,7 +629,7 @@ HMM        A      C      D      E      F      G      H      I      K      L     
    287    109   -243    672   2304  -5103  -4283    488  -4854  -1317  -2269   -656   -492  -1519   2679   -655   -618  -3248  -4404  -4965  -1114   464
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -     -1 -11253 -12295   -894  -1115   -701  -1378      *      * 
-   288   1312   1294  -6215  -5593   -206  -1244  -4339   2188  -5201   1409    395  -5091  -5478  -4828  -5009  -4538  -3794   1162  -4188  -3846   465
+   288   1312   1294  -6215  -5593   -206  -1244  -4339   2188  -5201   1409    395  -5091  -5478  -4828  -5009  -4538  -3794   1162  -4187  -3846   465
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -    -23 -11253  -6022   -894  -1115   -701  -1378      *      * 
    289  -3562    799  -5767  -2054  -1235  -2075    318    138    237   2164   1713  -1454  -5145  -1272   -730  -4172  -1640   1071  -3865    -34   466

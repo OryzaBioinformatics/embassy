@@ -143,7 +143,7 @@ Random seed:          0
 
 Output saved in file globino.ehmmemit
 
-hmmemit --seed 0  -n 10  -o globino.ehmmemit ../ehmmcalibrate-ex-keep/globino.hmm
+/shared/software/bin/hmmemit --seed 0  -n 10  -o globino.ehmmemit ../ehmmcalibrate-ex-keep/globino.hmm
 
 
 </pre></td></tr></table><p>
@@ -162,6 +162,9 @@ Where possible, the same command-line qualifier names and parameter order is use
 
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
+Generate sequences from a profile HMM.
+Version: EMBOSS:6.2.0
+
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-hmmfile]           infile     File containing one or more HMMs.
    -c                  boolean    [N] Predict a single majority-rule consensus
@@ -209,83 +212,210 @@ Where possible, the same command-line qualifier names and parameter order is use
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
-   -help               boolean    Report command line options. More
+   -help               boolean    Report command line options and exit. More
                                   information on associated and general
                                   qualifiers can be found with -help -verbose
    -warning            boolean    Report warnings
    -error              boolean    Report errors
    -fatal              boolean    Report fatal errors
    -die                boolean    Report dying program messages
+   -version            boolean    Report version number and exit
 
 </pre>
 </td></tr></table>
 <P>
 <table border cellspacing=0 cellpadding=3 bgcolor="#ccccff">
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=2>Standard (Mandatory) qualifiers</th>
+<th align="left">Qualifier</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
 <th align="left">Allowed values</th>
 <th align="left">Default</th>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>Standard (Mandatory) qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
 <td>[-hmmfile]<br>(Parameter 1)</td>
+<td>infile</td>
 <td>File containing one or more HMMs.</td>
 <td>Input file</td>
 <td><b>Required</b></td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-c</td>
+<td>boolean</td>
 <td>Predict a single majority-rule consensus sequence instead of sampling sequences from the HMM's probability distribution. Highly conserved residues (p &gt;= 0.9 for DNA, p &gt;= 0.5 for protein) are shown in upper case; others are shown in lower case. Some insert states may become part of the majority rule consensus, because they are used in &gt;= 50% of generated sequences; when this happens, insert-generated residues are simply shown as 'x'.</td>
 <td>Boolean value Yes/No</td>
 <td>No</td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-nseq</td>
+<td>integer</td>
 <td>Generate &lt;n&gt; sequences. Default is 10.</td>
 <td>Any integer value</td>
 <td>10</td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>[-o]<br>(Parameter 2)</td>
+<td>outfile</td>
 <td>File of synthetic sequences.</td>
 <td>Output file</td>
 <td><i>&lt;*&gt;</i>.ehmmemit</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=2>Additional (Optional) qualifiers</th>
-<th align="left">Allowed values</th>
-<th align="left">Default</th>
+<th align="left" colspan=5>Additional (Optional) qualifiers</th>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-a</td>
+<td>boolean</td>
 <td>Write the generated sequences in an aligned format (SELEX) rather than FASTA.</td>
 <td>Boolean value Yes/No</td>
 <td>No</td>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-q</td>
+<td>boolean</td>
 <td>Quiet; suppress all output except for the sequences themselves. Useful for piping or directing the output.</td>
 <td>Boolean value Yes/No</td>
 <td>No</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=2>Advanced (Unprompted) qualifiers</th>
-<th align="left">Allowed values</th>
-<th align="left">Default</th>
+<th align="left" colspan=5>Advanced (Unprompted) qualifiers</th>
 </tr>
 
-<tr>
+<tr bgcolor="#FFFFCC">
 <td>-seed</td>
+<td>integer</td>
 <td>Set the random seed to &lt;n&gt;, where &lt;n&gt; is a positive integer. The default is to use time() to generate a different seed for each run, which means that two different runs of hmmemit on the same HMM will give slightly different results. You can use this option to generate reproducible results.</td>
 <td>Integer 0 or more</td>
 <td>0</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>Associated qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>"-o" associated outfile qualifiers
+</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -odirectory2<br>-odirectory_o</td>
+<td>string</td>
+<td>Output directory</td>
+<td>Any string</td>
+<td>&nbsp;</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<th align="left" colspan=5>General qualifiers</th>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -auto</td>
+<td>boolean</td>
+<td>Turn off prompts</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -stdout</td>
+<td>boolean</td>
+<td>Write first file to standard output</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -filter</td>
+<td>boolean</td>
+<td>Read first file from standard input, write first file to standard output</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -options</td>
+<td>boolean</td>
+<td>Prompt for standard and additional values</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -debug</td>
+<td>boolean</td>
+<td>Write debug output to program.dbg</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -verbose</td>
+<td>boolean</td>
+<td>Report some/full command line options</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -help</td>
+<td>boolean</td>
+<td>Report command line options and exit. More information on associated and general qualifiers can be found with -help -verbose</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -warning</td>
+<td>boolean</td>
+<td>Report warnings</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -error</td>
+<td>boolean</td>
+<td>Report errors</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -fatal</td>
+<td>boolean</td>
+<td>Report fatal errors</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -die</td>
+<td>boolean</td>
+<td>Report dying program messages</td>
+<td>Boolean value Yes/No</td>
+<td>Y</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -version</td>
+<td>boolean</td>
+<td>Report version number and exit</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
 </tr>
 
 </table>
@@ -336,10 +466,10 @@ ALPH  Amino
 RF    no
 CS    no
 MAP   yes
-COM   hmmbuild -n globins50 --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin.hmm ../../data/hmmnew/globins50.msf
-COM   hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex-keep/globin.hmm
+COM   /shared/software/bin/hmmbuild -n globins50 --pbswitch 1000 --archpri 0.850000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin.hmm ../../data/hmmnew/globins50.msf
+COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.000000 --seed 1 ../ehmmbuild-ex-keep/globin.hmm
 NSEQ  50
-DATE  Tue Jul 15 12:00:00 2008
+DATE  Thu Jan  7 16:51:40 2010
 CKSUM 9858
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4 
 NULT      -4  -8455
@@ -415,7 +545,7 @@ HMM        A      C      D      E      F      G      H      I      K      L     
    137   1308   -787    564   -132   -966  -1332   -203   -362    -49   -395    -57   -305  -1481     49   -437   -190   -182   1020  -1282   -802   153
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -    -23  -6528  -7571   -894  -1115   -701  -1378      *      * 
-   138  -1746  -1358  -3897  -3341   -216  -3621  -2478   1774  -3040   2442   1158  -3189  -3229  -2422  -2853  -2824  -1659    392  -1720  -1647   154
+   138  -1746  -1358  -3897  -3341   -216  -3621  -2478   1774  -3040   2442   1157  -3189  -3229  -2422  -2853  -2824  -1659    392  -1720  -1647   154
      -   -149   -500    233     43   -381    399    106   -626    210   -466   -720    275    394     45     96    359    117   -369   -294   -249 
      -    -23  -6528  -7571   -894  -1115   -701  -1378      *      * 
    139   1176  -1289   -179    534  -1606   -607     34  -1278    734  -1372   -534     44  -1325    433    -89    521    826   -941  -1666  -1072   155

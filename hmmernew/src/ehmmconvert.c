@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 
 
     /* ACD file processing */
-    embInitP("ehmmconvert",argc,argv,"HMMERNEW");
+    embInitPV("ehmmconvert",argc,argv,"HMMERNEW",VERSION);
 
     oldhmmfile = ajAcdGetInfile("oldhmmfile");
     format     = ajAcdGetListSingle("format");
@@ -73,7 +73,7 @@ int main(int argc, char **argv)
        iii.HMMER 'options' (that don't appear in ACD file)
        iv. HMMER & new parameters.
        */
-    ajFmtPrintS(&cmd, "hmmconvert");
+    ajStrAssignS(&cmd, ajAcdGetpathC("hmmconvert"));
 
     /* ACD option only allows one selection */
     option = ajStrGetCharFirst(format);
