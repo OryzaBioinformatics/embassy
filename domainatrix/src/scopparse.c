@@ -1,6 +1,7 @@
 /* @source scopparse application
 **
-** Converts raw scop classification files to a file in embl-like format.
+** Reads raw SCOP classification files and writes a DCF file (domain 
+** classification file).
 **
 ** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
 ** @author: Copyright (C) Alan Bleasby (ableasby@hgmp.mrc.ac.uk)
@@ -28,13 +29,19 @@
 **  
 **  Please cite the authors and EMBOSS.
 **
-**  Manuscript in preparation.
-**  XXX (in preparation). 
-**  Jon C. Ison & Alan J. Bleasby  
+**  Rice P, Bleasby A.J.  2000.  EMBOSS - The European Molecular Biology Open 
+**  Software Suite.  Trends in Genetics, 15:276-278.  
+**  See also http://www.uk.embnet.org/Software/EMBOSS
 **  
 **  Email jison@rfcgr.mrc.ac.uk.
 **  
-****************************************************************************/
+**  NOTES
+**  na.
+******************************************************************************/
+
+
+
+
 
 #include "emboss.h"
 
@@ -42,47 +49,59 @@
 
 
 
-/* @prog scopparse **********************************************************
+
+/* @prog scopparse ************************************************************
 **
 ** Converts raw scop classification files to a file in embl-like format.
 **
-*****************************************************************************/
+******************************************************************************/
 int main(int argc, char **argv)
 {
-    AjPFile inf1      = NULL;
-    AjPFile inf2      = NULL;
-    AjPFile outf      = NULL;
-    AjBool  outputall = ajFalse;
-    AjPList list      = NULL;    
-    AjPScop tmp       = NULL;
-    
+    AjPFile inf1         = NULL;
+    AjPFile inf2         = NULL;
+    AjPFile outf         = NULL;
+    AjPList list         = NULL;    
+    AjPScop tmp          = NULL;
+    AjBool  nosegments   = ajFalse;
+    AjBool  nomultichain = ajFalse;
+    AjBool  nominor      = ajFalse;
        
 
 
 
 
-    /* Read data from acd*/
+    /* Read data from acd. */
     ajNamInit("emboss");
     ajAcdInitP("scopparse", argc, argv, "DOMAINATRIX");
-    inf1      =  ajAcdGetInfile("infilea");
-    inf2      =  ajAcdGetInfile("infileb");
-    outf      = ajAcdGetOutfile("outfile");
-    outputall =  ajAcdGetBool("outputall");
+    inf1         =  ajAcdGetInfile("classfile");
+    inf2         =  ajAcdGetInfile("desinfile");
+    outf         = ajAcdGetOutfile("dcffile");
+    nosegments   =  ajAcdGetBool("nosegments");
+    nomultichain =  ajAcdGetBool("nomultichain");
+    nominor      =  ajAcdGetBool("nominor");
 
 
+    /*
+    ajFmtPrint("nosegments: %B\n", nosegments);
+    ajFmtPrint("nomultichain: %B\n", nomultichain);
+    ajFmtPrint("nominor: %B\n", nominor);
+    */
 
-
-
-    /* Main body of code */
-    list = ajScopReadAllRawNew(inf1, inf2, outputall);
+    /* Main body of code. */
+    list = ajScopReadAllRawNew(inf1, inf2, nomultichain);
     while(ajListPop(list, (void **) &tmp))
     {
-	ajScopWrite(outf, tmp);
+	if(((!nosegments) || (tmp->N == 1)) &&
+	   ((!nominor) || ((tmp->Sunid_Class == 46456) ||  /* All alpha*/
+			   (tmp->Sunid_Class == 48724) ||  /* All beta */
+			   (tmp->Sunid_Class == 51349) ||  /* a/b      */
+			   (tmp->Sunid_Class == 53931))))  /* a+b      */
+	    ajScopWrite(outf, tmp);
 	ajScopDel(&tmp);
     }
     
 
-    /* Clean up */
+    /* Memory management. */
     ajFileClose(&outf);
     ajFileClose(&inf1);
     ajFileClose(&inf2);
@@ -91,6 +110,15 @@ int main(int argc, char **argv)
     ajExit();
     return 0;
 }
+
+
+
+
+
+
+
+
+
 
 
 

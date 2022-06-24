@@ -1,6 +1,7 @@
 /* @source domainer application
 **
-** Reads protein coordinate files and writes domain coordinate files.
+** Reads CCF files (clean coordinate files) for proteins and writes CCF 
+** files for domains, taken from a DCF file (domain classification file).
 ** 
 ** @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
 ** @@
@@ -19,7 +20,7 @@
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 **
-*****************************************************************************
+*******************************************************************************
 ** 
 **  DOMAINER documentation
 **  See http://wwww.emboss.org
@@ -32,7 +33,7 @@
 **  
 **  Email jison@rfcgr.mrc.ac.uk.
 **  
-****************************************************************************/
+******************************************************************************/
 
 
 
@@ -48,7 +49,8 @@
 
 /* @prog domainer *************************************************************
 **
-** Reads protein coordinate files and writes domain coordinate files.
+** Reads CCF files (clean coordinate files) for proteins and writes CCF files 
+** for domains, taken from a DCF file (domain classification file).
 **
 ******************************************************************************/
 
@@ -57,7 +59,7 @@ int main(int argc, char **argv)
     AjPStr   cpdb_name     =NULL;	/* Name of cpdb file */
     AjPStr   pdbscop_name  =NULL;	/* Name of pdbscop file */
     AjPStr   cpdbscop_name =NULL;	/* Name of cpdbscop file */
-    AjPStr   scop_name =NULL;	/* Name of cpdbscop file */
+    AjPStr   scop_name =NULL;	        /* Name of cpdbscop file */
     AjPStr   msg           =NULL;	/* Error message */
     AjPStr   temp          =NULL;	/* Error message */
 
@@ -89,14 +91,9 @@ int main(int argc, char **argv)
     /* Read data from acd */
     ajNamInit("emboss");
     ajAcdInitP("domainer",argc,argv,"DOMAINATRIX"); 
-    cpdb_dir     = ajAcdGetDirectory("cpdb");
-/*
-    cpdb_extn     = ajAcdGetString("cpdbextn");
-    cpdbscop_extn = ajAcdGetString("cpdbscopextn");
-    pdb_extn      = ajAcdGetString("pdbextn");
-*/
+    cpdb_dir     = ajAcdGetDirectory("ccfpdir");
     mode          = ajAcdGetList("mode");
-    cpdbscop_dir = ajAcdGetOutdir("cpdboutdir");
+    cpdbscop_dir = ajAcdGetOutdir("ccfoutdir");
     pdbscop_dir  = ajAcdGetOutdir("pdboutdir");
     scop_inf      = ajAcdGetInfile("scopfile");
     errf1         = ajAcdGetOutfile("pdberrfile");
@@ -108,10 +105,10 @@ int main(int argc, char **argv)
 	moden = ajIDX;
 
 
-    /*Start of main application loop*/
+    /* Start of main application loop. */
     while((scop = (ajScopReadCNew(scop_inf, "*"))))
     {
-	/* Write diagnostic */
+	/* Write diagnostic. */
 	ajFmtPrint("%S\n", scop->Entry);   
 
      
@@ -120,7 +117,11 @@ int main(int argc, char **argv)
 	ajStrToLower(&scop_name);
 	if(!(cpdb_inf=ajFileNewDirF(cpdb_dir, scop_name)))
 	{
-	    ajFileNameDir(&cpdb_name, cpdb_dir, scop_name);
+	    ajStrAssS(&cpdb_name, ajDirName(cpdb_dir));
+	    ajStrApp(&cpdb_name, scop_name);
+	    ajStrAppC(&cpdb_name, ".");
+	    ajStrApp(&cpdb_name, ajDirExt(cpdb_dir));
+
 	    ajFmtPrintS(&msg, "Could not open for reading cpdb file %S", 
 			cpdb_name);
 	    ajWarn(ajStrStr(msg));
@@ -128,13 +129,12 @@ int main(int argc, char **argv)
 			scop->Entry, cpdb_name);
 	    ajFmtPrintF(errf2, "//\n%S\nWARN  %S not found\n", 
 			scop->Entry, cpdb_name);
-	    /* ajFileClose(&cpdb_inf); */
 	    ajScopDel(&scop);
 	    continue;	    
 	}
 	
 	
-	/* Write pdb structure */
+	/* Write pdb structure. */
 	if(!(pdb=ajPdbReadNew(cpdb_inf)))
 	{
 	    ajFmtPrintS(&msg, "Error reading cpdb file %S", cpdb_name);
@@ -151,11 +151,17 @@ int main(int argc, char **argv)
 	
 
 
-	/* Open pdb format file for writing*/
+	/* Open pdb format file for writing. */
 	ajStrAss(&scop_name, scop->Entry);
 	ajStrToLower(&scop_name);
 
-	ajFileNameDir(&pdbscop_name, pdbscop_dir, scop_name);
+
+	ajStrAssS(&pdbscop_name, ajDirName(pdbscop_dir));
+	ajStrApp(&pdbscop_name, scop_name);
+	ajStrAppC(&pdbscop_name, ".");
+	ajStrApp(&pdbscop_name, ajDirExt(pdbscop_dir));
+
+
 	if(!(pdbscop_outf=ajFileNewOutDir(pdbscop_dir,scop_name)))
 	{
 	    ajFmtPrintS(&msg, "Could not open for writing pdbscop file %S", 
@@ -164,17 +170,21 @@ int main(int argc, char **argv)
 	    ajFmtPrintF(errf1, "//\n%S\nERROR %S file write error\n", 
 			scop->Entry, pdbscop_name);
 	    ajFileClose(&cpdb_inf);
-/*	    ajFileClose(&pdbscop_outf); */
 	    ajScopDel(&scop);
 	    ajPdbDel(&pdb);
 	    continue;
 	}   	
 
 
-	/* Open embl-like format file for writing*/
+	/* Open embl-like format file for writing. */
 	ajStrAssS(&scop_name, scop->Entry);
 	ajStrToLower(&scop_name);
-	ajFileNameDir(&cpdbscop_name, cpdbscop_dir, scop_name);
+
+	ajStrAssS(&cpdbscop_name, ajDirName(cpdbscop_dir));
+	ajStrApp(&cpdbscop_name, scop_name);
+	ajStrAppC(&cpdbscop_name, ".");
+	ajStrApp(&cpdbscop_name, ajDirExt(cpdbscop_dir));
+
 
 	if(!(cpdbscop_outf=ajFileNewOutDir(cpdbscop_dir, scop_name)))
 	{
@@ -183,29 +193,29 @@ int main(int argc, char **argv)
 	    ajWarn(ajStrStr(msg));
 	    ajFmtPrintF(errf2, "//\n%S\nERROR %S file write error\n", 
 			scop->Entry, cpdbscop_name);
-	    ajFileClose(&cpdb_inf);
 	    ajFileClose(&pdbscop_outf);
+
+	    ajFileClose(&cpdb_inf);
 	    ajScopDel(&scop);
 	    ajPdbDel(&pdb);
 	    continue;
 	}   	
 	
 	
-	/* Write domain coordinate file in pdb format */
+	/* Write domain coordinate file in pdb format.  */
 	if(!ajPdbWriteDomainRaw(moden, pdb, scop, pdbscop_outf, errf1))
 	{
 	    ajFmtPrintS(&msg, "Error writing pdbscop file %S", pdbscop_name);
 	    ajWarn(ajStrStr(msg));
 
 	    ajFileClose(&pdbscop_outf);
-	    ajFmtPrintS(&temp, "rm %S\n", pdbscop_name);
-	    ajFmtPrint("%S", temp);
+	    ajFmtPrintS(&temp, "rm %S", pdbscop_name);
+	    ajFmtPrint("%S\n", temp);
 	    ajSystem(temp);
-
 	}
 
 
-	/* Write domain coordinate file in embl-like format */
+	/* Write domain coordinate file in embl-like format. */
 	if(!ajPdbWriteDomain(cpdbscop_outf, pdb, scop, errf2))
 	{
 	    ajFmtPrintS(&msg, "Error writing cpdbscop file %S", 
@@ -213,27 +223,26 @@ int main(int argc, char **argv)
 	    ajWarn(ajStrStr(msg));
 
 	    ajFileClose(&cpdbscop_outf);
-	    ajFmtPrintS(&temp, "rm %S\n", cpdbscop_name);
-	    ajFmtPrint("%S", temp);
-	    
+	    ajFmtPrintS(&temp, "rm %S", cpdbscop_name);
+	    ajFmtPrint("%S\n", temp);
 	    ajSystem(temp);
 	}
 
 
-	/* Tidy up*/
+	/* Memory management. */
 	ajFileClose(&cpdb_inf);
 	ajFileClose(&pdbscop_outf);
 	ajFileClose(&cpdbscop_outf);
 	ajScopDel(&scop);
 	ajPdbDel(&pdb);
     }
-    /*End of main application loop*/    
+    /* End of main application loop. */    
     
 
 
 
 
-    /*Tidy up */
+    /* Tidy up. */
     ajStrDel(&cpdb_name);
     ajStrDel(&pdbscop_name);
     ajStrDel(&cpdbscop_name);
@@ -245,7 +254,6 @@ int main(int argc, char **argv)
     ajFileClose(&errf2);
 
 
-    /* Bye Bye */
     ajExit();
     return 0;
 }	

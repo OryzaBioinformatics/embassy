@@ -1,13 +1,11 @@
 /*  @source rocplot application
 **
-**  ROCPLOT is a generic tool for interpretation and graphical display of the
-**  performance of predictive methods.  ROCPLOT reads one or more files of hits,
-**  performs Receiver Operator Characteristic (ROC) analysis on the hits, and 
-**  writes graphs, including ROC plots, illustrating diagnostic performance.  
-**  For example, a profile or other type of discriminating element can be 
-**  generated for a protein family and scanned against a sequence database to 
-**  identify putative new family members.  The file(s) of hits would contain the
-**  results of the profile-database search(es). 
+**  Provides interpretation and graphical display of the 
+**  performance of discriminating elements (e.g. profiles for
+**  protein families).  rocplot reads file(s) of hits from 
+**  discriminator-database search(es), performs ROC analysis 
+**  on the hits, and writes graphs illustrating the diagnostic 
+**  performance of the discriminating elements.
 **
 **
 **  @author: Copyright (C) Jon Ison (jison@hgmp.mrc.ac.uk)
@@ -28,7 +26,7 @@
 **  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 **  02111-1307, USA.
 **
-*****************************************************************************
+*******************************************************************************
 ** 
 **  ROCPLOT documentation
 **  See http://wwww.emboss.org
@@ -40,14 +38,26 @@
 **  Applied Bioinformatics (submitted).  
 **  Jon C. Ison & Matthew J. Blades. 
 ** 
+**  Rice P, Bleasby A.J.  2000.  EMBOSS - The European Molecular Biology Open 
+**  Software Suite.  Trends in Genetics, 15:276-278.  
+**  See also http://www.uk.embnet.org/Software/EMBOSS
+**  
 **  Email jison@rfcgr.mrc.ac.uk.
 **  
-****************************************************************************/
+**  NOTES
+**  Replace "AJFREE(today);" with a call to the destructor function when one 
+**  becomes available.
+**  Could possibly set more sensible values for barchart - wait for user 
+**  feedback.
+**  
+******************************************************************************/
 
 
 
 #include "emboss.h"
 #include <math.h>
+
+
 
 
 /* Constants and globals */
@@ -65,19 +75,31 @@
     
 char    *CLASSNAMES[]={"True", "Cross", "Uncertain", "Unknown", "False"};
 
+AjPFile    errf      = NULL;
+
+
 
       
 
 
-
-/* Object definitions */
+/******************************************************************************
+**
+** STRUCTURE DEFINITIONS
+**
+******************************************************************************/
 
 /* @data AjPHitdata *********************************************************
 **
-** Class    Classification of hit            
-** Acc      Accession number of hit sequence (if available)
-** Start    Start of hit in sequence (if available)        
-** End      End of hit in sequence (if available)          
+** Hitdata object.
+**
+** Holds data for a hit.
+**
+** AjPHit is implemented as a pointer to a C data structure.
+**
+** @attr Class [AjPStr]    Classification of hit            
+** @attr Acc  [AjPStr]    Accession number of hit sequence (if available)
+** @attr Start [ajint]   Start of hit in sequence (if available)        
+** @attr End [ajint]     End of hit in sequence (if available)          
 **
 ** @alias AjOHitdata
 ** @alias AjSHitdata
@@ -94,10 +116,14 @@ typedef struct AjSHitdata
 
 /* @data AjPXYdata **********************************************************
 **
-** Class    Classification of hit            
-** Acc      Accession number of hit sequence (if available)
-** Start    Start of hit in sequence (if available)        
-** End      End of hit in sequence (if available)          
+** XYdata object.
+**
+** Holds X/Y coordinate.
+**
+** AjPXYdata is implemented as a pointer to a C data structure.
+**
+** @attr X [float] X coordinate.
+** @attr Y [float] Y coordinate.
 **
 ** @alias AjOXYdata
 ** @alias AjSXYdata
@@ -111,56 +137,113 @@ typedef struct AjSXYdata
 
 
 
-
-/* Function prototypes */
-static AjBool rocplot_write_summary(AjPFile outf, ajint mode, 
-				    ajint multimode, ajint datamode, 
-				    ajint numfiles, AjPStr *hitsnames,
+/******************************************************************************
+**
+** PROTOTYPES  
+**
+******************************************************************************/
+static AjBool rocplot_write_summary(AjPDir outdir, 
+				    AjPFile outf,
+				    ajint mode, 
+				    ajint multimode, 
+				    ajint datamode, 
+				    ajint numfiles, 
+				    AjPStr *hitsnames,
 				    ajint roc, 
-				    AjPFloat rocn, AjPInt nrelatives);
-static AjBool   rocplot_write_barchart(AjPStr fname, AjPStr title, 
-				       AjPStr xlabel, AjPStr ylabel, 
-				       ajint nbins, float binstart, 
-				       float binsize, AjPFloat rocn, 
+				    AjPFloat rocn, 
+				    AjPInt nrelatives);
+
+static AjBool   rocplot_write_barchart(AjPDir outdir,
+				       AjPStr fname, 
+				       AjPStr title, 
+				       AjPStr xlabel,
+				       AjPStr ylabel, 
+				       ajint nbins,
+				       float binstart, 
+				       float binsize,
+				       AjPFloat rocn, 
 				       ajint numfiles);
-static AjBool   rocplot_write_classplot(AjPStr fname, AjPStr title, 
-					AjPStr xlabel, AjPStr ylabel, 
-					ajint nseries, ajint filen, 
-					AjPStr *legend, AjPFloat2d classx, 
-					AjPFloat3d classy, ajint npoints);
-static AjBool   rocplot_write_rocplot(AjPStr fname, AjPStr title, 
-				      AjPStr xlabel, AjPStr ylabel, 
-				      ajint nseries, AjPStr *legend, 
-				      AjPFloat2d rocx, AjPFloat2d rocy, 
-				      AjPFloat rocn, AjPInt hitcnt);
-static AjBool rocplot_count_class(AjPHitdata tmphit, ajint hitcnt, 
-				  ajint plotn, AjBool reset, 
-				  AjPFloat2d *classx, AjPFloat3d *classy, 
-				  ajint *ntrue, ajint *nottrue);
-static AjBool rocplot_calcdata(int mode, int multimode, int datamode, 
-			       AjPList *hitslists, ajint numfiles, 
-			       ajint thresh, ajint roc, 
-			       AjPInt nrelatives, AjPFloat *rocn, 
-			       AjPFloat2d *rocx, AjPFloat2d *rocy, 
-			       AjPFloat2d *classx, AjPFloat3d *classy, 
-			       AjPInt *hitcnt);
-static AjBool rocplot_overlap(AjPHitdata h1, AjPHitdata h2, ajint thresh);
-static AjBool rocplot_hit_is_unique(AjPHitdata  hit, AjPList mrglist, 
-				    ajint thresh);
-void rocplot_HitdataDel(AjPHitdata *thys);
-AjPHitdata rocplot_HitdataNew(void);
-AjBool rocplot_read_hits_files(int mode, int multimode, int datamode, 
-			       AjPList hitsfiles, AjPStr **hitsnames, 
-			       AjPList *hitslists, AjPInt *nrelatives,
+
+static AjBool   rocplot_write_classplot(AjPDir outdir,
+					AjPStr fname,
+					AjPStr title, 
+					AjPStr xlabel,
+					AjPStr ylabel, 
+					ajint nseries,
+					ajint filen, 
+					AjPStr *legend,
+					AjPFloat2d classx, 
+					AjPFloat3d classy,
+					ajint npoints);
+
+static AjBool   rocplot_write_rocplot(AjPDir outdir,
+				      AjPStr fname, 
+				      AjPStr title, 
+				      AjPStr xlabel,
+				      AjPStr ylabel, 
+				      ajint nseries,
+				      AjPStr *legend, 
+				      AjPFloat2d rocx,
+				      AjPFloat2d rocy, 
+				      AjPFloat rocn,
+				      AjPInt hitcnt);
+
+static AjBool rocplot_count_class(AjPHitdata tmphit,
+				  ajint hitcnt, 
+				  ajint plotn,
+				  AjBool reset, 
+				  AjPFloat2d *classx,
+				  AjPFloat3d *classy, 
+				  ajint *ntrue,
+				  ajint *nottrue);
+
+static AjBool rocplot_calcdata(int mode, 
+			       int multimode, 
+			       int datamode, 
+			       AjPList *hitslists, 
+			       ajint numfiles, 
+			       ajint thresh,
+			       ajint roc, 
+			       AjPInt nrelatives, 
+			       AjPFloat *rocn, 
+			       AjPFloat2d *rocx,
+			       AjPFloat2d *rocy, 
+			       AjPFloat2d *classx, 
+			       AjPFloat3d *classy, 
+			       AjPInt *hitcnt,
+			       AjBool norange);
+
+static AjBool rocplot_overlap(AjPHitdata h1,
+			      AjPHitdata h2,
+			      ajint thresh);
+
+static AjBool rocplot_hit_is_unique(AjPHitdata  hit,
+				    AjPList mrglist, 
+				    ajint thresh,
+				    AjBool norange);
+
+static void rocplot_HitdataDel(AjPHitdata *thys);
+
+static AjPHitdata rocplot_HitdataNew(void);
+
+static AjBool rocplot_read_hits_files(int mode,
+			       int multimode,
+			       int datamode, 
+			       AjPList hitsfiles,
+			       AjPStr **hitsnames, 
+			       AjPList *hitslists,
+			       AjPInt *nrelatives,
 			       ajint *roc);
-void rocplot_XYdataDel(AjPXYdata *thys);
-AjPXYdata rocplot_XYdataNew(void);
-ajint rocplot_compX(const void *ptr1, const void *ptr2);
+
+static void rocplot_XYdataDel(AjPXYdata *thys);
+
+static AjPXYdata rocplot_XYdataNew(void);
+
+static ajint rocplot_compX(const void *ptr1,
+		    const void *ptr2);
 
 
 
-
-    AjPFile    errf      = NULL;
 
 
 
@@ -183,34 +266,34 @@ int main(int argc, char **argv)
 
     /* For ACD data */
     AjPList   hitsfiles  = NULL;    /* Directory of hits files from ACD. */
+    AjPDir    outdir     = NULL;    /* Directory for output files.       */
     AjPStr   *mode       = NULL;    /* 
-				    ** Mode of operation from ACD: 
-				    ** 1: Single input file mode.
-				    ** 2: Multiple input file mode. 
-				    */
+				     ** Mode of operation from ACD: 
+				     ** 1: Single input file mode.
+				     ** 2: Multiple input file mode. 
+				     */
     AjPStr   *multimode  = NULL;    /* 
-				    ** Mode of operation from ACD: 
-				    ** 1: Do not combine data (multiple ROC 
-				    **    curves).
-				    ** 2: Combine data (single ROC curve).
-				    */
+				     ** Mode of operation from ACD: 
+				     ** 1: Do not combine data (multiple ROC 
+				     **    curves).
+				     ** 2: Combine data (single ROC curve).
+				     */
     AjPStr   *datamode   = NULL;    /* 
-				    ** Mode of operation from ACD:
-				    ** 1: Single list of known true 
-				    **    relatives.
-				    ** 2: Multiple lists of known true 
-				    **    relatives.
-				    */
+				     ** Mode of operation from ACD:
+				     ** 1: Single list of known true 
+				     **    relatives.
+				     ** 2: Multiple lists of known true 
+				     **    relatives.
+				     */
     ajint     thresh     = 0;       /* Overlap threshold for hits from ACD */
-/*  AjPFile   rocbasename    = NULL; */ /* ROC plot file from ACD              */
-    AjPStr    rocbasename    = NULL;    /* ROC plot file from ACD              */
+    AjPStr    rocbasename= NULL;    /* ROC plot file from ACD              */
     AjPFile   outfdata   = NULL;    /* Summary file from ACD.              */
-/*  AjPFile   barbasename    = NULL; */ /* Bar chart for ROC value distribution  
+    AjPStr    barbasename= NULL;    /* Bar chart for ROC value distribution  
                                        from ACD.                           */
-    AjPStr    barbasename    = NULL;    /* Bar chart for ROC value distribution  
-                                       from ACD.                           */
-    AjPStr    classbasename   = NULL;    /* Base name of file(s) containing 
+    AjPStr    classbasename = NULL; /* Base name of file(s) containing 
 				       classification plot(s) from ACD.    */
+    AjBool    norange = ajFalse;    /* 	Disregard range data */
+    
 
     /* For housekeeping */
     AjPStr     *hitsnames  = NULL;  /* Array of names only of hits files.  */
@@ -223,7 +306,6 @@ int main(int argc, char **argv)
 				       classification plot(s)              */ 
     AjPList    *hitslists  = NULL;  /* Lists of hits from hits files       */
     AjPHitdata  tmphit     = NULL;  /* Object for temp. data               */ 
-/*  AjPFile     outfclass  = NULL;*//* Classification plot                 */
     AjPInt      nrelatives = NULL;  /* No. known relatives from each hits 
 				       file - array of token3 values.      */
     ajint       roc        = 0;     /* ROC number from input files         */
@@ -262,8 +344,8 @@ int main(int argc, char **argv)
     float     binstart   = 0.0;     /* Start value of first bin            */
     float     binsize    = 0.0;     /* Bin size                            */
 
-    /* DIAGNOSTICS */
-    AjIList    iter      = NULL;
+    /* DIAGNOSTICS 
+    AjIList    iter      = NULL; */
     
 
 
@@ -273,7 +355,8 @@ int main(int argc, char **argv)
     ajNamInit("emboss");
     ajAcdInitP("rocplot", argc, argv, "DOMAINATRIX");
 
-    hitsfiles     = ajAcdGetDirlist("hitsfiles");
+    hitsfiles     = ajAcdGetDirlist("hitsfilespath");
+    outdir        = ajAcdGetOutdir("outdir");
     mode          = ajAcdGetList("mode");
     if(ajStrChar(*mode,0)=='2')
 	multimode = ajAcdGetList("multimode");
@@ -282,18 +365,16 @@ int main(int argc, char **argv)
     if((ajStrChar(*mode,0)=='2') && (ajStrChar(*multimode,0)=='2') && 
        (ajStrChar(*datamode,0)=='1'))
 	thresh    = ajAcdGetInt("thresh");
-/*  rocbasename       = ajAcdGetOutfile("rocbasename");  */
     rocbasename       = ajAcdGetString("rocbasename");
-    outfdata      = ajAcdGetOutfile("outfdata");
-    /*
-    if((ajStrChar(*mode,0)=='2') && (ajStrChar(*multimode,0)=='1'))
-	barbasename   = ajAcdGetOutfile("barbasename"); */
+    outfdata      = ajAcdGetOutfile("outfile");
     if((ajStrChar(*mode,0)=='2') && (ajStrChar(*multimode,0)=='1'))
 	barbasename   = ajAcdGetString("barbasename");
     classbasename      = ajAcdGetString("classbasename");
+    norange           = ajAcdGetBool("norange");
+    
 
     /* DIAGNOSTICS */
-    errf          = ajAcdGetOutfile("errf");    
+    errf          = ajAcdGetOutfile("errfile");    
 
 
 
@@ -313,8 +394,6 @@ int main(int argc, char **argv)
 
 
     /* DIAGNOSTICS */
-/*    if(!(errf=ajFileNewOutC("rocplot.errors")))
-	ajFatal("Could not open error file"); */
     ajFmtPrintF(errf, "MODE INFO\n");
     ajFmtPrintF(errf, "modei: %d\nmultimodei: %d\ndatamodei: %d\n", 
 		modei, multimodei, datamodei);
@@ -322,7 +401,7 @@ int main(int argc, char **argv)
     
 
     numfiles  = ajListLength(hitsfiles);
-    printf("numfiles: %d\n", numfiles);
+/*    printf("numfiles: %d\n", numfiles); */
     
 
     /* DIAGNOSTICS */
@@ -395,6 +474,8 @@ int main(int argc, char **argv)
     for(x=0; x<numfiles; x++)
 	ajFmtPrintF(errf, "hitsnames[%d]: %S\n", x, hitsnames[x]);
     ajFmtPrintF(errf, "\n\n\n");    
+
+    /* DIAGNOSTICS 
     ajFmtPrintF(errf, "LISTS OF HITS IN EACH FILE\n");
     for(x=0; x<numfiles; x++)    
     {
@@ -410,6 +491,7 @@ int main(int argc, char **argv)
 	ajFmtPrintF(errf, "nrelatives[%d]: %d\n", x, 
 		    ajIntGet(nrelatives, x));
     ajFmtPrintF(errf, "\n\n\n");    	    
+    */
     
     /*********************************************************************/
     /* CALCULATE x/y DATA FOR ROC AND CLASSIFICATION PLOTS AND ROC VALUE */
@@ -418,7 +500,7 @@ int main(int argc, char **argv)
     if(!rocplot_calcdata(modei, multimodei, datamodei, hitslists, 
 			 numfiles, thresh, roc, 
 			 nrelatives, &rocn, &rocx, &rocy, &classx, &classy, 
-			 &hitcnt))
+			 &hitcnt, norange))
 	ajFatal("rocplot_calcdata failed");
 
 
@@ -457,8 +539,6 @@ int main(int argc, char **argv)
     ajFmtPrint("Please wait ... ");
     
 
-
-
     /**********************************************************************/
     /* SET DATA FOR OUTPUT FILES. WRITE CLASSIFICATION PLOT AND BAR CHART */
     /**********************************************************************/
@@ -474,16 +554,11 @@ int main(int argc, char **argv)
 	ajFmtPrintS(&roclegend[0], "%S", hitsnames[0]);
 
 	/* Write classification plot file */
-/*	outfclass = ajFileNewOut(classbasename); */
 	ajFmtPrintS(&classtitle, "Classification plot for %S", hitsnames[0]);	
-/*	rocplot_write_classplot(outfclass, classtitle, classxlabel, 
-				classylabel, NUMCLASSES, 0, classlegend, 
-				classx, classy, hitcnt); */
-	if(!rocplot_write_classplot(classbasename, classtitle, classxlabel, 
+	if(!rocplot_write_classplot(outdir, classbasename, classtitle, classxlabel, 
 				    classylabel, NUMCLASSES, 0, classlegend, 
 				    classx, classy, ajIntGet(hitcnt, 0)))
 	    ajFatal("rocplot_write_classplot failed");
-/*	ajFileClose(&outfclass); */
     }
     /****************************/
     /* 2. Multiple input files  */
@@ -516,18 +591,13 @@ int main(int argc, char **argv)
 			    hitsnames[x]);	 
 
 		ajFmtPrintS(&fullname, "%S%d", classbasename, x);
-/*		outfclass = ajFileNewOut(fullname); */
-/*		rocplot_write_classplot(outfclass, classtitle, classxlabel, 
-					classylabel, NUMCLASSES, x, 
-					classlegend, classx, classy, 
-					hitcnt); */
-		if(!rocplot_write_classplot(fullname, classtitle, 
+
+		if(!rocplot_write_classplot(outdir, fullname, classtitle, 
 					    classxlabel, 
 					    classylabel, NUMCLASSES, x, 
 					    classlegend, classx, classy, 
 					    ajIntGet(hitcnt, x)))
 		    ajFatal("rocplot_write_classplot failed");
-/*		ajFileClose(&outfclass); */
 	    }
 	    
 	    /* Set plot data */
@@ -545,9 +615,9 @@ int main(int argc, char **argv)
 	    nbins    = MAXBINS;
 	    binstart = BINSTART;
 	    binsize  = BINSIZE;
-	    /* XXX Could possibly set more sensible values here - wait for 
+	    /* Could possibly set more sensible values here - wait for 
 	     user feedback. */
-	    if(!rocplot_write_barchart(barbasename, bartitle, barxlabel, 
+	    if(!rocplot_write_barchart(outdir, barbasename, bartitle, barxlabel, 
 				       barylabel, nbins, binstart, binsize,
 				       rocn, numfiles))
 		ajFatal("rocplot_write_barchart failed");
@@ -570,18 +640,10 @@ int main(int argc, char **argv)
 		ajStrApp(&classtitle, hitsnames[x]);
 	    }
 	    
-/*	    outfclass = ajFileNewOut(classbasename); */
-/*	    rocplot_write_classplot(outfclass, classtitle, classxlabel, 
-				    classylabel, NUMCLASSES, 0, classlegend,
-				    classx, classy, hitcnt); */
-
-/*	    ajFileClose(&outfclass); */
-
 	    /* Write roc plot data */
 	    nrocseries = 1;
 	    ajFmtPrintS(&roclegend[0], "%s", "Combined dataset");
 
-	    
 	    /**********************************************/
 	    /* 2.2.1. Single list of known true relatives */
 	    /**********************************************/
@@ -604,7 +666,8 @@ int main(int argc, char **argv)
 	    }
 
 	    /* Write classification plot files */
-	    if(!rocplot_write_classplot(classbasename, classtitle, classxlabel, 
+	    if(!rocplot_write_classplot(outdir, classbasename, classtitle, 
+					classxlabel, 
 					classylabel, NUMCLASSES, 0, 
 					classlegend,
 					classx, classy, ajIntGet(hitcnt, 0)))
@@ -616,7 +679,8 @@ int main(int argc, char **argv)
     /* WRITE ROC PLOT FILE */
     /***********************/
 
-    if(!rocplot_write_rocplot(rocbasename, roctitle, rocxlabel, rocylabel, 
+    if(!rocplot_write_rocplot(outdir, rocbasename, roctitle, rocxlabel, 
+			      rocylabel, 
 			      nrocseries, roclegend, rocx, rocy, rocn, 
 			      hitcnt))
 	ajFatal("rocplot_write_rocplot failed");
@@ -625,7 +689,7 @@ int main(int argc, char **argv)
     /**********************/
     /* WRITE SUMMARY FILE */
     /* ********************/
-    if(!rocplot_write_summary(outfdata, modei, 
+    if(!rocplot_write_summary(outdir, outfdata, modei, 
 			      multimodei, 
 			      datamodei, 
 			      numfiles, hitsnames, roc, rocn, 
@@ -653,11 +717,9 @@ int main(int argc, char **argv)
 	ajStrDel(&datamode[0]);
 	AJFREE(datamode);
     }
-/*  ajFileClose(&rocbasename); */
     ajStrDel(&rocbasename);
     ajFileClose(&outfdata);
     if((modei==2) && (multimodei==1))
-	/* ajFileClose(&barbasename); */
 	ajStrDel(&barbasename);
     ajStrDel(&classbasename);
 
@@ -701,6 +763,10 @@ int main(int argc, char **argv)
     ajStrDel(&bartitle);
     ajStrDel(&barxlabel);
     ajStrDel(&barylabel);
+
+    /* For output directory */
+    ajDirDel(&outdir);
+    
     
     /* DIAGNOSTICS */
     ajFileClose(&errf); 
@@ -756,7 +822,7 @@ int main(int argc, char **argv)
 ** @return [AjBool] True if all file formats were ok.
 ** @@
 ****************************************************************************/
-AjBool rocplot_read_hits_files(int mode, int multimode, int datamode, 
+static AjBool rocplot_read_hits_files(int mode, int multimode, int datamode, 
 			       AjPList hitsfiles, AjPStr **hitsnames, 
 			       AjPList *hitslists, AjPInt *nrelatives,
 			       ajint *roc)
@@ -894,9 +960,8 @@ AjBool rocplot_read_hits_files(int mode, int multimode, int datamode,
 	    }
 	    else 
 	    {
-		if(ajFmtScanS(hitsline, "%S", &class) != 1)
-		    ajFatal("Incorrect format of hit line in %S",hitsfile);
-	    }
+		ajFmtScanS(hitsline, "%S", &class);
+	    } 
 	    
 	    /* Count number of false hits.
 	       Any hit that isn't a 'TRUE' is classed as a 'FALSE' when 
@@ -1001,7 +1066,7 @@ AjBool rocplot_read_hits_files(int mode, int multimode, int datamode,
 ** @return [AjPHitdata] Pointer to an Hitdata object
 ** @@
 ****************************************************************************/
-AjPHitdata rocplot_HitdataNew(void)
+static AjPHitdata rocplot_HitdataNew(void)
 {
     AjPHitdata ret = NULL;
 
@@ -1026,7 +1091,7 @@ AjPHitdata rocplot_HitdataNew(void)
 ** @return [void]
 ** @@
 ****************************************************************************/
-void rocplot_HitdataDel(AjPHitdata *thys)
+static void rocplot_HitdataDel(AjPHitdata *thys)
 {
     AjPHitdata pthis = *thys;
 
@@ -1057,17 +1122,22 @@ void rocplot_HitdataDel(AjPHitdata *thys)
 **  hits both with the same accession numbers and with the start and end 
 **  points of 1-100 and 91 - 190 respectively are considered to be the same
 **  hit if the overlap threshold is 10 or less.
+**  If 'norange' is true however (i.e. in cases where the 'norange' 
+**  additional ACD option was set on)  then range data are disregarded when 
+**  identifying unique hits: two hits are classed as unique if they have 
+**  different accession numbers.
 **
 ** @param [r] hit     [AjPHitdata] Hit to check for uniqueness
 ** @param [r] mrglist [AjPList]    List of hits
 ** @param [r] thresh  [ajint]      Overlap threshold
+** @param [r] norange [AjBool]     Disregard range data
 ** 
 ** @return [AjBool] True if Hit did not occur in list.
 ** @@
 **
 ****************************************************************************/
 static AjBool rocplot_hit_is_unique(AjPHitdata  hit, AjPList mrglist, 
-				    ajint thresh)
+				    ajint thresh, AjBool norange)
 {
     AjIList     iter      = NULL;    
     AjPHitdata  tmphit    = NULL; 
@@ -1075,11 +1145,20 @@ static AjBool rocplot_hit_is_unique(AjPHitdata  hit, AjPList mrglist,
     iter = ajListIterRead(mrglist);
     while((tmphit = (AjPHitdata)ajListIterNext(iter)))
     {
-	if(rocplot_overlap(tmphit, hit, thresh))
+	if(norange) 
 	{
-	    ajListIterFree(&iter);
-	    return ajFalse;
+	    if(ajStrMatch(tmphit->Acc, hit->Acc))
+	    {
+		ajListIterFree(&iter);
+		return ajFalse;
+	    }
 	}
+	else
+	    if(rocplot_overlap(tmphit, hit, thresh))
+	    {
+		ajListIterFree(&iter);
+		return ajFalse;
+	    }
     }
     ajListIterFree(&iter);
     return ajTrue;
@@ -1149,6 +1228,7 @@ static AjBool rocplot_overlap(AjPHitdata h1, AjPHitdata h2, ajint thresh)
 ** @param [w] classx     [AjPFloat2d *]   Classification x data to calculate.
 ** @param [w] classy     [AjPFloat3d *]   Classification y data to calculate.
 ** @param [w] hitcnt     [AjPInt *]       Count of hits processed. 
+** @param [r] norange    [AjBool]         Disregard range data
 ** 
 ** @return [AjBool] True on success.
 ** @@
@@ -1160,7 +1240,7 @@ static AjBool rocplot_calcdata(int mode, int multimode, int datamode,
 			       AjPInt nrelatives, AjPFloat *rocn, 
 			       AjPFloat2d *rocx, AjPFloat2d *rocy, 
 			       AjPFloat2d *classx, AjPFloat3d *classy, 
-			       AjPInt *hitcnt)
+			       AjPInt *hitcnt, AjBool norange)
 { 
     ajint       maxfalse   = 0;       /* Number of FALSE hits to consider  */
     AjPList     mrglist    = NULL;    /* Single list for hits from multiple. 
@@ -1248,7 +1328,7 @@ static AjBool rocplot_calcdata(int mode, int multimode, int datamode,
 		if((tmphit = (AjPHitdata)ajListIterNext(iters[x])))
 		{
 		    if(((datamode==1) && 
-			(rocplot_hit_is_unique(tmphit, mrglist, thresh))) ||
+			(rocplot_hit_is_unique(tmphit, mrglist, thresh, norange))) ||
 		       (datamode==2))
 		    {
 			ajIntInc(hitcnt, 0);
@@ -1260,12 +1340,14 @@ static AjBool rocplot_calcdata(int mode, int multimode, int datamode,
 						&nottrue))
 			    ajFatal("rocplot_count_class failed");
 			
-			/* Calculate data for roc plot.  Any hit that isn't a 'TRUE' 
-			   is classed as a 'FALSE' when calculating the ROC curve and
-			   value. */
+			/* Calculate data for roc plot.  Any hit that isn't a 
+			   'TRUE' is classed as a 'FALSE' when calculating the 
+			   ROC curve and value. */
 			if(!ajStrMatchC(tmphit->Class, "TRUE"))
 			    ntrue_sum += (float) ntrue;
-			ajFmtPrintF(errf, "For hit %5d ntrue=%5d ntrue_sum=%5.3f\n", ajIntGet(*hitcnt, x),ntrue, ntrue_sum);
+			/* DIAGNOSTICS 
+			ajFmtPrintF(errf, "For hit %5d ntrue=%5d ntrue_sum=%5.3f\n", 
+				    ajIntGet(*hitcnt, x),ntrue, ntrue_sum); */
 
 			/* Single list of known true relatives */	
 			if(datamode==1) 
@@ -1284,14 +1366,10 @@ static AjBool rocplot_calcdata(int mode, int multimode, int datamode,
 			xyptr->Y = sens;
 			ajListPushApp(xylist, (void *)xyptr);
 			
-/*			ajFloat2dPut(rocx, 0, *hitcnt-1, (1 - spec));
-			ajFloat2dPut(rocy, 0, *hitcnt-1, sens);		 */
-
 			if(nottrue==maxfalse)
 			{
 			    /* Sort list of data points by X value and 
 			       populate arrays */
-/*			    ajListSort(xylist, rocplot_compX);   */
 			    y=0;
 			    while(ajListPop(xylist, (void **)&xyptr))
 			    {
@@ -1320,7 +1398,7 @@ static AjBool rocplot_calcdata(int mode, int multimode, int datamode,
 	/* Single list of known true relatives */	
 	if(datamode==1) 
 	    rocn_tmp = ( 1 / (float)((float)roc * 
-				     (float)ajIntGet(nrelatives, x)))
+				     (float)ajIntGet(nrelatives, 0)))
 		* ((float)ntrue_sum);
 	
 	/* Multiple lists of known true relatives */	
@@ -1364,16 +1442,19 @@ static AjBool rocplot_calcdata(int mode, int multimode, int datamode,
 		 value. */
 		if(!ajStrMatchC(tmphit->Class, "TRUE"))
 		    ntrue_sum += (float) ntrue;
-		ajFmtPrintF(errf, "For hit %5d ntrue=%5d ntrue_sum=%5.3f\n", ajIntGet(*hitcnt, x),ntrue, ntrue_sum);
+
+		/* DIAGNOSTICS 
+		ajFmtPrintF(errf, "For hit %5d ntrue=%5d ntrue_sum=%5.3f\n", 
+			    ajIntGet(*hitcnt, x),ntrue, ntrue_sum); */
 		
 
-		/* DIAGNOSTICS */
+		/* DIAGNOSTICS 
 		ajFmtPrintF(errf, "[%d]   sens = %d / %d      spec = %d / %d", 
 			    ajIntGet(*hitcnt, x)-1, 
 			    ntrue, 
 			    ajIntGet(nrelatives, x), 
 			    ntrue, 
-			    ajIntGet(*hitcnt, x));
+			    ajIntGet(*hitcnt, x)); */
 		
 
 		sens = (float) ((float)ntrue / 
@@ -1382,7 +1463,7 @@ static AjBool rocplot_calcdata(int mode, int multimode, int datamode,
 				(float)ajIntGet(*hitcnt, x));
 				
 
-		ajFmtPrintF(errf, "   (sens = %f  spec = %f\n",sens, spec); 
+		/* ajFmtPrintF(errf, "   (sens = %f  spec = %f\n",sens, spec);  */
 
 		/* Create data point and populate list */
 		xyptr = rocplot_XYdataNew();
@@ -1391,26 +1472,24 @@ static AjBool rocplot_calcdata(int mode, int multimode, int datamode,
 
 		ajListPushApp(xylist, (void *)xyptr);
 			
-/*		ajFloat2dPut(rocx, x, *hitcnt-1, (1 - spec));
-		ajFloat2dPut(rocy, x, *hitcnt-1, sens);		 */
-		
 		/* Housekeeping */
 		reset = ajFalse;
+
 
 		if(nottrue==maxfalse)
 		{
 		    /* Sort list of data points by X value and populate 
 		       arrays */
-/*		    ajListSort(xylist, rocplot_compX);    */
 		    y=0;
 		    while(ajListPop(xylist, (void **)&xyptr))
 		    {
 			ajFloat2dPut(rocx, x, y, xyptr->X);
 			ajFloat2dPut(rocy, x, y, xyptr->Y);		 
 			
-			/* DIAGNOSTICS */
+
+			/* DIAGNOSTICS 
 			ajFmtPrintF(errf, "sens[%d]: %f   1-spec[%d]: %f\n", 
-				    y, xyptr->Y, y, xyptr->X);	
+				    y, xyptr->Y, y, xyptr->X);	 */
 			
 
 			rocplot_XYdataDel(&xyptr);
@@ -1425,10 +1504,11 @@ static AjBool rocplot_calcdata(int mode, int multimode, int datamode,
 	    }
 
 	    /* Calculate ROCn value */
+	    /* DIAGNOSTICS 
 	    ajFmtPrintF(errf, "roc: %d\n"
 		       "nrelativess: %d\n"
 		       "ntrue_sum: %f\n",
-		       roc, ajIntGet(nrelatives, x), ntrue_sum);
+		       roc, ajIntGet(nrelatives, x), ntrue_sum); */
 
 
 	    rocn_tmp = (1 / (float)((float)roc * 
@@ -1454,7 +1534,7 @@ static AjBool rocplot_calcdata(int mode, int multimode, int datamode,
 
 
 
-/* @funcstatic rocplot_count_class ******************************************
+/* @funcstatic rocplot_count_class ********************************************
 **
 ** Calculates x,y data for classification plot. Makes counts of different 
 ** types of hit.
@@ -1471,7 +1551,7 @@ static AjBool rocplot_calcdata(int mode, int multimode, int datamode,
 ** @return [AjBool] True on success.
 ** @@
 **
-****************************************************************************/
+******************************************************************************/
 static AjBool rocplot_count_class(AjPHitdata tmphit, ajint hitcnt, 
 				  ajint plotn, AjBool reset, 
 				  AjPFloat2d *classx, AjPFloat3d *classy, 
@@ -1534,7 +1614,7 @@ static AjBool rocplot_count_class(AjPHitdata tmphit, ajint hitcnt,
 
 
 
-/* @funcstatic rocplot_write_rocplot ****************************************
+/* @funcstatic rocplot_write_rocplot ******************************************
 **
 ** Writes a file of meta-data for drawing the ROC plot.
 **
@@ -1548,12 +1628,13 @@ static AjBool rocplot_count_class(AjPHitdata tmphit, ajint hitcnt,
 ** @param [r] rocy    [AjPFloat2d]  Data points (y) for each data series
 ** @param [r] rocn    [AjPFloat]    ROCn value for each dataset
 ** @param [r] hitcnt  [AjPInt]      No. of points in data series
+** @param [r] outdir  [AjPDir]      Directory for output files
 ** 
 ** @return [AjBool] True if file was succesfully written.
 ** @@
 **
-****************************************************************************/
-static AjBool   rocplot_write_rocplot(AjPStr fname, AjPStr title, 
+******************************************************************************/
+static AjBool   rocplot_write_rocplot(AjPDir outdir,AjPStr fname, AjPStr title, 
 				      AjPStr xlabel, AjPStr ylabel, 
 				      ajint nseries, AjPStr *legend, 
 				      AjPFloat2d rocx, AjPFloat2d rocy, 
@@ -1586,10 +1667,11 @@ static AjBool   rocplot_write_rocplot(AjPStr fname, AjPStr title,
     shorttitle = ajStrNew();
     shortlegend = ajStrNew();
 
+
     /* Create gnuplot data files */
     for(x=0; x<nseries; x++)
     {
-	ajFmtPrintS(&outfname, "%S_dat%d", fname, x);
+	ajFmtPrintS(&outfname, "%S%S_dat%d", ajDirName(outdir), fname, x);
 	if(!(outf = ajFileNewOut(outfname)))
 	    ajFatal("Could not open gnuplot data file (%S) for writing in "
 		    "rocplot_write_rocplot", outfname);
@@ -1602,7 +1684,11 @@ static AjBool   rocplot_write_rocplot(AjPStr fname, AjPStr title,
     }
 
     /* Create gnuplot driver file */
-    if(!(outf = ajFileNewOut(fname)))
+    ajStrAssS(&outfname, ajDirName(outdir));
+    ajStrApp(&outfname, fname);
+
+/*    if(!(outf = ajFileNewOut(fname))) */
+    if(!(outf = ajFileNewOut(outfname)))
 	ajFatal("Could not open gnuplot driver file (%S) for writing in "
 		"rocplot_write_rocplot", fname);
     ajFmtPrintF(outf, "# GNUPLOT driver file for roc plot\n");
@@ -1625,7 +1711,6 @@ static AjBool   rocplot_write_rocplot(AjPStr fname, AjPStr title,
        do this for legend[0] which in principle could get huge with 
        lots of input files. */
     ajStrAssSub(&shortlegend, legend[0], 0, 49);
-
 
     for(x=0; x<nseries; x++)
     {	
@@ -1669,7 +1754,6 @@ static AjBool   rocplot_write_rocplot(AjPStr fname, AjPStr title,
     ajXmlClearFile(graph);
     */
 
-
     ajStrDel(&outfname);
     ajStrDel(&shorttitle);
     ajStrDel(&shortlegend);
@@ -1680,7 +1764,7 @@ static AjBool   rocplot_write_rocplot(AjPStr fname, AjPStr title,
 
 
 
-/* @funcstatic rocplot_write_classplot **************************************
+/* @funcstatic rocplot_write_classplot ****************************************
 **
 ** Writes a file of meta-data for drawing the ROC plot.
 **
@@ -1694,12 +1778,14 @@ static AjBool   rocplot_write_rocplot(AjPStr fname, AjPStr title,
 ** @param [r] x       [AjPFloat2d]  Data points (x) for each data series
 ** @param [r] y       [AjPFloat3d]  Data points (y) for each data series
 ** @param [r] npoints [ajint]       No. of points in data series
+** @param [r] outdir  [AjPDir]      Directory for output files
 ** 
 ** @return [AjBool] True if file was succesfully written.
 ** @@
 **
-****************************************************************************/
-static AjBool   rocplot_write_classplot(AjPStr fname, AjPStr title, 
+*****************************************************************************/
+static AjBool   rocplot_write_classplot(AjPDir outdir,AjPStr fname, 
+					AjPStr title, 
 					AjPStr xlabel, AjPStr ylabel, 
 					ajint nseries, ajint filen, 
 					AjPStr *legend, AjPFloat2d classx, 
@@ -1734,7 +1820,7 @@ static AjBool   rocplot_write_classplot(AjPStr fname, AjPStr title,
     {
 	if(ajFloat3dGet(classy, filen, x, npoints-1)!=0.0)
 	{
-	    ajFmtPrintS(&outfname, "%S_dat%d", fname, x);
+	    ajFmtPrintS(&outfname, "%S%S_dat%d", ajDirName(outdir), fname, x);
 	    if(!(outf = ajFileNewOut(outfname)))
 		ajFatal("Could not open gnuplot data file (%S) for writing "
 			"in rocplot_write_classplot", outfname);	   
@@ -1749,7 +1835,10 @@ static AjBool   rocplot_write_classplot(AjPStr fname, AjPStr title,
     }
 
     /* Create gnuplot driver file */
-    if(!(outf = ajFileNewOut(fname)))
+    ajStrAssS(&outfname, ajDirName(outdir));
+    ajStrApp(&outfname, fname);
+
+    if(!(outf = ajFileNewOut(outfname)))
 	ajFatal("Could not open gnuplot driver file (%S) for writing in "
 		"rocplot_write_classplot", fname);		
     ajFmtPrintF(outf, "# GNUPLOT driver file for classification plot\n");
@@ -1770,7 +1859,7 @@ static AjBool   rocplot_write_classplot(AjPStr fname, AjPStr title,
 	{	
 	    if(done)
 		ajFmtPrintF(outf, ", ");
-	    ajFmtPrintS(&outfname, "%S_dat%d", fname, x);
+	    ajFmtPrintS(&outfname, "%S_dat%d", fname, x); 
 	    ajFmtPrintF(outf, "\"%S\" smooth bezier title "
 			"\"%s hits\"", outfname, CLASSNAMES[x]);
 	    done = ajTrue;
@@ -1816,7 +1905,7 @@ static AjBool   rocplot_write_classplot(AjPStr fname, AjPStr title,
 
 
 
-/* @funcstatic rocplot_write_barchart ***************************************
+/* @funcstatic rocplot_write_barchart *****************************************
 **
 ** Writes a file of meta-data for drawing the ROC plot.
 **
@@ -1829,12 +1918,14 @@ static AjBool   rocplot_write_classplot(AjPStr fname, AjPStr title,
 ** @param [r] binsize   [float]    Bin size
 ** @param [r] rocn      [AjPFloat] ROCn values
 ** @param [r] numfiles  [ajint]    No. of input files
+** @param [r] outdir    [AjPDir]   Directory for output files
 ** 
 ** @return [AjBool] True if file was succesfully written.
 ** @@
 **
-****************************************************************************/
-static AjBool   rocplot_write_barchart(AjPStr fname, AjPStr title, 
+******************************************************************************/
+static AjBool   rocplot_write_barchart(AjPDir outdir,AjPStr fname, 
+				       AjPStr title, 
 				       AjPStr xlabel, AjPStr ylabel, 
 				       ajint nbins, float binstart, 
 				       float binsize, AjPFloat rocn, 
@@ -1895,7 +1986,8 @@ static AjBool   rocplot_write_barchart(AjPStr fname, AjPStr title,
 	if(!done)
 	{
 	    ajIntDel(&freqs);
-	    ajFmtPrint("x: %d   numfiles: %d  nbins: %d   binsize: %f   min: %f   max: %f   roc: %f\n", 
+	    ajFmtPrint("x: %d   numfiles: %d  nbins: %d   binsize: %f   "
+		       "min: %f   max: %f   roc: %f\n", 
 		       x, numfiles, nbins, binsize, min, max, roc);
 	    
 	    ajFatal("Could not put data in bin");
@@ -1904,14 +1996,12 @@ static AjBool   rocplot_write_barchart(AjPStr fname, AjPStr title,
 
     
     /* Create gnuplot data files */
-    ajFmtPrintS(&outfname, "%S_dat", fname);
+    ajFmtPrintS(&outfname, "%S%S_dat", ajDirName(outdir), fname);
     if(!(outf = ajFileNewOut(outfname)))
 	ajFatal("Could not open gnuplot data file (%S) for writing in "
 		"rocplot_write_barchart", outfname);	
     ajFmtPrintF(outf, "# GNUPLOT data file for barchart\n");
 
-    /* WARNING - this code will probably only work if MAXBINS==20, 
-       BINSTART==0.0 and BINSIZE==0.05 */
     for(y=0; y<MAXBINS; y++)
 	ajFmtPrintF(outf, "%-.3f    %d\n", 
 		    (0.05*(y+1))-0.025, 
@@ -1920,7 +2010,10 @@ static AjBool   rocplot_write_barchart(AjPStr fname, AjPStr title,
 
     
     /* Create gnuplot driver file */
-    if(!(outf = ajFileNewOut(fname)))
+    ajStrAssS(&outfname, ajDirName(outdir));
+    ajStrApp(&outfname, fname);
+        
+    if(!(outf = ajFileNewOut(outfname)))
 	ajFatal("Could not open gnuplot driver file (%S) for writing in "
 		"rocplot_write_barchart", fname);
     ajFmtPrintF(outf, "set title \"%S\"\n", title);
@@ -1956,7 +2049,7 @@ static AjBool   rocplot_write_barchart(AjPStr fname, AjPStr title,
 
 
 
-/* @funcstatic rocplot_write_summary ****************************************
+/* @funcstatic rocplot_write_summary ******************************************
 **
 ** Writes the summary file.
 **
@@ -1969,12 +2062,13 @@ static AjBool   rocplot_write_barchart(AjPStr fname, AjPStr title,
 ** @param [r] roc        [ajint]     ROC number
 ** @param [r] rocn       [AjPFloat]  ROCn value for each dataset
 ** @param [r] nrelatives [AjPInt]    Number of known relatives for dataset
+** @param [r] outdir     [AjPDir]    Directory for output files
 ** 
 ** @return [AjBool] True if file was succesfully written.
 ** @@
 **
-****************************************************************************/
-static AjBool rocplot_write_summary(AjPFile outf, ajint mode, 
+******************************************************************************/
+static AjBool rocplot_write_summary(AjPDir outdir, AjPFile outf, ajint mode, 
 				    ajint multimode, ajint datamode, 
 				    ajint numfiles, AjPStr *hitsnames, 
 				    ajint roc, AjPFloat rocn, 
@@ -2077,7 +2171,7 @@ static AjBool rocplot_write_summary(AjPFile outf, ajint mode,
 		    "sd", roc, sd);
     	
 
-    /* XXX Replace this with a call to the destructor function when one 
+    /* Replace this with a call to the destructor function when one 
        becomes available */
     AJFREE(today);
     
@@ -2087,15 +2181,15 @@ static AjBool rocplot_write_summary(AjPFile outf, ajint mode,
 
 
 
-/* @funcstatic rocplot_XYdataNew ********************************************
+/* @funcstatic rocplot_XYdataNew **********************************************
 **
 ** XYdata object constructor.
 ** This is normally called by the rocplot_XYdataNew function.
 **
 ** @return [AjPXYdata] Pointer to an XYdata object
 ** @@
-****************************************************************************/
-AjPXYdata rocplot_XYdataNew(void)
+******************************************************************************/
+static AjPXYdata rocplot_XYdataNew(void)
 {
     AjPXYdata ret = NULL;
 
@@ -2108,7 +2202,7 @@ AjPXYdata rocplot_XYdataNew(void)
 
 
 
-/* @funcstatic rocplot_XYdataDel ********************************************
+/* @funcstatic rocplot_XYdataDel **********************************************
 **
 ** Destructor for XYdata object.
 **
@@ -2116,8 +2210,8 @@ AjPXYdata rocplot_XYdataNew(void)
 **
 ** @return [void]
 ** @@
-****************************************************************************/
-void rocplot_XYdataDel(AjPXYdata *thys)
+******************************************************************************/
+static void rocplot_XYdataDel(AjPXYdata *thys)
 {
     AjPXYdata pthis = *thys;
 
@@ -2131,7 +2225,7 @@ void rocplot_XYdataDel(AjPXYdata *thys)
 }
 
 
-/* @func rocplot_compX *****************************************************
+/* @funcstatic rocplot_compX **************************************************
 **
 ** Function to sort AjOXYdata objects by X element. Usually called by 
 ** ajListSort.  
@@ -2141,9 +2235,9 @@ void rocplot_XYdataDel(AjPXYdata *thys)
 **
 ** @return [ajint] 1 if score1>score2, 0 if score1==score2, else -1.
 ** @@
-****************************************************************************/
+******************************************************************************/
 
-ajint rocplot_compX(const void *ptr1, const void *ptr2)
+static ajint rocplot_compX(const void *ptr1, const void *ptr2)
 {
     AjPXYdata a = NULL;
     AjPXYdata b = NULL;
@@ -2158,6 +2252,19 @@ ajint rocplot_compX(const void *ptr1, const void *ptr2)
     return -1;
 }
 
+
+
+
+/* ****************************************************************************
+**
+** Dummy function to prevent compiler grumbling.
+** 
+******************************************************************************/
+
+void seqsort_unused(void)
+{
+    rocplot_compX(NULL, NULL);
+}
 
 
 
