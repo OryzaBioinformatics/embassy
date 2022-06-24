@@ -2,7 +2,7 @@
 
 lib_LTLIBRARIES = libckit.la
 
-INCLUDES = -I../h
+AM_CPPFLAGS = -I../h
 
 CKITSRC = datafiles.c next.c seqentry.c strings.c gcg.c pir.c \
 seqspec.c ttyinterface.c nextseqentry.c \

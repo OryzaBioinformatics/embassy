@@ -35,7 +35,7 @@ Multiple Sequence Editor
 Command line arguments
 
 Multiple Sequence Editor
-Version: EMBOSS:6.3.0
+Version: EMBOSS:6.4.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequence]          seqset     File containing a sequence alignment
@@ -195,6 +195,10 @@ See also
    Program name     Description
    edialign         Local multiple alignment of sequences
    emma             Multiple sequence alignment (ClustalW wrapper)
+   eomega           Multiple sequence alignment (ClustalO wrapper)
+   eomegapp         Profile with profile (ClustalO wrapper)
+   eomegash         Sequence with HMM (ClustalO wrapper)
+   eomegasp         Sequence with profile (ClustalO wrapper)
    infoalign        Display basic information about a multiple sequence alignment
    plotcon          Plot conservation of a sequence alignment
    prettyplot       Draw a sequence alignment with pretty formatting

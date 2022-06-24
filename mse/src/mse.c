@@ -15,6 +15,8 @@
 **  October 2003   Fix for file closing
 **
 *****************************************************************************/
+
+#include <config.h>
 #include "emboss.h"
 #include <stdio.h>
 #include <ctype.h>

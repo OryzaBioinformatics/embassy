@@ -1,4 +1,5 @@
 #
+ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = ckit src h emboss_acd emboss_doc
 
