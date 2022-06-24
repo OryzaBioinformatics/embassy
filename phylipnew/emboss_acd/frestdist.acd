@@ -3,6 +3,10 @@ application: frestdist [
                   fragments"
   groups: "Phylogeny:Molecular sequence"
   embassy: "phylipnew"
+  relations:  "EDAM:0000191 topic Phylogeny reconstruction"
+  relations:  "EDAM:0000084 topic Phylogenetics"
+  relations:  "EDAM:0000092 topic Data rendering and visualisation"
+  relations:  "EDAM:0000289 operation Sequence distance matrix generation"
 ]
 
 section: input [
@@ -14,7 +18,7 @@ section: input [
     characters: "01+-?"
     parameter: "Y"
     help: "File containing one or more sets of restriction data"
-    relations: "EDAM: PHYLIP discrete states file"                         
+    relations: "EDAM:0001427 data Phylogenetic discrete data"
   ]
 
 endsection: input
@@ -29,7 +33,7 @@ section: additional [
     information: "Restriction sites (put N if you want
                   restriction fragments)"
     default: "Y"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: neili [
@@ -37,14 +41,14 @@ section: additional [
     information: "Use original Nei/Li model (default uses
                   modified Nei/Li model)"
     default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: gamma [
     additional: "@(!$(neili))"
     information: "Gama distributed rates among sites"
     default: "N"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: gammacoefficient [
@@ -53,7 +57,7 @@ section: additional [
                   among sites"
     minimum: "0.001"
     default: "1"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: ttratio [
@@ -61,7 +65,7 @@ section: additional [
     default: "2.0"
     minimum: "0.001"
     information: "Transition/transversion ratio"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: sitelength [
@@ -69,14 +73,14 @@ section: additional [
     default: "6"
     information: "Site length"
     minimum: "1"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001249 data Sequence length"
   ]
 
   boolean: lower [
     additional: "Y"
     default: "N"
     information: "Lower triangular distance matrix"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: additional
@@ -90,21 +94,21 @@ section: output [
     parameter: "Y"
     knowntype: "restdist output"
     information: "Phylip restdist program output file"
-    relations:  "EDAM: PHYLIP phylogenetic distance matrix file"       
+    relations:  "EDAM:0000870 data Sequence distance matrix"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: output

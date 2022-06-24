@@ -281,6 +281,11 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
     getplotter(ajStrGetCharFirst(plottercode));
 
     labeldirection = ajAcdGetListSingle("labeldirection");
+    labeldirec = middle;
+    if(ajStrMatchC(labeldirection, "a")) labeldirec = along;
+    else if(ajStrMatchC(labeldirection, "f")) labeldirec = fixed;
+    else if(ajStrMatchC(labeldirection, "r")) labeldirec = radial;
+    else if(ajStrMatchC(labeldirection, "m")) labeldirec = middle;
 
     getpreviewer = ajAcdGetListSingle("previewer");
 
@@ -2614,8 +2619,8 @@ void setup_environment(int argc, Char *argv[])
 int main(int argc, Char *argv[])
 {
   long stripedepth;
-  boolean wasplotted = false;
 #ifdef MAC
+  boolean wasplotted = false;
   char filename1[FNMLNGTH];
   OSErr retcode;
   FInfo  fndrinfo;
@@ -2659,7 +2664,9 @@ int main(int argc, Char *argv[])
       printf("\nWriting plot file ...\n");
     drawit(fontname,&xoffset,&yoffset,numlines,root);
     finishplotter();
+#ifdef MAC
     wasplotted = true;
+#endif
     FClose(plotfile);
     printf("\nPlot written to file \"%s\"\n", pltfilename);
   }

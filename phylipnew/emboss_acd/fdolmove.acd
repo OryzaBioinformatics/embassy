@@ -4,6 +4,8 @@ application: fdolmove [
   groups: "Phylogeny:Molecular sequence"
   batch: "no"
   embassy: "phylipnew"
+  relations:  "EDAM:0000191 topic Phylogeny reconstruction"
+  relations:  "EDAM:0000545 operation Phylogenetic tree construction (parsimony methods)"
 ]
 
 section: input [
@@ -17,7 +19,7 @@ section: input [
     help: "File containing data set"
     knowntype: "discrete characters"
     information: "Phylip character discrete states file"
-    relations:  "EDAM: PHYLIP discrete states file"                    
+    relations:  "EDAM:0001427 data Phylogenetic discrete data"
   ]
 
   tree: intreefile [
@@ -25,7 +27,7 @@ section: input [
     nullok: "Y"
     knowntype: "newick"
     information: "Phylip tree file (optional)"
-    relations:  "EDAM: PHYLIP phylogenetic tree report"                
+    relations:  "EDAM:0000872 data Phylogenetic tree"
   ]
 
   properties: weights [
@@ -36,7 +38,7 @@ section: input [
     length: "$(infile.discretelength)"
     size: "1"
     nullok: "Y"
-    relations: "EDAM: PHYLIP phylogenetic property values file"            
+    relations: "EDAM:0002994 data Phylogenetic character weights"
   ]
 
   properties: ancfile [
@@ -46,7 +48,7 @@ section: input [
     nullok: "Y"
     length: "$(infile.discretelength)"
     size: "1"
-    relations: "EDAM: PHYLIP phylogenetic property values file"            
+    relations: "EDAM:0001427 data Phylogenetic discrete data"
   ]
 
   properties: factorfile [
@@ -55,7 +57,7 @@ section: input [
     nullok: "Y"
     length: "$(infile.discretelengt)"
     size: "1"
-    relations: "EDAM: PHYLIP phylogenetic property values file"            
+    relations: "EDAM:0001427 data Phylogenetic discrete data"
   ]
 
 endsection: input
@@ -73,14 +75,14 @@ section: additional [
     values: "d:Dollo; p:Polymorphism"
     information: "Parsimony method"
     default: "d"
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   toggle: thresh [
     additional: "Y"
     default: "N"
     information: "Use threshold parsimony"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: threshold [
@@ -88,7 +90,7 @@ section: additional [
     minimum: "0"
     information: "Threshold value"
     default: "1"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002146 data Threshold"
   ]
 
   list: initialtree [
@@ -99,21 +101,21 @@ section: additional [
     values: "a:Arbitary; u:User; s:Specify"
     information: "Initial tree"
     default: "Arbitary"
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: screenwidth [
     additional: "Y"
     default: "80"
     information: "Width of terminal screen in characters"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   integer: screenlines [
     additional: "Y"
     default: "24"
     information: "Number of lines on screen"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
 endsection: additional
@@ -129,7 +131,7 @@ section: output [
     knowntype: "newick tree"
     information: "Phylip tree output file (optional)"
     nullok: "Y"
-    relations:  "EDAM: PHYLIP phylogenetic tree report"                
+    relations:  "EDAM:0000872 data Phylogenetic tree"
   ]
 
 endsection: output

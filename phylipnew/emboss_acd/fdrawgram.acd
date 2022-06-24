@@ -4,6 +4,9 @@ application: fdrawgram [
   groups: "Phylogeny:Tree drawing"
   batch: "no"
   embassy: "phylipnew"
+  relations:  "EDAM:0000084 topic Phylogenetics"
+  relations:  "EDAM:0000092 topic Data rendering and visualisation"
+  relations:  "EDAM:0000567 operation Phylogenetic tree rendering"
 ]
 
 section: input [
@@ -15,14 +18,14 @@ section: input [
     default: "font1"
     information: "Fontfile name"
     knowntype: "phylip font"
-    relations:  "EDAM: File name"                                      
+    relations:  "EDAM:0001050 identifier File name"
   ]
 
   tree: intreefile [
     parameter: "Y"
     knowntype: "newick"
     information: "Phylip tree file"
-    relations:  "EDAM: PHYLIP phylogenetic tree report"                
+    relations:  "EDAM:0000872 data Phylogenetic tree"
   ]
 
 endsection: input
@@ -43,14 +46,14 @@ section: output [
     parameter: "Y"
     knowntype: "drawgram output"
     information: "Phylip drawgram output file"
-    relations:  "EDAM: PHYLIP phylogenetic tree report"                
+    relations:  "EDAM:0000872 data Phylogenetic tree"
   ]
 
   boolean: grows [
     additional: "Y"
     default: "Y"
     information: "Tree grows horizontally"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   list: style [
@@ -64,7 +67,7 @@ section: output [
              (branches curve outward then reverse); o:circular tree"
     information: "Tree style output"
     default: "c"
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   list: plotter [
@@ -89,7 +92,7 @@ section: output [
              Instruments plotter; u:other (one you have inserted code for)"
     information: "Plotter or printer the tree will be drawn on"
     default: "l"
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   list: previewer [
@@ -103,14 +106,14 @@ section: output [
              terminal); o:Other (one you have inserted code for)"
     information: "Previewing device"
     default: "x"
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   boolean: lengths [
     additional: "Y"
     default: "N"
     information: "Use branch lengths from user trees"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: labelrotation [
@@ -120,21 +123,21 @@ section: output [
     default: "90.0"
     minimum: "0.0"
     maximum: "360.0"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   toggle: rescaled [
     additional: "Y"
     default: "Y"
     information: "Automatically rescale branch lengths"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   float: bscale [
     additional: "@(!$(rescaled))"
     default: "1.0"
     information: "Centimeters per unit branch length"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   float: treedepth [
@@ -143,7 +146,7 @@ section: output [
     information: "Depth of tree as fraction of its breadth"
     minimum: "0.1"
     maximum: "100.0"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   float: stemlength [
@@ -152,7 +155,7 @@ section: output [
     information: "Stem length as fraction of tree depth"
     minimum: "0.01"
     maximum: "100.0"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   float: nodespace [
@@ -161,7 +164,7 @@ section: output [
     information: "Character height as fraction of tip spacing"
     minimum: "0.1"
     maximum: "100.0"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   list: nodeposition [
@@ -175,7 +178,7 @@ section: output [
              tree is v shaped"
     information: "Position of interior nodes"
     default: "c"
-    relations: "EDAM: Generic string array"                                
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   float: xmargin [
@@ -183,7 +186,7 @@ section: output [
     default: "1.65"
     minimum: "0.1"
     information: "Horizontal margin (cm)"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   float: ymargin [
@@ -191,7 +194,7 @@ section: output [
     default: "2.16"
     minimum: "0.1"
     information: "Vertical margin (cm)"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   float: xrayshade [
@@ -199,7 +202,7 @@ section: output [
     default: "1.65"
     minimum: "0.1"
     information: "Horizontal margin (pixels) for Rayshade output"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   float: yrayshade [
@@ -207,14 +210,14 @@ section: output [
     default: "2.16"
     minimum: "0.1"
     information: "Vertical margin (pixels) for Rayshade output"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   float: paperx [
     additional: "Y"
     default: "20.63750"
     information: "Paper width"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   float: papery [
@@ -222,7 +225,7 @@ section: output [
     default: "26.98750"
     information: "Paper height"
     minimum: "0.1"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   float: pagesheight [
@@ -230,7 +233,7 @@ section: output [
     default: "1"
     information: "Number of trees across height of page"
     minimum: "1"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   float: pageswidth [
@@ -238,7 +241,7 @@ section: output [
     default: "1"
     information: "Number of trees across width of page"
     minimum: "1"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   float: hpmargin [
@@ -246,7 +249,7 @@ section: output [
     default: "0.41275"
     information: "Horizontal overlap (cm)"
     minimum: "0.001"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
   float: vpmargin [
@@ -254,7 +257,7 @@ section: output [
     default: "0.53975"
     information: "Vertical overlap (cm)"
     minimum: "0.001"
-    relations: "EDAM: Generic float"                                       
+    relations: "EDAM:0002152 data Rendering parameter"
   ]
 
 endsection: output

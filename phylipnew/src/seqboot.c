@@ -1084,16 +1084,16 @@ void writefactors(void)
 {
     long i, k, l, m, n, writesites;
   char symbol;
-  steptr wfactor;
+  /*steptr wfactor;*/
   long grp;
 
   if(!justwts || firstrep){
     if(justwts){
       writesites = sites;
-      wfactor = factorr;
+      /*wfactor = factorr;*/
     } else {
       writesites = newergroups;
-      wfactor = newerfactor;
+      /*wfactor = newerfactor;*/
     }
     symbol = '+';
     if (interleaved)

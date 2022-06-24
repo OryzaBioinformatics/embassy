@@ -320,9 +320,9 @@ void drawfatline(long ixabs, long iyabs, long ixnow, long iynow,
 void plot(pensttstype pen, double xabs, double yabs)
 {
   long xhigh, yhigh, xlow, ylow, ixnow, iynow, ixabs, iyabs,
-       cdx, cdy, temp, i;
+      cdx, /*cdy,*/ temp, i;
   long pictint;
-  double newx, newy, dx, dy, lscale, dxreal, dyreal;
+  double newx, newy, /*dx, dy,*/ lscale, dxreal, dyreal;
   Char picthi, pictlo;
 
   /* added to give every line a name in vrml! - danieyek 981110 */
@@ -904,14 +904,14 @@ void plot(pensttstype pen, double xabs, double yabs)
       iynow = iyabs;
       iyabs = temp;
     }
-    dx = ixabs - ixnow;
-    dy = iyabs - iynow;
+    /*dx = ixabs - ixnow;
+      dy = iyabs - iynow;*/
    /* if (dx + fabs(dy) <= 0.0)
       c = 0.0;
     else
       c = 0.5 * linewidth / sqrt(dx * dx + dy * dy); */
     cdx = (long)floor(linewidth + 0.5);
-    cdy = (long)floor(linewidth + 0.5);
+    /*cdy = (long)floor(linewidth + 0.5);*/
     if ((iyabs + cdx >= strpbottom || iynow + cdx >= strpbottom) &&
         (iyabs - cdx <= strptop || iynow - cdx <= strptop)) {
       drawfatline(ixnow,iynow,ixabs,iyabs,(long)floor(linewidth+0.5));
@@ -962,7 +962,7 @@ void splyne(double x1, double y1, double x2, double y2, boolean sense,
   double rx,ry; /* axes of ellipse   */
   double ox,oy; /* center of ellipse */
   double prevx,prevy;
-  long pictint;
+  /*long pictint;*/
   
   x1 = x1 - (clipx0 * xunitspercm);
   x2 = x2 - (clipx0 * xunitspercm);
@@ -1042,7 +1042,7 @@ void splyne(double x1, double y1, double x2, double y2, boolean sense,
             pright++;
          else
             pleft--;
-        pictint = 1;    
+    /*pictint = 1;    */
 
         fprintf(plotfile,"\140%c%c%c%c%c%c%c%c%c%c%c%c",
                 (Char)(ptop / 256), (Char)(ptop % 256),

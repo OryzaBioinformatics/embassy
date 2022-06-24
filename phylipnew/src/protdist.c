@@ -729,7 +729,7 @@ void inputoptions()
 void protdist_inputdata(AjPSeqset seqset)
 {
   /* input the names and sequences for each species */
-  long i=0, j, k, l, aasread=0;
+  long i=0, j, k, l /*, aasread=0*/;
   Char charstate;
   boolean allread, done;
   aas aa=0;   /* temporary amino acid for input */
@@ -754,7 +754,7 @@ void protdist_inputdata(AjPSeqset seqset)
       putc(' ', outfile);
     fprintf(outfile, "---------\n\n");
   }
-  aasread = 0;
+  /*aasread = 0;*/
   allread = false;
   while (!(allread)) {
   i = 1;

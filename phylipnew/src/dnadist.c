@@ -75,7 +75,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
     AjPStr gammamethod = NULL;
     AjPFloat basefreq;
     AjPFloat arrayval; 
-  boolean ttr;
+    /*boolean ttr;*/
 
   ctgry = false;
   categs = 1;
@@ -95,7 +95,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
   human = false;
   similarity = false;
   ttratio = 2.0;
-  ttr = false;
+  /*ttr = false;*/
   weights = false;
   printdata = false;
   progress = true;

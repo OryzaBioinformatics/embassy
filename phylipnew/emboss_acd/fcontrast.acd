@@ -2,6 +2,8 @@ application: fcontrast [
   documentation: "Continuous character Contrasts"
   groups: "Phylogeny:Continuous characters"
   embassy: "phylipnew"
+  relations:  "EDAM:0000084 topic Phylogenetics"
+  relations:  "EDAM:0000550 operation Phylogenetic modelling"
 ]
 
 section: input [
@@ -12,7 +14,7 @@ section: input [
   frequencies: infile [
     parameter: "Y"
     help: "File containing one or more sets of data"
-    relations: "EDAM: PHYLIP phylogenetic character frequency values file" 
+    relations: "EDAM:0001426 data Phylogenetic continuous quantitative data"
   ]
 
   tree: intreefile [
@@ -20,7 +22,7 @@ section: input [
     knowntype: "newick"
     information: "Phylip tree file (optional)"
     nullok: "N"
-    relations:  "EDAM: PHYLIP phylogenetic tree report"                
+    relations:  "EDAM:0000872 data Phylogenetic tree"
   ]
 
 endsection: input
@@ -34,21 +36,21 @@ section: additional [
     additional: "Y"
     default: "N"
     information: "Within-population variation in data"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: reg [
     additional: "@(!$(varywithin))"
     default: "Y"
     information: "Print out correlations and regressions"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: writecont [
     additional: "@(!$(varywithin))"
     default: "N"
     information: "Print out contrasts"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: nophylo [
@@ -56,7 +58,7 @@ section: additional [
     default: "Y"
     information: "LRT test of no phylogenetic component, with
                   and without VarA"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: additional
@@ -70,21 +72,21 @@ section: output [
     parameter: "Y"
     knowntype: "contrast output"
     information: "Phylip contrast program output file"
-    relations:  "EDAM: Phylogenetic character contrast data"           
+    relations:  "EDAM:0001444 data Phylogenetic report (character contrasts)"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: output

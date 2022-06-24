@@ -744,7 +744,7 @@ static boolean nuview(node *p)
 
   /* At this point, all views downstream should be initialized.
    * If not, we have a problem. */
-  assert( invalid_descendant_view(p) == NULL );
+  /*assert( invalid_descendant_view(p) == NULL );*/
 
   /* Allocate the structure and blocks therein for variables used in
      this function */
@@ -1054,7 +1054,7 @@ static void dnamlk_add(node *below, node *newtip, node *newfork)
   boolean success;
 
   assert( all_tymes_valid(curtree.root, 0.98*MIN_BRANCH_LENGTH, false) );
-  assert( floating_fork(newfork) );
+  /*assert( floating_fork(newfork) );*/
   assert( newtip->back == NULL );
 
   /* Get parent nodelets */

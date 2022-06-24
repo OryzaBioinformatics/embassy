@@ -2,6 +2,8 @@ application: fdnainvar [
   documentation: "Nucleic acid sequence Invariants method"
   groups: "Phylogeny:Molecular sequence"
   embassy: "phylipnew"
+  relations:  "EDAM:0000084 topic Phylogenetics"
+  relations:  "EDAM:0000551 operation Phylogenetic tree analysis (shape)"
 ]
 
 section: input [
@@ -14,7 +16,7 @@ section: input [
     type: "gapdnaphylo"
     aligned: "Y"
     help: "File containing one or more sequence alignments"
-    relations: "EDAM: DNA sequence record"                                 
+    relations: "EDAM:0001383 data Sequence alignment (nucleic acid)"
   ]
 
   properties: weights [
@@ -23,7 +25,7 @@ section: input [
     nullok: "Y"
     knowntype: "weights"
     information: "Phylip weights file (optional)"
-    relations:  "EDAM: PHYLIP discrete states file"                    
+    relations: "EDAM:0002994 data Phylogenetic character weights"
   ]
 
 endsection: input
@@ -37,42 +39,42 @@ section: output [
     parameter: "Y"
     knowntype: "dnainvar output"
     information: "Phylip dnainvar program output file"
-    relations:  "EDAM: Phylogenetic invariants data"                   
+    relations:  "EDAM:0001429 data Phylogenetic report (invariants)"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: dotdiff [
     additional: "$(printdata)"
     default: "Y"
     information: "Use dot-differencing to display results"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: printpattern [
     additional: "Y"
     default: "Y"
     information: "Print counts of patterns"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: printinvariant [
     additional: "Y"
     default: "Y"
     information: "Print invariants"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: output

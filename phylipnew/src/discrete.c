@@ -2888,7 +2888,7 @@ void collapsetree(node *p, node *root, node **grbg, pointarray treenode,
   /*  nodes (not to tips).  If one exists, collapse the nodes together, */
   /*  removing the branch. */
   node *q, *x1, *y1, *x2, *y2;
-  long i, j, index, index2, numd;
+  long i, /*j,*/ index, index2, numd;
   if (p->tip)
     return;
   q = p->next;
@@ -2922,7 +2922,7 @@ void collapsetree(node *p, node *root, node **grbg, pointarray treenode,
        
       /* Alter treenode to point to real nodes, and update indicies */
       /* acordingly. */
-       j = 0; i=0;
+      /*j = 0;*/ i=0;
       for(i = (index2-1); i < nonodes-1 && treenode[i+1]; i++){ 
         treenode[i]=treenode[i+1];
         treenode[i+1] = NULL;

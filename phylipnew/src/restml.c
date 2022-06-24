@@ -25,6 +25,7 @@ void   restml_inputnumbers(AjPPhyloState);
 //void   getoptions(void);
 void   emboss_getoptions(char *pgm, int argc, char *argv[]);
 void   allocrest(void);
+void   freerest(void);
 void   setuppie(void);
 void   doinit(void);
 void   inputoptions(AjPPhyloState);
@@ -415,8 +416,8 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
      
 
      if(trout) {
-     embossouttree = ajAcdGetOutfile("outtreefile");
-     emboss_openfile(embossouttree, &outtree, &outtreename);
+         embossouttree = ajAcdGetOutfile("outtreefile");
+         emboss_openfile(embossouttree, &outtree, &outtreename);
      }
  
   fprintf(outfile, "\nRestriction site Maximum Likelihood");
@@ -454,6 +455,21 @@ void allocrest()
   alias = (steptr)Malloc((sites+1)*sizeof(long));
   aliasweight = (steptr)Malloc((sites+1)*sizeof(long));
 }  /* allocrest */
+
+
+void freerest()
+{
+  long i;
+
+  for (i = 0; i < spp; i++)
+      free(y[i]);
+  free(y);
+  free(nayme);
+  free(enterorder);
+  free(weight);
+  free(alias);
+  free(aliasweight);
+}  /* freerest */
 
 
 void freelrsaves()
@@ -576,7 +592,7 @@ void inputoptions(AjPPhyloState state)
 {
   /* read the options information */
   
-  long i, extranum, cursp, curst, curenz;
+  long i, /*extranum,*/ cursp, curst, curenz;
 
   if (!firstset) {
     cursp = state->Size;
@@ -601,7 +617,7 @@ void inputoptions(AjPPhyloState state)
   for (i = 1; i <= sites; i++)
     weight[i] = 1;
   weightsum = sites;
-  extranum = numwts;
+  /*extranum = numwts;*/
   for (i = 1; i <= numwts; i++) {
       inputweightsstr2(phyloweights->Str[i-1], 1, sites+1,
                        &weightsum, weight, &weights, "RESTML");
@@ -619,7 +635,7 @@ void inputoptions(AjPPhyloState state)
 void restml_inputdata(AjPPhyloState state)
 {
   /* read the species and sites data */
-  long i, j, k, l, sitesread;
+  long i, j, k, l /*, sitesread*/;
   Char ch;
   boolean allread, done;
   AjPStr str;
@@ -641,7 +657,7 @@ void restml_inputdata(AjPPhyloState state)
       putc(' ', outfile);
     fprintf(outfile, "-----\n\n");
   }
-  sitesread = 0;
+  /*sitesread = 0;*/
   allread = false;
   while (!(allread)) {
     i = 1;
@@ -951,7 +967,7 @@ void branchtrans(long i, double p)
 double evaluate(tree *tr, node *p)
 {
   /* evaluates the likelihood, using info. at one branch */
-  double sum, sum2, y, liketerm, like0, lnlike0=0, term;
+  double sum, sum2, /*y,*/ liketerm, like0, lnlike0=0, term;
   long i, j, k,branchnum;
   node *q;
   sitelike2 x1, x2;
@@ -964,7 +980,7 @@ double evaluate(tree *tr, node *p)
   nuview(p);
   nuview(q);
 
-  y = p->v;
+  /*y = p->v;*/
   branchnum = p->branchnum;
   copy_sitelike(x1,p->x2[0],sitelength);
   copy_sitelike(x2,q->x2[0],sitelength);
@@ -2414,6 +2430,29 @@ int main(int argc, Char *argv[])
 #ifdef WIN32
   phyRestoreConsoleAttributes();
 #endif
+
+  ajPhyloStateDelarray(&phylostates);
+  ajPhyloTreeDelarray(&phylotrees);
+  ajPhyloPropDel(&phyloweights);
+  ajFileClose(&embossoutfile);
+  ajFileClose(&embossouttree);
+
+  if(!usertree)
+  {
+      freetree(nonodes2, bestree.nodep);
+      freetrans(&bestree, nonodes2, sitelength);
+      freetree(nonodes2, curtree.nodep);
+      freetrans(&curtree, nonodes2, sitelength);
+      freetree(nonodes2, priortree.nodep);
+      freetrans(&priortree, nonodes2, sitelength);
+      if(njumble != 1)
+      {
+          freetree(nonodes2, bestree2.nodep);
+          freetrans(&bestree2, nonodes2, sitelength);
+      }
+  }
+  freerest();
+  free(pie);
   embExit();
   return 0;
 }  /* maximum likelihood phylogenies from restriction sites */

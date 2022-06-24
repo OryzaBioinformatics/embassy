@@ -165,7 +165,7 @@ void inputoptions(AjPPhyloState state)
 {
   /* read the options information */
  
-  long i, extranum, cursp, curst;
+  long i, /*extranum,*/ cursp, curst;
 
   if (!firstset) {
     cursp = state->Size;
@@ -181,7 +181,7 @@ void inputoptions(AjPPhyloState state)
   for (i = 1; i <= sites; i++)
     weight[i] = 1;
   weightsum = sites;
-  extranum = 0;
+  /*extranum = 0;*/
 
   /*  fscanf(infile, "%*[ 0-9]");
   readoptions(&extranum, "W");
@@ -197,7 +197,7 @@ void inputoptions(AjPPhyloState state)
 void restdist_inputdata(AjPPhyloState state)
 {
   /* read the species and sites data */
-  long i, j, k, l, sitesread = 0;
+  long i, j, k, l /*, sitesread = 0 */;
   Char ch;
   boolean allread, done;
   AjPStr str;
@@ -220,7 +220,7 @@ void restdist_inputdata(AjPPhyloState state)
       putc(' ', outfile);
     fprintf(outfile, "-----\n\n");
  }
-  sitesread = 0;
+ /*sitesread = 0;*/
   allread = false;
   while (!(allread)) {
     i = 1;

@@ -2,6 +2,9 @@ application: frestml [
   documentation: "Restriction site maximum Likelihood method"
   groups: "Phylogeny:Molecular sequence"
   embassy: "phylipnew"
+  relations:  "EDAM:0000191 topic Phylogeny reconstruction"
+  relations:  "EDAM:0000547 operation Phylogenetic tree construction
+               (maximum likelihood and Bayesian methods)"
 ]
 
 section: input [
@@ -13,7 +16,7 @@ section: input [
     characters: "01+-?"
     parameter: "Y"
     help: "File containing one or more sets of restriction data"
-    relations: "EDAM: PHYLIP discrete states file"                         
+    relations: "EDAM:0001427 data Phylogenetic discrete data"
   ]
 
   properties: weights [
@@ -24,7 +27,7 @@ section: input [
     length: "$(data.length)"
     size: "1"
     nullok: "Y"
-    relations: "EDAM: PHYLIP phylogenetic property values file"            
+    relations: "EDAM:0002994 data Phylogenetic character weights"
   ]
 
   tree: intreefile [
@@ -32,7 +35,7 @@ section: input [
     nullok: "Y"
     knowntype: "newick"
     information: "Phylip tree file (optional)"
-    relations:  "EDAM: PHYLIP phylogenetic tree report"                
+    relations:  "EDAM:0000872 data Phylogenetic tree"
   ]
 
 endsection: input
@@ -47,7 +50,7 @@ section: additional [
     default: "0"
     minimum: "0"
     information: "Number of times to randomise"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: seed [
@@ -57,7 +60,7 @@ section: additional [
     minimum: "1"
     maximum: "32767"
     default: "1"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: outgrno [
@@ -68,21 +71,21 @@ section: additional [
     trueminimum: "Y"
     default: "0"
     information: "Species number to use as outgroup"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: allsites [
     additional: "Y"
     default: "Y"
     information: "All sites detected"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: lengths [
     additional: "$(intreefile.isdefined)"
     default: "N"
     information: "Use lengths from user trees"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   integer: sitelength [
@@ -91,21 +94,21 @@ section: additional [
     minimum: "1"
     maximum: "8"
     information: "Site length"
-    relations: "EDAM: Generic integer"                                     
+    relations: "EDAM:0001249 data Sequence length"
   ]
 
   boolean: global [
     additional: "@(!$(intreefile.isdefined))"
     default: "N"
     information: "Global rearrangements"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: rough [
     additional: "@(!$(intreefile.isdefined))"
     default: "Y"
     information: "Speedier but rougher analysis"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: additional
@@ -119,14 +122,14 @@ section: output [
     parameter: "Y"
     knowntype: "restml output"
     information: "Phylip restml program output file"
-    relations:  "EDAM: Phylip phylogenetic tree raw data"              
+    relations:  "EDAM:0000872 data Phylogenetic tree"
   ]
 
   toggle: trout [
     additional: "Y"
     default: "Y"
     information: "Write out trees to tree file"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   outfile: outtreefile [
@@ -134,28 +137,28 @@ section: output [
     extension: "treefile"
     information: "Phylip tree output file"
     knowntype: "newick tree"
-    relations:  "EDAM: PHYLIP phylogenetic tree report"                
+    relations:  "EDAM:0000872 data Phylogenetic tree"
   ]
 
   boolean: printdata [
     additional: "Y"
     default: "N"
     information: "Print data at start of run"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: progress [
     additional: "Y"
     default: "Y"
     information: "Print indications of progress of run"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
   boolean: treeprint [
     additional: "Y"
     default: "Y"
     information: "Print out tree"
-    relations: "EDAM: Generic boolean"                                     
+    relations: "EDAM:0002527 data Parameter or primitive"
   ]
 
 endsection: output

@@ -2454,12 +2454,12 @@ char **stringnames_new(void)
 
   char **names;
   char *ch;
-  long len, i;
+  long /*len,*/ i;
 
   names = (char **)Malloc((spp+1) * sizeof(char *));
 
   for ( i = 0; i < spp; i++ ) {
-    len = strlen(nayme[i]);
+      /*len = strlen(nayme[i]);*/
     names[i] = (char *)Malloc((MAXNCH+1) * sizeof(char));
     strncpy(names[i], nayme[i], MAXNCH);
     names[i][MAXNCH] = '\0';

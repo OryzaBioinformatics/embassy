@@ -1040,8 +1040,8 @@ void user_loop(boolean *canbeplotted)
 int main(int argc, Char *argv[])
 {
   boolean canbeplotted;
-  boolean wasplotted = false;
 #ifdef MAC
+  boolean wasplotted = false;
   OSErr retcode;
   FInfo  fndrinfo;
 #ifdef OSX_CARBON
@@ -1079,7 +1079,9 @@ int main(int argc, Char *argv[])
     drawit(fontname,&xoffset,&yoffset,numlines,root);
     finishplotter();
     FClose(plotfile);
+#ifdef MAC
     wasplotted = true;
+#endif
     printf("\nPlot written to file \"%s\"\n\n", pltfilename);
   }
   FClose(intree);

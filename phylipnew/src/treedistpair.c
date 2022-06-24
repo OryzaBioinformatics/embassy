@@ -722,11 +722,11 @@ void free_patterns(pattern_elm ***pattern_array, long total_trees)
 
 void print_header(long trees_in_1, long trees_in_2) 
 {
-  long end_tree;
+    /*long end_tree;*/
 
   switch (tree_pairing) {
     case ADJACENT_PAIRS: 
-      end_tree = trees_in_1 - 1;
+        /*end_tree = trees_in_1 - 1;*/
 
       if (output_scheme == VERBOSE) {
         fprintf(outfile,
@@ -745,7 +745,7 @@ void print_header(long trees_in_1, long trees_in_2)
       break;
 
     case ALL_IN_FIRST: 
-      end_tree   = trees_in_1;
+        /*end_tree   = trees_in_1;*/
 
       if (output_scheme == VERBOSE) {
         fprintf(outfile, "\nTree distance program, version %s\n\n", VERSION);

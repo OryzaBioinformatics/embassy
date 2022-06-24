@@ -10,8 +10,9 @@
 #define VERSION "3.69"
 
 /* Debugging options */
-/* Define this to disable assertions */
-#define NDEBUG
+/* Define this to disable assertions ...
+   but this leads to 'unused variable' warnings */
+/*#define NDEBUG*/
 
 /* Define this to enable debugging code */
 /* #define DEBUG */
