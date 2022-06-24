@@ -5,8 +5,8 @@ dnl Process this file with autoconf to produce a configure script.
 ## then uncomment the following line.
 #CC=cc
 
-AC_INIT(src/domainer.c)
-AM_INIT_AUTOMAKE(DOMAINATRIX, 1.0.0)
+AC_INIT(src/scopparse.c)
+AM_INIT_AUTOMAKE(DOMAINATRIX, 0.1.0)
 
 
 AC_PROG_AWK

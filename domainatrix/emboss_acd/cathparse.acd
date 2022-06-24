@@ -1,6 +1,5 @@
 application: cathparse [
-  documentation: "Reads raw CATH classification files and
-                  writes DCF file (domain classification file)."
+  documentation: "Generates DCF file from raw CATH files."
   groups: "Utils:Database creation"
   gui: "yes"
   batch: "yes"
@@ -74,7 +73,7 @@ section: output [
     standard: "Y"
     information: "Name of CATHPARSE log file"
     help: "This option specifies the name of the CATHPARSE log file."
-    default: "CATHPARSE.log"
+    default: "cathparse.log"
     knowntype: "domainatrix log file"
   ]
 

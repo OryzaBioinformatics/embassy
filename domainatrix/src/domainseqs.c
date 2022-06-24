@@ -154,7 +154,7 @@ int main(int argc, char **argv)
     }
     domain_outf   = ajAcdGetOutfile("dcfoutfile");
     dpdb_path   = ajAcdGetDirectory("dpdbdir");
-    errf        = ajAcdGetOutfile("errfile");
+    errf        = ajAcdGetOutfile("logfile");
 
 
 
@@ -186,7 +186,7 @@ int main(int argc, char **argv)
 	}
 	
 	/* Read the coordinate file for the domain. */
-	if((!(pdb=ajPdbReadNew(dpdb_inf))))
+	if((!(pdb=ajPdbReadFirstModelNew(dpdb_inf))))
 	{
 	    ajFmtPrintF(errf, "%-15s\n", "FILE_READ");  
 	    ajFmtPrintS(&msg, "Error reading ccf file %S", dpdb_name);

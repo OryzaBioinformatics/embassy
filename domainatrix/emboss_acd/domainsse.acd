@@ -1,6 +1,5 @@
 application: domainsse [
-  documentation: "Adds secondary structure records to a DCF
-                  file (domain classification file)."
+  documentation: "Add secondary structure records to a DCF file."
   groups: "Utils:Database creation"
   gui: "yes"
   batch: "yes"
@@ -79,11 +78,11 @@ section: output [
     knowntype: "domain classification file"
   ]
 
-  outfile: errfile [
+  outfile: logfile [
     parameter: "Y"
     information: "Name of DOMAINSSE log file."
     help: "This option specifies the name of the DOMAINSSE log file."
-    default: "DOMAINSSE.log"
+    default: "domainsse.log"
     knowntype: "domainatrix log file"
   ]
 
