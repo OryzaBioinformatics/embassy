@@ -1,0 +1,495 @@
+                                  eomegash
+
+
+
+Wiki
+
+   The master copies of EMBOSS documentation are available at
+   http://emboss.open-bio.org/wiki/Appdocs on the EMBOSS Wiki.
+
+   Please help by correcting and extending the Wiki pages.
+
+Function
+
+   Sequence with HMM (ClustalO wrapper)
+
+Description
+
+   eomegash is a wrapper to clustalo. It takes a set of unaligned
+   sequences and one HMM and produces a combined output alignment.
+
+   Clustal-Omega (clustalo) is a general purpose multiple sequence
+   alignment (MSA) program for proteins. It produces high quality MSAs and
+   is capable of handling data-sets of hundreds of thousands of sequences
+   in reasonable time.
+
+   In its current form Clustal-Omega can only align protein sequences but
+   not DNA/RNA sequences. It is envisioned that DNA/RNA will become
+   available in a future version.
+
+Algorithm
+
+   Clustal-Omega uses HMMs for the alignment engine, based on the HHalign
+   package from Johannes Soeding [1]. Guide trees are optionally made
+   using mBed [2] which can cluster very large numbers of sequences in
+   O(N*log(N)) time. Multiple alignment then proceeds by aligning larger
+   and larger alignments using HHalign, following the clustering given by
+   the guide tree.
+
+Usage
+
+   Here is a sample session with eomegash
+
+
+% eomegash ../data/globins4.hmm
+Sequence with HMM (ClustalO wrapper)
+(aligned) output sequence set [twoglob.aln]:
+WARNING: This is a beta version of Clustal Omega, for protein only.
+
+
+   Go to the input files for this example
+   Go to the output files for this example
+
+Command line arguments
+
+Sequence with HMM (ClustalO wrapper)
+Version: EMBOSS:6.4.0.0
+
+   Standard (Mandatory) qualifiers:
+  [-sequences]         seqset     File containing sequences to align
+  [-hmm]               infile     Pre-aligned multiple sequence file (aligned
+                                  columns will be kept fixed)
+  [-outseq]            seqoutset  [.] Sequence set filename
+                                  and optional format (output USA)
+
+   Additional (Optional) qualifiers: (none)
+   Advanced (Unprompted) qualifiers:
+   -indist             infile     Pairwise distance matrix input file (skips
+                                  distance computation)
+   -inguide            infile     Guide tree input file (skips distance
+                                  computation and guide tree clustering step)
+   -dealign            toggle     [N] Dealign input sequences
+   -mbed               toggle     [N] Fast, Mbed-like clustering for guide
+                                  tree calculation
+   -intermbed          toggle     [N] Fast, Mbed-like clustering for guide
+                                  tree calculation
+   -maxiterations      integer    [0] Number of (combined guide tree/HMM)
+                                  iterations (Integer from 0 to 2000000000)
+   -maxgiterations     integer    [2000000000] Maximum guide tree iterations
+                                  (Integer from 0 to 2000000000)
+   -maxhiterations     integer    [2000000000] Maximum number of HMM
+                                  iterations (Integer from 0 to 2000000000)
+   -maxseqs            integer    [2000000000] Maximum number of sequences
+                                  (Integer from 2 to 2000000000)
+   -maxlenseq          integer    [2000000000] Maximum length of sequence
+                                  (Integer from 1 to 2000000000)
+   -self               toggle     [N] Set options automatically (might
+                                  overwrite some options
+   -outdist            outfile    [*.eomegash] Pairwise distance matrix output
+                                  file
+   -outguide           outfile    [*.eomegash] Guide tree output file
+
+   Associated qualifiers:
+
+   "-sequences" associated qualifiers
+   -sbegin1            integer    Start of each sequence to be used
+   -send1              integer    End of each sequence to be used
+   -sreverse1          boolean    Reverse (if DNA)
+   -sask1              boolean    Ask for begin/end/reverse
+   -snucleotide1       boolean    Sequence is nucleotide
+   -sprotein1          boolean    Sequence is protein
+   -slower1            boolean    Make lower case
+   -supper1            boolean    Make upper case
+   -sformat1           string     Input sequence format
+   -sdbname1           string     Database name
+   -sid1               string     Entryname
+   -ufo1               string     UFO features
+   -fformat1           string     Features format
+   -fopenfile1         string     Features file name
+
+   "-outseq" associated qualifiers
+   -osformat3          string     Output seq format
+   -osextension3       string     File name extension
+   -osname3            string     Base file name
+   -osdirectory3       string     Output directory
+   -osdbname3          string     Database name to add
+   -ossingle3          boolean    Separate file for each entry
+   -oufo3              string     UFO features
+   -offormat3          string     Features format
+   -ofname3            string     Features file name
+   -ofdirectory3       string     Output directory
+
+   "-outdist" associated qualifiers
+   -odirectory         string     Output directory
+
+   "-outguide" associated qualifiers
+   -odirectory         string     Output directory
+
+   General qualifiers:
+   -auto               boolean    Turn off prompts
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
+   -options            boolean    Prompt for standard and additional values
+   -debug              boolean    Write debug output to program.dbg
+   -verbose            boolean    Report some/full command line options
+   -help               boolean    Report command line options and exit. More
+                                  information on associated and general
+                                  qualifiers can be found with -help -verbose
+   -warning            boolean    Report warnings
+   -error              boolean    Report errors
+   -fatal              boolean    Report fatal errors
+   -die                boolean    Report dying program messages
+   -version            boolean    Report version number and exit
+
+
+Input file format
+
+   eomegash reads a set of unaligned sequences and optional distance and
+   guide tree files.
+
+  Input files for usage example
+
+  File: twoglob.fasta
+
+>HBA_HUMAN P69905 Hemoglobin subunit alpha (Alpha-globin) (Hemoglobin alpha chai
+n)
+MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHG
+KKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTP
+AVHASLDKFLASVSTVLTSKYR
+>HBA_BOVFRAG Hemoglobin subunit alpha (Alpha-globin) fragment (Hemoglobin alpha
+chain)
+DKGNVKAAWGKVGGHAAEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHG
+AKVAAALTKAVEHLDDLPGALSELSDLHAHKLRVDPVNFKLLSHSLLVTLASHLPSDFTP
+AVHASLDKFLANVST
+
+  File: globins4.hmm
+
+HMMER3/b [3.0 | March 2010]
+NAME  globins4
+LENG  149
+ALPH  amino
+RF    no
+CS    no
+MAP   yes
+DATE  Fri Jul 15 12:00:00 2011
+NSEQ  4
+EFFN  0.964844
+CKSUM 2027839109
+STATS LOCAL MSV       -9.9014  0.70957
+STATS LOCAL VITERBI  -10.7224  0.70957
+STATS LOCAL FORWARD   -4.1637  0.70957
+HMM          A        C        D        E        F        G        H        I
+     K        L        M        N        P        Q        R        S        T
+      V        W        Y
+            m->m     m->i     m->d     i->m     i->i     d->m     d->d
+  COMPO   2.36553  4.52577  2.96709  2.70473  3.20818  3.02239  3.41069  2.90041
+  2.55332  2.35210  3.67329  3.19812  3.45595  3.16091  3.07934  2.66722  2.8547
+5  2.56965  4.55393  3.62921
+          2.68640  4.42247  2.77497  2.73145  3.46376  2.40504  3.72516  3.29302
+  2.67763  2.69377  4.24712  2.90369  2.73719  3.18168  2.89823  2.37879  2.7749
+7  2.98431  4.58499  3.61525
+          0.57544  1.78073  1.31293  1.75577  0.18968  0.00000        *
+      1   1.70038  4.17733  3.76164  3.36686  3.72281  3.29583  4.27570  2.40482
+  3.29230  2.54324  3.63799  3.55099  3.93183  3.61602  3.56580  2.71897  2.8410
+4  1.67328  5.32720  4.10031      9 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.03156  3.86736  4.58970  0.61958  0.77255  0.34406  1.23405
+      2   2.62748  4.47174  3.31917  2.82619  3.63815  3.49607  2.75382  3.03401
+  2.75280  2.74783  3.65114  3.24714  2.62341  3.12082  3.11124  2.79244  2.8935
+5  1.88003  5.06315  3.77128     10 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+      3   3.50771  4.88753  4.66754  4.31907  3.27776  4.35743  4.88268  2.50779
+  4.08449  0.57907  3.22569  4.56607  4.74802  4.37991  4.20749  3.97946  3.7919
+1  2.62059  5.25407  4.04279     11 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+      4   2.34080  4.28719  3.51550  3.22063  4.37406  3.06195  4.29366  3.74891
+  3.24370  3.47337  4.31943  3.39310  3.80273  3.56072  3.55390  1.08280  2.0028
+0  3.23325  5.72380  4.49519     12 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+      5   2.04218  4.87966  2.77126  1.92448  4.32563  3.33660  3.78415  3.73388
+  2.61886  3.34029  4.16568  2.96714  2.18012  2.94561  3.07633  2.70238  2.9680
+3  3.36068  5.56791  4.21854     13 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+      6   1.67844  4.79514  2.78469  2.00544  4.34945  2.26719  3.85010  3.76260
+  2.72087  3.37961  4.20641  2.99947  3.85561  3.02442  3.17766  2.68798  2.9657
+5  3.36703  5.60901  4.27005     14 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+      7   3.05756  5.63998  1.78612  1.06702  4.93093  3.31407  3.86695  4.45859
+  2.89031  3.95237  4.80915  2.77798  3.94091  3.03432  3.48933  2.93505  3.3481
+0  4.02575  6.09427  4.58708     15 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+      8   2.98085  4.92154  3.50401  2.91209  3.76425  3.70161  3.75301  3.57060
+  1.24921  3.12012  4.04714  3.32210  4.09411  3.00014  2.54951  3.05147  3.1898
+2  3.31354  2.52964  3.70813     16 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+      9   2.59353  4.69451  3.03503  2.60972  4.18917  3.33498  3.80536  3.60013
+  2.58953  3.21847  4.04944  3.07115  3.85428  2.20828  2.99231  2.14672  1.8475
+3  3.23346  5.45458  4.14691     17 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+     10   2.23880  4.76665  3.06952  2.55248  4.02235  3.47005  3.69787  3.40277
+  2.01551  2.36330  3.87991  2.51243  3.88223  2.86967  2.84293  2.72413  2.9030
+0  3.10205  5.29826  3.99496     18 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+     11   3.19694  4.48391  4.99800  4.51340  3.70437  4.59686  5.22508  1.39091
+  4.40799  2.19554  3.49619  4.71017  4.90059  4.67186  4.59646  3.99910  3.4652
+8  0.94853  5.69937  4.48740     19 - -
+
+
+  [Part of this file has been deleted for brevity]
+
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    134   2.87148  5.44150  1.98118  1.74899  4.74617  3.33260  3.73791  4.25433
+  2.62738  3.72942  4.52187  2.07888  3.87291  2.23146  3.17389  2.78299  3.1312
+2  3.81624  5.87307  4.40314    150 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    135   3.27331  5.22456  3.46754  3.04631  4.68046  3.71770  3.96365  4.13172
+  0.69147  3.63653  4.59195  3.45354  4.20521  3.14539  2.53832  3.30173  3.5091
+5  3.82642  5.61930  4.48069    151 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    136   2.13728  4.25596  4.26822  3.70038  2.51560  3.93283  4.27242  2.28282
+  3.58922  1.68324  3.19522  3.92448  4.28790  3.80594  3.78003  3.23864  3.0440
+1  1.82614  4.90639  3.70545    152 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    137   3.25266  4.59255  4.86528  4.29758  3.18898  4.50160  4.83534  2.17302
+  4.15958  1.11276  2.09173  4.53148  4.72252  4.28685  4.28308  3.84128  3.4796
+3  1.79006  5.20435  4.12672    153 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    138   1.79466  4.79782  2.82404  1.94090  4.31166  3.30608  3.81075  3.72422
+  2.65702  3.33717  4.15830  2.99339  3.84716  2.97720  3.11199  2.03142  2.9394
+9  3.33667  5.56525  4.22435    154 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    139   2.58506  4.29342  3.55405  3.00981  3.47023  2.68992  3.90060  2.80129
+  2.93915  2.04902  2.51305  3.37662  3.96778  3.25166  3.26632  2.35763  2.8450
+1  2.57968  4.93542  3.70537    155 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    140   3.08583  4.40689  4.84510  4.29544  2.25790  4.37874  4.73777  1.57472
+  4.17210  1.94826  3.22641  4.44953  4.66205  4.33233  4.29141  3.72292  3.3261
+7  1.35939  5.16135  3.94030    156 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    141   2.02979  2.61338  3.45168  2.91840  3.84883  3.32836  3.92100  3.21873
+  2.81248  2.91084  3.77423  3.27409  3.86642  3.17756  2.28029  2.17107  2.8203
+2  2.90332  5.22633  3.98297    157 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    142   2.65037  4.69800  3.11777  2.58559  3.93396  3.48363  3.71066  2.49275
+  2.05906  2.95516  3.80693  2.50024  3.88815  2.89605  2.88872  2.72907  2.4276
+3  2.99850  5.24239  3.94877    158 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    143   2.21701  4.52657  2.45380  2.75014  3.73535  3.53805  3.84294  2.86807
+  2.75770  2.17002  3.64455  3.21159  3.95457  3.08148  3.16791  2.80094  2.8960
+8  2.24528  5.16549  3.89225    159 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    144   3.41438  4.70993  5.04893  4.51836  3.21871  4.71073  5.05993  1.60681
+  4.34794  0.90468  3.01922  4.76098  4.89446  4.48359  4.45935  4.09339  3.6465
+9  2.14279  5.32906  4.22624    160 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    145   1.66341  4.55765  3.29747  2.78822  4.09563  3.34088  3.86205  3.44543
+  2.60980  3.11452  3.96692  3.19039  3.87148  3.05878  2.16675  2.67137  2.2904
+3  3.09965  5.38848  4.12438    161 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    146   1.96741  4.60402  3.09101  2.67267  4.09875  3.30287  2.64764  3.55483
+  2.68845  3.18630  4.02165  3.11035  3.84730  3.04694  3.09548  1.72418  2.8800
+8  3.18467  5.41006  4.09565    162 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    147   2.02427  4.88556  3.14956  2.70898  4.40362  3.45865  3.80224  3.73109
+  1.30907  3.34916  4.21424  3.15279  3.95761  2.96243  2.65527  2.83485  3.0657
+3  3.38348  5.54009  4.27566    163 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.02321  4.17053  4.89288  0.61958  0.77255  0.48576  0.95510
+    148   3.70647  5.07328  4.29292  4.08736  2.37118  4.18885  3.80078  3.67800
+  3.93734  3.05218  4.32316  4.11065  4.65987  4.16910  4.05541  3.80923  3.9969
+3  3.56378  4.02310  0.58497    164 - -
+          2.68618  4.42225  2.77519  2.73123  3.46354  2.40513  3.72494  3.29354
+  2.67741  2.69355  4.24690  2.90347  2.73739  3.18146  2.89801  2.37887  2.7751
+9  2.98518  4.58477  3.61503
+          0.19360  4.17053  1.82902  0.61958  0.77255  0.48576  0.95510
+    149   2.92198  5.11574  3.28049  2.65489  4.47826  3.59727  2.51142  3.88373
+  1.57593  3.35205  4.19259  3.10178  3.96579  2.72398  1.84611  2.91372  3.1036
+3  3.55066  5.42147  4.18835    165 - -
+          2.68634  4.42241  2.77536  2.73098  3.46370  2.40469  3.72511  3.29370
+  2.67757  2.69331  4.24706  2.90363  2.73756  3.18097  2.89817  2.37903  2.7753
+6  2.98535  4.58493  3.61418
+          0.22163  1.61553        *  1.50361  0.25145  0.00000        *
+//
+
+Output file format
+
+   eomegash writes alignments using the default Clustal-Omega output.
+
+  Output files for usage example
+
+  File: twoglob.aln
+
+>HBA_HUMAN P69905 Hemoglobin subunit alpha (Alpha-globin) (Hemoglobin alpha chai
+n)
+MVLSPADKTNVKAAWGKVGAHAGEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHG
+KKVADALTNAVAHVDDMPNALSALSDLHAHKLRVDPVNFKLLSHCLLVTLAAHLPAEFTP
+AVHASLDKFLASVSTVLTSKYR
+>HBA_BOVFRAG Hemoglobin subunit alpha (Alpha-globin) fragment (Hemoglobin alpha
+chain)
+------DKGNVKAAWGKVGGHAAEYGAEALERMFLSFPTTKTYFPHFDLSHGSAQVKGHG
+AKVAAALTKAVEHLDDLPGALSELSDLHAHKLRVDPVNFKLLSHSLLVTLASHLPSDFTP
+AVHASLDKFLANVST-------
+
+Data files
+
+   None.
+
+Notes
+
+   None.
+
+References
+
+   [1] Johannes Soding (2005) Protein homology detection by HMM-HMM
+   comparison. Bioinformatics 21 (7): 951aEUR"960.
+
+   [2] Blackshields G, Sievers F, Shi W, Wilm A, Higgins DG. Sequence
+   embedding for fast construction of guide trees for multiple sequence
+   alignment. Algorithms Mol Biol. 2010 May 14;5:21.
+
+   [3] http://www.genetics.wustl.edu/eddy/software/#squid
+
+   [4] Wilbur and Lipman, 1983; PMID 6572363
+
+   [5] Thompson JD, Higgins DG, Gibson TJ. (1994). CLUSTAL W: improving
+   the sensitivity of progressive multiple sequence alignment through
+   sequence weighting, position-specific gap penalties and weight matrix
+   choice. Nucleic Acids Res., 22, 4673-4680.
+
+   [6] Larkin MA, Blackshields G, Brown NP, Chenna R, McGettigan PA,
+   McWilliam H, Valentin F, Wallace IM, Wilm A, Lopez R, Thompson JD,
+   Gibson TJ, Higgins DG. (2007). Clustal W and Clustal X version 2.0.
+   Bioinformatics, 23, 2947-2948.
+
+   [7] Kimura M (1980). "A simple method for estimating evolutionary rates
+   of base substitutions through comparative studies of nucleotide
+   sequences". Journal of Molecular Evolution 16: 111aEUR"120.
+
+   [8] Edgar, R.C. (2004) MUSCLE: multiple sequence alignment with high
+   accuracy and high throughput.Nucleic Acids Res. 32(5):1792-1797.
+
+Warnings
+
+   None.
+
+Diagnostic Error Messages
+
+   None.
+
+Exit status
+
+   It always exits with status 0.
+
+Known bugs
+
+   None.
+
+See also
+
+   Program name     Description
+   edialign         Local multiple alignment of sequences
+   emma             Multiple sequence alignment (ClustalW wrapper)
+   eomega           Multiple sequence alignment (ClustalO wrapper)
+   eomegapp         Profile with profile (ClustalO wrapper)
+   eomegasp         Sequence with profile (ClustalO wrapper)
+   infoalign        Display basic information about a multiple sequence alignment
+   mse              Multiple Sequence Editor
+   plotcon          Plot conservation of a sequence alignment
+   prettyplot       Draw a sequence alignment with pretty formatting
+   showalign        Display a multiple sequence alignment in pretty format
+   tranalign        Generate an alignment of nucleic coding regions from aligned
+                    proteins
+
+Author(s)
+
+   Alan Bleasby
+   European Bioinformatics Institute, Wellcome Trust Genome Campus,
+   Hinxton, Cambridge CB10 1SD, UK
+
+   Please report all bugs to the EMBOSS bug team
+   (emboss-bug (c) emboss.open-bio.org) not to the original author.
+
+History
+
+Target users
+
+   This program is intended to be used by everyone and everything, from
+   naive users to embedded scripts.
+
+Comments
+
+   None

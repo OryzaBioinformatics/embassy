@@ -1,0 +1,172 @@
+application: eomegapp [
+  groups: "Alignment:Multiple"
+  documentation: "Profile with profile (ClustalO wrapper)"
+  gui: "yes"
+  batch: "yes"
+  cpu: "high"
+  embassy: "clustalomega"
+  external: "clustalo Clustal Omega from http://www.clustal.org/"
+  relations: "EDAM:0000182 topic Sequence alignment"
+  relations: "EDAM:0000499 operation Multiple sequence alignment
+              (phylogenetic tree-based)"
+]
+
+section: input [
+  information: "Input section"
+  type: "page"
+]
+
+   infile: aprofile [
+    parameter: "Y"
+    information: "Pre-aligned multiple sequence file"
+    help: "Pre-aligned multiple sequence file (aligned columns will be kept
+           fixed)"
+    knowntype: "profile or matrix"
+    relations: "EDAM:0001354 data Sequence profile"
+  ]
+
+   infile: bprofile [
+    parameter: "Y"
+    information: "Pre-aligned multiple sequence file"
+    help: "Pre-aligned multiple sequence file (aligned columns will be kept
+           fixed)"
+    knowntype: "profile or matrix"
+    relations: "EDAM:0001354 data Sequence profile"
+  ]
+
+  infile: indist [
+    default: ""
+    nullok: "Y"
+    information: "Pairwise distance matrix input file"
+    help: "Pairwise distance matrix input file (skips distance computation)"
+    knowntype: "distance matrix"
+    relations:  "EDAM:0000870 data Sequence distance matrix"
+  ]
+
+  infile: inguide [
+    default: ""
+    nullok: "Y"
+    information: "Guide tree input file"
+    help: "Guide tree input file  (skips distance computation and guide tree
+           clustering step)"
+    knowntype: "dendrogram"
+    relations: "EDAM:0000872 data Phylogenetic tree"
+  ]
+
+endsection: input
+
+section: required [
+  information: "Required section"
+  type: "page"
+]
+
+endsection: required
+
+
+section: advanced [
+  information: "Advanced section"
+  type: "page"
+]
+
+  toggle: dealign [
+    default: "N"
+    information: "Dealign input sequences"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  toggle: mbed [
+    default: "N"
+    information: "Fast, Mbed-like clustering for guide tree calculation"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  toggle: intermbed [
+    default: "N"
+    information: "Fast, Mbed-like clustering for guide tree calculation"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  integer: maxiterations [
+    information: "Number of (combined guide tree/HMM) iterations"
+    minimum: "0"
+    maximum: "2000000000"
+    default: "0"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  integer: maxgiterations [
+    information: "Maximum guide tree iterations"
+    minimum: "0"
+    maximum: "2000000000"
+    default: "2000000000"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  integer: maxhiterations [
+    information: "Maximum number of HMM iterations"
+    minimum: "0"
+    maximum: "2000000000"
+    default: "2000000000"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  integer: maxseqs [
+    information: "Maximum number of sequences"
+    minimum: "2"
+    maximum: "2000000000"
+    default: "2000000000"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  integer: maxlenseq [
+    information: "Maximum length of sequence"
+    minimum: "1"
+    maximum: "2000000000"
+    default: "2000000000"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+  toggle: self [
+    default: "N"
+    information: "Set options automatically"
+    help: "Set options automatically (might overwrite some options"
+    relations: "EDAM:0002527 data Parameter or primitive"
+  ]
+
+endsection: advanced
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+  seqoutset: outseq [
+    parameter: "Y"
+    extension: "aln"
+    aligned: "Y"
+    type: "gapprotein"
+    relations: "EDAM:0000849 data Sequence record"
+  ]
+
+  outfile: outdist [
+    default: ""
+    nullok: "Y"
+    nulldefault: "Y"
+    information: "Pairwise distance matrix output file"
+    help: "Pairwise distance matrix output file"
+    knowntype: "distance matrix"
+    relations:  "EDAM:0000870 data Sequence distance matrix"
+  ]
+
+  outfile: outguide [
+    default: ""
+    nullok: "Y"
+    nulldefault: "Y"
+    relations: "EDAM:0000872 data Phylogenetic tree"
+    information: "Guide tree output file"
+    help: "Guide tree output file"
+    knowntype: "dendrogram"
+    relations: "EDAM:0000872 data Phylogenetic tree"
+  ]
+
+endsection: output

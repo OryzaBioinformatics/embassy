@@ -1,0 +1,472 @@
+                                  eomegasp
+
+
+
+Wiki
+
+   The master copies of EMBOSS documentation are available at
+   http://emboss.open-bio.org/wiki/Appdocs on the EMBOSS Wiki.
+
+   Please help by correcting and extending the Wiki pages.
+
+Function
+
+   Sequence with profile (ClustalO wrapper)
+
+Description
+
+   eomegasp is a wrapper to clustalo. It takes a set of unaligned
+   sequences and one profile and produces a combined output alignment.
+
+   Clustal-Omega (clustalo) is a general purpose multiple sequence
+   alignment (MSA) program for proteins. It produces high quality MSAs and
+   is capable of handling data-sets of hundreds of thousands of sequences
+   in reasonable time.
+
+   In its current form Clustal-Omega can only align protein sequences but
+   not DNA/RNA sequences. It is envisioned that DNA/RNA will become
+   available in a future version.
+
+Algorithm
+
+   Clustal-Omega uses HMMs for the alignment engine, based on the HHalign
+   package from Johannes Soeding [1]. Guide trees are optionally made
+   using mBed [2] which can cluster very large numbers of sequences in
+   O(N*log(N)) time. Multiple alignment then proceeds by aligning larger
+   and larger alignments using HHalign, following the clustering given by
+   the guide tree.
+
+Usage
+
+   Here is a sample session with eomegasp
+
+
+% eomegasp ../data/op1.ali
+Sequence with profile (ClustalO wrapper)
+(aligned) output sequence set [ops.aln]:
+WARNING: This is a beta version of Clustal Omega, for protein only.
+
+
+   Go to the input files for this example
+   Go to the output files for this example
+
+Command line arguments
+
+Sequence with profile (ClustalO wrapper)
+Version: EMBOSS:6.4.0.0
+
+   Standard (Mandatory) qualifiers:
+  [-sequences]         seqset     File containing sequences to align
+  [-profile]           infile     Pre-aligned multiple sequence file (aligned
+                                  columns will be kept fixed)
+  [-outseq]            seqoutset  [.] Sequence set filename
+                                  and optional format (output USA)
+
+   Additional (Optional) qualifiers: (none)
+   Advanced (Unprompted) qualifiers:
+   -indist             infile     Pairwise distance matrix input file (skips
+                                  distance computation)
+   -inguide            infile     Guide tree input file (skips distance
+                                  computation and guide tree clustering step)
+   -dealign            toggle     [N] Dealign input sequences
+   -mbed               toggle     [N] Fast, Mbed-like clustering for guide
+                                  tree calculation
+   -intermbed          toggle     [N] Fast, Mbed-like clustering for guide
+                                  tree calculation
+   -maxiterations      integer    [0] Number of (combined guide tree/HMM)
+                                  iterations (Integer from 0 to 2000000000)
+   -maxgiterations     integer    [2000000000] Maximum guide tree iterations
+                                  (Integer from 0 to 2000000000)
+   -maxhiterations     integer    [2000000000] Maximum number of HMM
+                                  iterations (Integer from 0 to 2000000000)
+   -maxseqs            integer    [2000000000] Maximum number of sequences
+                                  (Integer from 2 to 2000000000)
+   -maxlenseq          integer    [2000000000] Maximum length of sequence
+                                  (Integer from 1 to 2000000000)
+   -self               toggle     [N] Set options automatically (might
+                                  overwrite some options
+   -outdist            outfile    [*.eomegasp] Pairwise distance matrix output
+                                  file
+   -outguide           outfile    [*.eomegasp] Guide tree output file
+
+   Associated qualifiers:
+
+   "-sequences" associated qualifiers
+   -sbegin1            integer    Start of each sequence to be used
+   -send1              integer    End of each sequence to be used
+   -sreverse1          boolean    Reverse (if DNA)
+   -sask1              boolean    Ask for begin/end/reverse
+   -snucleotide1       boolean    Sequence is nucleotide
+   -sprotein1          boolean    Sequence is protein
+   -slower1            boolean    Make lower case
+   -supper1            boolean    Make upper case
+   -sformat1           string     Input sequence format
+   -sdbname1           string     Database name
+   -sid1               string     Entryname
+   -ufo1               string     UFO features
+   -fformat1           string     Features format
+   -fopenfile1         string     Features file name
+
+   "-outseq" associated qualifiers
+   -osformat3          string     Output seq format
+   -osextension3       string     File name extension
+   -osname3            string     Base file name
+   -osdirectory3       string     Output directory
+   -osdbname3          string     Database name to add
+   -ossingle3          boolean    Separate file for each entry
+   -oufo3              string     UFO features
+   -offormat3          string     Features format
+   -ofname3            string     Features file name
+   -ofdirectory3       string     Output directory
+
+   "-outdist" associated qualifiers
+   -odirectory         string     Output directory
+
+   "-outguide" associated qualifiers
+   -odirectory         string     Output directory
+
+   General qualifiers:
+   -auto               boolean    Turn off prompts
+   -stdout             boolean    Write first file to standard output
+   -filter             boolean    Read first file from standard input, write
+                                  first file to standard output
+   -options            boolean    Prompt for standard and additional values
+   -debug              boolean    Write debug output to program.dbg
+   -verbose            boolean    Report some/full command line options
+   -help               boolean    Report command line options and exit. More
+                                  information on associated and general
+                                  qualifiers can be found with -help -verbose
+   -warning            boolean    Report warnings
+   -error              boolean    Report errors
+   -fatal              boolean    Report fatal errors
+   -die                boolean    Report dying program messages
+   -version            boolean    Report version number and exit
+
+
+Input file format
+
+   eomegasp reads a set of unaligned sequences and a profile file or
+   aligned sequences, plus optional distance and guide tree files.
+
+  Input files for usage example
+
+  File: ops.fasta
+
+>OPSD_ALLMI P52202 Rhodopsin
+MNGTEGPDFYIPFSNKTGVVRSPFEYPQYYLAEPWKYSALAAYMFMLIILGFPINFLTLY
+VTVQHKKLRSPLNYILLNLAVADLFMVLGGFTTTLYTSMNGYFVFGVTGCYFEGFFATLG
+GEVALWCLVVLAIERYIVVCKPMSNFRFGENHAIMGVVFTWIMALTCAAPPLVGWSRYIP
+EGMQCSCGVDYYTLKPEVNNESFVIYMFVVHFAIPLAVIFFCYGRLVCTVKEAAAQQQES
+ATTQKAEKEVTRMVIIMVVSFLICWVPYASVAFYIFSNQGSDFGPVFMTIPAFFAKSSAI
+YNPVIYIVMNKQFRNCMITTLCCGKNPLGDDETATGSKTETSSVSTSQVSPA
+>OPSD_CAMAB Q17292 Rhodopsin
+MMSIASGPSHAAYTWASQGGGFGNQTVVDKVPPEMLHMVDAHWYQFPPMNPLWHALLGFV
+IGVLGVISVIGNGMVIYIFTTTKSLRTPSNLLVVNLAISDFLMMLCMSPAMVINCYYETW
+VLGPLFCELYGLAGSLFGCASIWTMTMIAFDRYNVIVKGLSAKPMTINGALIRILTIWFF
+TLAWTIAPMFGWNRYVPEGNMTACGTDYLTKDLF--SRSYILIYSIFVYFTPLFLIIYSY
+FFIIQAVAAHEKNMREQAKKMNVASLRSAENQSTSAECKLAKVALMTISLWFMAWTPYLV
+INYSGI-FETTKISPLFTIWGSLFAKANAVYNPIVYGISHPKYRAALFQKFPSLACTTEP
+TGADTMSTTTTVTEGNEKPAA
+
+  File: op1.ali
+
+>OPSD_ABYKO O42294 Rhodopsin (Fragment)
+-----------------------------------------YLVNPAAYAALGAYMFLLI
+LIGFP---INFLTLYVTLEHKKLRTPLNYILLNLAVANLFMVLGGFTTTMYTSMHGYFVL
+GRLGCNLEAFFATLGGEIALWSLVVLAIERWIVVCKPISNFRFTEDHAIMGLAFTWVMAL
+ACAVPPLVGWSRYIPEGMQCSCGVDYYTRAEGFNNESFVIYMFIVHFLIPLSVIFFCYGR
+LLCAVKEAPAAQQE-------------SETTQRAEKEVSRMVVIMVIGFLVCWLPYASVA
+WWIFCNQGSDFGPIFMTLPSFFAKSAAIYNPMIYICMNKQFRHCMI--------------
+-------------------------
+>OPSD_AMBTI Q90245 Rhodopsin
+MNGTEGPNFYV-------PFSNKSGVVRSPFEYP-----QYYLAEPWQYSVLAAYMFLLI
+LLGFP---VNFLTLYVTIQHKKLRTPLNYILLNLAFANHFMVFGGFPVTMYSSMHGYFVF
+GQTGCYIEGFFATMGGEIALWSLVVLAIERYVVVCKPMSNFRFGENHAIMGVMMTWIMAL
+ACAAPPLFGWSRYIPEGMQCSCGVDYYTLKPEVNNESFVIYMFLVHFTIPLMIIFFCYGR
+LVCTVKEAAAQQQE-------------SATTQKAEKEVTRMVIIMVVAFLICWVPYASVA
+FYIFSNQGTDFGPIFMTVPAFFAKSSAIYNPVIYIVLNKQFRNCMIT---TICCGKNPFG
+DDETTSAATSKTEASSVSSSQVSPA
+>OPSD_ANOCA P41591 Rhodopsin
+MNGTEGQNFYV-------PMSNKTGVVRNPFEYP-----QYYLADPWQFSALAAYMFLLI
+LLGFP---INFLTLFVTIQHKKLRTPLNYILLNLAVANLFMVLMGFTTTMYTSMNGYFIF
+GTVGCNIEGFFATLGGEMGLWSLVVLAVERYVVICKPMSNFRFGETHALIGVSCTWIMAL
+ACAGPPLLGWSRYIPEGMQCSCGVDYYTPTPEVHNESFVIYMFLVHFVTPLTIIFFCYGR
+LVCTVKAAAAQQQE-------------SATTQKAEREVTRMVVIMVISFLVCWVPYASVA
+FYIFTHQGSDFGPVFMTIPAFFAKSSAIYNPVIYILMNKQFRNCMIM---TLCCGKNPLG
+DEETSAG--TKTETSTVSTSQVSPA
+>OPSD_APIME Q17053 Rhodopsin, long-wavelength (Opsin, green-sensitive)
+MIAVSGPSYEAFSYGGQARFNNQTVVDKVPPDMLHLIDANWYQYPPLNPMWHGILGFVIG
+MLGFVSAMGNGMVVYIFLSTKSLRTPSNLFVINLAISNFLMMFCMSPPMVINCYYETWVL
+GPLFCQIYAMLGSLFGCGSIWTMTMIAFDRYNVIVKGLSGKPLSINGALIRIIAIWLFSL
+GWTIAPMFGWNRYVPEGNMTACGTDYFNRGL--LSASYLVCYGIWVYFVPLFLIIYSYWF
+IIQAVAAHEKNMREQAKKMNVASLRSSENQNTSAECKLAKVALMTISLWFMAWTPYLVIN
+FSGIF-NLVKISPLFTIWGSLFAKANAVYNPIVYGISHPKYRAALFAKFPSLACAAEPSS
+DAVSTTSGTTTVTD-----NEKSNA
+>OPSD_ASTFA P41590 Rhodopsin
+MNGTEGPYFYV-------PMSNATGVVRSPYEYP-----QYYLAPPWAYACLAAYMFFLI
+LVGFP---VNFLTLYVTIEHKKLRTPLNYILLNLAVADLFMVFGGFTTTMYTSLNGYFVF
+GRLGCNLEGFFATFGGINSLWCLVVLSIERWVVVCKPMSNFRFGENHAIMGVAFTWFMAL
+ACTVPPLVGWSRYIPEGMQCSCGIDYYTRAEGFNNESFVIYMFVVHFLTPLFVITFCYGR
+LVCTVKEAAAQQQE-------------SETTQRAEREVTRMVILMFIAYLVCWLPYASVS
+WWIFTNQGSEFGPIFMTVPAFFAKSSSIYNPVIYICLNKQFRHCMIT---TLCCGKNPFE
+EEEGASTTASKTEASSVSSVSPA--
+>OPSD_ATHBO Q9YGZ1 Rhodopsin
+MNGTEGPYFYI-------PMLNTTGVVRSPYEYP-----QYYLVNPAAYAVLGAYMFFLI
+LVGFP---INFLTLYVTIEHKKLRTPLNYILLNLAVADLFMVFGGFTTTIYTSMHGYFVL
+GRLGCNVEGFSATLGGEIALWSLVVLAIERWVVVCKPISNFRFGENHAIMGVAFTWFMAA
+ACAVPPLFGWSRYIPEGMQCSCGIDYYTRAEGFNNESFVIYMFTCHFCIPLMVVFFCYGR
+LVCAVKEAAAAQQE-------------SETTQRAEREVTRMVIIMVVSFLVSWVPYASVA
+WYIFTHQGSEFGPLFMTIPAFFAKSSSIYNPMIYICMNKQFRHCMIT---TLCCGKNPFE
+EEEGASSTASKTEASSVSSSSVSPA
+>OPSD_BATMU O42300 Rhodopsin (Fragment)
+-----------------------------------------YLVSPAAYAALGAYMFLLI
+LIGFP---VNFLTLYVTLEHKKLRTPLNYILLNLAVADLFMVLGGFTTTMYTSMHGYFVL
+GRLGCNLEGFFATLGGEIALWSLVVLAIERWIVVCKPISNFRFTEDNAIMGLAFSWVMAL
+TCAVPPLVGWSRYIPEGMQCSCGVDYYTRAEGFNNESFVIYMFIVHFPIPLSVIFFCYGR
+LLCAVKEAAAAQQE-------------SETTQRAEKEVSRMVVILVIGFLVCWLPYASVA
+WWIFCNQGSDFGPIFMTLPSFFAKRPAIYNPMIYICMNKQFRHCMI--------------
+-------------------------
+>OPSD_BATNI O42301 Rhodopsin (Fragment)
+-----------------------------------------YLVSPAAYAALGAYMFLLI
+LIGFP---VNFLTLYVTLEHKKLRTPLNYILLNLAVADLFMVLGGFTTTMYTSMHGYFVL
+GRLGCNLEGFFATLGGEIALWSLVVLAIERWIVVCKPISKFRFTEDNAIMGLAFSWVMAL
+ACAVPPLVGWLRYIPEGMQCTCGVDYYTRAEGFDNESFVIYMFIVHFLIPLSVIFFCYGR
+LLCAVKEAAAAQQE-------------SETTQRAEKEVSRMVVIMVIGFLVCWLPYASVA
+WWIFCNQGSDFGPIFMTLPSFFAKRPAIYNPMIYICMNKQFRHCMI--------------
+-------------------------
+>OPSD_BOVIN P02699 Rhodopsin
+MNGTEGPNFYV-------PFSNKTGVVRSPFEAP-----QYYLAEPWQFSMLAAYMFLLI
+MLGFP---INFLTLYVTVQHKKLRTPLNYILLNLAVADLFMVFGGFTTTLYTSLHGYFVF
+GPTGCNLEGFFATLGGEIALWSLVVLAIERYVVVCKPMSNFRFGENHAIMGVAFTWVMAL
+ACAAPPLVGWSRYIPEGMQCSCGIDYYTPHEETNNESFVIYMFVVHFIIPLIVIFFCYGQ
+LVFTVKEAAAQQQE-------------SATTQKAEKEVTRMVIIMVIAFLICWLPYAGVA
+FYIFTHQGSDFGPIFMTIPAFFAKTSAVYNPVIYIMMNKQFRNCMVT---TLCCGKNPLG
+DDEASTTVS-KTET-----SQVAPA
+>OPSD_BUFBU P56514 Rhodopsin
+MNGTEGPNFYI-------PMSNKTGVVRSPFEYP-----QYYLAEPWQYSILCAYMFLLI
+LLGFP---INFMTLYVTIQHKKLRTPLNYILLNLAFANHFMVLCGFTVTMYSSMNGYFIL
+GATGCYVEGFFATLGGEIALWSLVVLAIERYVVVCKPMSNFRFSENHAVMGVAFTWIMAL
+SCAVPPLLGWSRYIPEGMQCSCGVDYYTLKPEVNNESFVIYMFVVHFTIPLIIIFFCYGR
+LVCTVKEAAAQQQE-------------SATTQKAEKEVTRMVIIMVVFFLICWVPYASVA
+FFIFSNQGSEFGPIFMTVPAFFAKSSSIYNPVIYIMLNKQFRNCMIT---TLCCGKNPFG
+EDDASSAATSKTEASSVSSSQVSPA
+>OPSD_BUFMA P56515 Rhodopsin
+MNGTEGPNFYI-------PMSNKTGVVRSPFEYP-----QYYLAEPWQYSVLCAYMFLLI
+LLGFP---INFMTLYVTIQHKKLRTPLNYILLNLAFANHFMVLCGFTVTMYSSMNGYFVF
+GQTGCYVEGFFATLGGEIALWSLVVLAIERYVVVCKPMSNFRFSENHAIMGVAFTWIMAL
+ACAAPPLFGWSRYIPEGMQCSCGVDYYTLKPEVNNESFVIYMFVVHFLIPLIIIFFCYGR
+LVCTVKEAAAQQQE-------------SATTQKAEKEVTRMVIIMVVFFLICWVPYASVA
+FFIFTHQGSEFGPVFMTIPAFFAKSSSIYNPVIYIMLNKQFRNCMIT---TLCCGKNPFG
+DEDASSAATSKTEASSVSSSQVSPA
+>OPSD_CALPD Q6W3E1 Rhodopsin
+MNGTEGPNFYV-------PFSNKTGVVRSPFEEP-----QYYLAEPWQFSCLAAYMFMLI
+VLGFP---INFLTLYVTIQHKKLRTPLNYILLNLAIADLFMVFGGFTTTLYTSLHGYFVF
+GPTGCDLEGFFATLGGEIALWSLVVLAIERYIVVCKPMSNFRFGENHAIMGVAFTWVMAL
+ACAAPPLVGWSRYIPEGMQCSCGIDYYTLKPEVNNESFVIYMFVVHFTIPMVVIFFCYGQ
+LVFTVKEAAAQQQE-------------SATTQKAEKEVTRMVIIMVIAFLICWLPYAGVA
+FYIFTHQGSNFGPILMTLPAFFAKTSAVYNPVIYIMLNKQFRTCMLT---TLCCGKIPLG
+DDEASATAS-KTET-----SQVAPA
+
+Output file format
+
+   eomegasp writes alignments using the default Clustal-Omega output.
+
+  Output files for usage example
+
+  File: ops.aln
+
+>OPSD_ALLMI P52202 Rhodopsin
+-MNGTEGPDFYI--------PFSNKTGVVRSPFEYP-----QYYLAEPWKYSALAAYMFM
+LIILGFP---INFLTLYVTVQHKKLRSPLNYILLNLAVADLFMVLGGFTTTLYTSMNGYF
+VFGVTGCYFEGFFATLGGEVALWCLVVLAIERYIVVCKPMSNFRFGENHAIMGVVFTWIM
+ALTCAAPPLVGWSRYIPEGMQCSCGVDYYTLKPEVNNESFVIYMFVVHFAIPLAVIFFCY
+GRLVCTVKEAAAQQQE---------------SATTQKAEKEVTRMVIIMVVSFLICWVPY
+ASVAFYIFSNQGSDFGPVFMTIPAFFAKSSAIYNPVIYIVMNKQFRNCMI---TTLCCGK
+NPLGDDETATG--SKTETSSVSTSQVSPA
+>OPSD_CAMAB Q17292 Rhodopsin
+MMSIASGPSHAAYTWASQGGGFGNQTVVDKVPPEMLHMVDAHWYQFPPMNPLWHALLGFV
+IGVLGVISVIGNGMVIYIFTTTKSLRTPSNLLVVNLAISDFLMMLCMSPAMVINCYYETW
+VLGPLFCELYGLAGSLFGCASIWTMTMIAFDRYNVIVKGLSAKPMTINGALIRILTIWFF
+TLAWTIAPMFGWNRYVPEGNMTACGTDYLTKDL--F--SRSYILIYSIFVYFTPLFLIIY
+SYFFIIQAVAAHEKNMREQAKKMNVASLR--SAENQSTSAECKLAKVALMTISLWFMAWT
+PYLVINYS-GI-FETTKISPLFTIWGSLFAKANAVYNPIVYGISHPKYRAALFQKFPSLA
+CTTEPTGADTM--STTTTVTEGNEKPAA-
+>OPSD_ABYKO O42294 Rhodopsin (Fragment)
+-------------------------------------------YLVNPAAYAALGAYMFL
+LILIGFP---INFLTLYVTLEHKKLRTPLNYILLNLAVANLFMVLGGFTTTMYTSMHGYF
+VLGRLGCNLEAFFATLGGEIALWSLVVLAIERWIVVCKPISNFRFTEDHAIMGLAFTWVM
+ALACAVPPLVGWSRYIPEGMQCSCGVDYYTRAEGFNNESFVIYMFIVHFLIPLSVIFFCY
+GRLLCAVKEAPAAQ--QE-------------SETTQRAEKEVSRMVVIMVIGFLVCWLPY
+ASVAWWIFCNQGSDFGPIFMTLPSFFAKSAAIYNPMIYICMNKQFRHCMI----------
+-----------------------------
+>OPSD_AMBTI Q90245 Rhodopsin
+-MNGTEGPNFYV--------PFSNKSGVVRSPFEYP-----QYYLAEPWQYSVLAAYMFL
+LILLGFP---VNFLTLYVTIQHKKLRTPLNYILLNLAFANHFMVFGGFPVTMYSSMHGYF
+VFGQTGCYIEGFFATMGGEIALWSLVVLAIERYVVVCKPMSNFRFGENHAIMGVMMTWIM
+ALACAAPPLFGWSRYIPEGMQCSCGVDYYTLKPEVNNESFVIYMFLVHFTIPLMIIFFCY
+GRLVCTVKEAAAQQ--QE-------------SATTQKAEKEVTRMVIIMVVAFLICWVPY
+ASVAFYIFSNQGTDFGPIFMTVPAFFAKSSAIYNPVIYIVLNKQFRNCMIT---TICCGK
+NPFGDDETTSAATSKTEASSVSSSQVSPA
+>OPSD_ANOCA P41591 Rhodopsin
+-MNGTEGQNFYV--------PMSNKTGVVRNPFEYP-----QYYLADPWQFSALAAYMFL
+LILLGFP---INFLTLFVTIQHKKLRTPLNYILLNLAVANLFMVLMGFTTTMYTSMNGYF
+IFGTVGCNIEGFFATLGGEMGLWSLVVLAVERYVVICKPMSNFRFGETHALIGVSCTWIM
+ALACAGPPLLGWSRYIPEGMQCSCGVDYYTPTPEVHNESFVIYMFLVHFVTPLTIIFFCY
+GRLVCTVKAAAAQQ--QE-------------SATTQKAEREVTRMVVIMVISFLVCWVPY
+ASVAFYIFTHQGSDFGPVFMTIPAFFAKSSAIYNPVIYILMNKQFRNCMIM---TLCCGK
+NPLGDEETSAG--TKTETSTVSTSQVSPA
+>OPSD_APIME Q17053 Rhodopsin, long-wavelength (Opsin, green-sensitive)
+-MIAVSGPSYEAFSYGGQ-ARFNNQTVVDKVPPDMLHLIDANWYQYPPLNPMWHGILGFV
+IGMLGFVSAMGNGMVVYIFLSTKSLRTPSNLFVINLAISNFLMMFCMSPPMVINCYYETW
+VLGPLFCQIYAMLGSLFGCGSIWTMTMIAFDRYNVIVKGLSGKPLSINGALIRIIAIWLF
+SLGWTIAPMFGWNRYVPEGNMTACGTDYFNRGL--LSASYLVCYGIWVYFVPLFLIIYSY
+WFIIQAVAAHEKNM--REQAKKMNVASLRSSENQNTSAECKLAKVALMTISLWFMAWTPY
+LVINFSGIF-NLVKISPLFTIWGSLFAKANAVYNPIVYGISHPKYRAALFAKFPSLACAA
+EPSSDAVSTTSGTTTVTD-----NEKSNA
+>OPSD_ASTFA P41590 Rhodopsin
+-MNGTEGPYFYV--------PMSNATGVVRSPYEYP-----QYYLAPPWAYACLAAYMFF
+
+
+  [Part of this file has been deleted for brevity]
+
+GRLVCAVKEAAAAQ--QE-------------SETTQRAEREVTRMVIIMVVSFLVSWVPY
+ASVAWYIFTHQGSEFGPLFMTIPAFFAKSSSIYNPMIYICMNKQFRHCMIT---TLCCGK
+NPFEEEEGASSTASKTEASSVSSSSVSPA
+>OPSD_BATMU O42300 Rhodopsin (Fragment)
+-------------------------------------------YLVSPAAYAALGAYMFL
+LILIGFP---VNFLTLYVTLEHKKLRTPLNYILLNLAVADLFMVLGGFTTTMYTSMHGYF
+VLGRLGCNLEGFFATLGGEIALWSLVVLAIERWIVVCKPISNFRFTEDNAIMGLAFSWVM
+ALTCAVPPLVGWSRYIPEGMQCSCGVDYYTRAEGFNNESFVIYMFIVHFPIPLSVIFFCY
+GRLLCAVKEAAAAQ--QE-------------SETTQRAEKEVSRMVVILVIGFLVCWLPY
+ASVAWWIFCNQGSDFGPIFMTLPSFFAKRPAIYNPMIYICMNKQFRHCMI----------
+-----------------------------
+>OPSD_BATNI O42301 Rhodopsin (Fragment)
+-------------------------------------------YLVSPAAYAALGAYMFL
+LILIGFP---VNFLTLYVTLEHKKLRTPLNYILLNLAVADLFMVLGGFTTTMYTSMHGYF
+VLGRLGCNLEGFFATLGGEIALWSLVVLAIERWIVVCKPISKFRFTEDNAIMGLAFSWVM
+ALACAVPPLVGWLRYIPEGMQCTCGVDYYTRAEGFDNESFVIYMFIVHFLIPLSVIFFCY
+GRLLCAVKEAAAAQ--QE-------------SETTQRAEKEVSRMVVIMVIGFLVCWLPY
+ASVAWWIFCNQGSDFGPIFMTLPSFFAKRPAIYNPMIYICMNKQFRHCMI----------
+-----------------------------
+>OPSD_BOVIN P02699 Rhodopsin
+-MNGTEGPNFYV--------PFSNKTGVVRSPFEAP-----QYYLAEPWQFSMLAAYMFL
+LIMLGFP---INFLTLYVTVQHKKLRTPLNYILLNLAVADLFMVFGGFTTTLYTSLHGYF
+VFGPTGCNLEGFFATLGGEIALWSLVVLAIERYVVVCKPMSNFRFGENHAIMGVAFTWVM
+ALACAAPPLVGWSRYIPEGMQCSCGIDYYTPHEETNNESFVIYMFVVHFIIPLIVIFFCY
+GQLVFTVKEAAAQQ--QE-------------SATTQKAEKEVTRMVIIMVIAFLICWLPY
+AGVAFYIFTHQGSDFGPIFMTIPAFFAKTSAVYNPVIYIMMNKQFRNCMVT---TLCCGK
+NPLGDDEASTTVS-KTET-----SQVAPA
+>OPSD_BUFBU P56514 Rhodopsin
+-MNGTEGPNFYI--------PMSNKTGVVRSPFEYP-----QYYLAEPWQYSILCAYMFL
+LILLGFP---INFMTLYVTIQHKKLRTPLNYILLNLAFANHFMVLCGFTVTMYSSMNGYF
+ILGATGCYVEGFFATLGGEIALWSLVVLAIERYVVVCKPMSNFRFSENHAVMGVAFTWIM
+ALSCAVPPLLGWSRYIPEGMQCSCGVDYYTLKPEVNNESFVIYMFVVHFTIPLIIIFFCY
+GRLVCTVKEAAAQQ--QE-------------SATTQKAEKEVTRMVIIMVVFFLICWVPY
+ASVAFFIFSNQGSEFGPIFMTVPAFFAKSSSIYNPVIYIMLNKQFRNCMIT---TLCCGK
+NPFGEDDASSAATSKTEASSVSSSQVSPA
+>OPSD_BUFMA P56515 Rhodopsin
+-MNGTEGPNFYI--------PMSNKTGVVRSPFEYP-----QYYLAEPWQYSVLCAYMFL
+LILLGFP---INFMTLYVTIQHKKLRTPLNYILLNLAFANHFMVLCGFTVTMYSSMNGYF
+VFGQTGCYVEGFFATLGGEIALWSLVVLAIERYVVVCKPMSNFRFSENHAIMGVAFTWIM
+ALACAAPPLFGWSRYIPEGMQCSCGVDYYTLKPEVNNESFVIYMFVVHFLIPLIIIFFCY
+GRLVCTVKEAAAQQ--QE-------------SATTQKAEKEVTRMVIIMVVFFLICWVPY
+ASVAFFIFTHQGSEFGPVFMTIPAFFAKSSSIYNPVIYIMLNKQFRNCMIT---TLCCGK
+NPFGDEDASSAATSKTEASSVSSSQVSPA
+>OPSD_CALPD Q6W3E1 Rhodopsin
+-MNGTEGPNFYV--------PFSNKTGVVRSPFEEP-----QYYLAEPWQFSCLAAYMFM
+LIVLGFP---INFLTLYVTIQHKKLRTPLNYILLNLAIADLFMVFGGFTTTLYTSLHGYF
+VFGPTGCDLEGFFATLGGEIALWSLVVLAIERYIVVCKPMSNFRFGENHAIMGVAFTWVM
+ALACAAPPLVGWSRYIPEGMQCSCGIDYYTLKPEVNNESFVIYMFVVHFTIPMVVIFFCY
+GQLVFTVKEAAAQQ--QE-------------SATTQKAEKEVTRMVIIMVIAFLICWLPY
+AGVAFYIFTHQGSNFGPILMTLPAFFAKTSAVYNPVIYIMLNKQFRTCMLT---TLCCGK
+IPLGDDEASATAS-KTET-----SQVAPA
+
+Data files
+
+   None.
+
+Notes
+
+   None.
+
+References
+
+   [1] Johannes Soding (2005) Protein homology detection by HMM-HMM
+   comparison. Bioinformatics 21 (7): 951aEUR"960.
+
+   [2] Blackshields G, Sievers F, Shi W, Wilm A, Higgins DG. Sequence
+   embedding for fast construction of guide trees for multiple sequence
+   alignment. Algorithms Mol Biol. 2010 May 14;5:21.
+
+   [3] http://www.genetics.wustl.edu/eddy/software/#squid
+
+   [4] Wilbur and Lipman, 1983; PMID 6572363
+
+   [5] Thompson JD, Higgins DG, Gibson TJ. (1994). CLUSTAL W: improving
+   the sensitivity of progressive multiple sequence alignment through
+   sequence weighting, position-specific gap penalties and weight matrix
+   choice. Nucleic Acids Res., 22, 4673-4680.
+
+   [6] Larkin MA, Blackshields G, Brown NP, Chenna R, McGettigan PA,
+   McWilliam H, Valentin F, Wallace IM, Wilm A, Lopez R, Thompson JD,
+   Gibson TJ, Higgins DG. (2007). Clustal W and Clustal X version 2.0.
+   Bioinformatics, 23, 2947-2948.
+
+   [7] Kimura M (1980). "A simple method for estimating evolutionary rates
+   of base substitutions through comparative studies of nucleotide
+   sequences". Journal of Molecular Evolution 16: 111aEUR"120.
+
+   [8] Edgar, R.C. (2004) MUSCLE: multiple sequence alignment with high
+   accuracy and high throughput.Nucleic Acids Res. 32(5):1792-1797.
+
+Warnings
+
+   None.
+
+Diagnostic Error Messages
+
+   None.
+
+Exit status
+
+   It always exits with status 0.
+
+Known bugs
+
+   None.
+
+See also
+
+   Program name     Description
+   edialign         Local multiple alignment of sequences
+   emma             Multiple sequence alignment (ClustalW wrapper)
+   eomega           Multiple sequence alignment (ClustalO wrapper)
+   eomegapp         Profile with profile (ClustalO wrapper)
+   eomegash         Sequence with HMM (ClustalO wrapper)
+   infoalign        Display basic information about a multiple sequence alignment
+   mse              Multiple Sequence Editor
+   plotcon          Plot conservation of a sequence alignment
+   prettyplot       Draw a sequence alignment with pretty formatting
+   showalign        Display a multiple sequence alignment in pretty format
+   tranalign        Generate an alignment of nucleic coding regions from aligned
+                    proteins
+
+Author(s)
+
+   Alan Bleasby
+   European Bioinformatics Institute, Wellcome Trust Genome Campus,
+   Hinxton, Cambridge CB10 1SD, UK
+
+   Please report all bugs to the EMBOSS bug team
+   (emboss-bug (c) emboss.open-bio.org) not to the original author.
+
+History
+
+Target users
+
+   This program is intended to be used by everyone and everything, from
+   naive users to embedded scripts.
+
+Comments
+
+   None
