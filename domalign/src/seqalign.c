@@ -60,6 +60,7 @@
 ** writes a DAF file extended with the hits.
 **
 ******************************************************************************/
+
 int main(int argc, char **argv)
 {
     AjPList  inseqs    = NULL;  /* Directory of input sequences. Is made to 
@@ -93,7 +94,7 @@ int main(int argc, char **argv)
 
     AjPFile    logf    = NULL;  /* Log file pointer                          */
 
-    ajint x=0;                  /* Loop counter                              */
+    ajuint x=0;                 /* Loop counter                              */
     AjPStr  cmd        = NULL;  /* Executable command                        */
    
     AjPFile alg_in     = NULL;  /* the alignment file for reading            */
@@ -233,7 +234,7 @@ int main(int argc, char **argv)
 		    ok = ajTrue;
 	    }
 	    else
-		if(scopalign->N)
+		if(scopalign->Number)
 		    ok = ajTrue;
 	    ajFileClose(&inf);
 	    
@@ -527,7 +528,7 @@ int main(int argc, char **argv)
 	{
 	    if(scopalign)
 	    {
-		if(scopalign->Type == ajSCOP)
+		if(scopalign->Type == ajEDomainTypeSCOP)
 		    ajFmtPrintF(alg_out,"# TY   SCOP\n# XX\n");
 		else
 		    ajFmtPrintF(alg_out,"# TY   CATH\n# XX\n");
@@ -544,7 +545,7 @@ int main(int argc, char **argv)
 	{
 	    if(hit_sing)
 	    {
-		if(hit_sing->Type == ajSCOP)
+		if(hit_sing->Type == ajEDomainTypeSCOP)
 		    ajFmtPrintF(alg_out,"# TY   SCOP\n# XX\n");
 		else
 		    ajFmtPrintF(alg_out,"# TY   CATH\n# XX\n");
@@ -586,7 +587,7 @@ int main(int argc, char **argv)
 
 	/* Clean up directory. */
 	if(modei==2)
-	    if(scopalign->N !=0)
+	    if(scopalign->Number !=0)
 		ajSysFileUnlinkS(clustin1);
 	
 	ajSysFileUnlinkS(clustin2);

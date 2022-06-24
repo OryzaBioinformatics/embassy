@@ -41,14 +41,8 @@
 **  domainrep and correctly configured (see DOMAINREP documentation).
 ******************************************************************************/
 
-
-
-
-
-
 #include <config.h>
 #include "emboss.h"
-
 
 
 
@@ -58,6 +52,7 @@
 ** PROTOTYPES  
 **
 ******************************************************************************/
+
 static AjBool domainrep_WriteRmsd(ajint x, ajint y, 
 				  AjPFloat2d *scores,  
 				  AjPFile fptr);
@@ -112,16 +107,19 @@ int main(int argc, char **argv)
     
     AjPFloat2d scores     = NULL; /* Array of pairwise rmsd values          */
     AjPFloat   means      = NULL; /* Array of average pairwise rmsd values  */
-    float      reso_cnt   = 0.0;  /* Used to calculate means array */
-    ajint      div        = 0;    /* Used to calculate means array */
+    float      reso_cnt   = 0.0F; /* Used to calculate means array */
+    ajint      divisor    = 0;    /* Used to calculate means array */
     ajint      ignore     = 0;    /* Used for writing ordered scop output file */
-    float      min        = 0.0;  /* Used for writing ordered scop output file */    
+    float      min        = 0.0F; /* Used for writing ordered scop output file */    
 
    
     AjPStr     node       = NULL; /* Node of redundancy removal */
     ajint      noden      = 0;    /*1: Class (SCOP), 2: Fold (SCOP) etc, see ACD file */
-    ajint      type       = 0;    /* Type of domain (ajSCOP or ajCATH) in the DCF file */
-
+    AjEDomainType type = ajEDomainTypeNULL; /* AJAX Domain Type enumeration
+                                            ** of domain (ajEDomainTypeSCOP or
+                                            ** ajEDomainTypeCATH) in the
+                                            ** DCF file.
+                                            */
 
     /* Initialise strings etc*/
     last_node = ajStrNew();
@@ -174,18 +172,17 @@ int main(int argc, char **argv)
     while((domain=(ajDomainReadCNew(dcfin, "*", type))))
     {
 	/* A new family. */
-	if(((domain->Type == ajSCOP) &&
-	    (((noden==1) && (last_nodeid !=  domain->Scop->Sunid_Class))      || 
-	     ((noden==2) && (last_nodeid !=  domain->Scop->Sunid_Fold))       || 
-	     ((noden==3) && (last_nodeid !=  domain->Scop->Sunid_Superfamily))|| 
-	     ((noden==4) && (last_nodeid !=  domain->Scop->Sunid_Family))))   ||
-	   ((domain->Type == ajCATH) &&
-	    (((noden==5) && (last_nodeid !=  domain->Cath->Class_Id))         || 
-	     ((noden==6) && (last_nodeid !=  domain->Cath->Arch_Id))          || 
-	     ((noden==7) && (last_nodeid !=  domain->Cath->Topology_Id))      || 
-	     ((noden==8) && (last_nodeid !=  domain->Cath->Superfamily_Id))   || 
-	     ((noden==9) && (last_nodeid !=  domain->Cath->Family_Id)))))
-	    
+	if(((domain->Type == ajEDomainTypeSCOP) &&
+	    (((noden == 1) && (last_nodeid !=  domain->Scop->Sunid_Class))      || 
+	     ((noden == 2) && (last_nodeid !=  domain->Scop->Sunid_Fold))       || 
+	     ((noden == 3) && (last_nodeid !=  domain->Scop->Sunid_Superfamily))|| 
+	     ((noden == 4) && (last_nodeid !=  domain->Scop->Sunid_Family))))   ||
+	   ((domain->Type == ajEDomainTypeCATH) &&
+	    (((noden == 5) && (last_nodeid !=  domain->Cath->Class_Id))         || 
+	     ((noden == 6) && (last_nodeid !=  domain->Cath->Arch_Id))          || 
+	     ((noden == 7) && (last_nodeid !=  domain->Cath->Topology_Id))      || 
+	     ((noden == 8) && (last_nodeid !=  domain->Cath->Superfamily_Id))   || 
+	     ((noden == 9) && (last_nodeid !=  domain->Cath->Family_Id)))))
 	{
 	    /* If we have done the first family*/
 	    if(nfam)
@@ -285,20 +282,20 @@ int main(int argc, char **argv)
 		    for(x=0;x<famsize;x++)
 		    {
 			reso_cnt = 0;
-			div      = 0;
+			divisor  = 0;
 			for(y=0;y<famsize;y++)    
 			{       
 			    if((y != x) && (ajFloat2dGet(scores, x, y) != 100))
 			    {
 				reso_cnt += ajFloat2dGet(scores, x, y);
-				div++;
+				divisor++;
 			    }           
                         
 			    else
 				continue;
 			}
         
-			ajFloatPut(&means, x, (reso_cnt/(float)(div)));
+			ajFloatPut(&means, x, (reso_cnt/(float)(divisor)));
 		    }
 		    
 		    
@@ -460,20 +457,20 @@ int main(int argc, char **argv)
 	for(x=0;x<famsize;x++)
 	{
 	    reso_cnt = 0;
-	    div      = 0;
+	    divisor  = 0;
 	    for(y=0;y<famsize;y++)    
 	    {       
 		if((y != x) && (ajFloat2dGet(scores, x, y) != 100))
 		{
 		    reso_cnt += ajFloat2dGet(scores, x, y);
-		    div++;
+		    divisor++;
 		}           
                         
 		else
 		    continue;
 	    }
         
-	    ajFloatPut(&means, x, (reso_cnt/(float)(div)));
+	    ajFloatPut(&means, x, (reso_cnt/(float)(divisor)));
 	}
 	
 	

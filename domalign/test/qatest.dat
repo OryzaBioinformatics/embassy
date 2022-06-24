@@ -1,0 +1,197 @@
+#########################################################
+#
+# EMBASSY (DOMALIGN)
+#
+#########################################################
+
+ID domainrep-keep
+AB domalign
+DL keep
+AA domainrep
+RQ stamp
+CC requires a modified stamp to be installed
+IN ../../data/structure/all.scop2
+IN 2
+IN all_rep1st.scop
+FI stderr
+FC = 12
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 6
+FP 6 /stamp/
+FI all_rep1st.scop
+FC = 104
+FZ = 1785
+FP 4 /^ID/
+//
+
+
+
+ID domainalign-keep
+AB domalign
+DL keep
+AA domainalign
+PP mkdir daf
+RQ stamp
+CC requires a modified stamp to be installed
+IN ../../data/structure/all.scop2
+IN
+IN 4
+IN 1
+IN N
+IN daf
+IN
+IN
+FI stderr
+FC = 15
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 108
+FP 4 /^\S+\/stamp/
+FI 54894.ent
+FC = 1461
+FZ = 117967
+FP 11 /^REMARK/
+DI daf
+DF 54894.daf
+DF 55074.daf
+## FI daf/54894.daf
+## FC = 21
+## FZ = 856
+## FP 6 /^# XX/
+FI 55074.ent
+FC = 3343
+FZ = 270409
+FP 11 /^REMARK/
+## FI daf/55074.daf
+## FC = 36
+## FZ = 1773
+## FP 6 /^# XX/
+FI domainalign.log
+FC = 14
+FZ = 574
+FP 14 /^Replaced/
+//
+
+
+
+ID seqsearch-domalign
+RQ blastpgp
+## Uses blastpgp to search
+## blastpgp generates 4 warning messages
+## (WARNING so the test pattern misses it) in stderr
+AY domsearch
+DL keep
+AX seqsearch
+IN 2
+IN ../domainalign-keep/daf
+IN ../../data/structure/swsmall
+IN
+IN 0.0001
+IN 100
+IN
+IN
+FI stderr
+FC = 12
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 4
+FP 2 /^\S+blastpgp/
+FI 54894.dhf
+FC = 80
+FZ = 13751
+FP 40 /^>/
+FI 55074.dhf
+FC = 200
+FZ = 37208
+FP 100 /^>/
+FI seqsearch.log
+FC = 4
+FP 2 /\.daf\n/
+FP 2 /^\/\/\n/
+//
+
+
+ID allversusall-ex
+AB domalign
+AA allversusall
+IN ../../data/structure/allversusall/
+IN
+IN
+FI stdout
+FC = 2
+FP /swtiny1\.fasta\n/
+FP /swtiny2\.fasta\n/
+FI stderr
+FC = 2
+FP 0 /^Warning:/
+FP 0 /^Error:/
+FP 0 /^Died:/
+FI swtiny1.out
+FC = 10
+FZ = 280
+FP /1 Q9WVI4 : 2 Q9ERL9 : 90\.48\n/
+FP /2 Q9ERL9 : 3 Q9DGG6 : 58\.28\n/
+FP /3 Q9DGG6 : 4 Q99396 : 52\.26\n/
+FP /4 Q99396 : 5 Q99280 : 83\.41\n/
+FI swtiny2.out
+FC = 3
+FZ = 84
+FP /1 O58452 : 2 O30129 : 82\.42\n/
+FP /1 O58452 : 3 O26938 : 75\.56\n/
+FP /2 O30129 : 3 O26938 : 71\.43\n/
+FI allversusall.log
+FC = 4
+FP 2 /^\/\/\n/
+FP /swtiny1\.fasta\n/
+FP /swtiny2\.fasta\n/
+//
+
+
+
+ID seqalign-keep
+AB domalign
+AA seqalign
+DL keep
+TI 300
+RQ clustalw
+## Apparently requires clustalw 1.83 for long filenames
+## clustalw 1.82 failed with 'unable to read .aln file'
+## this was a clustalw error message
+## renaming the files and running clustalw worked
+IN 2
+IN ../domainalign-keep/daf
+IN ../seqsearch-domalign
+IN 1
+IN
+IN
+FI stderr
+FC = 8
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 6360
+FP 144 /Sequence \d+: .* \d+ aa\n/
+FI 54894.daf
+FC = 98
+FZ = 6987
+FP 2 /d4at1b1_0/
+FP 2 /d4at1d1_1/
+FI 55074.daf
+FC = 527
+FZ = 42762
+FP 5 /d1cs4a__0/
+FP 5 /d1fx2a__1/
+FI seqalign.log
+FC = 4
+FP 2 /\.daf\n/
+FP 2 /^\/\/\n/
+//
+

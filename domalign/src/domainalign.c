@@ -43,8 +43,6 @@
 
 
 
-
-
 #include <config.h>
 #include "emboss.h"
 #define MODE_STAMP    1
@@ -58,6 +56,7 @@
 ** PROTOTYPES  
 **
 ******************************************************************************/
+
 static void domainalign_ProcessStampFile(AjPStr in, 
 					 AjPStr out, 
 					 AjPDomain domain, 
@@ -118,7 +117,6 @@ static void domainalign_tcoffee(AjPDomain domain,
 
 
 
-
 /* @prog domainalign **********************************************************
 **
 ** Generates DAF files (domain alignment files) structure-based sequence 
@@ -161,8 +159,11 @@ int main(int argc, char **argv)
     AjPDomain domain     = NULL; /* Pointer to domain structure.             */
     AjPDomain prevdomain = NULL; /* Pointer to previous domain structure.    */
 
-    ajint     type       = 0;    /* Type of domain (ajSCOP or ajCATH) in the 
-				    DCF file.                                */
+    AjEDomainType type = ajEDomainTypeNULL; /* AJAX Domain Type enumeration
+                                            ** (ajEDomainTypeSCOP or
+                                            ** ajEDomainTypeCATH) in the 
+                                            ** DCF file.
+                                            */
 
     AjPStr   *node       = NULL; /* Node of alignment         .              */
     ajint     noden      = 0;    /*1: Class (SCOP), 2: Fold (SCOP) etc, see 
@@ -261,12 +262,12 @@ int main(int argc, char **argv)
     while((domain=(ajDomainReadCNew(dcfin, "*", type))))
     {
 	/* A new family. */
-	if(((domain->Type == ajSCOP) &&
+	if(((domain->Type == ajEDomainTypeSCOP) &&
 	    (((noden==1) && (last_nodeid != domain->Scop->Sunid_Class))      ||
 	     ((noden==2) && (last_nodeid != domain->Scop->Sunid_Fold))       ||
 	     ((noden==3) && (last_nodeid != domain->Scop->Sunid_Superfamily))||
 	     ((noden==4) && (last_nodeid != domain->Scop->Sunid_Family))))   ||
-	   ((domain->Type == ajCATH) &&
+	   ((domain->Type == ajEDomainTypeCATH) &&
 	    (((noden==5) && (last_nodeid != domain->Cath->Class_Id))         ||
 	     ((noden==6) && (last_nodeid != domain->Cath->Arch_Id))          ||
 	     ((noden==7) && (last_nodeid != domain->Cath->Topology_Id))      ||
@@ -490,11 +491,9 @@ int main(int argc, char **argv)
     ajFileClose(&logf);
     
     ajExit();
+
     return 0;
 }
-
-
-
 
 
 
@@ -650,7 +649,7 @@ static void domainalign_ProcessStampFile(AjPStr in,
 	 ajFatal("Could not open output file in domainalign_ProcessStampFile");
 
 	
-	if((domain->Type == ajSCOP))
+	if((domain->Type == ajEDomainTypeSCOP))
 	{
 	    ajFmtPrintF(outf,"# TY   SCOP\n# XX\n");
 	    ajFmtPrintF(outf,"# CL   %S",domain->Scop->Class);
@@ -674,7 +673,7 @@ static void domainalign_ProcessStampFile(AjPStr in,
 			    " \t\n\r");
 	    ajFmtPrintF(outf,"# XX\n");
 	}
-	if((domain->Type == ajSCOP))
+	if((domain->Type == ajEDomainTypeSCOP))
 	{
 	    if(noden==1) 
 		ajFmtPrintF(outf,"# SI   %d\n# XX",domain->Scop->Sunid_Class);
@@ -800,7 +799,6 @@ static void domainalign_ProcessStampFile(AjPStr in,
 
 
 
-
 /* @funcstatic domainalign_writelast ******************************************
 **
 ** House-keeping function.
@@ -814,6 +812,7 @@ static void domainalign_ProcessStampFile(AjPStr in,
 ** 
 ** @@
 ****************************************************************************/
+
 static void domainalign_writelast(AjPDomain domain, 
 				  ajint noden, 
 				  AjPStr *last_node, 
@@ -869,6 +868,7 @@ static void domainalign_writelast(AjPDomain domain,
 
 
 
+
 /* @funcstatic domainalign_writeid ********************************************
 **
 ** House-keeping function.
@@ -884,6 +884,7 @@ static void domainalign_writelast(AjPDomain domain,
 ** 
 ** @@
 ****************************************************************************/
+
 static void domainalign_writeid(AjPDomain domain, 
 				ajint noden, 
 				AjPDirout daf, 
@@ -932,8 +933,6 @@ static void domainalign_writeid(AjPDomain domain,
 
 
 
-
-
 /* @funcstatic domainalign_writesid *******************************************
 **
 ** House-keeping function.
@@ -946,6 +945,7 @@ static void domainalign_writeid(AjPDomain domain,
 ** 
 ** @@
 ****************************************************************************/
+
 static 	void domainalign_writesid(AjPDomain domain, 
 				  ajint noden, 
 				  AjPStr *id)
@@ -971,6 +971,7 @@ static 	void domainalign_writesid(AjPDomain domain,
 
     return;
 }
+
 
 
 
@@ -1002,6 +1003,7 @@ static 	void domainalign_writesid(AjPDomain domain,
 ** @return [void] True on success
 ** @@
 ****************************************************************************/
+
 static void domainalign_stamp(AjPDomain prevdomain,
 			      AjPDomain domain, 
 			      AjPDirout daf, 
@@ -1030,7 +1032,15 @@ static void domainalign_stamp(AjPDomain prevdomain,
     AjPStr    temp      = NULL;	/* A temporary string.                     */
     ajint     x         = 0;    /* Loop counter.                           */
     
-
+    /* TODO: The following parameters are unused. */
+    (void) domain;
+    (void) daf;
+    (void) super;
+    (void) singlets;
+    (void) keepsinglets;
+    (void) moden;
+    (void) nset;
+    
     exec     = ajStrNew();
     line     = ajStrNew();
     temp     = ajStrNew();
@@ -1114,6 +1124,8 @@ static void domainalign_stamp(AjPDomain prevdomain,
 }   
 
 
+
+
 /* @funcstatic domainalign_tcoffee ********************************************
 **
 ** Call TCOFFEE and process files.
@@ -1129,6 +1141,7 @@ static void domainalign_stamp(AjPDomain prevdomain,
 ** @return [void] True on success
 ** @@
 ****************************************************************************/
+
 static void domainalign_tcoffee(AjPDomain domain, 
 				AjPStr    in, 
 				AjPStr    align, 
@@ -1139,6 +1152,9 @@ static void domainalign_tcoffee(AjPDomain domain,
 			 
 {
     AjPStr    exec      = NULL;	/* The UNIX command line to be executed*/
+
+    /* TODO: The following parameters are unused. */
+    (void) alignc;
 
     exec     = ajStrNew();
 
@@ -1165,7 +1181,6 @@ static void domainalign_tcoffee(AjPDomain domain,
 
 
 
-
 /* @funcstatic domainalign_ProcessTcoffeeFile *********************************
 **
 ** Parses tcoffee output.
@@ -1179,6 +1194,7 @@ static void domainalign_tcoffee(AjPDomain domain,
 ** @return [void] True on success
 ** @@
 ****************************************************************************/
+
 static void domainalign_ProcessTcoffeeFile(AjPStr in, 
 					   AjPStr align, 
 					   AjPDomain domain,
@@ -1192,7 +1208,9 @@ static void domainalign_ProcessTcoffeeFile(AjPStr in,
     AjPStr  temp3 = NULL;  /* Temporary string. */
     AjPStr   line = NULL;  /* Line of text from input file. */
     
-    
+    /* TODO: The following parameters are unused. */
+    (void) logf;
+
     /* Initialise strings. */
     line    = ajStrNew();
     temp1   = ajStrNew();
@@ -1209,7 +1227,7 @@ static void domainalign_ProcessTcoffeeFile(AjPStr in,
     
 
     /*Write DOMAIN classification records to file*/
-    if((domain->Type == ajSCOP))
+    if((domain->Type == ajEDomainTypeSCOP))
     {
 	ajFmtPrintF(outf,"# TY   SCOP\n# XX\n");
 	ajFmtPrintF(outf,"# CL   %S",domain->Scop->Class);
@@ -1228,7 +1246,7 @@ static void domainalign_ProcessTcoffeeFile(AjPStr in,
 	ajFmtPrintF(outf,"# XX\n");
     }
     
-    if((domain->Type == ajSCOP))
+    if((domain->Type == ajEDomainTypeSCOP))
     {
 	if(noden==1) 
 	    ajFmtPrintF(outf,"# SI   %d\n# XX\n",domain->Scop->Sunid_Class);
@@ -1352,7 +1370,7 @@ static void domainalign_keepsinglets(AjPDomain domain,
 	ajStrAssignS(&hitlist->hits[0]->Dom, ajDomainGetId(domain));
 	
 
-	if((domain->Type == ajSCOP))
+	if((domain->Type == ajEDomainTypeSCOP))
 	{
 	    ajStrAssignS(&hitlist->Class, domain->Scop->Class);
 	    ajStrAssignS(&hitlist->Fold, domain->Scop->Fold);

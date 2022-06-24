@@ -357,7 +357,7 @@ SEQALIGN does not use a data file.
  
 <pre>
 Extend alignments (DAF file) with sequences (DHF file).
-Version: EMBOSS:6.4.0.0
+Version: EMBOSS:6.5.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
    -mode               menu       [1] This option specifies the mode of
@@ -573,7 +573,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-dhfinpath" associated dirlist qualifiers
+<td align="left" colspan=5>"-dhfinpath" associated dirlist qualifiers
 </td>
 </tr>
 
@@ -586,7 +586,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-dafinpath" associated dirlist qualifiers
+<td align="left" colspan=5>"-dafinpath" associated dirlist qualifiers
 </td>
 </tr>
 
@@ -599,7 +599,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-dhfindir" associated directory qualifiers
+<td align="left" colspan=5>"-dhfindir" associated directory qualifiers
 </td>
 </tr>
 
@@ -612,7 +612,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-dafoutdir" associated outdir qualifiers
+<td align="left" colspan=5>"-dafoutdir" associated outdir qualifiers
 </td>
 </tr>
 
@@ -625,7 +625,7 @@ Version: EMBOSS:6.4.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<th align="left" colspan=5>"-logfile" associated outfile qualifiers
+<td align="left" colspan=5>"-logfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -755,7 +755,7 @@ Input mode
          2 : Multiple sequences (e.g. sequence set or alignment)
 Select mode of operation. [1]: <b>2</b>
 Domain alignment directories [./]: <b>../domainalign-keep/daf</b>
-Domain hits directory [./]: <b>../seqsearch-keep</b>
+Domain hits directory [./]: <b>../seqsearch-domalign</b>
 Alignment algorithm option
          1 : CLUSTALW
          2 : TCOFFEE (not yet implemented)
@@ -766,62 +766,64 @@ Domainatrix log output file [seqalign.log]: <b></b>
 
 
 
- CLUSTAL W (1.83) Multiple Sequence Alignments
-
+ CLUSTAL 2.1 Multiple Sequence Alignments
 
 
 Sequence type explicitly set to Protein
 Sequence format is Pearson
-No. of seqs=2
+No. of seqs = 2
 Sequences assumed to be PROTEIN
-Sequence 1: d4at1b1_0        94 aa
-Sequence 2: d4at1d1_1        94 aa
+Sequence 1: d4at1b1_0     94 aa
+Sequence 2: d4at1d1_1     94 aa
+before profileInput
 Sequence format is Pearson
 No. of seqs in profile=40
 Total no. of seqs     =42
 Sequences assumed to be PROTEIN
-Sequence 3: Q9YBD5_1_95       95 aa
-Sequence 4: Q9UX07_1_93       93 aa
-Sequence 5: Q9KP65_1_92       92 aa
-Sequence 6: Q9K1K9_1_92       92 aa
-Sequence 7: Q9JWY6_1_92       92 aa
-Sequence 8: Q9HKM3_1_93       93 aa
-Sequence 9: Q9HHN3_1_93       93 aa
-Sequence 10: Q97FS4_1_90       90 aa
-Sequence 11: Q97B28_1_93       93 aa
-Sequence 12: Q970X3_1_91       91 aa
-Sequence 13: Q8ZTG2_1_93       93 aa
-Sequence 14: Q8ZB38_1_92       92 aa
-Sequence 15: Q8Z130_1_92       92 aa
-Sequence 16: Q8U374_1_94       94 aa
-Sequence 17: Q8TVB1_1_92       92 aa
-Sequence 18: Q8THL3_1_92       92 aa
-Sequence 19: Q8PXK6_1_92       92 aa
-Sequence 20: Q8K9H8_1_92       92 aa
-Sequence 21: Q8DCF7_1_92       92 aa
-Sequence 22: Q8D1W6_1_92       92 aa
-Sequence 23: Q8A9S4_1_92       92 aa
-Sequence 24: Q891I9_1_91       91 aa
-Sequence 25: Q87LF7_1_92       92 aa
-Sequence 26: Q83IL8_1_92       92 aa
-Sequence 27: Q7P144_1_92       92 aa
-Sequence 28: Q7MZ14_1_92       92 aa
-Sequence 29: Q7MX57_1_92       92 aa
-Sequence 30: Q7MHF0_1_92       92 aa
-Sequence 31: Q58801_1_91       91 aa
-Sequence 32: P96175_1_92       92 aa
-Sequence 33: P96111_1_98       98 aa
-Sequence 34: P77919_1_94       94 aa
-Sequence 35: P74766_1_93       93 aa
-Sequence 36: P57451_1_92       92 aa
-Sequence 37: P19936_1_92       92 aa
-Sequence 38: P08421_1_92       92 aa
-Sequence 39: P00478_1_92       92 aa
-Sequence 40: O58452_1_94       94 aa
-Sequence 41: O30129_1_93       93 aa
-Sequence 42: O26938_1_91       91 aa
+Sequence 3: Q9YBD5_1_95    95 aa
+Sequence 4: Q9UX07_1_93    93 aa
+Sequence 5: Q9KP65_1_92    92 aa
+Sequence 6: Q9K1K9_1_92    92 aa
+Sequence 7: Q9JWY6_1_92    92 aa
+Sequence 8: Q9HKM3_1_93    93 aa
+Sequence 9: Q9HHN3_1_93    93 aa
+Sequence 10: Q97FS4_1_90    90 aa
+Sequence 11: Q97B28_1_93    93 aa
+Sequence 12: Q970X3_1_91    91 aa
+Sequence 13: Q8ZTG2_1_93    93 aa
+Sequence 14: Q8ZB38_1_92    92 aa
+Sequence 15: Q8Z130_1_92    92 aa
+Sequence 16: Q8U374_1_94    94 aa
+Sequence 17: Q8TVB1_1_92    92 aa
+Sequence 18: Q8THL3_1_92    92 aa
+Sequence 19: Q8PXK6_1_92    92 aa
+Sequence 20: Q8K9H8_1_92    92 aa
+Sequence 21: Q8DCF7_1_92    92 aa
+Sequence 22: Q8D1W6_1_92    92 aa
+Sequence 23: Q8A9S4_1_92    92 aa
+Sequence 24: Q891I9_1_91    91 aa
+Sequence 25: Q87LF7_1_92    92 aa
+Sequence 26: Q83IL8_1_92    92 aa
+Sequence 27: Q7P144_1_92    92 aa
+Sequence 28: Q7MZ14_1_92    92 aa
+Sequence 29: Q7MX57_1_92    92 aa
+Sequence 30: Q7MHF0_1_92    92 aa
+Sequence 31: Q58801_1_91    91 aa
+Sequence 32: P96175_1_92    92 aa
+Sequence 33: P96111_1_98    98 aa
+Sequence 34: P77919_1_94    94 aa
+Sequence 35: P74766_1_93    93 aa
+Sequence 36: P57451_1_92    92 aa
+Sequence 37: P19936_1_92    92 aa
+Sequence 38: P08421_1_92    92 aa
+Sequence 39: P00478_1_92    92 aa
+Sequence 40: O58452_1_94    94 aa
+Sequence 41: O30129_1_93    93 aa
+Sequence 42: O26938_1_91    91 aa
+after profileInput
 Start of Pairwise alignments
 Aligning...
+
 Sequences (1:3) Aligned. Score:  35
 Sequences (1:4) Aligned. Score:  34
 Sequences (1:5) Aligned. Score:  65
@@ -1682,8 +1684,12 @@ Sequences (39:42) Aligned. Score:  41
 Sequences (40:41) Aligned. Score:  60
 Sequences (40:42) Aligned. Score:  54
 Sequences (41:42) Aligned. Score:  51
-Guide tree        file created:   [./seqalign-1234567890.1234.dnd]
+
+
+Guide tree file created:   [./seqalign-1234567890.1234.dnd]
+
 Start of Multiple Alignment
+
 Sequence:39     Score:1453
 Sequence:26     Score:1426
 Sequence:38     Score:1399
@@ -1725,126 +1731,130 @@ Sequence:24     Score:615
 Sequence:10     Score:608
 Sequence:33     Score:587
 Alignment Score 209199
+
 CLUSTAL-Alignment file created  [./seqalign-1234567890.1234.out]
 
 
 
- CLUSTAL W (1.83) Multiple Sequence Alignments
 
+ CLUSTAL 2.1 Multiple Sequence Alignments
 
 
 Sequence type explicitly set to Protein
 Sequence format is Pearson
-No. of seqs=2
+No. of seqs = 2
 Sequences assumed to be PROTEIN
-Sequence 1: d1cs4a__0       252 aa
-Sequence 2: d1fx2a__1       252 aa
+Sequence 1: d1cs4a__0    252 aa
+Sequence 2: d1fx2a__1    252 aa
+before profileInput
 Sequence format is Pearson
 No. of seqs in profile=100
 Total no. of seqs     =102
 Sequences assumed to be PROTEIN
-Sequence 3: Q9WVI4_1_149        149 aa
-Sequence 4: Q9ERL9_1_152        152 aa
-Sequence 5: Q9DGG6_1_181        181 aa
-Sequence 6: Q99396_1_212        212 aa
-Sequence 7: Q99280_6_216        211 aa
-Sequence 8: Q99279_1_218        218 aa
-Sequence 9: Q91WF3_1_165        165 aa
-Sequence 10: Q91WF3_1_158        158 aa
-Sequence 11: Q8VHH7_1_186        186 aa
-Sequence 12: Q8NFM4_1_161        161 aa
-Sequence 13: Q8NFM4_1_158        158 aa
-Sequence 14: Q29450_1_186        186 aa
-Sequence 15: Q29450_1_58          58 aa
-Sequence 16: Q27675_1_217        217 aa
-Sequence 17: Q26896_6_216        211 aa
-Sequence 18: Q26721_1_206        206 aa
-Sequence 19: Q25263_1_217        217 aa
-Sequence 20: Q09435_1_161        161 aa
-Sequence 21: Q08828_1_186        186 aa
-Sequence 22: Q08828_1_51          51 aa
-Sequence 23: Q08462_1_186        186 aa
-Sequence 24: Q08462_1_167        167 aa
-Sequence 25: Q07553_1_152        152 aa
-Sequence 26: Q07093_1_158        158 aa
-Sequence 27: Q04400_1_189        189 aa
-Sequence 28: Q04400_1_159        159 aa
-Sequence 29: Q03343_1_189        189 aa
-Sequence 30: Q03343_1_159        159 aa
-Sequence 31: Q03101_1_149        149 aa
-Sequence 32: Q02846_1_152        152 aa
-Sequence 33: Q02153_1_165        165 aa
-Sequence 34: Q02108_1_160        160 aa
-Sequence 35: Q01341_1_188        188 aa
-Sequence 36: Q01341_1_159        159 aa
-Sequence 37: P98999_1_150        150 aa
-Sequence 38: P97490_1_186        186 aa
-Sequence 39: P97490_1_162        162 aa
-Sequence 40: P70106_1_150        150 aa
-Sequence 41: P55205_1_154        154 aa
-Sequence 42: P55204_1_150        150 aa
-Sequence 43: P55203_1_151        151 aa
-Sequence 44: P55202_1_154        154 aa
-Sequence 45: P52785_1_150        150 aa
-Sequence 46: P51842_1_152        152 aa
-Sequence 47: P51841_1_152        152 aa
-Sequence 48: P51840_1_150        150 aa
-Sequence 49: P51839_1_163        163 aa
-Sequence 50: P51830_1_179        179 aa
-Sequence 51: P51829_109_166       58 aa
-Sequence 52: P51829_1_186        186 aa
-Sequence 53: P51828_1_186        186 aa
-Sequence 54: P51828_1_58          58 aa
-Sequence 55: P46197_1_168        168 aa
-Sequence 56: P40146_1_186        186 aa
-Sequence 57: P40146_1_162        162 aa
-Sequence 58: P40145_1_186        186 aa
-Sequence 59: P40145_1_162        162 aa
-Sequence 60: P40144_1_189        189 aa
-Sequence 61: P40144_1_159        159 aa
-Sequence 62: P40137_1_139        139 aa
-Sequence 63: P33402_1_149        149 aa
-Sequence 64: P32870_1_186        186 aa
-Sequence 65: P32870_1_58          58 aa
-Sequence 66: P30804_1_188        188 aa
-Sequence 67: P30804_1_159        159 aa
-Sequence 68: P30803_1_189        189 aa
-Sequence 69: P30803_1_159        159 aa
-Sequence 70: P26770_1_165        165 aa
-Sequence 71: P26770_1_158        158 aa
-Sequence 72: P26769_1_186        186 aa
-Sequence 73: P26769_1_163        163 aa
-Sequence 74: P26338_1_216        216 aa
-Sequence 75: P25092_1_150        150 aa
-Sequence 76: P23897_1_150        150 aa
-Sequence 77: P23466_1_154        154 aa
-Sequence 78: P22717_1_147        147 aa
-Sequence 79: P21932_1_186        186 aa
-Sequence 80: P20595_1_165        165 aa
-Sequence 81: P20594_1_168        168 aa
-Sequence 82: P19754_1_186        186 aa
-Sequence 83: P19754_1_51          51 aa
-Sequence 84: P19687_1_161        161 aa
-Sequence 85: P19686_1_160        160 aa
-Sequence 86: P18910_1_168        168 aa
-Sequence 87: P18293_1_168        168 aa
-Sequence 88: P16068_1_165        165 aa
-Sequence 89: P16067_1_168        168 aa
-Sequence 90: P16066_1_168        168 aa
-Sequence 91: P16065_1_143        143 aa
-Sequence 92: O95622_1_189        189 aa
-Sequence 93: O95622_1_159        159 aa
-Sequence 94: O75343_1_147        147 aa
-Sequence 95: O60503_1_179        179 aa
-Sequence 96: O60266_1_186        186 aa
-Sequence 97: O60266_1_54          54 aa
-Sequence 98: O43306_1_189        189 aa
-Sequence 99: O43306_1_159        159 aa
-Sequence 100: O30820_1_149        149 aa
-Sequence 101: O19179_1_150        150 aa
-Sequence 102: O02740_1_162        162 aa
+Sequence 3: Q9WVI4_1_149     149 aa
+Sequence 4: Q9ERL9_1_152     152 aa
+Sequence 5: Q9DGG6_1_181     181 aa
+Sequence 6: Q99396_1_212     212 aa
+Sequence 7: Q99280_6_216     211 aa
+Sequence 8: Q99279_1_218     218 aa
+Sequence 9: Q91WF3_1_165     165 aa
+Sequence 10: Q91WF3_1_158     158 aa
+Sequence 11: Q8VHH7_1_186     186 aa
+Sequence 12: Q8NFM4_1_161     161 aa
+Sequence 13: Q8NFM4_1_158     158 aa
+Sequence 14: Q29450_1_186     186 aa
+Sequence 15: Q29450_1_58       58 aa
+Sequence 16: Q27675_1_217     217 aa
+Sequence 17: Q26896_6_216     211 aa
+Sequence 18: Q26721_1_206     206 aa
+Sequence 19: Q25263_1_217     217 aa
+Sequence 20: Q09435_1_161     161 aa
+Sequence 21: Q08828_1_186     186 aa
+Sequence 22: Q08828_1_51       51 aa
+Sequence 23: Q08462_1_186     186 aa
+Sequence 24: Q08462_1_167     167 aa
+Sequence 25: Q07553_1_152     152 aa
+Sequence 26: Q07093_1_158     158 aa
+Sequence 27: Q04400_1_189     189 aa
+Sequence 28: Q04400_1_159     159 aa
+Sequence 29: Q03343_1_189     189 aa
+Sequence 30: Q03343_1_159     159 aa
+Sequence 31: Q03101_1_149     149 aa
+Sequence 32: Q02846_1_152     152 aa
+Sequence 33: Q02153_1_165     165 aa
+Sequence 34: Q02108_1_160     160 aa
+Sequence 35: Q01341_1_188     188 aa
+Sequence 36: Q01341_1_159     159 aa
+Sequence 37: P98999_1_150     150 aa
+Sequence 38: P97490_1_186     186 aa
+Sequence 39: P97490_1_162     162 aa
+Sequence 40: P70106_1_150     150 aa
+Sequence 41: P55205_1_154     154 aa
+Sequence 42: P55204_1_150     150 aa
+Sequence 43: P55203_1_151     151 aa
+Sequence 44: P55202_1_154     154 aa
+Sequence 45: P52785_1_150     150 aa
+Sequence 46: P51842_1_152     152 aa
+Sequence 47: P51841_1_152     152 aa
+Sequence 48: P51840_1_150     150 aa
+Sequence 49: P51839_1_163     163 aa
+Sequence 50: P51830_1_179     179 aa
+Sequence 51: P51829_109_166    58 aa
+Sequence 52: P51829_1_186     186 aa
+Sequence 53: P51828_1_186     186 aa
+Sequence 54: P51828_1_58       58 aa
+Sequence 55: P46197_1_168     168 aa
+Sequence 56: P40146_1_186     186 aa
+Sequence 57: P40146_1_162     162 aa
+Sequence 58: P40145_1_186     186 aa
+Sequence 59: P40145_1_162     162 aa
+Sequence 60: P40144_1_189     189 aa
+Sequence 61: P40144_1_159     159 aa
+Sequence 62: P40137_1_139     139 aa
+Sequence 63: P33402_1_149     149 aa
+Sequence 64: P32870_1_186     186 aa
+Sequence 65: P32870_1_58       58 aa
+Sequence 66: P30804_1_188     188 aa
+Sequence 67: P30804_1_159     159 aa
+Sequence 68: P30803_1_189     189 aa
+Sequence 69: P30803_1_159     159 aa
+Sequence 70: P26770_1_165     165 aa
+Sequence 71: P26770_1_158     158 aa
+Sequence 72: P26769_1_186     186 aa
+Sequence 73: P26769_1_163     163 aa
+Sequence 74: P26338_1_216     216 aa
+Sequence 75: P25092_1_150     150 aa
+Sequence 76: P23897_1_150     150 aa
+Sequence 77: P23466_1_154     154 aa
+Sequence 78: P22717_1_147     147 aa
+Sequence 79: P21932_1_186     186 aa
+Sequence 80: P20595_1_165     165 aa
+Sequence 81: P20594_1_168     168 aa
+Sequence 82: P19754_1_186     186 aa
+Sequence 83: P19754_1_51       51 aa
+Sequence 84: P19687_1_161     161 aa
+Sequence 85: P19686_1_160     160 aa
+Sequence 86: P18910_1_168     168 aa
+Sequence 87: P18293_1_168     168 aa
+Sequence 88: P16068_1_165     165 aa
+Sequence 89: P16067_1_168     168 aa
+Sequence 90: P16066_1_168     168 aa
+Sequence 91: P16065_1_143     143 aa
+Sequence 92: O95622_1_189     189 aa
+Sequence 93: O95622_1_159     159 aa
+Sequence 94: O75343_1_147     147 aa
+Sequence 95: O60503_1_179     179 aa
+Sequence 96: O60266_1_186     186 aa
+Sequence 97: O60266_1_54       54 aa
+Sequence 98: O43306_1_189     189 aa
+Sequence 99: O43306_1_159     159 aa
+Sequence 100: O30820_1_149     149 aa
+Sequence 101: O19179_1_150     150 aa
+Sequence 102: O02740_1_162     162 aa
+after profileInput
 Start of Pairwise alignments
 Aligning...
+
 Sequences (1:3) Aligned. Score:  36
 Sequences (1:4) Aligned. Score:  32
 Sequences (1:5) Aligned. Score:  46
@@ -6995,8 +7005,12 @@ Sequences (99:102) Aligned. Score:  32
 Sequences (100:101) Aligned. Score:  38
 Sequences (100:102) Aligned. Score:  38
 Sequences (101:102) Aligned. Score:  93
-Guide tree        file created:   [./seqalign-1234567890.1234.dnd]
+
+
+Guide tree file created:   [./seqalign-1234567890.1234.dnd]
+
 Start of Multiple Alignment
+
 Sequence:27     Score:1663
 Sequence:60     Score:2788
 Sequence:68     Score:2903
@@ -7098,7 +7112,9 @@ Sequence:88     Score:1038
 Sequence:62     Score:749
 Sequence:77     Score:1070
 Alignment Score 1454950
+
 CLUSTAL-Alignment file created  [./seqalign-1234567890.1234.out]
+
 Processing /homes/user/test/qa/domainalign-keep/daf/54894.daf
 
 /shared/software/bin/clustalw -type=protein -profile1=./seqalign-1234567890.1234.aln -sequences -profile2=./seqalign-1234567890.1234.seqs -MATRIX=BLOSUM -GAPOPEN=10 -GAPEXT=0.5 -outfile=./seqalign-1234567890.1234.out
@@ -7218,7 +7234,7 @@ None.
 <th>Description</th></tr>
 <tr>
 <td><a href="/embassy/domainatrix/cathparse.html">cathparse</a></td>
-<td>Generates DCF file from raw CATH files</td>
+<td>Generate DCF file from raw CATH files</td>
 </tr>
 
 <tr>
@@ -7228,7 +7244,7 @@ None.
 
 <tr>
 <td><a href="/embassy/domainatrix/domainnr.html">domainnr</a></td>
-<td>Removes redundant domains from a DCF file</td>
+<td>Remove redundant domains from a DCF file</td>
 </tr>
 
 <tr>
@@ -7238,7 +7254,7 @@ None.
 
 <tr>
 <td><a href="/embassy/domainatrix/domainseqs.html">domainseqs</a></td>
-<td>Adds sequence records to a DCF file</td>
+<td>Add sequence records to a DCF file</td>
 </tr>
 
 <tr>
@@ -7273,17 +7289,17 @@ None.
 
 <tr>
 <td><a href="/emboss/apps/pepcoil.html">pepcoil</a></td>
-<td>Predicts coiled coil regions in protein sequences</td>
+<td>Predict coiled coil regions in protein sequences</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/signature/rocon.html">rocon</a></td>
-<td>Generates a hits file from comparing two DHF files</td>
+<td>Generate a hits file from comparing two DHF files</td>
 </tr>
 
 <tr>
 <td><a href="/embassy/signature/rocplot.html">rocplot</a></td>
-<td>Performs ROC analysis on hits files</td>
+<td>Perform ROC analysis on hits files</td>
 </tr>
 
 <tr>
@@ -7293,7 +7309,7 @@ None.
 
 <tr>
 <td><a href="/embassy/domsearch/seqfraggle.html">seqfraggle</a></td>
-<td>Removes fragment sequences from DHF files</td>
+<td>Remove fragment sequences from DHF files</td>
 </tr>
 
 <tr>
@@ -7308,7 +7324,7 @@ None.
 
 <tr>
 <td><a href="/embassy/domsearch/seqwords.html">seqwords</a></td>
-<td>Generates DHF files from keyword search of UniProt</td>
+<td>Generate DHF files from keyword search of UniProt</td>
 </tr>
 
 <tr>
@@ -7333,7 +7349,7 @@ None.
 
 <tr>
 <td><a href="/emboss/apps/wordmatch.html">wordmatch</a></td>
-<td>Finds regions of identity (exact matches) of two sequences</td>
+<td>Find regions of identity (exact matches) of two sequences</td>
 </tr>
 
 </table>

@@ -53,6 +53,7 @@
 ** input directory and writes files of sequence similarity values. 
 **
 ****************************************************************************/
+
 int main(int argc, char **argv)
 {
     /* Variable declarations */
@@ -61,8 +62,8 @@ int main(int argc, char **argv)
     AjPStr     inname    = NULL;    /* Full name of the current DHF file.    */
     AjPFile    inf       = NULL;    /* Current DHF file.                     */
     AjPMatrixf matrix    = NULL;    /* Substitution matrix.                  */
-    float      gapopen   = 0.0;     /* Gap insertion penalty.                */
-    float      gapextend = 0.0;     /* Gap extension penalty.                */
+    float      gapopen   = 0.0F;    /* Gap insertion penalty.                */
+    float      gapextend = 0.0F;    /* Gap extension penalty.                */
     AjPDirout  out       = NULL;    /* Domain hits files (output).           */
 
     AjPFile    outf      = NULL;    /* Current DHF file (output).            */
@@ -75,14 +76,12 @@ int main(int argc, char **argv)
     AjPSeqin   seqin     = NULL;    /* Seqin (re-used)                       */
 
     AjPList    seq_list  = NULL;    /* Main list for redundancy removal.     */
-    ajint      seq_list_siz = 0;    /* Size of seq_list                      */
+    ajuint     seq_list_siz = 0;    /* Size of seq_list                      */
     AjPSeq     seq_tmp   = NULL;    /* Temp. pointer for making seq_list.    */
     AjPFloat2d scores      = NULL;  /* 1: Sequence in seq_list was classed as
 				       non-redundant, 0: redundant.          */
-    ajint      x         = 0;       /* Housekeeping.                         */
-    ajint      y         = 0;       /* Housekeeping.                         */
-
-    
+    ajuint     x         = 0;       /* Housekeeping.                         */
+    ajuint     y         = 0;       /* Housekeeping.                         */
 
 
     /* Read data from acd */
@@ -96,10 +95,8 @@ int main(int argc, char **argv)
     logf      = ajAcdGetOutfile("logfile");
 
 
-
     /* Housekeeping */
     outname     = ajStrNew();
-
 
        
     /* Process each DHF (input) in turn */
@@ -107,7 +104,6 @@ int main(int argc, char **argv)
     {
 	ajFmtPrint("Processing %S\n", inname);
 	ajFmtPrintF(logf, "//\n%S\n", inname);
-
 
 	seq_list    = ajListNew();
 	
@@ -127,7 +123,6 @@ int main(int argc, char **argv)
 	
 	ajFileClose(&inf);
 	
-	
 	/* Process empty sequence files (should never occur). */
 	if(!ok)
 	{		
@@ -142,7 +137,7 @@ int main(int argc, char **argv)
 
 	
 	/* 1.  Create list of sequences from the main input directory. */
-	for(x=0;x<ajSeqsetGetSize(seqset);x++)
+	for(x = 0U; x < ajSeqsetGetSize(seqset); x++)
 	{
 	    seq_tmp = ajSeqNew();
 	    ajStrAssignS(&seq_tmp->Acc, ajSeqsetGetseqAccS(seqset, x));
@@ -165,11 +160,11 @@ int main(int argc, char **argv)
 
 	/* 5. Write sequence similarity values to output directory.   */
 	seq_list_siz = ajListGetLength(seq_list);
-	for(x=0; x<seq_list_siz; x++)
-	    for(y=x+1; y<seq_list_siz; y++)
-		ajFmtPrintF(outf, "%d %S : %d %S : %.2f\n", 
-			    x+1, ajSeqsetGetseqNameS(seqset, x), 
-			    y+1, ajSeqsetGetseqNameS(seqset, y), 
+	for(x = 0U; x < seq_list_siz; x++)
+	    for(y = x + 1U; y < seq_list_siz; y++)
+		ajFmtPrintF(outf, "%u %S : %u %S : %.2f\n", 
+			    x + 1U, ajSeqsetGetseqNameS(seqset, x), 
+			    y + 1U, ajSeqsetGetseqNameS(seqset, y), 
 			    ajFloat2dGet(scores, x, y));
 	
 	ajSeqsetDel(&seqset);
@@ -192,8 +187,6 @@ int main(int argc, char **argv)
     ajMatrixfDel(&matrix);
 
     embExit();
+
     return 0;
 }
-
-
-

@@ -7,10 +7,10 @@ application: domainrep [
   cpu: "medium"
   embassy: "domalign"
   external: "stamp Modified stamp - contact Jon Ison jison@ebi.ac.uk"
-  relations: "EDAM:0000182 topic Sequence alignment"
-  relations: "EDAM:0000164 topic Sequence clustering"
-  relations: "EDAM:0000736 topic Protein domains"
-  relations: "EDAM:0002233 operation Representative sequence identification"
+  relations: "EDAM_topic:0182 Sequence alignment"
+  relations: "EDAM_topic:0164 Sequence clustering"
+  relations: "EDAM_topic:0736 Protein domains and folds"
+  relations: "EDAM_operation:2233 Representative sequence identification"
 ]
 
 section: input [
@@ -28,7 +28,7 @@ section: input [
            SCOPPARSE and CATHPARSE. Domain sequence information can be added
            to the file by using DOMAINSEQS."
     knowntype: "Domain classification"
-    relations: "EDAM:0000900 data Protein domain classification"
+    relations: "EDAM_data:0900 Protein domain classification"
   ]
 
 endsection: input
@@ -55,7 +55,7 @@ section: required [
     codedelimiter: ":"
     header: "Node at which to reorder"
     information: "Select number."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: required
@@ -76,7 +76,7 @@ section: output [
            to the file by using DOMAINSEQS."
     default: "test.scop"
     knowntype: "domain classification"
-    relations: "EDAM:0000900 data Protein domain classification"
+    relations: "EDAM_data:0900 Protein domain classification"
   ]
 
 endsection: output

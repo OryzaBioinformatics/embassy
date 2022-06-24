@@ -11,9 +11,9 @@ application: domainalign [
   external: "transform STAMP package http://www.compbio.dundee.ac.uk/"
   external: "poststamp STAMP package http://www.compbio.dundee.ac.uk/"
   external: "ver2hor STAMP package http://www.compbio.dundee.ac.uk/"
-  relations: "EDAM:0000182 topic Sequence alignment"
-  relations: "EDAM:0000736 topic Protein domains"
-  relations: "EDAM:0000292 operation Sequence alignment"
+  relations: "EDAM_topic:0182 Sequence alignment"
+  relations: "EDAM_topic:0736 Protein domains and folds"
+  relations: "EDAM_operation:0292 Sequence alignment construction"
 ]
 
 section: input [
@@ -31,7 +31,7 @@ section: input [
            SCOPPARSE and CATHPARSE. Domain sequence information can be added
            to the file by using DOMAINSEQS."
     knowntype: "Domain classification"
-    relations: "EDAM:0000900 data Protein domain classification"
+    relations: "EDAM_data:0900 Protein domain classification"
   ]
 
   directory: pdbdir [
@@ -44,8 +44,8 @@ section: input [
     default: "./"
     extension: "ent"
     knowntype: "domain pdb"
-    relations:  "EDAM:0001468 data Protein domain"
-    relations:  "EDAM:0001049 identifier Directory name"
+    relations:  "EDAM_data:1468 Protein domain"
+    relations:  "EDAM_identifier:1049 Directory name"
   ]
 
 endsection: input
@@ -72,7 +72,7 @@ section: required [
     codedelimiter: ":"
     header: "Node at which to remove redundancy"
     information: "Select number."
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
   list: mode [
@@ -86,7 +86,7 @@ section: required [
     codedelimiter: ":"
     header: "Alignment algorithm option"
     information: "Select number."
-    relations: "EDAM:0001190 identifier Tool name"
+    relations: "EDAM_identifier:1190 Tool name"
   ]
 
   toggle: keepsinglets [
@@ -96,7 +96,7 @@ section: required [
            families to file. If you specify this option, the sequence for
            each singlet family are written to file (output)."
     default: "Y"
-    relations: "EDAM:0002527 data Parameter or primitive"
+    relations: "EDAM_data:2527 Parameter"
   ]
 
 endsection: required
@@ -121,8 +121,8 @@ section: output [
     default: "./"
     extension: "daf"
     knowntype: "domain alignment"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations:  "EDAM:0001384 data Sequence alignment (protein)"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations:  "EDAM_data:1384 Sequence alignment (protein)"
   ]
 
   outdir: singletsoutdir [
@@ -136,9 +136,9 @@ section: output [
     default: "./"
     extension: "dhf"
     knowntype: "domain hits"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations: "EDAM:0000849 data Sequence record"
-    relations: "EDAM:0001219 format pure protein"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations: "EDAM_data:0849 Sequence record"
+    relations: "EDAM_format:1219 pure protein"
 
   ]
 
@@ -152,8 +152,8 @@ section: output [
     default: "./"
     extension: "ent"
     knowntype: "pdb"
-    relations:  "EDAM:0001049 identifier Directory name"
-    relations:  "EDAM:0001481 data Structure alignment (protein)"
+    relations:  "EDAM_identifier:1049 Directory name"
+    relations:  "EDAM_data:1481 Structure alignment (protein)"
   ]
 
   outfile: logfile [
@@ -164,7 +164,7 @@ section: output [
            domainalign ran."
     default: "domainalign.log"
     knowntype: "domainatrix log"
-    relations:  "EDAM:0001678 data Tool log"
+    relations:  "EDAM_data:1678 Tool log"
   ]
 
 endsection: output
