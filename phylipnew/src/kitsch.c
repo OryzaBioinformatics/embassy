@@ -10,7 +10,7 @@
 #define epsilonk         0.000001   /* a very small but not too small number */
 
 
-AjPPhyloDist phylodist = NULL;
+AjPPhyloDist* phylodists = NULL;
 AjPPhyloTree* phylotrees;
 
 
@@ -56,6 +56,7 @@ AjPFile embossouttree;
 
 Char infilename[FNMLNGTH], intreename[FNMLNGTH];
 long nonodes, numtrees, col, datasets, ith, njumble, jumb;
+long nummatrices=0;
 /*   numtrees is used by usertree option part of maketree */
 long inseed;
 tree curtree, bestree;   /* pointers to all nodes in tree */
@@ -105,10 +106,10 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
     else if(ajStrMatchC(matrixtype, "u")) upper = true;
 
    
-    phylodist = ajAcdGetDistances("datafile");
+    phylodists = ajAcdGetDistances("datafile");
 
-    //  while (phylodist[nummatrices])
-    //	nummatrices++;
+    while (phylodists[nummatrices])
+	nummatrices++;
 
 
     minev = ajAcdGetBool("minev");
@@ -153,7 +154,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
     emboss_openfile(embossoutfile, &outfile, &outfilename);
     if(trout) emboss_openfile(embossouttree, &outtree, &outtreename);
 
-
+/*
 
     printf("\n inseed: %ld",(inseed));
     printf("\n jumble: %s",(jumble ? "true" : "false"));
@@ -173,7 +174,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
     printf("\n datasets: %s",(datasets ? "true" : "false"));
     printf("\n nummatrices: %d",(nummatrices));
 
-
+*/
 
 }  /* emboss_getoptions */
 
@@ -182,7 +183,7 @@ void doinit()
 {
   /* initializes variables */
 
-  inputnumbers2seq(phylodist, &spp, &nonodes, 1);
+  inputnumbers2seq(phylodists[0], &spp, &nonodes, 1);
   alloctree(&curtree.nodep, nonodes);
   allocd(nonodes, curtree.nodep);
   allocw(nonodes, curtree.nodep);
@@ -200,7 +201,7 @@ void inputoptions()
 {
   /* print options information */
   if (!firstset)
-    samenumspseq2(phylodist, ith);
+    samenumspseq2(phylodists[ith-1], ith);
   fprintf(outfile, "\nFitch-Margoliash method ");
   fprintf(outfile, "with contemporary tips, version %s\n\n",VERSION);
   if (minev)
@@ -252,10 +253,10 @@ void input_data()
     curtree.nodep[i]->d[i] = 0.0;
     curtree.nodep[i]->w[i] = 0.0;
     curtree.nodep[i]->weight = 0.0;
-    initnamedist(phylodist, i);
+    initnamedist(phylodists[ith-1], i);
     for (j = 1; j <= (spp); j++) {
-      curtree.nodep[i]->d[j - 1] = phylodist->Data[ipos];
-      curtree.nodep[i]->w[j - 1] = phylodist->Replicates[ipos++];
+      curtree.nodep[i]->d[j - 1] = phylodists[ith-1]->Data[ipos];
+      curtree.nodep[i]->w[j - 1] = phylodists[ith-1]->Replicates[ipos++];
     }
   }
 
