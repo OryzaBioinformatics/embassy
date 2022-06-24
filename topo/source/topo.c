@@ -7,7 +7,7 @@ Draws an image of a transmembrane protein
 Display on device [xwin]: 
 Transmembrane Sections: 18 35 49 67 94 115 136 156 165 184 211 232
 First membrane from the outside [Y]: n
-Signatue Sections: 74 82 sy 189 189 hm 239 239 sa 157 157 sa 262 262 sa
+Signature Sections: 74 82 sy 189 189 hm 239 239 sa 157 157 sa 262 262 sa
 */
 
 #include "ajax.h"
@@ -17,92 +17,155 @@ Signatue Sections: 74 82 sy 189 189 hm 239 239 sa 157 157 sa 262 262 sa
 #include "common.h" 
 #include "ajgraph.h"
 
-void  truncdown(const int num,const int istart,const int iend,float *off,const float wide,char *strand,int *syms);
-void  truncup(const int num,const int istart,const int iend,float *off,const float wide,char *strand,int *syms)  ;
+void  truncdown(const int num,const int istart,const int iend,
+		float *off,const float wide,char *strand,int *syms);
+void  truncup(const int num,const int istart,const int iend,
+	      float *off,const float wide,char *strand,int *syms)  ;
 /*void  selectsym(int ndev,int symx);*/
-void  checkcys(char dir,const int symcys,const int inum, const int length,int *istart,
+void  checkcys(char dir,const int symcys,const int inum,
+	       const int length,int *istart,
 	       int *iend,char *strand,int *syms) ;
-void  checklca(const int symlcharge,const int inum,int *istart,int *iend,char *strand,int *syms);
-void  checklcb(const int symlcharge,const int inum,int *istart,int *iend,char *strand,int *syms);
-void  checkla(const int symlcharge,const int inum,int *istart,int *iend,char *strand,int *syms);
-void  checkloh(const int symloh,const int inum,int *istart,int *iend,char *strand,int *syms);
-void  checklar(const int symlar,const int inum,int *istart,int *iend,char *strand,int *syms);
-void  checklpro(const int symlpro,const int inum,int *istart,int *iend,char *strand,int *syms);
-void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,int *iend,char *strand,int *syms);
-void  membrane();
-void  membrane2();
-void  membrane3();
+void  checklca(const int symlcharge,const int inum,
+	       int *istart,int *iend,char *strand,int *syms);
+void  checklcb(const int symlcharge,const int inum,
+	       int *istart,int *iend,char *strand,int *syms);
+void  checkla(const int symlcharge,const int inum,
+	      int *istart,int *iend,char *strand,int *syms);
+void  checkloh(const int symloh,const int inum,
+	       int *istart,int *iend,char *strand,int *syms);
+void  checklar(const int symlar,const int inum,
+	       int *istart,int *iend,char *strand,int *syms);
+void  checklpro(const int symlpro,const int inum,
+		int *istart,int *iend,char *strand,int *syms);
+void  checkgly(char dir,const int symgly,const int inum,int length,
+	       int *istart,int *iend,char *strand,int *syms);
+void  membrane(void);
+void  membrane2(void);
+void  membrane3(void);
 void  symbol(const float x,float y,char stran,int sym);
-void  starttop7(const int inum,const int istart,float *off,char *strand,int *syms);
-void  starttop7full(const int inum,const int istart,char *strand,int *syms);
-void  endtop7full(const int inum,const int iend,const int length,char *strand,int *syms) ;
-void  endbot7full(const int inum,const int ie,const int length,char *strand,int *syms);
-void  endtop7(const int inum,const int iend,const int length,float *off,char *strand,int *syms)  ;
+void  starttop7(const int inum,const int istart,float *off,
+		char *strand,int *syms);
+void  starttop7full(const int inum,const int istart,
+		    char *strand,int *syms);
+void  endtop7full(const int inum,const int iend,const int length,
+		  char *strand,int *syms) ;
+void  endbot7full(const int inum,const int ie,const int length,
+		  char *strand,int *syms);
+void  endtop7(const int inum,const int iend,const int length,
+	      float *off,char *strand,int *syms)  ;
 void  term(const float x,const float y);
-void  startbot7(const int inum,const int istart,float *off,char *strand,int *syms);
-void  endbot7(const int inum,const int iend,const int length,float *off,char *strand,int *syms);
-void  chaindown(const int i,const int istart,const int nchain,float *off,const int page,const float wide,
+void  startbot7(const int inum,const int istart,float *off,
+		char *strand,int *syms);
+void  endbot7(const int inum,const int iend,const int length,
+	      float *off,char *strand,int *syms);
+void  chaindown(const int i,const int istart,const int nchain,
+		float *off,const int page,const float wide,
 		float *hold,char *strand,int *syms);
-void  chain0down(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
+void  chain0down(const int page,const int i,const int istart,
+		 const int nchain,float *off,float *hold,
 		 const float wide,char *strand,int *syms);
-void  sheetup(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
+void  sheetup(const int page,const int i,const int istart,
+	      const int nchain,float *off,float *hold,
 	      const float wide,char *strand,int *syms);
-void  chain0up(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
+void  chain0up(const int page,const int i,const int istart,
+	       const int nchain,float *off,float *hold,
 		       const float wide,char *strand,int *syms);
-void  chain1down(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
+void  chain1down(const int page,const int i,const int istart,
+		 const int nchain,float *off,float *hold,
 		 const float wide,char *strand,int *syms);
-void  chain1up(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
+void  chain1up(const int page,const int i,const int istart,
+	       const int nchain,float *off,float *hold,
 	       const float wide,char *strand,int *syms);
-void  chain2down(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
+void  chain2down(const int page,const int i,const int istart,
+		 const int nchain,float *off,float *hold,
 		 const float wide,char *strand,int *syms);
-void  chainup(const int i,const int istart,const int nchain,float *off,const int page,const float wide,
+void  chainup(const int i,const int istart,const int nchain,
+	      float *off,const int page,const float wide,
 	      float *hold,char *strand,int *syms);
-void  chain2up(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
+void  chain2up(const int page,const int i,const int istart,
+	       const int nchain,float *off,float *hold,
 	       const float wide,char *strand,int *syms) ;
-void  chain3down(const int page,const int i,const int istart,const int nchain,float *off,
+void  chain3down(const int page,const int i,const int istart,
+		 const int nchain,float *off,
 		 float *hold,const float wide,char *strand,int *syms) ;
-void  chain3up(const int page,const int i,const int istart,const int nchain,float *off,
+void  chain3up(const int page,const int i,const int istart,
+	       const int nchain,float *off,
 	       float *hold,const float wide,char *strand,int *syms) ;
-void  ball1s(const int istart,const int j,const float x,char *strand,int *syms);
-void  ball1su(const int istart,const int j,const float x,char *strand,int *syms) ;
-void  ball1u(const int istart,const int j,const float x,char *strand,int *syms) ;
-void  ball2topdown(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball2topup(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball2botdown(const int istart,const int j,const float x,char *strand,int *syms) ;
-void  ball2botup(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball1(const int istart,const int j,const float x,char *strand,int *syms) ;
-void  ball1down7(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball1up7(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball1down(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball1up(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball1bdown(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball1bup(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball2sdown(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball2sup(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball2down(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball2up(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball2adown(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball2aup(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball3sdown(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball3sup(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball3down(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball3up(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball3down2(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball3up2(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball4up(const int istart,const int j,const float x,char *strand,int *syms)  ;
-void  ball4down(const int i,const int j,const float x,char *strand,int *syms)  ;
-void  ball4bdown(const int i,const int j,const float x,char *strand,int *syms)  ;
-void  ball4bup(const int i,const int j,const float x,char *strand,int *syms)  ;
-void  ball5down(const int i,const int j,const float x,char *strand,int *syms)  ;
-void  ball5up(const int i,const int j,const float x,char *strand,int *syms)  ;
-void  conup(float *hold,const int i,const int is,int *ie,char *strand,int *syms)  ;
-void  condown(float *hold1,const int i,const int is,int *ie,char *strand,int *syms) ;
+void  ball1s(const int istart,const int j,const float x,
+	     char *strand,int *syms);
+void  ball1su(const int istart,const int j,const float x,
+	      char *strand,int *syms) ;
+void  ball1u(const int istart,const int j,const float x,
+	     char *strand,int *syms) ;
+void  ball2topdown(const int istart,const int j,const float x,
+		   char *strand,int *syms)  ;
+void  ball2topup(const int istart,const int j,const float x,
+		 char *strand,int *syms)  ;
+void  ball2botdown(const int istart,const int j,const float x,
+		   char *strand,int *syms) ;
+void  ball2botup(const int istart,const int j,const float x,
+		 char *strand,int *syms)  ;
+void  ball1(const int istart,const int j,const float x,
+	    char *strand,int *syms) ;
+void  ball1down7(const int istart,const int j,const float x,
+		 char *strand,int *syms)  ;
+void  ball1up7(const int istart,const int j,const float x,
+	       char *strand,int *syms)  ;
+void  ball1down(const int istart,const int j,const float x,
+		char *strand,int *syms)  ;
+void  ball1up(const int istart,const int j,const float x,
+	      char *strand,int *syms)  ;
+void  ball1bdown(const int istart,const int j,const float x,
+		 char *strand,int *syms)  ;
+void  ball1bup(const int istart,const int j,const float x,
+	       char *strand,int *syms)  ;
+void  ball2sdown(const int istart,const int j,const float x,
+		 char *strand,int *syms)  ;
+void  ball2sup(const int istart,const int j,const float x,
+	       char *strand,int *syms)  ;
+void  ball2down(const int istart,const int j,const float x,
+		char *strand,int *syms)  ;
+void  ball2up(const int istart,const int j,const float x,
+	      char *strand,int *syms)  ;
+void  ball2adown(const int istart,const int j,const float x,
+		 char *strand,int *syms)  ;
+void  ball2aup(const int istart,const int j,const float x,
+	       char *strand,int *syms)  ;
+void  ball3sdown(const int istart,const int j,const float x,
+		 char *strand,int *syms)  ;
+void  ball3sup(const int istart,const int j,const float x,
+	       char *strand,int *syms)  ;
+void  ball3down(const int istart,const int j,const float x,
+		char *strand,int *syms)  ;
+void  ball3up(const int istart,const int j,const float x,
+	      char *strand,int *syms)  ;
+void  ball3down2(const int istart,const int j,const float x,
+		 char *strand,int *syms)  ;
+void  ball3up2(const int istart,const int j,const float x,
+	       char *strand,int *syms)  ;
+void  ball4up(const int istart,const int j,const float x,
+	      char *strand,int *syms)  ;
+void  ball4down(const int i,const int j,const float x,
+		char *strand,int *syms)  ;
+void  ball4bdown(const int i,const int j,const float x,
+		 char *strand,int *syms)  ;
+void  ball4bup(const int i,const int j,const float x,
+	       char *strand,int *syms)  ;
+void  ball5down(const int i,const int j,const float x,
+		char *strand,int *syms)  ;
+void  ball5up(const int i,const int j,const float x,
+	      char *strand,int *syms)  ;
+void  conup(float *hold,const int i,const int is,int *ie,
+	    char *strand,int *syms)  ;
+void  condown(float *hold1,const int i,const int is,int *ie,
+	      char *strand,int *syms) ;
 void  condownsmall(const int is,int *ie,char *strand,int *syms)  ;
 void  conupbig2(const int is,int *ie,char *strand,int *syms)  ;
 void  condownbig2(const int is,int *ie,char *strand,int *syms)  ;
 void  condownbig3(const int is,int *ie,char *strand,int *syms)  ;
 void  startbot7full(const int inum,int istart,char *strand,int *syms)  ;
-void  sheetdown(const int page,const int i,const int istart,const int nchain,float *off,
+void  sheetdown(const int page,const int i,const int istart,
+		const int nchain,float *off,
 		float *hold,const float wide,char *strand,int *syms) ;
  
 
@@ -114,13 +177,15 @@ float circle2=0.0;
 AjPGraph graph; /* change to ajPGraph later*/
 
 int getValFromStr(AjPStr str){
-  char *colstr;
+  static AjPStr tmpstr = NULL;
+  const char *colstr;
   int symval;
   int shape = 0;
   int col = 0;
 
-  ajStrToUpper(&str);
-  colstr = ajStrStr(str);
+  tmpstr = ajStrNewS(str);
+  ajStrToUpper(&tmpstr);
+  colstr = ajStrStr(tmpstr);
 
 
   if(strstr(colstr,"N")!=NULL)          /* NONE overrides everything else */
@@ -137,7 +202,10 @@ int getValFromStr(AjPStr str){
     shape = 5;
 
   if(!shape)                     /* if no shape return */
-    return 0;
+  {
+      ajStrDel(&tmpstr);
+      return 0;
+  }
 
   if(strstr(colstr,"G")!=NULL)
     col = 1;
@@ -152,10 +220,14 @@ int getValFromStr(AjPStr str){
   else if(strstr(colstr,"Y")!=NULL)
     col = 6;
   else if(strstr(colstr,"F")!=NULL)    /* NO FILL */
+  {
+    ajStrDel(&tmpstr);
     return shape;
+  }
 
   symval = ((shape*8)-2)+col;
 
+  ajStrDel(&tmpstr);
   return symval;
 }
 
@@ -256,7 +328,7 @@ int main(int argc, char * argv[]) {
   int   gaps ;
   int   symcys,symgly,symlchargea,symlchargeb ;
   int   symlamine,symloh,symlar,symlpro,symsign ;
-  int   endsp ;
+  int   endsp = 0;
   float      off=0.0,wide=0.0,hold=0.0,off0=0.0,hold0=0.0 ;
   /*        int   sqread ;*/
   /* new */
@@ -278,7 +350,7 @@ int main(int argc, char * argv[]) {
   (void) wshowplot();
   
 
-  sq.seq[0] = ' ';     /* hopefully sort out all the fortran to c offset worrys :) */
+  sq.seq[0] = ' '; /* hopefully sort out the fortran to c offset worrys :) */
 
   strcpy(&sq.seq[1],ajSeqChar(sequence));
   length = strlen(sq.seq);
@@ -401,7 +473,7 @@ int main(int argc, char * argv[]) {
     (void) checklpro(symlpro,inum,istart,iend,strand,syms) ;
   /*c ask about aromatic amino acids  */ 
 
-  ajspnum = ajAcdGetBool("signature");
+  ajspnum = ajAcdGetToggle("signature");
   if(ajspnum){
     /* num num code sets */
     regions = ajAcdGetRange ("sigrange");
@@ -410,7 +482,7 @@ int main(int argc, char * argv[]) {
     isigend = (int *) AJALLOC(sizeof(int));               
     /*    ajRangeValues(regions,i,isigstart,isigend);*/
     for(i=0;i<ii;i++){
-      AjPStr val;
+      AjPStr val = NULL;
       ajRangeValues(regions,i,isigstart,isigend);
       if(ajRangeText(regions,i,&val)){
 	symsign = getValFromStr(val);
@@ -421,7 +493,10 @@ int main(int argc, char * argv[]) {
       for(j=*isigstart;j<=*isigend ;j++) {
 	syms[j]=symsign ;
       }  /*end for*/
+      ajStrDel(&val);
     }
+    AJFREE(isigstart);
+    AJFREE(isigend);
   }
     
   /*c determine if this is a draft plot */ 
@@ -1927,10 +2002,12 @@ int main(int argc, char * argv[]) {
   /*  (void) closef(fn) ;
   (void) account() ;*/
   
-  return 1;
+  ajExit();
+  return 0;
 }	/*end ;*/
 
-void  truncdown(const int num,const int istart,const int iend,float *off,const float wide,char *strand,int *syms)  {
+void  truncdown(const int num,const int istart,const int iend,
+		float *off,const float wide,char *strand,int *syms)  {
 /*#include "common.inc" */ 
  
   float  x,y ;
@@ -1973,7 +2050,8 @@ void  truncdown(const int num,const int istart,const int iend,float *off,const f
   return ;
 }
   
-void  truncup(const int num,const int istart,const int iend,float *off,const float wide,char *strand,int *syms)  {
+void  truncup(const int num,const int istart,const int iend,
+	      float *off,const float wide,char *strand,int *syms)  {
     /*#include "common.inc" */ 
     
     float x,y ;
@@ -2017,12 +2095,13 @@ void  truncup(const int num,const int istart,const int iend,float *off,const flo
 }
 
  
-void  checkcys(char dir,const int symcys,const int inum, const int length,int *istart,int *iend,char *strand,int *syms) {
+void  checkcys(char dir,const int symcys,const int inum,
+	       const int length,int *istart,int *iend,char *strand,int *syms) {
  
  
 /*#include "common.inc" */ 
  
-  int    i,k,count,pass ;
+  int    i,k,count,pass = 0;
   float       rcount ;
  
 /*c determine the number of passes */ 
@@ -2196,7 +2275,8 @@ void  checkcys(char dir,const int symcys,const int inum, const int length,int *i
   return ;
 }
  
-void  checklca(const int symlcharge,const int inum,int *istart,int *iend,char *strand,int *syms)  {
+void  checklca(const int symlcharge,const int inum,
+	       int *istart,int *iend,char *strand,int *syms)  {
 /*#include "common.inc" */ 
   int    i,k ;
  
@@ -2209,7 +2289,8 @@ void  checklca(const int symlcharge,const int inum,int *istart,int *iend,char *s
   return ;
 }
  
-void  checklcb(const int symlcharge,const int inum,int *istart,int *iend,char *strand,int *syms)  {
+void  checklcb(const int symlcharge,const int inum,
+	       int *istart,int *iend,char *strand,int *syms)  {
 /*#include "common.inc" */ 
   int    i,k ;
  
@@ -2223,7 +2304,8 @@ void  checklcb(const int symlcharge,const int inum,int *istart,int *iend,char *s
   return ;
 }
  
-void  checkla(const int symlamine,const int inum,int *istart,int *iend,char *strand,int *syms)  {
+void  checkla(const int symlamine,const int inum,
+	      int *istart,int *iend,char *strand,int *syms)  {
 /*#include "common.inc" */ 
   int    i,k ;
  
@@ -2236,7 +2318,8 @@ void  checkla(const int symlamine,const int inum,int *istart,int *iend,char *str
   return ;
 }
  
-void  checkloh(const int symloh,const int inum,int *istart,int *iend,char *strand,int *syms) {
+void  checkloh(const int symloh,const int inum,
+	       int *istart,int *iend,char *strand,int *syms) {
 /*#include "common.inc" */ 
   int    i,k ;
  
@@ -2250,7 +2333,8 @@ void  checkloh(const int symloh,const int inum,int *istart,int *iend,char *stran
   return ;
 }
  
-void  checklar(const int symlar,const int inum,int *istart,int *iend,char *strand,int *syms) {
+void  checklar(const int symlar,const int inum,
+	       int *istart,int *iend,char *strand,int *syms) {
 /*#include "common.inc" */ 
   int    i,k ;
  
@@ -2265,7 +2349,8 @@ void  checklar(const int symlar,const int inum,int *istart,int *iend,char *stran
 }
  
  
-void  checklpro(const int symlpro,const int inum,int *istart,int *iend,char *strand,int *syms){
+void  checklpro(const int symlpro,const int inum,
+		int *istart,int *iend,char *strand,int *syms){
 /*#include "common.inc" */ 
   int    i,k ;
  
@@ -2277,8 +2362,9 @@ void  checklpro(const int symlpro,const int inum,int *istart,int *iend,char *str
   return ;
 }
  
-void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,int *iend,char *strand,int *syms) {
-  int    i,count,pass,k ;
+void  checkgly(char dir,const int symgly,const int inum,int length,
+	       int *istart,int *iend,char *strand,int *syms) {
+  int    i,k,count,pass = 0 ;
   float       rcount ;
  
 /*c determine the number of passes */ 
@@ -2310,7 +2396,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       else if (inum > 2) {
 	for(i=iend[2]+1;i<=istart[3]-1 ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N' ) {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2321,7 +2410,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       if(inum == 4) {
 	for(i=iend[4]+1;i<=length ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N' ) {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't'||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2330,7 +2422,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       else if (inum > 4) {
 	for(i=iend[4]+1;i<=istart[5]-1 ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't' || strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2341,7 +2436,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       if(inum == 6) {
 	for(i=iend[6]+1;i<=length ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't' || strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2350,7 +2448,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       else if (inum > 6) {
 	for(i=iend[6]+1;i<=istart[6]-1 ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't' || strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2361,7 +2462,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       if(inum == 8) {
 	for(i=iend[8]+1;i<=length ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2370,7 +2474,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       else if (inum > 8) {
 	for(i=iend[8]+1;i<=istart[9]-1 ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N' ) {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2381,7 +2488,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       if(inum == 10) {
 	for(i=iend[10]+1;i<=length ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2390,7 +2500,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       else if (inum > 10) {
 	for(i=iend[10]+1;i<=istart[11]-1 ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't' || strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2401,7 +2514,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       if(inum == 12) {
 	for(i=iend[12]+1;i<=length ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't' || strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2410,7 +2526,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       else if (inum > 12) {
 	for(i=iend[12]+1;i<=istart[13]-1 ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't' || strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2421,7 +2540,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       if(inum == 1) {
 	for(i=iend[1]+1;i<=length ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2430,7 +2552,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       else if (inum > 1) {
 	for(i=iend[1]+1;i<=istart[2]-1 ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2441,7 +2566,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       if(inum == 3) {
 	for(i=iend[3]+1;i<=length ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't' || strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2450,7 +2578,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       else if (inum > 3) {
 	for(i=iend[3]+1;i<=istart[4]-1 ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2461,7 +2592,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       if(inum == 5) {
 	for(i=iend[5]+1;i<=length ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2470,7 +2604,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       else if (inum > 5) {
 	for(i=iend[5]+1;i<=istart[6]-1 ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2481,7 +2618,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       if(inum == 7) {
 	for(i=iend[7]+1;i<=length ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2490,7 +2630,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       else if (inum > 7) {
 	for(i=iend[7]+1;i<=istart[8]-1 ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2501,7 +2644,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       if(inum == 9) {
 	for(i=iend[9]+1;i<=length ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2510,7 +2656,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       else if (inum > 9) {
 	for(i=iend[9]+1;i<=istart[10]-1 ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2521,7 +2670,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       if(inum == 11) {
 	for(i=iend[11]+1;i<=length ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2530,7 +2682,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
       else if (inum > 11) {
 	for(i=iend[11]+1;i<=istart[12]-1 ;i++) {
 	  if(strand[i] == 'n' || strand[i] == 'N') {
-	    if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	    if(strand[i+2] == 's' ||
+	       strand[i+2] == 't' ||
+	       strand[i+2] == 'S' ||
+	       strand[i+2] == 'T') {
 	      syms[i]=symgly ;
 	    }  /*end if*/
 	  }  /*end if*/
@@ -2540,7 +2695,10 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
     else if (dir == '2' && k == 7) {
       for(i=iend[13]+1;i<=length ;i++) {
 	if(strand[i] == 'n' || strand[i] == 'N') {
-	  if(strand[i+2] == 's' || strand[i+2] == 't'|| strand[i+2] == 'S' || strand[i+2] == 'T') {
+	  if(strand[i+2] == 's' ||
+	     strand[i+2] == 't' ||
+	     strand[i+2] == 'S' ||
+	     strand[i+2] == 'T') {
 	    syms[i]=symgly ;
 	  }  /*end if*/
 	}  /*end if*/
@@ -2551,7 +2709,7 @@ void  checkgly(char dir,const int symgly,const int inum,int length,int *istart,i
   return ;
 }
  
-void  membrane()  {
+void  membrane(void)  {
   
   /*#include "common.inc" */ 
   
@@ -2575,7 +2733,7 @@ void  membrane()  {
   return             ;
 }
  
-void  membrane2()  {
+void  membrane2(void)  {
  
   /*#include "common.inc" */ 
   
@@ -2590,7 +2748,7 @@ void  membrane2()  {
   return             ;
 }
  
-void  membrane3 () {
+void  membrane3 (void) {
  
   /*#include "common.inc" */ 
   
@@ -2857,13 +3015,14 @@ void  symbol(const float x,float y,char stran,int sym)  {
   return    ;
 }
  
-void  starttop7(const int inum,const int istart,float *off,char *strand,int *syms)  {
+void  starttop7(const int inum,const int istart,float *off,
+		char *strand,int *syms)  {
  
 /*#include "common.inc" */ 
  
   char  stran ;
   int   j,sym ;
-  float x,y,wide,shift ;
+  float x = 0.0,y,wide,shift ;
  
 /*c this assumes 7 transmembrane sections */ 
   if(istart <= 9)shift=0.0 ;
@@ -3485,7 +3644,8 @@ void  starttop7full(const int inum,const int istart,char *strand,int *syms)  {
 	return ;
 }
  
-void  endtop7full(const int inum,const int iend,const int length,char *strand,int *syms)  {
+void  endtop7full(const int inum,const int iend,const int length,
+		  char *strand,int *syms)  {
  
 /*#include "common.inc" */ 
  
@@ -4237,7 +4397,8 @@ void  startbot7full(const int inum,int istart,char *strand,int *syms)  {
 	return ;
 }
  
-void  endbot7full(const int inum,const int ie,const int length,char *strand,int *syms)  {
+void  endbot7full(const int inum,const int ie,const int length,
+		  char *strand,int *syms)  {
  
 /*#include "common.inc" */ 
  	char  stran ;
@@ -4613,13 +4774,14 @@ void  endbot7full(const int inum,const int ie,const int length,char *strand,int 
 	return ;
 }
  
-void  endtop7(const int inum,const int iend,const int length,float *off,char *strand,int *syms)  {
+void  endtop7(const int inum,const int iend,const int length,
+	      float *off,char *strand,int *syms)  {
  
 /*#include "common.inc" */ 
  
 	char  stran ;
 	int    j,sym,remain;
-	float       x,y,wide,shift,offref ;
+	float       x = 0.0,y,wide,shift,offref ;
  
 /*c this assumes 7 transmembrane sections */ 
 	 
@@ -4896,13 +5058,14 @@ void  term(const float x,const float y)  {
 	return ;
 	}
  
-void  startbot7(const int inum,const int istart,float *off,char *strand,int *syms)  {
+void  startbot7(const int inum,const int istart,float *off,
+		char *strand,int *syms)  {
  
 /*#include "common.inc" */ 
  
 	char  stran ;
 	int    j,sym ;
-	float       x,y ;
+	float       x = 0.0,y ;
 	float       wide,shift ;
  
 	/*	ajUser("inum = %d, istart = %d, off= %f",inum,istart,*off);*/
@@ -5149,14 +5312,15 @@ void  startbot7(const int inum,const int istart,float *off,char *strand,int *sym
 	return ;
 	}
  
-void  endbot7(const int inum,const int iend,const int length,float *off,char *strand,int *syms)  {
+void  endbot7(const int inum,const int iend,const int length,
+	      float *off,char *strand,int *syms)  {
  
 /*#include "common.inc" */ 
  
 	char stran ;
 	int    j,remain ;
 	int    sym ;
-	float       x,y,off0 ;
+	float       x = 0.0,y,off0 ;
 	float       shift ;
  
         remain=length-iend ;
@@ -5389,10 +5553,11 @@ void  endbot7(const int inum,const int iend,const int length,float *off,char *st
 	return ;
 	}
  
-void  chaindown(const int i,const int istart,const int nchain,float *off,const int page,const float wide,
+void  chaindown(const int i,const int istart,const int nchain,
+		float *off,const int page,const float wide,
 		float *hold,char *strand,int *syms) {
  
-	float       x3 ;
+	float       x3 = 0.0 ;
  
 /*c draw down the membrane section */ 
 	if(i == 1) {
@@ -5428,10 +5593,11 @@ void  chaindown(const int i,const int istart,const int nchain,float *off,const i
 	return ;
 	}
  
-void  chainup(const int i,const int istart,const int nchain,float *off,const int page,const float wide,
+void  chainup(const int i,const int istart,const int nchain,
+	      float *off,const int page,const float wide,
 	      float *hold,char *strand,int *syms){
  
-	float       x3 ;
+	float       x3 = 0.0;
  
 /*c draw up the membrane section */ 
 	if(i == 1) {
@@ -5467,11 +5633,12 @@ void  chainup(const int i,const int istart,const int nchain,float *off,const int
 	return ;
 	}
  
-void  chain0down(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
+void  chain0down(const int page,const int i,const int istart,
+		 const int nchain,float *off,float *hold,
 		 const float wide,char *strand,int *syms) {
  
 	int   k;
-	float      x ;
+	float      x = 0.0 ;
 	 
 	if(page == 1) {
 	   x=*off+(i-1)*wide ;
@@ -5572,11 +5739,12 @@ DAA:	*hold=x ;
 	return ;
 	}
  
-void  sheetdown(const int page,const int i,const int istart,const int nchain,float *off,
+void  sheetdown(const int page,const int i,const int istart,
+		const int nchain,float *off,
 		float *hold,const float wide,char *strand,int *syms) {
  
 	int   k ;
-	float      x;
+	float      x = 0.0;
 	 
 	if(page == 1) {
 	   x=*off+(i-1)*wide ;
@@ -5680,11 +5848,12 @@ DAA:	*hold=x ;
 	return ;
 	}
  
-void  sheetup(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
+void  sheetup(const int page,const int i,const int istart,
+	      const int nchain,float *off,float *hold,
 	      const float wide,char *strand,int *syms){
  
 	int   k ;
-	float      x;
+	float      x = 0.0;
 	 
 	if(page == 1) {
 	   x=*off+(i-1)*wide ;
@@ -5779,11 +5948,12 @@ void  sheetup(const int page,const int i,const int istart,const int nchain,float
 	return ;
 	}
  
-void  chain0up(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
-		       const float wide,char *strand,int *syms) {
+void  chain0up(const int page,const int i,const int istart,
+	       const int nchain,float *off,float *hold,
+	       const float wide,char *strand,int *syms) {
  
 	int   k ;
-	float      x;
+	float      x = 0.0;
 	 
 	if(page == 1) {
 	   x=*off+(i-1)*wide ;
@@ -5884,11 +6054,12 @@ DAA:	*hold=x ;
 	return ;
 	}
  
-void  chain1down(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
+void  chain1down(const int page,const int i,const int istart,
+		 const int nchain,float *off,float *hold,
 		 const float wide,char *strand,int *syms){
  
 	int   k ;
-	float      x ;
+	float      x = 0.0 ;
 	 
 	if(page == 1) {
 	   x=*off+(i-1)*wide ;
@@ -5957,11 +6128,12 @@ void  chain1down(const int page,const int i,const int istart,const int nchain,fl
 	return ;
 	}
  
-void  chain1up(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
+void  chain1up(const int page,const int i,const int istart,
+	       const int nchain,float *off,float *hold,
 	       const float wide,char *strand,int *syms){
 
 	int   k;
-	float      x;
+	float      x = 0.0;
 	 
 	if(page == 1) {
 	   x=*off+(i-1)*wide ;
@@ -6036,11 +6208,12 @@ void  chain1up(const int page,const int i,const int istart,const int nchain,floa
 	return ;
 	}
  
-void  chain2down(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
+void  chain2down(const int page,const int i,const int istart,
+		 const int nchain,float *off,float *hold,
 		 const float wide,char *strand,int *syms){
  
 	int   k ;
-	float      x;
+	float      x = 0.0;
 	 
 	if(page == 1) {
 	   x=*off+(i-1)*wide ;
@@ -6140,11 +6313,12 @@ void  chain2down(const int page,const int i,const int istart,const int nchain,fl
 	return ;
 	}
  
-void  chain2up(const int page,const int i,const int istart,const int nchain,float *off,float *hold,
+void  chain2up(const int page,const int i,const int istart,
+	       const int nchain,float *off,float *hold,
 	       const float wide,char *strand,int *syms) {
  
 	int   k ;
-	float      x ;
+	float      x = 0.0;
 	 
 	if(page == 1) {
 	   x=*off+(i-1)*wide ;
@@ -6243,11 +6417,12 @@ void  chain2up(const int page,const int i,const int istart,const int nchain,floa
 	return ;
 	}
  
-void  chain3down(const int page,const int i,const int istart,const int nchain,float *off,
+void  chain3down(const int page,const int i,const int istart,
+		 const int nchain,float *off,
 		 float *hold,const float wide,char *strand,int *syms) {
 
 	int   k;
-	float      x;
+	float      x = 0.0;
 	 
 	if(page == 1) {
 	   x=*off+(i-1)*wide ;
@@ -6346,11 +6521,12 @@ void  chain3down(const int page,const int i,const int istart,const int nchain,fl
 	return ;
 	}
  
-void  chain3up(const int page,const int i,const int istart,const int nchain,float *off,
+void  chain3up(const int page,const int i,const int istart,
+	       const int nchain,float *off,
 	       float *hold,const float wide,char *strand,int *syms){
  
 	int   k;
-	float      x ;
+	float      x = 0.0;
 	 
 	if(page == 1) {
 	   x=*off+(i-1)*wide ;
@@ -6450,11 +6626,12 @@ void  chain3up(const int page,const int i,const int istart,const int nchain,floa
 	return ;
 	}
  
-void  ball1s(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball1s(const int istart,const int j,const float x,
+	     char *strand,int *syms)  {
  
-  char stran;
-	int   sym ;
-	float     y ;
+    char stran = '\0';
+	int   sym = 0;
+	float     y = 0.0;
  
 	if(j == 1) {
 	   y=68.6 ;
@@ -6471,11 +6648,12 @@ void  ball1s(const int istart,const int j,const float x,char *strand,int *syms) 
 	return ;
 	}
  
-void  ball1su(const int istart,const int j,const float x,char *strand,int *syms) {
+void  ball1su(const int istart,const int j,const float x,
+	      char *strand,int *syms) {
 
-	char stran ;
-	int  sym ;
-	float y ;
+	char stran = '\0';
+	int  sym = 0;
+	float y = 0.0;
  
  	if(j == 1) {
 	   y=40.4 ;
@@ -6492,11 +6670,12 @@ void  ball1su(const int istart,const int j,const float x,char *strand,int *syms)
 	return ;
 	}
  
-void  ball1(const int istart,const int j,const float x,char *strand,int *syms) {
+void  ball1(const int istart,const int j,const float x,
+	    char *strand,int *syms) {
 
-	char stran ;
-	int   sym ;
-	float y ;
+	char stran = '\0';
+	int   sym = 0;
+	float y = 0.0;
  
 	if(j == 1) {
 	   y=68.6 ;
@@ -6513,11 +6692,12 @@ void  ball1(const int istart,const int j,const float x,char *strand,int *syms) {
 	return ;
 	}
  
-void  ball1u(const int istart,const int j,const float x,char *strand,int *syms) {
+void  ball1u(const int istart,const int j,const float x,
+	     char *strand,int *syms) {
 
-	char stran ;
-	int   sym ;
-	float y ;
+	char stran = '\0';
+	int   sym = 0;
+	float y = 0.0;
  
 	if(j == 1) {
 	   y=40.4 ;
@@ -6534,10 +6714,11 @@ void  ball1u(const int istart,const int j,const float x,char *strand,int *syms) 
 	return ;
 	}
  
-void  ball2topdown(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball2topdown(const int istart,const int j,const float x,
+		   char *strand,int *syms)  {
  
-	char stran ;
-	int   sym ;
+	char stran;
+	int   sym;
 	float y,x2 ;
  
 	x2=x+2.8 ;
@@ -6550,7 +6731,8 @@ void  ball2topdown(const int istart,const int j,const float x,char *strand,int *
 	return ;
 	}
  
-void  ball2topup(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball2topup(const int istart,const int j,const float x,
+		 char *strand,int *syms)  {
  
 	char stran ;
 	int  sym ;
@@ -6566,11 +6748,12 @@ void  ball2topup(const int istart,const int j,const float x,char *strand,int *sy
 	return ;
 	}
  
-void  ball2botdown(const int istart,const int j,const float x,char *strand,int *syms) {
+void  ball2botdown(const int istart,const int j,const float x,
+		   char *strand,int *syms) {
  
 	char stran ;
 	int   sym ;
-	float y,x2 ;
+	float y = 0.0,x2 ;
  
 	x2=x-2.8 ;
  
@@ -6583,11 +6766,12 @@ void  ball2botdown(const int istart,const int j,const float x,char *strand,int *
 	return ;
 	}
  
-void  ball2botup(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball2botup(const int istart,const int j,const float x,
+		 char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float y,x2 ;
+	float y = 0.0,x2 ;
  
 	x2=x+2.8 ;
  
@@ -6599,11 +6783,12 @@ void  ball2botup(const int istart,const int j,const float x,char *strand,int *sy
 	return ;
 	}
  
-void  ball1down7(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball1down7(const int istart,const int j,const float x,
+		 char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,y,y2 ;
+	float x0,x2,y = 0.0,y2 ;
  
 	x0=x ;
 	x2=x0 ;
@@ -6622,11 +6807,12 @@ void  ball1down7(const int istart,const int j,const float x,char *strand,int *sy
 	return ;
 	}
  
-void  ball1up7(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball1up7(const int istart,const int j,const float x,
+	       char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,y,y2 ;
+	float x0,x2,y = 0.0,y2 ;
  
 	x0=x ;
 	x2=x0 ;
@@ -6645,11 +6831,12 @@ void  ball1up7(const int istart,const int j,const float x,char *strand,int *syms
 	return ;
 	}
  
-void  ball1down(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball1down(const int istart,const int j,const float x,
+		char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,y,y2 ;
+	float x0,x2,y = 0.0,y2 ;
  
 	x0=x ;
 	x2=x0 ;
@@ -6668,11 +6855,12 @@ void  ball1down(const int istart,const int j,const float x,char *strand,int *sym
 	return ;
 	}
  
-void  ball1up(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball1up(const int istart,const int j,const float x,
+	      char *strand,int *syms)  {
  
 	char stran ;
 	int  sym ;
-	float x0,x2,y,y2 ;
+	float x0,x2,y = 0.0,y2 ;
  
 	x0=x ;
 	x2=x0 ;
@@ -6691,11 +6879,12 @@ void  ball1up(const int istart,const int j,const float x,char *strand,int *syms)
 	return ;
 	}
  
-void  ball1bdown(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball1bdown(const int istart,const int j,const float x,
+		 char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,y,y2 ;
+	float x0,x2,y = 0.0,y2 ;
  
 	x0=x ;
 	x2=x0 ;
@@ -6711,11 +6900,12 @@ void  ball1bdown(const int istart,const int j,const float x,char *strand,int *sy
 	return ;
 	}
  
-void  ball1bup(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball1bup(const int istart,const int j,const float x,
+	       char *strand,int *syms)  {
  
 	char stran ;
 	int  sym ;
-	float x0,x2,y,y2 ;
+	float x0,x2,y = 0.0,y2 ;
  
 	x0=x ;
 	x2=x0 ;
@@ -6731,11 +6921,12 @@ void  ball1bup(const int istart,const int j,const float x,char *strand,int *syms
 	return ;
 }
  
-void  ball2sdown(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball2sdown(const int istart,const int j,const float x,
+		 char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,x3,y,y2,y3 ;
+	float x0,x2,x3,y = 0.0,y2,y3 ;
  
 	x0=x ;
 	x2=x0-1.4 ;
@@ -6762,11 +6953,12 @@ void  ball2sdown(const int istart,const int j,const float x,char *strand,int *sy
 	return ;
 	}
  
-void  ball2sup(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball2sup(const int istart,const int j,const float x,
+	       char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,x3,y,y2,y3 ;
+	float x0,x2,x3,y = 0.0,y2,y3 ;
  
 	x0=x ;
 	x2=x0+1.4 ;
@@ -6793,11 +6985,12 @@ void  ball2sup(const int istart,const int j,const float x,char *strand,int *syms
 	return ;
 	}
  
-void  ball2down(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball2down(const int istart,const int j,const float x,
+		char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,x3,y,y2,y3 ;
+	float x0,x2,x3,y = 0.0,y2,y3 ;
  
 	x0=x ;
 	x2=x0-1.4 ;
@@ -6828,11 +7021,12 @@ void  ball2down(const int istart,const int j,const float x,char *strand,int *sym
 	return ;
 	}
  
-void  ball2up(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball2up(const int istart,const int j,const float x,
+	      char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float  x0,x2,x3,y,y2,y3 ;
+	float  x0,x2,x3,y = 0.0,y2,y3 ;
  
 	x0=x ;
 	x2=x0+1.4 ;
@@ -6862,11 +7056,12 @@ void  ball2up(const int istart,const int j,const float x,char *strand,int *syms)
 	return ;
 	}
  
-void  ball2adown(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball2adown(const int istart,const int j,const float x,
+		 char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,x3,y,y2,y3 ;
+	float x0,x2,x3,y = 0.0,y2,y3 ;
  
 	x0=x ;
 	x2=x0-1.4 ;
@@ -6888,11 +7083,12 @@ void  ball2adown(const int istart,const int j,const float x,char *strand,int *sy
 	return ;
 	}
  
-void  ball2aup(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball2aup(const int istart,const int j,const float x,
+	       char *strand,int *syms)  {
  
 	char stran ;
 	int  sym ;
-	float x0,x2,x3,y,y2,y3 ;
+	float x0,x2,x3,y = 0.0,y2,y3 ;
  
 	x0=x ;
 	x2=x0+1.4 ;
@@ -6914,11 +7110,12 @@ void  ball2aup(const int istart,const int j,const float x,char *strand,int *syms
 	return ;
 	}
  
-void  ball3sdown(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball3sdown(const int istart,const int j,const float x,
+		 char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,x3,y,y2,y3 ;
+	float x0,x2,x3,y = 0.0,y2,y3 ;
  
 	x0=x ;
 	x2=x0-2.8 ;
@@ -6949,11 +7146,12 @@ void  ball3sdown(const int istart,const int j,const float x,char *strand,int *sy
 	return ;
 	}
  
-void  ball3sup(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball3sup(const int istart,const int j,const float x,
+	       char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,x3,y,y2,y3 ;
+	float x0,x2,x3,y = 0.0,y2,y3 ;
  
 	x0=x ;
 	x2=x0+2.8 ;
@@ -6984,11 +7182,12 @@ void  ball3sup(const int istart,const int j,const float x,char *strand,int *syms
 	return ;
 	}
  
-void  ball3down(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball3down(const int istart,const int j,const float x,
+		char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,x3,y,y2,y3 ;
+	float x0,x2,x3,y = 0.0,y2,y3 ;
  
 	x0=x ;
 	x2=x0-2.8 ;
@@ -7024,11 +7223,12 @@ void  ball3down(const int istart,const int j,const float x,char *strand,int *sym
 	return ;
 	}
  
-void  ball3up(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball3up(const int istart,const int j,const float x,
+	      char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,x3,y,y2,y3 ;
+	float x0,x2,x3,y = 0.0,y2,y3 ;
  
 	x0=x ;
 	x2=x0-2.8 ;
@@ -7063,11 +7263,12 @@ void  ball3up(const int istart,const int j,const float x,char *strand,int *syms)
 	return ;
 	}
  
-void  ball3down2(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball3down2(const int istart,const int j,const float x,
+		 char *strand,int *syms)  {
  
 	char stran ;
 	int  sym ;
-	float x0,x2,x3,y,y2,y3 ;
+	float x0,x2,x3,y = 0.0,y2,y3 ;
  
 	x0=x ;
 	x2=x0-2.8 ;
@@ -7092,11 +7293,12 @@ void  ball3down2(const int istart,const int j,const float x,char *strand,int *sy
 	return ;
 	}
  
-void  ball3up2(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball3up2(const int istart,const int j,const float x,
+	       char *strand,int *syms)  {
  
 	char stran ;
 	int  sym ;
-	float  x0,x2,x3,y,y2,y3 ;
+	float  x0,x2,x3,y = 0.0,y2,y3 ;
  
 	x0=x ;
 	x2=x0-2.8 ;
@@ -7121,11 +7323,12 @@ void  ball3up2(const int istart,const int j,const float x,char *strand,int *syms
 	return ;
 	}
  
-void  ball4down(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball4down(const int istart,const int j,const float x,
+		char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,x3,x4,y,y0,y2,y3,y4 ;
+	float x0,x2,x3,x4,y = 0.0,y0,y2,y3,y4 ;
  
 	x0=x-4.2 ;
 	x2=x-1.4 ;
@@ -7170,11 +7373,12 @@ void  ball4down(const int istart,const int j,const float x,char *strand,int *sym
 	return ;
 }
  
-void  ball4up(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball4up(const int istart,const int j,const float x,
+	      char *strand,int *syms)  {
  
 	char stran ;
 	int sym ;
-	float  x0,x2,x3,x4,y,y0,y2,y3,y4 ;
+	float  x0,x2,x3,x4,y = 0.0,y0,y2,y3,y4 ;
  
 	x0=x-4.2 ;
 	x2=x-1.4 ;
@@ -7219,11 +7423,12 @@ void  ball4up(const int istart,const int j,const float x,char *strand,int *syms)
 	return ;
 }
  
- void  ball4bdown(const int istart,const int j,const float x,char *strand,int *syms)  {
+ void  ball4bdown(const int istart,const int j,const float x,
+		  char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,x3,x4,y,y0,y2,y3,y4 ;
+	float x0,x2,x3,x4,y = 0.0,y0,y2,y3,y4 ;
  
 	x0=x-4.2 ;
 	x2=x-1.4 ;
@@ -7256,11 +7461,12 @@ void  ball4up(const int istart,const int j,const float x,char *strand,int *syms)
 	return ;
 	}
  
-void  ball4bup(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball4bup(const int istart,const int j,const float x,
+	       char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,x3,x4,y,y0,y2,y3,y4 ;
+	float x0,x2,x3,x4,y = 0.0,y0,y2,y3,y4 ;
  
 	x0=x-4.2 ;
 	x2=x-1.4 ;
@@ -7293,11 +7499,12 @@ void  ball4bup(const int istart,const int j,const float x,char *strand,int *syms
 	return ;
 }
  
-void  ball5down(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball5down(const int istart,const int j,const float x,
+		char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,x3,x4,x5,y,y0,y2,y3,y4,y5 ;
+	float x0,x2,x3,x4,x5,y = 0.0,y0,y2,y3,y4,y5 ;
  
 	x0=x-5.6 ;
 	x2=x-2.8 ;
@@ -7348,11 +7555,12 @@ void  ball5down(const int istart,const int j,const float x,char *strand,int *sym
 	return ;
 }
  
-void  ball5up(const int istart,const int j,const float x,char *strand,int *syms)  {
+void  ball5up(const int istart,const int j,const float x,
+	      char *strand,int *syms)  {
  
 	char stran ;
 	int   sym ;
-	float x0,x2,x3,x4,x5,y,y0,y2,y3,y4,y5 ;
+	float x0,x2,x3,x4,x5,y = 0.0,y0,y2,y3,y4,y5 ;
  
 	x0=x-5.6 ;
 	x2=x-2.8 ;
@@ -7403,18 +7611,19 @@ void  ball5up(const int istart,const int j,const float x,char *strand,int *syms)
 	return ;
 }
 	 
-void  conup(float *hold,const int i,const int is,int *ie,char *strand,int *syms)  {
+void  conup(float *hold,const int i,const int is,int *ie,
+	    char *strand,int *syms)  {
  
   char   stran ;
   int     j,length,hole,hol2,hold3,ibridge,ibrid2 ;
   int     ihole,sym ;
-  float        x,y,x2 ;
-  float        spacer,rhol2,diff,rhole ;
+  float        x = 0.0,y,x2 ;
+  float        spacer = 0.0,rhol2,diff,rhole ;
   
   /*  ajUser("conup hold = %f, i = %d, is= %d, ie = %d",*hold,i,is,*ie);*/
   /*c check to see the size of the connecting part */ 
   length=is-*ie-1 ;
-  /*c	if(length > 74)return */ 
+  /*c	if(length > 74)return */
   if(length <= 7) {
     if(length == 7)spacer=0.0 ;
     if(length == 6)spacer=0.0 ;
@@ -7960,7 +8169,8 @@ void  conup(float *hold,const int i,const int is,int *ie,char *strand,int *syms)
 	   return ;
 	}
  
-void  condown(float *hold1,const int i,const int is,int *ie,char *strand,int *syms) {
+void  condown(float *hold1,const int i,const int is,int *ie,
+	      char *strand,int *syms) {
  
  
 /*#include "common.inc" */ 
@@ -7968,8 +8178,8 @@ void  condown(float *hold1,const int i,const int is,int *ie,char *strand,int *sy
 	char   stran ;
 	int     j,length,hole,hol2,hold3,ibridge,ibrid2 ;
 	int     ihole,sym ;
-	float        x,y,x2 ;
-        float        spacer,rhol2,diff,rhole ;
+	float        x = 0.0,y,x2 ;
+        float        spacer = 0.0,rhol2,diff,rhole ;
  
 /*c check to see the size of the connecting part */ 
 	length=is-*ie-1 ;
