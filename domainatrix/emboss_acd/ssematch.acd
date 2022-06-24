@@ -63,7 +63,7 @@ section: additional [
   type: "page"
 ]
 
-  float: gapopenr [
+  float: rgapopen [
     additional: "Y"
     information: "Gap insertion penalty for reside-based
                   alignment"
@@ -80,7 +80,7 @@ section: additional [
            matrix for nucleotide sequences."
   ]
 
-  float: gapextendr [
+  float: rgapextend [
     additional: "Y"
     information: "Gap extension penalty for residue-based
                   alignment"
@@ -97,7 +97,7 @@ section: additional [
            penalty should be lower than the gap penalty."
   ]
 
-  float: gapopene [
+  float: egapopen [
     additional: "Y"
     information: "Gap insertion penalty for secondary structure
                   element-based alignment."
@@ -114,7 +114,7 @@ section: additional [
            matrix for nucleotide sequences."
   ]
 
-  float: gapextende [
+  float: egapextend [
     additional: "Y"
     information: "Gap extension penalty for secondary structure
                   element-based alignment"
@@ -143,7 +143,7 @@ section: output [
     information: "Domain classification residue-based output
                   file"
     help: "This option specifies the name of the file containing
-           top-scoring domains for residue-based alinnment (output).A 'domain
+           top-scoring domains for residue-based alignment (output).A 'domain
            classification file' contains classification and other data for
            domains from SCOP or CATH, in DCF format (EMBL-like)."
     knowntype: "domain classification"
@@ -155,7 +155,7 @@ section: output [
                   file"
     help: "This option specifies the name of the file containing
            top-scoring domains for secondary structure element-based
-           alinnment (output). A 'domain classification file' contains
+           alignment (output). A 'domain classification file' contains
            classification and other data for domains from SCOP or CATH, in
            DCF format (EMBL-like)."
     knowntype: "domain classification"
