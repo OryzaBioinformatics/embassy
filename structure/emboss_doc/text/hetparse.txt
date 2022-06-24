@@ -218,7 +218,7 @@ NN   0
 6.0 USAGE
 
 Convert heterogen group dictionary to EMBL-like format.
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers (* if not always prompted):
   [-infile]            infile     This option specifies the name of input file
