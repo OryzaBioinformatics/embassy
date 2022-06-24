@@ -115,7 +115,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   mulsets = false;
   msets = 1;
 
-    embInitP (pgm, argc, argv, "PHYLIPNEW");
+  embInitPV(pgm, argc, argv, "PHYLIPNEW",VERSION);
 
     phylostates = ajAcdGetDiscretestates("infile");
 
@@ -942,9 +942,9 @@ void maketree()
   }
   if (jumb == njumble) {
     if (progress) {
-      printf("\nOutput written to file \"%s\"\n\n", outfilename);
+      printf("\nOutput written to file \"%s\"\n", outfilename);
       if (trout)
-        printf("Trees also written onto file \"%s\"\n", outtreename);
+        printf("\nTrees also written onto file \"%s\"\n", outtreename);
       putchar('\n');
     }
   }

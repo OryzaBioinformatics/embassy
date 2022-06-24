@@ -269,7 +269,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   AjPStr getpreviewer = NULL;
   AjPStr labeldirection = NULL;
   
-  embInitP (pgm, argc, argv, "PHYLIPNEW");
+  embInitPV(pgm, argc, argv, "PHYLIPNEW",VERSION);
 
   n = (int)((pagex-hpmargin-0.01)/(paperx-hpmargin)+1.0);
   m = (int)((pagey-vpmargin-0.01)/(papery-vpmargin)+1.0);
@@ -2559,7 +2559,6 @@ void setup_environment(int argc, Char *argv[])
   printf("Reading tree ... \n");
   firsttree = true;
   treestr = ajStrGetuniquePtr(&phylotrees[0]->Tree); 
-  ajUser("Reading tree '%s'", treestr);
   allocate_nodep(&nodep, treestr, &spp);
   treeread (&treestr, &root, treenode, &goteof, &firsttree,
             nodep, &nextnode, &haslengths,
@@ -2662,11 +2661,11 @@ int main(int argc, Char *argv[])
     finishplotter();
     wasplotted = true;
     FClose(plotfile);
-    printf("\nPlot written to file \"%s\"\n\n", pltfilename);
+    printf("\nPlot written to file \"%s\"\n", pltfilename);
   }
 
   FClose(intree);
-  printf("Done.\n\n");
+  printf("\nDone.\n\n");
 #ifdef MAC
   if (plotter == pict && wasplotted){
 #ifdef OSX_CARBON

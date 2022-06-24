@@ -111,7 +111,7 @@ void   emboss_getoptions(char *pgm, int argc, char *argv[])
   mulsets = false;
   datasets = 1;
 
-    embInitP (pgm, argc, argv, "PHYLIPNEW");
+  embInitPV(pgm, argc, argv, "PHYLIPNEW",VERSION);
    
     phylodists = ajAcdGetDistances("datafile");
 
@@ -1020,10 +1020,9 @@ void maketree()
     }
   }
   if (jumb == njumble && progress) {
-    printf("\nOutput written to file \"%s\"\n\n", outfilename);
+    printf("\nOutput written to file \"%s\"\n", outfilename);
     if (trout) {
-      printf("Tree also written onto file \"%s\"\n", outtreename);
-      putchar('\n');
+      printf("\nTree also written onto file \"%s\"\n", outtreename);
     }
   }
 }  /* maketree */
@@ -1066,7 +1065,7 @@ int main(int argc, Char *argv[])
   fixmacfile(outfilename);
   fixmacfile(outtreename);
 #endif
-  printf("Done.\n\n");
+  printf("\nDone.\n\n");
 #ifdef WIN32
   phyRestoreConsoleAttributes();
 #endif

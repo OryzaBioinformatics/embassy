@@ -117,7 +117,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[])
   dotdiff = true;
   msets = 1;
 
-  embInitP (pgm, argc, argv, "PHYLIPNEW");
+  embInitPV(pgm, argc, argv, "PHYLIPNEW",VERSION);
 
   seqsets = ajAcdGetSeqsetall("sequence");
   numseqs = 0;
@@ -1373,12 +1373,12 @@ void maketree()
   }
   if (jumb == njumble) {
     if (progress) {
-      printf("\nOutput written to file \"%s\"\n\n", outfilename);
+      printf("\nOutput written to file \"%s\"\n", outfilename);
       if (trout) {
-        printf("Tree");
+        printf("\nTree");
         if ((usertree && numtrees > 1) || (!usertree && nextree != 2))
           printf("s");
-        printf(" also written onto file \"%s\"\n\n", outtreename);
+        printf(" also written onto file \"%s\"\n", outtreename);
       }
     }
   }
@@ -1503,7 +1503,7 @@ int main(int argc, Char *argv[])
   fixmacfile(outtreename);
 #endif
   if (progress)
-    printf("Done.\n\n");
+    printf("\nDone.\n\n");
 #ifdef WIN32
   phyRestoreConsoleAttributes();
 #endif

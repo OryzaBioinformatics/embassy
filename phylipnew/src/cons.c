@@ -3,7 +3,7 @@
 
 int tree_pairing;
 
-Char outfilename[FNMLNGTH], intreename[FNMLNGTH], intree2name[FNMLNGTH], outtreename[FNMLNGTH];
+Char intreename[FNMLNGTH], intree2name[FNMLNGTH];
 node *root;
 
 long numopts, outgrno, col, setsz;
@@ -672,22 +672,26 @@ void drawline(long i)
         putc('+', outfile);
       trif = false;
       if (!q->tip) {
-        for (j = 1; j <= n - 7; j++)
+        for (j = 1; j <= n - 8; j++)
           putc('-', outfile);
         if (noroot && (root->next->next->next == root) &&
             (((root->next->back == q) && root->next->next->back->tip)
              || ((root->next->next->back == q) && root->next->back->tip)))
-          fprintf(outfile, "------|");
+          fprintf(outfile, "-------|");
         else {
           if (!strict) {   /* write number of times seen */
-            if (q->deltav >= 100)
-              fprintf(outfile, "%5.1f-|", (double)q->deltav);
+            if (q->deltav >= 10000)
+              fprintf(outfile, "-%5.0f-|", (double)q->deltav);
+            else if (q->deltav >= 1000)
+              fprintf(outfile, "--%4.0f-|", (double)q->deltav);
+            else if (q->deltav >= 100)
+              fprintf(outfile, "-%5.1f-|", (double)q->deltav);
             else if (q->deltav >= 10)
-              fprintf(outfile, "-%4.1f-|", (double)q->deltav);
+              fprintf(outfile, "--%4.1f-|", (double)q->deltav);
             else
-              fprintf(outfile, "--%3.1f-|", (double)q->deltav);
+              fprintf(outfile, "--%4.2f-|", (double)q->deltav);
           } else
-            fprintf(outfile, "------|");
+            fprintf(outfile, "-------|");
         }
         extra = true;
         trif = true;
@@ -1442,7 +1446,6 @@ void read_groups (pattern_elm ****pattern_array,
       (*pattern_array) =
         (pattern_elm ***)Malloc(setsz * sizeof(pattern_elm **));
 
-      ajUser("read_groups %p", (*pattern_array));
       /* For this assignment, let's assume that there will be no
          more than maxtrees. */
       for (j = 0 ; j < setsz ; j++) 
