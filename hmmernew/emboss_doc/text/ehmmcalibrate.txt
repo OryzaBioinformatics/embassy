@@ -88,7 +88,7 @@ Command line arguments
    them).
 
 Calibrate HMM search statistics
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-inhmmfile]         infile     File containing an HMM.
@@ -199,11 +199,11 @@ ALPH  Amino
 RF    no
 CS    no
 MAP   yes
-COM   /shared/software/bin/hmmbuild -n globins50 --pbswitch 1000 --archpri 0.850
-000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin.
-hmm ../../data/hmmnew/globins50.msf
+COM   /home/pmr/local/bin/hmmbuild -n globins50 --pbswitch 1000 --archpri 0.8500
+00 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin.h
+mm ../../data/hmmnew/globins50.msf
 NSEQ  50
-DATE  Fri Jul 15 12:00:00 2011
+DATE  Mon Jul 15 12:00:00 2013
 CKSUM 9858
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4
 NULT      -4  -8455
@@ -373,13 +373,13 @@ ALPH  Amino
 RF    no
 CS    no
 MAP   yes
-COM   /shared/software/bin/hmmbuild -n globins50 --pbswitch 1000 --archpri 0.850
-000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin.
-hmm ../../data/hmmnew/globins50.msf
-COM   /shared/software/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.00
-0000 --seed 1 ../ehmmbuild-keep/globin.hmm
+COM   /homes/user/local/bin/hmmbuild -n globins50 --pbswitch 1000 --archpri 0.85
+0000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin
+.hmm ../../data/hmmnew/globins50.msf
+COM   /homes/user/local/bin/hmmcalibrate --mean 350.000000 --num 5000 --sd 350.0
+00000 --seed 1 ../ehmmbuild-keep/globin.hmm
 NSEQ  50
-DATE  Fri Jul 15 12:00:00 2011
+DATE  Mon Jul 15 12:00:00 2013
 CKSUM 9858
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4
 NULT      -4  -8455

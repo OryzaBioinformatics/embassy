@@ -109,7 +109,7 @@ ID ehmmcalibrate-keep
 AB hmmernew
 RQ hmmer
 AA ehmmcalibrate
-TI 120
+TI 180
 DL keep
 CL ../ehmmbuild-keep/globin.hmm globino.hmm -seed 1
 FI stderr

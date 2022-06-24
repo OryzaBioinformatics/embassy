@@ -110,7 +110,7 @@ Command line arguments
    them).
 
 Build a profile HMM from an alignment.
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-alignfile]         seqset     (Aligned) protein sequence set filename and
@@ -365,6 +365,7 @@ Version: EMBOSS:6.5.0.0
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
    -scircular1         boolean    Sequence is circular
+   -squick1            boolean    Read id and sequence only
    -sformat1           string     Input sequence format
    -iquery1            string     Input query fields or ID list
    -ioffset1           integer    Input start position offset
@@ -543,11 +544,11 @@ ALPH  Amino
 RF    no
 CS    no
 MAP   yes
-COM   /shared/software/bin/hmmbuild -n globins50 --pbswitch 1000 --archpri 0.850
-000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin.
-hmm ../../data/hmmnew/globins50.msf
+COM   /homes/user/local/bin/hmmbuild -n globins50 --pbswitch 1000 --archpri 0.85
+0000 --idlevel 0.620000 --swentry 0.500000 --swexit 0.500000 --wgsc -A -F globin
+.hmm ../../data/hmmnew/globins50.msf
 NSEQ  50
-DATE  Fri Jul 15 12:00:00 2011
+DATE  Mon Jul 15 12:00:00 2013
 CKSUM 9858
 XT      -8455     -4  -1000  -1000  -8455     -4  -8455     -4
 NULT      -4  -8455
