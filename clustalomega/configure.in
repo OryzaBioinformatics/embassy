@@ -4,11 +4,11 @@
 
 AC_PREREQ([2.64])
 AC_INIT([CLUSTALOMEGA],
-[0.2.0.650],
+[1.1.0],
 [emboss-bug@emboss.open-bio.org],
 [CLUSTALOMEGA],
 [http://emboss.open-bio.org/])
-AC_REVISION([$Revision: 1.5 $])
+AC_REVISION([$Revision: 1.6 $])
 AC_CONFIG_SRCDIR([src/eomega.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])

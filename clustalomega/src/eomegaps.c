@@ -1,4 +1,4 @@
-/* @source eomega application
+/* @source eomegaps application
 **
 ** Wrapper for clustalo
 **
@@ -59,6 +59,7 @@ typedef struct OmegaSQual
 
 static OmegaOQual omegaqualsgeneral[] =
 {
+    {"profile",      "p2",              "",    TYPE_INFILE},
     {"indistfile",   "distmat-in",      "",    TYPE_INFILE},
     {"inguidefile",  "guidetree-in",    "",    TYPE_INFILE},
     {"outdistfile",  "distmat-out",     "",    TYPE_OUTFILE},
@@ -106,19 +107,19 @@ typedef struct OmegaSQuals
 } OmegaOQuals;
 #define OmegaPQuals OmegaOQuals*
 
-static void eomega_doquals(AjPStr *cl, OmegaOQual[]);
+static void eomegasp_doquals(AjPStr *cl, OmegaOQual[]);
 
-static void eomega_dobool(AjPStr *cl, OmegaOQual qual);
-static void eomega_dotoggle(AjPStr *cl, OmegaOQual qual);
-static void eomega_dostring(AjPStr *cl, OmegaOQual qual);
-static void eomega_doinfile(AjPStr *cl, OmegaOQual qual);
-static void eomega_dooutfile(AjPStr *cl, OmegaOQual qual);
-static void eomega_dodirectory(AjPStr *cl, OmegaOQual qual);
-static void eomega_dolistsingle(AjPStr *cl, OmegaOQual qual);
+static void eomegasp_dobool(AjPStr *cl, OmegaOQual qual);
+static void eomegasp_dotoggle(AjPStr *cl, OmegaOQual qual);
+static void eomegasp_dostring(AjPStr *cl, OmegaOQual qual);
+static void eomegasp_doinfile(AjPStr *cl, OmegaOQual qual);
+static void eomegasp_dooutfile(AjPStr *cl, OmegaOQual qual);
+static void eomegasp_dodirectory(AjPStr *cl, OmegaOQual qual);
+static void eomegasp_dolistsingle(AjPStr *cl, OmegaOQual qual);
 static void eomega_dolistspecial(AjPStr *cl, OmegaOQual qual);
-static void eomega_dolist(AjPStr *cl, OmegaOQual qual);
-static void eomega_dointeger(AjPStr *cl, OmegaOQual qual);
-static void eomega_dofloat(AjPStr *cl, OmegaOQual qual);
+static void eomegasp_dolist(AjPStr *cl, OmegaOQual qual);
+static void eomegasp_dointeger(AjPStr *cl, OmegaOQual qual);
+static void eomegasp_dofloat(AjPStr *cl, OmegaOQual qual);
 
 
 
@@ -144,23 +145,23 @@ typedef struct OmegaSProcess
 
 static OmegaOProcess omegaprocess[] =
 {
-    {TYPE_BOOL, eomega_dobool},
-    {TYPE_TOGGLE, eomega_dotoggle},
-    {TYPE_INT, eomega_dointeger},
-    {TYPE_FLOAT, eomega_dofloat},
-    {TYPE_STR, eomega_dostring},
-    {TYPE_LIST, eomega_dolist},
-    {TYPE_LISTSINGLE, eomega_dolistsingle},
+    {TYPE_BOOL, eomegasp_dobool},
+    {TYPE_TOGGLE, eomegasp_dotoggle},
+    {TYPE_INT, eomegasp_dointeger},
+    {TYPE_FLOAT, eomegasp_dofloat},
+    {TYPE_STR, eomegasp_dostring},
+    {TYPE_LIST, eomegasp_dolist},
+    {TYPE_LISTSINGLE, eomegasp_dolistsingle},
     {TYPE_LISTSPECIAL, eomega_dolistspecial},
-    {TYPE_INFILE, eomega_doinfile},
-    {TYPE_OUTFILE, eomega_dooutfile},
-    {TYPE_DIR, eomega_dodirectory},
+    {TYPE_INFILE, eomegasp_doinfile},
+    {TYPE_OUTFILE, eomegasp_dooutfile},
+    {TYPE_DIR, eomegasp_dodirectory},
 
 };
 
 
 
-/* @prog eomega ***************************************************************
+/* @prog eomegasp *************************************************************
 **
 ** Wrapper for clustalo
 **
@@ -168,7 +169,7 @@ static OmegaOProcess omegaprocess[] =
 
 int main(int argc, char **argv)
 {
-    AjPSeqset seqs   = NULL;
+    AjPSeq seq   = NULL;
     AjPSeqout outseq = NULL;
     AjPSeqout seq_file = NULL;
     
@@ -176,21 +177,19 @@ int main(int argc, char **argv)
     AjPStr tmpfile = NULL;
     AjPStr outname = NULL;
     
-    embInitPV("eomega", argc, argv, "CLUSTALOMEGA",VERSION);
+    embInitPV("eomegaps", argc, argv, "CLUSTALOMEGA",VERSION);
 
     tmpfile = ajStrNew();
     outname = ajStrNew();
     
     cl = ajStrNewS(ajAcdGetpathC("clustalo"));
 
-    seqs   = ajAcdGetSeqset("sequences");
-    outseq = ajAcdGetSeqoutset("outseq");
+    seq    = ajAcdGetSeq("sequence");
 
     /*
     ** Start by writing sequences into a unique temporary file
     ** get file pointer to unique file
     */
-
 
     seq_file = ajSeqoutNew();
     ajFmtPrintS(&tmpfile,"clustalotmp%d",getpid());
@@ -200,20 +199,22 @@ int main(int argc, char **argv)
 
     /* Set output format to fasta */
     ajSeqoutSetFormatC(seq_file, "fasta");
-    ajSeqoutWriteSet(seq_file, seqs);
+    ajSeqoutWriteSeq(seq_file, seq);
     ajSeqoutClose(seq_file);
     ajSeqoutDel(&seq_file);
+    
+    ajFmtPrintAppS(&cl," --p1=%S",tmpfile);
 
+    eomegasp_doquals(&cl, omegaqualsgeneral);
+
+    outseq = ajAcdGetSeqoutset("outseq");
     ajStrAssignS(&outname,ajSeqoutGetFilename(outseq));
     ajSeqoutCloseEmpty(outseq);
     ajSeqoutDel(&outseq);
     ajSysFileUnlinkS(outname);    
-    
-    ajFmtPrintAppS(&cl," --infile=%S",tmpfile);
     ajFmtPrintAppS(&cl," --outfile=%S",outname);
 
-    eomega_doquals(&cl, omegaqualsgeneral);
-    eomega_doquals(&cl, omegaqualsadv);
+    eomegasp_doquals(&cl, omegaqualsadv);
 
     ajDebug("Constructed command line: %S\n",cl);
 
@@ -232,8 +233,7 @@ int main(int argc, char **argv)
     ajStrDel(&cl);
     ajStrDel(&tmpfile);
     ajStrDel(&outname);
-
-    ajSeqsetDel(&seqs);
+    ajSeqDel(&seq);
 
     embExit();
 
@@ -243,7 +243,7 @@ int main(int argc, char **argv)
 
 
 
-/* @funcstatic eomega_doquals *********************************************
+/* @funcstatic eomegasp_doquals ***********************************************
 **
 ** Get ACD bools.
 ** Only add to command line if value different from the default
@@ -255,7 +255,7 @@ int main(int argc, char **argv)
 ** @@
 ******************************************************************************/
 
-static void eomega_doquals(AjPStr *cl, OmegaOQual omegaquals[])
+static void eomegasp_doquals(AjPStr *cl, OmegaOQual omegaquals[])
 {
     ajuint i;
     
@@ -273,7 +273,7 @@ static void eomega_doquals(AjPStr *cl, OmegaOQual omegaquals[])
 
 
 
-/* @funcstatic eomega_dobool *********************************************
+/* @funcstatic eomegasp_dobool *********************************************
 **
 ** Get ACD bools.
 ** Only add to command line if value different from the default
@@ -285,7 +285,7 @@ static void eomega_doquals(AjPStr *cl, OmegaOQual omegaquals[])
 ** @@
 ******************************************************************************/
 
-static void eomega_dobool(AjPStr *cl, OmegaOQual qual)
+static void eomegasp_dobool(AjPStr *cl, OmegaOQual qual)
 {
     AjBool bqual = ajFalse;
 
@@ -308,7 +308,7 @@ static void eomega_dobool(AjPStr *cl, OmegaOQual qual)
 
 
 
-/* @funcstatic eomega_dotoggle *********************************************
+/* @funcstatic eomegasp_dotoggle *********************************************
 **
 ** Get ACD toggle.
 ** Only add to command line if value different from the default
@@ -321,7 +321,7 @@ static void eomega_dobool(AjPStr *cl, OmegaOQual qual)
 ** @@
 ******************************************************************************/
 
-static void eomega_dotoggle(AjPStr *cl, OmegaOQual qual)
+static void eomegasp_dotoggle(AjPStr *cl, OmegaOQual qual)
 {
     AjBool bqual = ajFalse;
 
@@ -341,7 +341,7 @@ static void eomega_dotoggle(AjPStr *cl, OmegaOQual qual)
 
 
 
-/* @funcstatic eomega_dostring *********************************************
+/* @funcstatic eomegasp_dostring *********************************************
 **
 ** Get ACD strings.
 ** Only add to command line if value different from the default
@@ -352,7 +352,7 @@ static void eomega_dotoggle(AjPStr *cl, OmegaOQual qual)
 ** @@
 ******************************************************************************/
 
-static void eomega_dostring(AjPStr *cl, OmegaOQual qual)
+static void eomegasp_dostring(AjPStr *cl, OmegaOQual qual)
 {
     AjPStr squal = NULL;
     
@@ -374,7 +374,7 @@ static void eomega_dostring(AjPStr *cl, OmegaOQual qual)
 
 
 
-/* @funcstatic eomega_doinfile ************************************************
+/* @funcstatic eomegasp_doinfile ************************************************
 **
 ** Get ACD input files.
 ** Only add to command line if value different from the default
@@ -385,7 +385,7 @@ static void eomega_dostring(AjPStr *cl, OmegaOQual qual)
 ** @@
 ******************************************************************************/
 
-static void eomega_doinfile(AjPStr *cl, OmegaOQual qual)
+static void eomegasp_doinfile(AjPStr *cl, OmegaOQual qual)
 {
     AjPStr squal = NULL;
     AjPFile infile = NULL;
@@ -415,9 +415,9 @@ static void eomega_doinfile(AjPStr *cl, OmegaOQual qual)
 
 
 
-/* @funcstatic eomega_dooutfile ************************************************
+/* @funcstatic eomegasp_dooutfile *********************************************
 **
-** Get ACD output files.
+** Get ACD input files.
 ** Only add to command line if value different from the default
 **
 ** @param [w] cl [AjPStr*] command line
@@ -426,7 +426,7 @@ static void eomega_doinfile(AjPStr *cl, OmegaOQual qual)
 ** @@
 ******************************************************************************/
 
-static void eomega_dooutfile(AjPStr *cl, OmegaOQual qual)
+static void eomegasp_dooutfile(AjPStr *cl, OmegaOQual qual)
 {
     AjPStr squal = NULL;
     AjPFile outfile = NULL;
@@ -453,7 +453,7 @@ static void eomega_dooutfile(AjPStr *cl, OmegaOQual qual)
 
 
 
-/* @funcstatic eomega_dodirectory **********************************************
+/* @funcstatic eomegasp_dodirectory **********************************************
 **
 ** Get ACD directories.
 ** Only add to command line if value different from the default
@@ -464,7 +464,7 @@ static void eomega_dooutfile(AjPStr *cl, OmegaOQual qual)
 ** @@
 ******************************************************************************/
 
-static void eomega_dodirectory(AjPStr *cl, OmegaOQual qual)
+static void eomegasp_dodirectory(AjPStr *cl, OmegaOQual qual)
 {
     AjPStr squal = NULL;
     
@@ -486,7 +486,7 @@ static void eomega_dodirectory(AjPStr *cl, OmegaOQual qual)
 
 
 
-/* @funcstatic eomega_dolistsingle ********************************************
+/* @funcstatic eomegasp_dolistsingle ********************************************
 **
 ** Get ACD single value list entries.
 ** Only add to command line if value different from the default
@@ -497,7 +497,7 @@ static void eomega_dodirectory(AjPStr *cl, OmegaOQual qual)
 ** @@
 ******************************************************************************/
 
-static void eomega_dolistsingle(AjPStr *cl, OmegaOQual qual)
+static void eomegasp_dolistsingle(AjPStr *cl, OmegaOQual qual)
 {
     AjPStr squal = NULL;
 
@@ -563,7 +563,7 @@ static void eomega_dolistspecial(AjPStr *cl, OmegaOQual qual)
 
 
 
-/* @funcstatic eomega_dolist **************************************************
+/* @funcstatic eomegasp_dolist ************************************************
 **
 ** Get ACD single value list entries.
 ** Only add to command line if value different from the default
@@ -574,7 +574,7 @@ static void eomega_dolistspecial(AjPStr *cl, OmegaOQual qual)
 ** @@
 ******************************************************************************/
 
-static void eomega_dolist(AjPStr *cl, OmegaOQual qual)
+static void eomegasp_dolist(AjPStr *cl, OmegaOQual qual)
 {
     AjPStr *squal = NULL;
     ajuint j;
@@ -606,7 +606,7 @@ static void eomega_dolist(AjPStr *cl, OmegaOQual qual)
 
 
 
-/* @funcstatic eomega_dointeger ********************************************
+/* @funcstatic eomegasp_dointeger ********************************************
 **
 ** Get ACD integers.
 ** Only add to command line if value different from the default
@@ -618,7 +618,7 @@ static void eomega_dolist(AjPStr *cl, OmegaOQual qual)
 ** @@
 ******************************************************************************/
 
-static void eomega_dointeger(AjPStr *cl, OmegaOQual qual)
+static void eomegasp_dointeger(AjPStr *cl, OmegaOQual qual)
 {
     ajint  iqual;
 
@@ -637,7 +637,7 @@ static void eomega_dointeger(AjPStr *cl, OmegaOQual qual)
 
 
 
-/* @funcstatic eomega_dofloat ********************************************
+/* @funcstatic eomegasp_dofloat ********************************************
 **
 ** Get ACD integers.
 ** Only add to command line if value different from the default
@@ -649,7 +649,7 @@ static void eomega_dointeger(AjPStr *cl, OmegaOQual qual)
 ** @@
 ******************************************************************************/
 
-static void eomega_dofloat(AjPStr *cl, OmegaOQual qual)
+static void eomegasp_dofloat(AjPStr *cl, OmegaOQual qual)
 {
     ajint  fqual;
 

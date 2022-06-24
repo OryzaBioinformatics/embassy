@@ -44,7 +44,6 @@ Usage
 % eomegash ../data/globins4.hmm
 Sequence with HMM (ClustalO wrapper)
 (aligned) output sequence set [twoglob.aln]:
-WARNING: This is a beta version of Clustal Omega, for protein only.
 
 
    Go to the input files for this example
@@ -53,26 +52,25 @@ WARNING: This is a beta version of Clustal Omega, for protein only.
 Command line arguments
 
 Sequence with HMM (ClustalO wrapper)
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequences]         seqset     File containing sequences to align
-  [-hmm]               infile     Pre-aligned multiple sequence file (aligned
+  [-hmmfile]           infile     Pre-aligned multiple sequence file (aligned
                                   columns will be kept fixed)
   [-outseq]            seqoutset  [.] Sequence set filename
                                   and optional format (output USA)
 
    Additional (Optional) qualifiers: (none)
    Advanced (Unprompted) qualifiers:
-   -indist             infile     Pairwise distance matrix input file (skips
+   -indistfile         infile     Pairwise distance matrix input file (skips
                                   distance computation)
-   -inguide            infile     Guide tree input file (skips distance
+   -inguidefile        infile     Guide tree input file (skips distance
                                   computation and guide tree clustering step)
    -dealign            toggle     [N] Dealign input sequences
-   -mbed               toggle     [N] Fast, Mbed-like clustering for guide
-                                  tree calculation
-   -intermbed          toggle     [N] Fast, Mbed-like clustering for guide
-                                  tree calculation
+   -cluster            menu       [mbed] Method (Values: mbed (mBED method);
+                                  full (Full slow method); iter (Iteration
+                                  used full slower method))
    -maxiterations      integer    [0] Number of (combined guide tree/HMM)
                                   iterations (Integer from 0 to 2000000000)
    -maxgiterations     integer    [2000000000] Maximum guide tree iterations
@@ -85,9 +83,15 @@ Version: EMBOSS:6.5.0.0
                                   (Integer from 1 to 2000000000)
    -self               toggle     [N] Set options automatically (might
                                   overwrite some options
-   -outdist            outfile    [*.eomegash] Pairwise distance matrix output
-                                  file
-   -outguide           outfile    [*.eomegash] Guide tree output file
+   -outformat          menu       [fasta] Format (Values: fasta (FASTA);
+                                  clustal (Aln clustal); msf (MSF); phylip
+                                  (Phylip); selex (Selex); stockholm
+                                  (Stockholm); vienna (ViennaRNA))
+   -outdistfile        outfile    [*.eomegash] Pairwise distance matrix output
+                                  file, only available in cluster mode 'full'
+   -outguidefile       outfile    [*.eomegash] Guide tree output file
+   -log                toggle     [N] Log progress to standard output if not
+                                  used for output
 
    Associated qualifiers:
 
@@ -101,6 +105,7 @@ Version: EMBOSS:6.5.0.0
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
    -scircular1         boolean    Sequence is circular
+   -squick1            boolean    Read id and sequence only
    -sformat1           string     Input sequence format
    -iquery1            string     Input query fields or ID list
    -ioffset1           integer    Input start position offset
@@ -122,10 +127,10 @@ Version: EMBOSS:6.5.0.0
    -ofname3            string     Features file name
    -ofdirectory3       string     Output directory
 
-   "-outdist" associated qualifiers
+   "-outdistfile" associated qualifiers
    -odirectory         string     Output directory
 
-   "-outguide" associated qualifiers
+   "-outguidefile" associated qualifiers
    -odirectory         string     Output directory
 
    General qualifiers:
@@ -175,7 +180,7 @@ ALPH  amino
 RF    no
 CS    no
 MAP   yes
-DATE  Fri Jul 15 12:00:00 2011
+DATE  Mon Jul 15 12:00:00 2013
 NSEQ  4
 EFFN  0.964844
 CKSUM 2027839109
@@ -468,6 +473,7 @@ See also
    emma             Multiple sequence alignment (ClustalW wrapper)
    eomega           Multiple sequence alignment (ClustalO wrapper)
    eomegapp         Profile with profile (ClustalO wrapper)
+   eomegaps         Single sequence with profile (ClustalO wrapper)
    eomegasp         Sequence with profile (ClustalO wrapper)
    infoalign        Display basic information about a multiple sequence alignment
    mse              Multiple sequence editor

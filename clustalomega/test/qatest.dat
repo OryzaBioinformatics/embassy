@@ -20,6 +20,50 @@ FP 0 /Error: /
 FP 0 /Died: /
 //
 
+ID eomega-output
+AB clustalomega
+AA eomega
+CL ../../data/globins.fasta -outguide globins.guide
+IN
+FI globins.guide
+FP 2 /^HB[AB]_HORSE:0\./
+FI globins.aln
+FC = 28
+FP /^>HBA_HORSE Sw:Hba_Horse => HBA_HORSE\n/
+FP /^---------VLSAADKTNVKAAWSKVGGHAGEYGAEALERMFLGFPTTKTYFPHFDL---\n/
+FP /^---SHGSAQVKAHGKKVGDALTLAVGHLDDLP--G---ALSNLSDLHAHKLRVDPVNFKL\n/
+FP /^LSHCLLSTLAVHLPNDFTPAVHASLDKFLSSVSTVLTSKYR------\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID eomega-outdist
+AB clustalomega
+AA eomega
+CL ../../data/globins.fasta -cluster full
+CL -outdist globins.dist -outguide globins.guide
+IN
+FI globins.dist
+FP /^7\n/
+FP /HBA_HUMAN  0\.6\d+ 0\.6\d+ 0\.0+ 0\.1\d+ 0\.7\d+ 0\.7\d+ 0\.8\d+\n/
+FI globins.guide
+FP 2 /^HB[AB]_HORSE:0\./
+FI globins.aln
+FC = 28
+FP /^>HBA_HORSE Sw:Hba_Horse => HBA_HORSE\n/
+FP /^---------VLSAADKTNVKAAWSKVGGHAGEYGAEALERMFLGFPTTKTYFPHFDL---\n/
+FP /^---SHGSAQVKAHGKKVGDALTLAVGHLDDLP--G---ALSNLSDLHAHKLRVDPVNFKL\n/
+FP /^LSHCLLSTLAVHLPNDFTPAVHASLDKFLSSVSTVLTSKYR------\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
 ID eomegapp-ex
 AB clustalomega
 AA eomegapp
@@ -64,6 +108,28 @@ FP 0 /Error: /
 FP 0 /Died: /
 //
 
+ID eomegaps-ex
+AB clustalomega
+AA eomegaps
+CL ../../data/op1.ali tsw:opsd_human
+IN
+FI op1.aln
+FC = 104
+FP /^>OPSD_HUMAN P08100 Rhodopsin \(Opsin-2\)\n/
+FP /^MNGTEGPNFYV-------PFSNATGVVRSPFEYP-----QYYLAEPWQFSMLAAYMFLLI\n/
+FP /^VLGFP---INFLTLYVTVQHKKLRTPLNYILLNLAVADLFMVLGGFTSTLYTSLHGYFVF\n/
+FP /^GPTGCNLEGFFATLGGEIALWSLVVLAIERYVVVCKPMSNFRFGENHAIMGVAFTWVMAL\n/
+FP /^ACAAPPLAGWSRYIPEGLQCSCGIDYYTLKPEVNNESFVIYMFVVHFTIPMIIIFFCYGQ\n/
+FP /^LVFTVKEAAAQQQE-------------SATTQKAEKEVTRMVIIMVIAFLICWVPYASVA\n/
+FP /^FYIFTHQGSNFGPIFMTIPAFFAKSAAIYNPVIYIMMNKQFRNCMLT---TICCGKNPLG\n/
+FP /^DDEASATVS-KTET-----SQVAPA\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
 ID eomegasp-ex
 AB clustalomega
 AA eomegasp
@@ -79,6 +145,234 @@ FP /^ALACAAPPLVGWSRYIPEGMQCSCGIDYYTLKPEVNNESFVIYMFVVHFTIPMVVIFFCY\n/
 FP /^GQLVFTVKEAAAQQ--QE-------------SATTQKAEKEVTRMVIIMVIAFLICWLPY\n/
 FP /^AGVAFYIFTHQGSNFGPILMTLPAFFAKTSAVYNPVIYIMLNKQFRTCMLT---TLCCGK\n/
 FP /^IPLGDDEASATAS-KTET-----SQVAPA\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID clustalo-test1
+AB clustalomega
+AP eomega
+CL TESTDATA:globin.fa
+IN
+FI globin.aln
+FC = 28
+FP /^>HBA_HORSE Sw:Hba_Horse => HBA_HORSE\n/
+FP /^---------VLSAADKTNVKAAWSKVGGHAGEYGAEALERMFLGFPTTKTYFPHFDL---\n/
+FP /^---SHGSAQVKAHGKKVGDALTLAVGHLDDLP--G---ALSNLSDLHAHKLRVDPVNFKL\n/
+FP /^LSHCLLSTLAVHLPNDFTPAVHASLDKFLSSVSTVLTSKYR------\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID clustalo-test2keep
+AB clustalomega
+AP eomega
+DL keep
+CL TESTDATA:globin.fa -outformat stockholm
+IN globin.sto
+FI globin.sto
+FC = 42
+FP /^# STOCKHOLM 1.0\n/
+FP /^#=GS  HBB_HUMAN DE    Sw:Hbb_Human => HBB_HUMAN\n/
+FP /^HBB_HUMAN   --------VHLTPEEKSAVTALWGKVNV--DEVGGEALGRLLVVYPWTQR\n/
+FP /^HBB_HUMAN   FFESFGDLSTPDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLK--G---TF\n/
+FP /^HBB_HUMAN   ATLSELHCDKLHVDPENFRLLGNVLVCVLAHHFGKEFTPPVQAAYQKVVA\n/
+FP /^HBB_HUMAN   GVANALAHKYH------\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID clustalo-test3
+AB clustalomega
+AP eomega
+CL TESTDATA:globin.fa -outformat clustal
+IN
+FI globin.aln
+FC = 29
+FP /^CLUSTAL O\(1\.1\.0\) multiple sequence alignment\n/
+FP /^HBB_HUMAN       --------VHLTPEEKSAVTALWGKVNV--DEVGGEALGRLLVVYPWTQRFFESFGDLST\n/
+FP /^HBB_HUMAN       PDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLK--G---TFATLSELHCDKLHVDPENFRL\n/
+FP /^HBB_HUMAN       LGNVLVCVLAHHFGKEFTPPVQAAYQKVVAGVANALAHKYH------\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID clustalo-test3a
+AB clustalomega
+AP eomega
+CL TESTDATA:globin.fa -outformat aln
+IN
+FI globin.aln
+FC = 29
+FP /^CLUSTAL O\(1\.1\.0\) multiple sequence alignment\n/
+FP /^HBB_HUMAN       --------VHLTPEEKSAVTALWGKVNV--DEVGGEALGRLLVVYPWTQRFFESFGDLST\n/
+FP /^HBB_HUMAN       PDAVMGNPKVKAHGKKVLGAFSDGLAHLDNLK--G---TFATLSELHCDKLHVDPENFRL\n/
+FP /^HBB_HUMAN       LGNVLVCVLAHHFGKEFTPPVQAAYQKVVAGVANALAHKYH------\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID clustalo-test4keep
+AB clustalomega
+AP eomega
+DL keep
+CL TESTDATA:globin.fa -outdist globin.mat -outguide globin.dnd
+CL -cluster full
+IN
+FI globin.aln
+FC = 28
+FP /^>HBA_HORSE Sw:Hba_Horse => HBA_HORSE\n/
+FP /^---------VLSAADKTNVKAAWSKVGGHAGEYGAEALERMFLGFPTTKTYFPHFDL---\n/
+FP /^---SHGSAQVKAHGKKVGDALTLAVGHLDDLP--G---ALSNLSDLHAHKLRVDPVNFKL\n/
+FP /^LSHCLLSTLAVHLPNDFTPAVHASLDKFLSSVSTVLTSKYR------\n/
+FI globin.dnd
+FC = 26
+FP 7 /[A-Z0-9]+_[A-Z0-9]+:0.[0-9]+\n/
+FI globin.mat
+FC = 8
+FP /7\n/
+FP 7 /\S+ +[0-9.-]+ [0-9.-]+ [0-9.-]+ [0-9.-]+ [0-9.-]+ [0-9.-]+ [0-9.-]+\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID clustalo-test5
+AB clustalomega
+AP eomega
+CL TESTDATA:globin.fa -inguide ../clustalo-test4keep/globin.dnd
+IN
+FI globin.aln
+FC = 28
+FP /^>HBA_HORSE Sw:Hba_Horse => HBA_HORSE\n/
+FP /^---------VLSAADKTNVKAAWSKVGGHAGEYGAEALERMFLGFPTTKTYFPHFDL---\n/
+FP /^---SHGSAQVKAHGKKVGDALTLAVGHLDDLP--G---ALSNLSDLHAHKLRVDPVNFKL\n/
+FP /^LSHCLLSTLAVHLPNDFTPAVHASLDKFLSSVSTVLTSKYR------\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID clustalo-test6
+AB clustalomega
+AP eomega
+CL TESTDATA:globin.fa -maxiter 2
+IN
+FI globin.aln
+FC = 28
+FP /^>HBA_HORSE Sw:Hba_Horse => HBA_HORSE\n/
+FP /^---------VLSAADKTNVKAAWSKVGGHAGEYGAEALERMFLGFPTTKTYFPHFDL---\n/
+FP /^---SHGSAQVKAHGKKVGDALTLAVGHLDDLPG-----ALSNLSDLHAHKLRVDPVNFKL\n/
+FP /^LSHCLLSTLAVHLPNDFTPAVHASLDKFLSSVSTVLTSKYR------\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID clustalo-test7
+AB clustalomega
+AP eomega
+CL TESTDATA:globin.fa -maxiter 5 -maxgiter 1
+IN
+FI globin.aln
+FC = 28
+FP /^>HBA_HORSE Sw:Hba_Horse => HBA_HORSE\n/
+FP /^---------VLSAADKTNVKAAWSKVGGHAGEYGAEALERMFLGFPTTKTYFPHFDL---\n/
+FP /^---SHGSAQVKAHGKKVGDALTLAVGHLDDLPG-----ALSNLSDLHAHKLRVDPVNFKL\n/
+FP /^LSHCLLSTLAVHLPNDFTPAVHASLDKFLSSVSTVLTSKYR------\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID clustalo-test8
+AB clustalomega
+AP eomega
+CL TESTDATA:globin.fa -log
+IN
+FI globin.aln
+FC = 28
+FP /^>HBA_HORSE Sw:Hba_Horse => HBA_HORSE\n/
+FP /^---------VLSAADKTNVKAAWSKVGGHAGEYGAEALERMFLGFPTTKTYFPHFDL---\n/
+FP /^---SHGSAQVKAHGKKVGDALTLAVGHLDDLP--G---ALSNLSDLHAHKLRVDPVNFKL\n/
+FP /^LSHCLLSTLAVHLPNDFTPAVHASLDKFLSSVSTVLTSKYR------\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+FI stdout
+FC = 10
+FP /^mBed created 1 cluster\/s /
+FP /Progressive alignment progress: 100 \% \(6 out of 6\)/
+//
+
+ID clustalo-test9keep
+AB clustalomega
+AP eomega
+DL keep
+TI 900
+CL TESTDATA:PF00042_full.fa -dealign -cluster full -outformat vienna
+IN pf00042_full.vie
+FI pf00042_full.vie
+FC = 9260
+FP 4630 /^>/
+FP /AQVKGHGA-KVADA-+LATAAD-N-L-+D-+D-+LPG-ALSALSNLHA--HK-+L-+r-+V-DPV-NF-+K-LL-+SHCLL-+\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID clustalo-test10
+AB clustalomega
+AP eomega
+CL TESTDATA:PF00042_full.fa -dealign -cluster mbed -outformat vienna
+IN
+FI pf00042_full.aln
+FC = 9260
+FP 4630 /^>/
+FP /GSAQ---V-KGHGA-KVADALA--TAAD-+NLD-+DL-+PG-+A-+LSALSN-LHAH-KLr-+VDPVNF-+KLLSHCLL-+\n/
+FI stderr
+FC = 2
+FP 0 /Warning: /
+FP 0 /Error: /
+FP 0 /Died: /
+//
+
+ID clustalo-test11
+AB clustalomega
+AP eomegapp
+CL ../clustalo-test2keep/globin.sto ../clustalo-test9keep/pf00042_full.vie
+IN globin+pf00042.fa
+FI globin+pf00042.fa
+FC < 32500
+FP 4637 /^>/
+FP 4 /-AQIKGHGK-KVADA-----LTKAVG-H-I-/
 FI stderr
 FC = 2
 FP 0 /Warning: /

@@ -20,35 +20,36 @@ section: input [
     parameter: "Y"
     type: "gapprotein"
     aligned: "N"
+    minseqs: "2"
     help: "File containing sequences to align"
     relations: "EDAM_data:0849 Sequence record"
   ]
 
    infile: profile [
     parameter: "Y"
-    information: "Pre-aligned multiple sequence file"
+    information: "Pre-aligned protein multiple sequence file"
     help: "Pre-aligned multiple sequence file (aligned columns will be kept
            fixed)"
-    knowntype: "profile or matrix"
+    knowntype: "clustalo profile"
     relations: "EDAM_data:1354 Sequence profile"
   ]
 
-  infile: indist [
+  infile: indistfile [
     default: ""
     nullok: "Y"
-    information: "Pairwise distance matrix input file"
+    information: "Clustalo distance matrix file (optional)"
     help: "Pairwise distance matrix input file (skips distance computation)"
-    knowntype: "distance matrix"
+    knowntype: "clustalo distance matrix"
     relations:  "EDAM_data:0870 Sequence distance matrix"
   ]
 
-  infile: inguide [
+  infile: inguidefile [
     default: ""
     nullok: "Y"
-    information: "Guide tree input file"
+    information: "Clustalo guide tree file (optional)"
     help: "Guide tree input file  (skips distance computation and guide tree
            clustering step)"
-    knowntype: "dendrogram"
+    knowntype: "clustalo guide tree"
     relations: "EDAM_data:0872 Phylogenetic tree"
   ]
 
@@ -73,18 +74,20 @@ section: advanced [
     relations: "EDAM_data:2527 Parameter"
   ]
 
-  toggle: mbed [
-    default: "N"
-    information: "Fast, Mbed-like clustering for guide tree calculation"
+  list: cluster [
+    default: "mbed"
+    minimum: "1"
+    maximum: "1"
+    header: "Clustering algorithm for guide tree calculation"
+    values: "mbed:mBED method;
+             full:Full slow method;
+             iter:Iteration used full slower method"
+    information: "Method"
+    delimiter: ";"
+    codedelimiter: ":"
     relations: "EDAM_data:2527 Parameter"
   ]
-
-  toggle: intermbed [
-    default: "N"
-    information: "Fast, Mbed-like clustering for guide tree calculation"
-    relations: "EDAM_data:2527 Parameter"
-  ]
-
+  
   integer: maxiterations [
     information: "Number of (combined guide tree/HMM) iterations"
     minimum: "0"
@@ -146,24 +149,48 @@ section: output [
     relations: "EDAM_data:0849 Sequence record"
   ]
 
-  outfile: outdist [
+  list: outformat [
+    default: "fasta"
+    minimum: "1"
+    maximum: "1"
+    header: "Aligned sequence output format"
+    values: "fasta:FASTA;
+             clustal:Aln clustal;
+             msf:MSF;
+             phylip:Phylip;
+             selex:Selex;
+             stockholm:Stockholm;
+             vienna:ViennaRNA"
+    information: "Format"
+    delimiter: ";"
+    codedelimiter: ":"
+    relations: "EDAM_format:1919 Sequence record format"    
+  ]
+
+  outfile: outdistfile [
     default: ""
     nullok: "Y"
     nulldefault: "Y"
-    information: "Pairwise distance matrix output file"
-    help: "Pairwise distance matrix output file"
-    knowntype: "distance matrix"
+    information: "Clustalo distance matrix output file (optional)"
+    help: "Pairwise distance matrix output file,
+           only available in cluster mode 'full'"
+    knowntype: "clustalo distance matrix"
     relations:  "EDAM_data:0870 Sequence distance matrix"
   ]
 
-  outfile: outguide [
+  outfile: outguidefile [
     default: ""
     nullok: "Y"
     nulldefault: "Y"
-    information: "Guide tree output file"
+    information: "Clustalo guide tree output file (optional)"
     help: "Guide tree output file"
-    knowntype: "dendrogram"
+    knowntype: "clustalo guide tree"
     relations: "EDAM_data:0872 Phylogenetic tree"
+  ]
+
+  toggle: log [
+    default: "N"
+    information: "Log progress to standard output if not used for output"    
   ]
 
 endsection: output

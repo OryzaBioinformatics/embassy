@@ -24,8 +24,9 @@
 #include "emboss.h"
 
 
-typedef enum {TYPE_BOOL, TYPE_TOGGLE, TYPE_INT, TYPE_FLOAT, TYPE_STR, TYPE_LIST,
-              TYPE_LISTSINGLE, TYPE_INFILE, TYPE_OUTFILE, TYPE_DIR,
+typedef enum {TYPE_BOOL, TYPE_TOGGLE, TYPE_INT, TYPE_FLOAT, TYPE_STR,
+              TYPE_LIST, TYPE_LISTSINGLE, TYPE_LISTSPECIAL,
+              TYPE_INFILE, TYPE_OUTFILE, TYPE_DIR,
               TYPE_UNKNOWN
 } OmegaQualType;
     
@@ -59,24 +60,25 @@ typedef struct OmegaSQual
 static OmegaOQual omegaqualsgeneral[] =
 {
     {"profile",      "p1",              "",    TYPE_INFILE},
-    {"indist",       "distmat-in",      "",    TYPE_INFILE},
-    {"inguide",      "guidetree-in",    "",    TYPE_INFILE},
-    {"outdist",      "distmat-out",     "",    TYPE_OUTFILE},
-    {"outguide",     "guidetree-out",   "",    TYPE_OUTFILE},
+    {"indistfile",   "distmat-in",      "",    TYPE_INFILE},
+    {"inguidefile",  "guidetree-in",    "",    TYPE_INFILE},
+    {"outdistfile",  "distmat-out",     "",    TYPE_OUTFILE},
+    {"outguidefile", "guidetree-out",   "",    TYPE_OUTFILE},
     {NULL, NULL, NULL, 0}
 };
 
 static OmegaOQual omegaqualsadv[] =
 {
     {"dealign",        "dealign",       "",  TYPE_TOGGLE},
-    {"mbed",           "mbed",          "",  TYPE_TOGGLE},
-    {"intermbed",      "mbediter",      "",  TYPE_TOGGLE},
+    {"cluster",        "full",          "",  TYPE_LISTSPECIAL},
     {"maxiterations",  "iterations",    "",  TYPE_INT},
     {"maxgiterations", "max-guidetree-iterations", "",  TYPE_INT},
     {"maxhiterations", "max-hmm-iterations",       "",  TYPE_INT},
     {"maxseqs",        "maxnumseqs",    "",  TYPE_INT},
     {"maxlenseq",      "maxseqlen",     "",  TYPE_INT},
     {"self",           "auto",          "",  TYPE_TOGGLE},
+    {"log",            "verbose",       "",  TYPE_TOGGLE},
+    {"outformat",      "outfmt",        "",  TYPE_LISTSPECIAL},
     {NULL, NULL, NULL, 0}
 };
 
@@ -114,6 +116,7 @@ static void eomegasp_doinfile(AjPStr *cl, OmegaOQual qual);
 static void eomegasp_dooutfile(AjPStr *cl, OmegaOQual qual);
 static void eomegasp_dodirectory(AjPStr *cl, OmegaOQual qual);
 static void eomegasp_dolistsingle(AjPStr *cl, OmegaOQual qual);
+static void eomega_dolistspecial(AjPStr *cl, OmegaOQual qual);
 static void eomegasp_dolist(AjPStr *cl, OmegaOQual qual);
 static void eomegasp_dointeger(AjPStr *cl, OmegaOQual qual);
 static void eomegasp_dofloat(AjPStr *cl, OmegaOQual qual);
@@ -149,6 +152,7 @@ static OmegaOProcess omegaprocess[] =
     {TYPE_STR, eomegasp_dostring},
     {TYPE_LIST, eomegasp_dolist},
     {TYPE_LISTSINGLE, eomegasp_dolistsingle},
+    {TYPE_LISTSPECIAL, eomega_dolistspecial},
     {TYPE_INFILE, eomegasp_doinfile},
     {TYPE_OUTFILE, eomegasp_dooutfile},
     {TYPE_DIR, eomegasp_dodirectory},
@@ -411,7 +415,7 @@ static void eomegasp_doinfile(AjPStr *cl, OmegaOQual qual)
 
 
 
-/* @funcstatic eomegasp_dooutfile ************************************************
+/* @funcstatic eomegasp_dooutfile *********************************************
 **
 ** Get ACD input files.
 ** Only add to command line if value different from the default
@@ -429,22 +433,19 @@ static void eomegasp_dooutfile(AjPStr *cl, OmegaOQual qual)
     
     outfile = ajAcdGetOutfile(qual.ename);
 
-    if(ajAcdIsUserdefinedC(qual.ename))
+    if(outfile)
     {
+        squal = ajStrNewS(ajFileGetNameS(outfile));
+        
+        ajFmtPrintAppS(cl," --%s%s=%S",
+                       qual.prefix,
+                       qual.qname,
+                       squal);
+        ajFileClose(&outfile);
 
-        if(outfile)
-        {
-            squal = ajStrNewS(ajFileGetNameS(outfile));
-
-            ajFmtPrintAppS(cl," --%s%s=%S",
-                           qual.prefix,
-                           qual.qname,
-                           squal);
-            ajStrDel(&squal);
-        }
+        ajSysFileUnlinkS(squal);
+        ajStrDel(&squal);
     }
-    
-    ajFileClose(&outfile);
 
     return;
 }
@@ -518,7 +519,51 @@ static void eomegasp_dolistsingle(AjPStr *cl, OmegaOQual qual)
 
 
 
-/* @funcstatic eomegasp_dolist ********************************************
+/* @funcstatic eomega_dolistspecial *******************************************
+**
+** Get ACD special value list entries, tailored to convert to native options
+** Only add to command line if value different from the default
+**
+** @param [w] cl [AjPStr*] command line
+**
+** @return [void]
+** @@
+******************************************************************************/
+
+static void eomega_dolistspecial(AjPStr *cl, OmegaOQual qual)
+{
+    AjPStr squal = NULL;
+
+    squal = ajAcdGetListSingle(qual.ename);
+
+    if(ajAcdIsUserdefinedC(qual.ename))
+    {
+        if(ajCharMatchC(qual.ename, "cluster"))
+        {
+            if(ajStrMatchC(squal, "full"))
+                ajFmtPrintAppS(cl," --full");
+            else if(ajStrMatchC(squal, "iter"))
+                ajFmtPrintAppS(cl," --full-iter");
+            else if(!ajStrMatchC(squal, "mbed"))
+                ajDie("Unknown '-%s' value '%S'", qual.ename, squal);
+        }
+        else if(ajCharMatchC(qual.ename, "outformat"))
+        {
+            ajFmtPrintAppS(cl," --outfmt=%S", squal);
+        }
+        else
+            ajDie("Unknown special list option'-%s'", qual.ename);
+    }
+
+    ajStrDel(&squal);
+
+    return;
+}
+
+
+
+
+/* @funcstatic eomegasp_dolist ************************************************
 **
 ** Get ACD single value list entries.
 ** Only add to command line if value different from the default

@@ -121,7 +121,6 @@ Here is a sample session with <b>eomega</b>
 % <b>eomega globins.fasta </b>
 Multiple sequence alignment (ClustalO wrapper)
 (aligned) output sequence set [globins.aln]: <b></b>
-WARNING: This is a beta version of Clustal Omega, for protein only.
 
 </pre></td></tr></table><p>
 <p>
@@ -136,7 +135,7 @@ WARNING: This is a beta version of Clustal Omega, for protein only.
 <table CELLSPACING=0 CELLPADDING=3 BGCOLOR="#f5f5ff" ><tr><td>
 <pre>
 Multiple sequence alignment (ClustalO wrapper)
-Version: EMBOSS:6.5.0.0
+Version: EMBOSS:6.6.0.0
 
    Standard (Mandatory) qualifiers:
   [-sequences]         seqset     File containing sequences to align
@@ -145,15 +144,14 @@ Version: EMBOSS:6.5.0.0
 
    Additional (Optional) qualifiers: (none)
    Advanced (Unprompted) qualifiers:
-   -indist             infile     Pairwise distance matrix input file (skips
+   -indistfile         infile     Pairwise distance matrix input file (skips
                                   distance computation)
-   -inguide            infile     Guide tree input file (skips distance
+   -inguidefile        infile     Guide tree input file (skips distance
                                   computation and guide tree clustering step)
    -dealign            toggle     [N] Dealign input sequences
-   -mbed               toggle     [N] Fast, Mbed-like clustering for guide
-                                  tree calculation
-   -intermbed          toggle     [N] Fast, Mbed-like clustering for guide
-                                  tree calculation
+   -cluster            menu       [mbed] Method (Values: mbed (mBED method);
+                                  full (Full slow method); iter (Iteration
+                                  used full slower method))
    -maxiterations      integer    [0] Number of (combined guide tree/HMM)
                                   iterations (Integer from 0 to 2000000000)
    -maxgiterations     integer    [2000000000] Maximum guide tree iterations
@@ -166,9 +164,15 @@ Version: EMBOSS:6.5.0.0
                                   (Integer from 1 to 2000000000)
    -self               toggle     [N] Set options automatically (might
                                   overwrite some options
-   -outdist            outfile    [*.eomega] Pairwise distance matrix output
-                                  file
-   -outguide           outfile    [*.eomega] Guide tree output file
+   -outformat          menu       [fasta] Format (Values: fasta (FASTA);
+                                  clustal (Aln clustal); msf (MSF); phylip
+                                  (Phylip); selex (Selex); stockholm
+                                  (Stockholm); vienna (ViennaRNA))
+   -outdistfile        outfile    [*.eomega] Pairwise distance matrix output
+                                  file, only available in cluster mode 'full'
+   -outguidefile       outfile    [*.eomega] Guide tree output file
+   -log                toggle     [N] Log progress to standard output if not
+                                  used for output
 
    Associated qualifiers:
 
@@ -182,6 +186,7 @@ Version: EMBOSS:6.5.0.0
    -slower1            boolean    Make lower case
    -supper1            boolean    Make upper case
    -scircular1         boolean    Sequence is circular
+   -squick1            boolean    Read id and sequence only
    -sformat1           string     Input sequence format
    -iquery1            string     Input query fields or ID list
    -ioffset1           integer    Input start position offset
@@ -203,10 +208,10 @@ Version: EMBOSS:6.5.0.0
    -ofname2            string     Features file name
    -ofdirectory2       string     Output directory
 
-   "-outdist" associated qualifiers
+   "-outdistfile" associated qualifiers
    -odirectory         string     Output directory
 
-   "-outguide" associated qualifiers
+   "-outguidefile" associated qualifiers
    -odirectory         string     Output directory
 
    General qualifiers:
@@ -271,7 +276,7 @@ Version: EMBOSS:6.5.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-indist</td>
+<td>-indistfile</td>
 <td>infile</td>
 <td>Pairwise distance matrix input file (skips distance computation)</td>
 <td>Input file</td>
@@ -279,7 +284,7 @@ Version: EMBOSS:6.5.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-inguide</td>
+<td>-inguidefile</td>
 <td>infile</td>
 <td>Guide tree input file (skips distance computation and guide tree clustering step)</td>
 <td>Input file</td>
@@ -295,19 +300,11 @@ Version: EMBOSS:6.5.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-mbed</td>
-<td>toggle</td>
-<td>Fast, Mbed-like clustering for guide tree calculation</td>
-<td>Toggle value Yes/No</td>
-<td>No</td>
-</tr>
-
-<tr bgcolor="#FFFFCC">
-<td>-intermbed</td>
-<td>toggle</td>
-<td>Fast, Mbed-like clustering for guide tree calculation</td>
-<td>Toggle value Yes/No</td>
-<td>No</td>
+<td>-cluster</td>
+<td>list</td>
+<td>Method</td>
+<td><table><tr><td>mbed</td> <td><i>(mBED method)</i></td></tr><tr><td>full</td> <td><i>(Full slow method)</i></td></tr><tr><td>iter</td> <td><i>(Iteration used full slower method)</i></td></tr></table></td>
+<td>mbed</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -359,19 +356,35 @@ Version: EMBOSS:6.5.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-outdist</td>
+<td>-outformat</td>
+<td>list</td>
+<td>Format</td>
+<td><table><tr><td>fasta</td> <td><i>(FASTA)</i></td></tr><tr><td>clustal</td> <td><i>(Aln clustal)</i></td></tr><tr><td>msf</td> <td><i>(MSF)</i></td></tr><tr><td>phylip</td> <td><i>(Phylip)</i></td></tr><tr><td>selex</td> <td><i>(Selex)</i></td></tr><tr><td>stockholm</td> <td><i>(Stockholm)</i></td></tr><tr><td>vienna</td> <td><i>(ViennaRNA)</i></td></tr></table></td>
+<td>fasta</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td>-outdistfile</td>
 <td>outfile</td>
-<td>Pairwise distance matrix output file</td>
+<td>Pairwise distance matrix output file, only available in cluster mode 'full'</td>
 <td>Output file</td>
 <td><i>&lt;*&gt;</i>.eomega</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td>-outguide</td>
+<td>-outguidefile</td>
 <td>outfile</td>
 <td>Guide tree output file</td>
 <td>Output file</td>
 <td><i>&lt;*&gt;</i>.eomega</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td>-log</td>
+<td>toggle</td>
+<td>Log progress to standard output if not used for output</td>
+<td>Toggle value Yes/No</td>
+<td>No</td>
 </tr>
 
 <tr bgcolor="#FFFFCC">
@@ -451,6 +464,14 @@ Version: EMBOSS:6.5.0.0
 <td> -scircular1<br>-scircular_sequences</td>
 <td>boolean</td>
 <td>Sequence is circular</td>
+<td>Boolean value Yes/No</td>
+<td>N</td>
+</tr>
+
+<tr bgcolor="#FFFFCC">
+<td> -squick1<br>-squick_sequences</td>
+<td>boolean</td>
+<td>Read id and sequence only</td>
 <td>Boolean value Yes/No</td>
 <td>N</td>
 </tr>
@@ -605,7 +626,7 @@ Version: EMBOSS:6.5.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td align="left" colspan=5>"-outdist" associated outfile qualifiers
+<td align="left" colspan=5>"-outdistfile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -618,7 +639,7 @@ Version: EMBOSS:6.5.0.0
 </tr>
 
 <tr bgcolor="#FFFFCC">
-<td align="left" colspan=5>"-outguide" associated outfile qualifiers
+<td align="left" colspan=5>"-outguidefile" associated outfile qualifiers
 </td>
 </tr>
 
@@ -904,7 +925,7 @@ None.
         Useful things you can do with this program.
    -->
 
-None.
+In the clustal-omega README file, this is input option (a).
 
 
 
@@ -1034,18 +1055,23 @@ None.
 <tr><th>Program name</th>
 <th>Description</th></tr>
 <tr>
-<td><a href="/emboss/apps/edialign.html">edialign</a></td>
+<td><a href="../../emboss/apps/edialign.html">edialign</a></td>
 <td>Local multiple alignment of sequences</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/emma.html">emma</a></td>
+<td><a href="../../emboss/apps/emma.html">emma</a></td>
 <td>Multiple sequence alignment (ClustalW wrapper)</td>
 </tr>
 
 <tr>
 <td><a href="eomegapp.html">eomegapp</a></td>
 <td>Profile with profile (ClustalO wrapper)</td>
+</tr>
+
+<tr>
+<td><a href="eomegaps.html">eomegaps</a></td>
+<td>Single sequence with profile (ClustalO wrapper)</td>
 </tr>
 
 <tr>
@@ -1059,32 +1085,32 @@ None.
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/infoalign.html">infoalign</a></td>
+<td><a href="../../emboss/apps/infoalign.html">infoalign</a></td>
 <td>Display basic information about a multiple sequence alignment</td>
 </tr>
 
 <tr>
-<td><a href="/embassy/mse/mse.html">mse</a></td>
+<td><a href="../mse/mse.html">mse</a></td>
 <td>Multiple sequence editor</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/plotcon.html">plotcon</a></td>
+<td><a href="../../emboss/apps/plotcon.html">plotcon</a></td>
 <td>Plot conservation of a sequence alignment</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/prettyplot.html">prettyplot</a></td>
+<td><a href="../../emboss/apps/prettyplot.html">prettyplot</a></td>
 <td>Draw a sequence alignment with pretty formatting</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/showalign.html">showalign</a></td>
+<td><a href="../../emboss/apps/showalign.html">showalign</a></td>
 <td>Display a multiple sequence alignment in pretty format</td>
 </tr>
 
 <tr>
-<td><a href="/emboss/apps/tranalign.html">tranalign</a></td>
+<td><a href="../../emboss/apps/tranalign.html">tranalign</a></td>
 <td>Generate an alignment of nucleic coding regions from aligned proteins</td>
 </tr>
 

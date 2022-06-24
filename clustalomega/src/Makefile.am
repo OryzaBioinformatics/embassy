@@ -42,10 +42,11 @@ endif
 
 AM_CFLAGS =  $(AIX_CFLAGS) $(WARN_CFLAGS) $(DEVWARN_CFLAGS)
 
-bin_PROGRAMS = eomega eomegapp eomegasp eomegash
+bin_PROGRAMS = eomega eomegapp eomegaps eomegasp eomegash
 
 eomega_SOURCES = eomega.c
 eomegapp_SOURCES = eomegapp.c
+eomegaps_SOURCES = eomegaps.c
 eomegasp_SOURCES = eomegasp.c
 eomegash_SOURCES = eomegash.c
 

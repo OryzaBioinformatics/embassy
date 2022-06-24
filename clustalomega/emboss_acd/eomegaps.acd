@@ -1,6 +1,6 @@
-application: eomegash [
+application: eomegaps [
   groups: "Alignment:Multiple"
-  documentation: "Sequence with HMM (ClustalO wrapper)"
+  documentation: "Single sequence with profile (ClustalO wrapper)"
   gui: "yes"
   batch: "yes"
   cpu: "high"
@@ -16,22 +16,20 @@ section: input [
   type: "page"
 ]
 
-  seqset: sequences [
-    parameter: "Y"
-    type: "gapprotein"
-    aligned: "N"
-    minseqs: "2"
-    help: "File containing sequences to align"
-    relations: "EDAM_data:0849 Sequence record"
-  ]
-
-   infile: hmmfile [
+   infile: profile [
     parameter: "Y"
     information: "Pre-aligned protein multiple sequence file"
     help: "Pre-aligned multiple sequence file (aligned columns will be kept
            fixed)"
-    knowntype: "clustalo hmm"
-    relations: "EDAM_data:1418 Sequence-profile alignment (HMM)"
+    knowntype: "clustalo profile"
+    relations: "EDAM_data:1354 Sequence profile"
+  ]
+
+  sequence: sequence [
+    parameter: "Y"
+    type: "gapprotein"
+    help: "File containing single sequence to align"
+    relations: "EDAM_data:0849 Sequence record"
   ]
 
   infile: indistfile [
