@@ -1,6 +1,7 @@
 application: esim4 [
   documentation: "Align an mRNA to a genomic DNA sequence"
   groups: "Alignment:Global"
+  embassy: "esim4"
 ]
 
 section: input [
@@ -20,18 +21,6 @@ seqall: bsequence  [
 ]
 
 endsection: input
-
-section: output [
-  information: "Output section"
-  type: "page"
-]
-
-outfile: outfile  [
-  parameter: "Y"
-  knowntype: "sim4 output"
-]
-
-endsection: output
 
 section: additional [
   information: "Additional section"
@@ -218,3 +207,15 @@ integer: tob  [
 ]
 
 endsection: additional
+
+section: output [
+  information: "Output section"
+  type: "page"
+]
+
+outfile: outfile  [
+  parameter: "Y"
+  knowntype: "sim4 output"
+]
+
+endsection: output
