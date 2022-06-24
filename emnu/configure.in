@@ -232,6 +232,7 @@ CHECK_JAVAOS
 CHECK_PNGDRIVER
 CHECK_AUTH
 CHECK_GROUT
+CHECK_AMD64
 
 dnl "Export" these variables for PCRE
 
@@ -393,7 +394,7 @@ AC_ARG_WITH(curses,
 [ --with-curses	   curses (or ncurses)])
 if test "${with_curses}" ; then
 AC_MSG_CHECKING(for with_curses)
-CPPFLAGS="$CPPFLAGS -I${with_curses}/include"
+CPPFLAGS="$CPPFLAGS -I${with_curses}/include -I${with_curses}/include/ncurses"
 LDFLAGS="$LDFLAGS -L${with_curses}/lib"
 fi
 AC_CHECK_LIB(ncurses, main, LIBS="$LIBS -lncurses", LIBS="$LIBS -lcurses")
@@ -461,4 +462,5 @@ dnl check and set compilation flags for Jemboss auth server code
 CHECK_THREADS
 
 
-AC_OUTPUT(Makefile emboss_acd/Makefile source/Makefile)
+AC_OUTPUT(Makefile source/Makefile emboss_acd/Makefile
+emboss_doc/Makefile emboss_doc/html/Makefile emboss_doc/text/Makefile)
