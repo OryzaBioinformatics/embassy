@@ -1,24 +1,23 @@
-
                          ALLVERSUSALL documentation
-                                      
-   
+
+
 
 CONTENTS
 
-   1.0 SUMMARY 
-   2.0 INPUTS & OUTPUTS 
-   3.0 INPUT FILE FORMAT 
-   4.0 OUTPUT FILE FORMAT 
-   5.0 DATA FILES 
-   6.0 USAGE 
-   7.0 KNOWN BUGS & WARNINGS 
-   8.0 NOTES 
-   9.0 DESCRIPTION 
-   10.0 ALGORITHM 
-   11.0 RELATED APPLICATIONS 
-   12.0 DIAGNOSTIC ERROR MESSAGES 
-   13.0 AUTHORS 
-   14.0 REFERENCES 
+   1.0 SUMMARY
+   2.0 INPUTS & OUTPUTS
+   3.0 INPUT FILE FORMAT
+   4.0 OUTPUT FILE FORMAT
+   5.0 DATA FILES
+   6.0 USAGE
+   7.0 KNOWN BUGS & WARNINGS
+   8.0 NOTES
+   9.0 DESCRIPTION
+   10.0 ALGORITHM
+   11.0 RELATED APPLICATIONS
+   12.0 DIAGNOSTIC ERROR MESSAGES
+   13.0 AUTHORS
+   14.0 REFERENCES
 
 1.0 SUMMARY
 
@@ -27,11 +26,11 @@ CONTENTS
 2.0 INPUTS & OUTPUTS
 
    ALLVERSUSALL reads a directory of files each containing a set of 2 or
-   more sequences, performs an all-versus-all global alignment on each
-   set and writes a file of sequence similarity values for each input
-   file. The output files have the same base name as the input files. The
-   path and extension of the input and output files are specified by the
-   user in the ACD file.
+   more sequences, performs an all-versus-all global alignment on each set
+   and writes a file of sequence similarity values for each input file.
+   The output files have the same base name as the input files. The path
+   and extension of the input and output files are specified by the user
+   in the ACD file.
 
 3.0 INPUT FILE FORMAT
 
@@ -84,6 +83,9 @@ CONTENTS
 6.0 USAGE
 
   6.1 COMMAND LINE ARGUMENTS
+
+Sequence similarity data from all-versus-all comparison.
+Version: EMBOSS:6.2.0
 
    Standard (Mandatory) qualifiers:
   [-seqinpath]         dirlist    [./] Sequence directories
@@ -140,11 +142,13 @@ CONTENTS
    -options            boolean    Prompt for standard and additional values
    -debug              boolean    Write debug output to program.dbg
    -verbose            boolean    Report some/full command line options
-   -help               boolean    Report command line options. More
+   -help               boolean    Report command line options and exit. More
                                   information on associated and general
                                   qualifiers can be found with -help -verbose
    -warning            boolean    Report warnings
    -error              boolean    Report errors
    -fatal              boolean    Report fatal errors
    -die                boolean    Report dying program messages
+   -version            boolean    Report version number and exit
+
 

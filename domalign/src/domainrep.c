@@ -136,7 +136,7 @@ int main(int argc, char **argv)
 
 
     /* Read data from acd */
-    embInitP("domainrep",argc,argv,"DOMALIGN");
+    embInitPV("domainrep",argc,argv,"DOMALIGN",VERSION);
 
     dcfin     = ajAcdGetInfile("dcfinfile");
     dcfout    = ajAcdGetOutfile("dcfoutfile");
@@ -199,12 +199,12 @@ int main(int argc, char **argv)
 		    ajListToarray(famlist, (void ***) &(arr));
 		    
 		    /* Allocate & initialise scores and mean arrays. */
-		    scores   = ajFloat2dNewL(famsize);
+		    scores   = ajFloat2dNewRes(famsize);
 		    for(x=0;x<famsize;x++)
 			for(y=0;y<famsize;y++)
 			    ajFloat2dPut(&scores, x, y, 0);
 		    
-		    means = ajFloatNewL(famsize);
+		    means = ajFloatNewRes(famsize);
 		    for(x=0;x<famsize;x++)
 			ajFloatPut(&means, x, 0);
 
@@ -244,8 +244,11 @@ int main(int argc, char **argv)
 			    
 			    
 			    /* Call STAMP. */
-			    ajFmtPrintS(&exec,"stamp -l %S -s -n 2 -slide 5 -prefix "
-					"%S -d %S > %S\n", dom, name, set, out);
+			    ajFmtPrintS(&exec,
+                                        "%S -l %S -s -n 2 -slide 5 -prefix "
+					"%S -d %S > %S\n",
+                                        ajAcdGetpathC("stamp"),
+                                        dom, name, set, out);
 			    ajFmtPrint("%S\n", exec);
 			    system(ajStrGetPtr(exec));  
 
@@ -373,12 +376,12 @@ int main(int argc, char **argv)
 	ajListToarray(famlist, (void ***) &(arr));
 	
 	/* Allocate & initialise scores and mean arrays. */
-	scores   = ajFloat2dNewL(famsize);
+	scores   = ajFloat2dNewRes(famsize);
 	for(x=0;x<famsize;x++)
 	    for(y=0;y<famsize;y++)
 		ajFloat2dPut(&scores, x, y, 0);
 	
-	means = ajFloatNewL(famsize);
+	means = ajFloatNewRes(famsize);
 	for(x=0;x<famsize;x++)
 	    ajFloatPut(&means, x, 0);
 	
