@@ -1,5 +1,5 @@
-#include "phylip.h"
 #include "ajax.h"
+#include "phylip.h"
 
 /* version 3.52c. (c) Copyright 1993 by Joseph Felsenstein.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
@@ -89,7 +89,8 @@ AjPSeqset seqset;
 
 void emboss_getoptions(char *pgm, int argc, char *argv[]){
   AjStatus retval;
-  AjPFile outf,treef;
+  AjPFile outf;
+  AjPFile treef;
   int temp;
   long inseed0;
 
@@ -110,7 +111,7 @@ void emboss_getoptions(char *pgm, int argc, char *argv[]){
   ajNamInit("emboss");
   retval =  ajAcdInitP (pgm, argc, argv,"PHYLIP");
 
-  seqset = ajAcdGetSeqset("msf");
+  seqset = ajAcdGetSeqset("sequence");
   
   outf = ajAcdGetOutfile("outfile");
   outfile = outf->fp;
@@ -186,7 +187,7 @@ void emboss_getnums(){
   spp = ajSeqsetSize (seqset);
   chars = ajSeqsetGetRange(seqset,&begin2,&end2);
   if (printdata)
-    fprintf(outfile, "%4hd Species, %4hd Sites\n", spp, chars);
+    fprintf(outfile, "%4ld Species, %4ld Sites\n", spp, chars);
   nonodes = spp * 2 - 1;
 }
 

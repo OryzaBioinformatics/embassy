@@ -1,5 +1,5 @@
-#include "phylip.h"
 #include "ajax.h"
+#include "phylip.h"
 
 /* version 3.52c. (c) Copyright 1993 by Joseph Felsenstein.
    Written by Joseph Felsenstein, Jerry Shurman, Hisashi Horino,
@@ -71,7 +71,9 @@ Static  aPtr Temp, Processed, Rarer2;
 /************ EMBOSS GET OPTIONS ROUTINES ******************************/
 void emboss_getoptions(char *pgm, int argc, char *argv[]){
 AjStatus retval;
-AjPFile outf,treef,inf;
+AjPFile outf;
+AjPFile treef;
+AjPFile inf;
  
   ajNamInit("emboss");
   retval =  ajAcdInitP (pgm, argc, argv,"PHYLIP");
@@ -676,8 +678,8 @@ Static Void ReadData()
 	  putc(' ', outfile);
       }
       if (ch != '0' && ch != '1') {
-	printf("BAD CHARACTER STATE: %c (NOT 0 OR 1)");
-	printf("AT CHARACTER%3ld OF SPECIES%3ld\n", ch, j, i + 1);
+	printf("BAD CHARACTER STATE: %c (NOT 0 OR 1)", ch);
+	printf("AT CHARACTER%3ld OF SPECIES%3ld\n", j, i + 1);
 	exit(-1);
       }
       Data[i]->vec[j - 1] = (ch == '1');
@@ -1504,7 +1506,7 @@ long tcount;
   if (tcount <= 1)
     putc('\n', treefile);
   else
-    fprintf(treefile, "%7.4llf\n", 1.0 / tcount);
+    fprintf(treefile, "%7.4f\n", 1.0 / tcount);
 }  /* treeout */
 
 Local Void DoAll(Chars_, Processed, Rarer_, tcount)
@@ -1663,7 +1665,7 @@ vecrec **Comp_;
 }  /* GetMaxCliques */
 
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 Char *argv[];
 {  /* Main Program */

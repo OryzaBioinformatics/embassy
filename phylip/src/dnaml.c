@@ -1,5 +1,5 @@
-#include "phylip.h"
 #include "ajax.h"
+#include "phylip.h"
 
 /* version 3.56c. (c) Copyright 1993 by Joseph Felsenstein.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
@@ -100,7 +100,8 @@ AjPSeqset seqset;
 
 void emboss_getoptions(char *pgm, int argc, char *argv[]){
 AjStatus retval;
-AjPFile outf,treef;
+AjPFile outf;
+AjPFile treef;
 AjPStr valstr;
 boolean done1;
 char line[256];
@@ -133,7 +134,7 @@ int scanned;
   ajNamInit("emboss");
   retval =  ajAcdInitP (pgm, argc, argv,"PHYLIP");
 
-  seqset = ajAcdGetSeqset("msf");
+  seqset = ajAcdGetSeqset("sequence");
 
   outf = ajAcdGetOutfile("outfile");
   outfile = outf->fp;
@@ -1019,7 +1020,7 @@ void getdata()
 	    continue;
 	  uppercase(&ch);
 	  if (strchr("ABCDGHKMNRSTUVWXY?O-.",ch) == NULL){
-	    printf("ERROR: BAD BASE:%c AT POSITION%5hd OF SPECIES %3ld\n",
+	    printf("ERROR: BAD BASE:%c AT POSITION%5hd OF SPECIES %3hd\n",
 		   ch, j, i);
 	    exit(-1);
 	  }

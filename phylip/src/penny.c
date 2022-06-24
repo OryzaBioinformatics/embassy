@@ -1,5 +1,5 @@
-#include "phylip.h"
 #include "ajax.h"
+#include "phylip.h"
 
 /* version 3.572c. (c) Copyright 1995 by Joseph Felsenstein.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
@@ -87,7 +87,9 @@ bitptr suppsteps;
 /************ EMBOSS GET OPTIONS ROUTINES ******************************/
 void emboss_getoptions(char *pgm, int argc, char *argv[]){
 AjStatus retval;
-AjPFile outf,treef,inf;
+AjPFile outf;
+AjPFile treef;
+AjPFile inf;
 AjPStr *methodlist;
 
   outgrno = 1;
@@ -102,10 +104,10 @@ AjPStr *methodlist;
   infile = inf->fp;
 
   methodlist = ajAcdGetList ("method");
-  if(strncmp(ajStrStr(*methodlist),"Wag",3) ==NULL){
+  if(strncmp(ajStrStr(*methodlist),"Wag",3) == 0){
     allwagner = true;
   }
-  else if(strncmp(ajStrStr(*methodlist),"Cam",3)==NULL)
+  else if(strncmp(ajStrStr(*methodlist),"Cam",3)== 0)
     allsokal = true;
   else
     mixture = true;
@@ -894,7 +896,7 @@ void inputdata()
 	if (charstate != '0' && charstate != '1' && charstate != '?' &&
 	    charstate != 'P' && charstate != 'B') {
 	  printf("WARNING -- BAD CHARACTER STATE: %c",charstate);
-	  printf(" AT CHARACTER %5hd OF SPECIES %3hd\n",charstate, j, i);
+	  printf(" AT CHARACTER %5hd OF SPECIES %3hd\n", j, i);
 	  exit(-1);
 	}
 	if (printdata) {
@@ -1869,7 +1871,7 @@ void maketree()
 }  /* maketree */
 
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 Char *argv[];
 {  /* Penny's branch-and-bound method */

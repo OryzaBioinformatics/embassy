@@ -1,5 +1,5 @@
-#include "phylip.h"
 #include "ajax.h"
+#include "phylip.h"
 
 /* version 3.52c. (c) Copyright 1993 by Joseph Felsenstein.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
@@ -45,7 +45,9 @@ long contno;
 /************ EMBOSS GET OPTIONS ROUTINES ******************************/
 void emboss_getoptions(char *pgm, int argc, char *argv[]){
 AjStatus retval;
-AjPFile outf,inf,trf;
+AjPFile outf;
+AjPFile inf;
+AjPFile trf;
 
   ajNamInit("emboss");
   retval =  ajAcdInitP (pgm, argc, argv,"PHYLIP");

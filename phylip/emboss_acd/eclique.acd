@@ -1,80 +1,85 @@
-appl: eclique [
-    doc: "Largest clique program"
-    group: "phylip"
-   ]
+application: eclique [
+  documentation: "Largest clique program"
+  groups: "Phylogeny:Discrete characters"
+]
 
-infile: infile [ 
-        param: Y 
-	info: "file to read in"
-	prompt: "phylip file to read in" ]
+infile: infile  [
+  parameter: "Y"
+  information: "file to read in"
+  knowntype: "clique input"
+]
 
+outfile: outfile  [
+  parameter: "Y"
+  default: "eclique.outfile"
+  knowntype: "clique output"
+]
 
-outfile: outfile [ 
-         param: Y
-	 def: "eclique.outfile" ]
+boolean: trout  [
+  parameter: "Y"
+  default: "Y"
+  information: "Create a tree file"
+]
 
+boolean: drawtree  [
+  additional: "Y"
+  default: "Y"
+  information: "Draw tree"
+]
 
-bool: trout [ 
-      param: Y 
-      def:Y
-      information: "Create a tree file" ]
+outfile: treefile  [
+  parameter: "Y"
+  default: "eclique.treefile"
+  information: "tree file name"
+  knowntype: "tree file"
+  nullok: "Y"
+]
 
-bool: drawtree [ 
-      opt: Y 
-      def: Y
-      information: "Draw tree" ]
+boolean: ancestral  [
+  additional: "Y"
+  default: "N"
+  information: "Use ancestral states in input file"
+]
 
-outfile: treefile [
-         param: "$(trout)"
-	 def: "eclique.treefile"
-	 info: "tree file name"
-	 prompt: "tree file" ]
-	 
-bool: ancestral [
-      opt: Y
-      def : N
-      info: "Use ancestral states in input file"
-      prompt: "Use ancestral states in input file" ]
+boolean: minclique  [
+  additional: "Y"
+  default: "N"
+  information: "Use minimum clique size"
+]
 
-bool: minclique [
-      opt: Y
-      def: N
-      info: "Use minimum clique size"
-      prompt: "Use minimum clique size" ]
+integer: cliqminnum  [
+  standard: "$(minclique)"
+  default: "1"
+  information: "Minimum clique size"
+]
 
-int: cliqminnum [
-     req: "$(minclique)"
-     def: 1
-     info: "Minimum clique size"
-     prompt: " Minimum clique size" ]
+boolean: og  [
+  standard: "Y"
+  information: "Outgroup root"
+  default: "N"
+]
 
-bool: og [ 
-      req: Y 
-      info: "Outgroup root" 
-      def: N ]
+integer: outgnum  [
+  standard: "$(og)"
+  minimum: "1"
+  default: "1"
+  information: "number of the outgroup"
+]
 
-int: outgnum [ 
-     req: "$(og)" 
-     min: 1
-     def: 1
-#     max: "@($(msf.count))"  
-     info:"number of the outgroup" ]
+boolean: printdata  [
+  additional: "Y"
+  default: "N"
+  information: "Print out the data at start of run"
+]
 
-bool: printdata [ 
-      opt: Y 
-      def: N 
-      info: "Print out the data at start of run" 
-      prompt: "Print out the data at start of run" ]
+boolean: progress  [
+  additional: "Y"
+  default: "Neze"
+  information: "Print indications of progress of run"
+]
 
-bool: progress [ 
-      opt: Y 
-      def: N 
-      info: "Print indications of progress of run" 
-      prompt: "Print indications of progress of run" ]
-
-bool: matrixout [ 
-      opt: Y 
-      def: N 
-      info: "Print out compatibility matrix" 
-      prompt: "Print out compatibility matrix" ]
-
+boolean: matrixout  [
+  additional: "Y"
+  default: "N"
+  information: "Print out compatibility matrix"
+]

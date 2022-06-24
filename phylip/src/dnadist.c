@@ -1,5 +1,5 @@
-#include "phylip.h"
 #include "ajax.h"
+#include "phylip.h"
 
 /* version 3.56c. (c) Copyright 1993 by Joseph Felsenstein.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
@@ -59,7 +59,8 @@ AjPSeqset seqset;
 
 void emboss_getoptions(char *pgm, int argc, char *argv[]){
 AjStatus retval;
-AjPStr *methodlist,*matrixlist;
+AjPStr *methodlist;
+AjPStr *matrixlist;
 AjPFile outf;
 
   progress = false;
@@ -74,19 +75,19 @@ AjPFile outf;
   ajNamInit("emboss");
   retval =  ajAcdInitP (pgm, argc, argv,"PHYLIP");
 
-  seqset = ajAcdGetSeqset("msf");
+  seqset = ajAcdGetSeqset("sequence");
   outf = ajAcdGetOutfile("outfile");
   outfile = outf->fp;
   methodlist = ajAcdGetList ("method");
 
   ajUser("%S",*methodlist);
-  if(strncmp(ajStrStr(*methodlist),"Kimura",6) ==NULL){
+  if(strncmp(ajStrStr(*methodlist),"Kimura",6) == 0){
     kimura = true;
   }
-  else if(strncmp(ajStrStr(*methodlist),"Jinnei",6)==NULL){
+  else if(strncmp(ajStrStr(*methodlist),"Jinnei",6)== 0){
     jinnei = true;
   }
-  else if(strncmp(ajStrStr(*methodlist),"Jukes",5)==NULL){
+  else if(strncmp(ajStrStr(*methodlist),"Jukes",5)== 0){
     jukes = true;
   }
   else{
@@ -550,8 +551,8 @@ void inputweights()
     if (ch == '0' || ch == '1')
       oldweight[i] = ch - '0';
     else {
-      printf("BAD WEIGHT CHARACTER: %c -- ");
-      printf("WEIGHTS IN DNADIST MUST BE 0 OR 1\n",ch);
+      printf("BAD WEIGHT CHARACTER: %c -- ",ch);
+      printf("WEIGHTS IN DNADIST MUST BE 0 OR 1\n");
       exit(-1);
     }
     weightsum += oldweight[i];
@@ -1414,7 +1415,7 @@ void writedists()
 }  /* writedists */
 
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 Char *argv[];
 {  /* DNA Distances by Maximum Likelihood */

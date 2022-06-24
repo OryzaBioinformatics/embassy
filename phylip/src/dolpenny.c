@@ -1,5 +1,5 @@
-#include "phylip.h"
 #include "ajax.h"
+#include "phylip.h"
 
 /* version 3.572c. (c) Copyright 1995 by Joseph Felsenstein.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
@@ -77,7 +77,9 @@ bitptr stps;
 /************ EMBOSS GET OPTIONS ROUTINES ******************************/
 void emboss_getoptions(char *pgm, int argc, char *argv[]){
 AjStatus retval;
-AjPFile outf,treef,inf;
+AjPFile outf;
+AjPFile treef;
+AjPFile inf;
   howoften = often;
   howmany = many;
   simple = true;

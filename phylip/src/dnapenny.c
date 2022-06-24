@@ -1,5 +1,5 @@
-#include "phylip.h"
 #include "ajax.h"
+#include "phylip.h"
 
 /* version 3.56c. (c) Copyright 1993 by Joseph Felsenstein.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
@@ -131,7 +131,8 @@ AjPSeqset seqset;
 
 void emboss_getoptions(char *pgm, int argc, char *argv[]){
 AjStatus retval;
-AjPFile outf,treef;
+AjPFile outf;
+AjPFile treef;
 
   howoften = often;
   howmany = many;
@@ -151,7 +152,7 @@ AjPFile outf,treef;
   ajNamInit("emboss");
   retval =  ajAcdInitP (pgm, argc, argv,"PHYLIP");
 
-  seqset = ajAcdGetSeqset("msf");
+  seqset = ajAcdGetSeqset("sequence");
 
   howmany = ajAcdGetInt("numgroups");
 

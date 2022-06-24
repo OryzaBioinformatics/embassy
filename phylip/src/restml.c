@@ -1,5 +1,5 @@
-#include "phylip.h"
 #include "ajax.h"
+#include "phylip.h"
 
 /* version 3.52c. (c) Copyright 1993 by Joseph Felsenstein.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
@@ -66,7 +66,9 @@ short *weight, *alias, *aliasweight;
 
 void emboss_getoptions(char *pgm, int argc, char *argv[]){
   AjStatus retval;
-  AjPFile outf,treef,inf;
+  AjPFile outf;
+  AjPFile treef;
+  AjPFile inf;
   int temp,i;
   long inseed0;
 

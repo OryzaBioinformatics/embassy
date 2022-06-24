@@ -1,5 +1,5 @@
-#include "phylip.h"
 #include "ajax.h"
+#include "phylip.h"
 
 /* version 3.57c. (c) Copyright 1993 by Joseph Felsenstein.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
@@ -44,8 +44,11 @@ Static long **sppord;
 
 void emboss_getoptions(char *pgm, int argc, char *argv[]){
   AjStatus retval;
-  AjPFile outf,treef,inf;
-  AjPStr *methodlist,*testlist;
+  AjPFile outf;
+  AjPFile treef;
+  AjPFile inf;
+  AjPStr *methodlist;
+  AjPStr *testlist;
   int temp,i;
   long inseed0,inseed;
 
@@ -80,11 +83,11 @@ void emboss_getoptions(char *pgm, int argc, char *argv[]){
   } while (inseed != 0);
 
   methodlist = ajAcdGetList ("method");
-  if(strncmp(ajStrStr(*methodlist),"Seq",3) ==NULL)
+  if(strncmp(ajStrStr(*methodlist),"Seq",3) == 0)
     data = seqs;
-  else if(strncmp(ajStrStr(*methodlist),"Mor",3) ==NULL)
+  else if(strncmp(ajStrStr(*methodlist),"Mor",3) == 0)
     data = morphology;
-  else if(strncmp(ajStrStr(*methodlist),"Res",3) ==NULL)
+  else if(strncmp(ajStrStr(*methodlist),"Res",3) == 0)
     data = restsites;
   else
     data = genefreqs;
@@ -96,9 +99,9 @@ void emboss_getoptions(char *pgm, int argc, char *argv[]){
 
   testlist = ajAcdGetList ("test");
 
-  if(strncmp(ajStrStr(*testlist),"Jack",4) ==NULL)
+  if(strncmp(ajStrStr(*testlist),"Jack",4) == 0)
     jackknife = true;
-  else if(strncmp(ajStrStr(*testlist),"Perm",4) ==NULL)
+  else if(strncmp(ajStrStr(*testlist),"Perm",4) == 0)
     permute = true;
 
   reps = ajAcdGetInt("reps");
@@ -952,7 +955,7 @@ Static Void bootwrite()
 }  /* bootwrite */
 
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 Char *argv[];
 {  /* Read in sequences or frequencies and bootstrap or jackknife them */

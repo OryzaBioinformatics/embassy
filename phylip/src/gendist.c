@@ -1,5 +1,5 @@
-#include "phylip.h"
 #include "ajax.h"
+#include "phylip.h"
 
 /* version 3.56c. (c) Copyright 1993 by Joseph Felsenstein.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
@@ -29,7 +29,8 @@ Static boolean all, cavalli, lower, nei, reynolds,  mulsets, ibmpc,
 /************ EMBOSS GET OPTIONS ROUTINES ******************************/
 void emboss_getoptions(char *pgm, int argc, char *argv[]){
 AjStatus retval;
-AjPFile outf,inf;
+AjPFile outf;
+AjPFile inf;
 AjPStr *methodlist;
 
   cavalli = false;
@@ -48,10 +49,10 @@ AjPStr *methodlist;
   all = ajAcdGetBool("all");
 
   methodlist = ajAcdGetList ("method");
-  if(strncmp(ajStrStr(*methodlist),"Nei",3) ==NULL){
+  if(strncmp(ajStrStr(*methodlist),"Nei",3) == 0){
     nei = true;
   }
-  else if(strncmp(ajStrStr(*methodlist),"Cav",3)==NULL)
+  else if(strncmp(ajStrStr(*methodlist),"Cav",3)== 0)
     cavalli = true;
   else
     reynolds = true;
@@ -421,7 +422,7 @@ void writedists()
 }  /* writedists */
 
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 Char *argv[];
 {  /* main program */

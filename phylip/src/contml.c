@@ -1,5 +1,5 @@
-#include "phylip.h"
 #include "ajax.h"
+#include "phylip.h"
 
 /* version 3.56c. (c) Copyright 1993 by Joseph Felsenstein.
    Written by Joseph Felsenstein, Akiko Fuseki, Sean Lamont, and Andrew Keeffe.
@@ -63,7 +63,9 @@ Char ch;
 /************ EMBOSS GET OPTIONS ROUTINES ******************************/
 void emboss_getoptions(char *pgm, int argc, char *argv[]){
 AjStatus retval;
-AjPFile outf,treef,inf;
+AjPFile outf;
+AjPFile treef;
+AjPFile inf;
 int temp;
 long inseed0;
  
@@ -682,8 +684,8 @@ void getdata()
 		x[i][l] /= sqrt(sum);
 	      x[i][m - 1] = 0.0;
 	    } else {
-	      printf("\n LOCUS%3hd IN SPECIES%3hd: ");
-	      printf("FREQUENCIES ADD UP TO MORE THAN 1\n",j, i + 1);
+	      printf("\n LOCUS%3hd IN SPECIES%3hd: ",j, i + 1);
+	      printf("FREQUENCIES ADD UP TO MORE THAN 1\n");
 	      exit(-1);
 	    }
 	  }
@@ -1519,7 +1521,7 @@ node *p;
   divisor = 1.0;
   getch(&ch);
   digit = ch - ordzero;
-  while (((unsigned long)digit <= 9) | ch == '.'){
+  while (((unsigned long)digit <= 9) || ch == '.'){
     if (ch == '.')
       pointread = true;
     else {
@@ -1885,7 +1887,7 @@ void maketree()
 }  /* maketree */
 
 
-main(argc, argv)
+int main(argc, argv)
 int argc;
 Char *argv[];
 {  /* main program */
